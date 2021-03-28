@@ -1,0 +1,53 @@
+<div id="center">
+    <div id="left">
+        <div id="menuTitle" class="title"><p>Categorías</p></div>
+        <div id="menuContainer">
+            <ul id="menuContent">
+                <li><span class="old_world_blues_candy" (click)="expandOption($event.target)">Old World Blues</span>
+                    <ul>
+                        <li class="category_ragtime">Ragtime</li>
+                        <li class="category_stride">Stride-Piano</li>
+                        <li class="category_boogie">Boogie-Woogie</li>
+                        <li class="category_jazz">Blues-Jazz</li>
+                        <li class="category_v-soundtrack">Soundtracks</li>
+                    </ul>
+                </li>
+                <li><span class="mojave_ride_candy" (click)="expandOption($event.target)">Mojave Ride</span>
+                    <ul>
+                        <li class="category_country">Country</li>
+                        <li class="category_c-soundtrack">Soundtracks</li>
+                    </ul>
+                </li>
+                <li><span class="classic_wave_candy" (click)="expandOption($event.target)">Classic Wave</span>
+                    <ul>
+                        <li class="category_classic">Clásica</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="title"><p>Galería</p></div>
+        <div id="imageGalery" class="tinyFont centerText"><p>No hay contenido disponible</p></div>
+        <div class="title"><p>Iniciar sesión</p></div>
+        <div id="formMenu">
+            <form method="post">
+                <label for="email">Email:</label>
+                <br>
+                <input type="text" name="email">
+                <br><br>
+                <label for="password">Contraseña:</label>
+                <br>
+                <input type="text" name="password">
+                <div id="formError"><br></div>
+                <input type="submit" name="Enviar" class="greenButton centerButton">
+                <br><br>
+                <a href="javascript:void(0);" routerLink="/SignUp" id="signUpLink" class="tinyFont whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a>
+            </form>
+        </div>
+    </div>
+    <div id="right">
+        <div id="candyRow"><p><span class="oh_a_candy candy_home" id="candy_home"><a href="javascript:void(0);" alt="Página principal" onclick="generateHome()">Home</a></span></p></div>
+        <div id="rightBody">
+            <app-showcase></app-showcase>
+        </div>
+    </div>
+</div>

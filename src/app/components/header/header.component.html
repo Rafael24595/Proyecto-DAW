@@ -1,0 +1,60 @@
+<div id="header">
+    <img id="logo" src="assets/media/images/PAYNES.png">
+    <div id="menuButton" (click)="expandMenu()">
+        <div id="barsContainer">
+            <div class="menuButtonBar"></div>
+            <div class="menuButtonBar"></div>
+            <div class="menuButtonBar"></div>
+        </div>
+    </div>
+</div>
+<div id="menuExpanded" [ngClass]="expandStatus ? 'active' : '' ">
+    <div id="menuExpandedOptions">
+        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" onclick="generateLogIn()">º</a>
+        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" onclick="showImage()">9</a>
+    </div>
+    <ul class="menuContentHeader left">
+        <li><span class="superior_candy">Superior</span>
+            <ul>
+                <li class="category_shirt" onclick="generateShopShowcase()">Camisas</li>
+                <li class="category_t-shirt" onclick="generateShopShowcase()">Camisetas</li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="menuContentHeader">
+        <li><span class="inferior_candy">Inferior</span>
+            <ul>
+                <li class="category_short" onclick="generateShopShowcase()">Bermudas</li>
+                <li class="category_skirt" onclick="generateShopShowcase()">Faldas</li>
+                <li class="category_socks" onclick="generateShopShowcase()">Calcetines</li>
+                <li class="category_shoes" onclick="generateShopShowcase()">Calzado</li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="menuContentHeader">
+        <li><span class="accesorios_candy">Accesorios</span>
+            <ul>
+                <li class="category_caps" onclick="generateShopShowcase()">Gorras</li>
+                <li class="category_jewely" onclick="generateShopShowcase()">Bisuteria</li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="menuContentHeader">
+        <li><span class="souvenires_candy">Souvenires</span>
+            <ul>
+                <li class="category_necklace" onclick="generateShopShowcase()">Collares</li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="menuContentHeader right">
+        <li><span>Social</span>
+            <ul>
+                <li class="socialMenu">y</li>
+                <li class="socialMenu">t</li>
+                <br>
+                <li class="socialMenu">f</li>
+                <li class="socialMenu">c</li>
+            </ul>
+        </li>
+    </ul>
+</div>

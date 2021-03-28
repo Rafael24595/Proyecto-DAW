@@ -1,0 +1,178 @@
+#header {
+
+	height: 20%;
+	/*background-image: url("../media/images/header_leaf.png");*/
+    background-color: rgb(26, 26, 26);
+
+}
+
+#logo{
+
+	position: relative;
+    margin-left: 20px;
+    top: 50%;
+    height: 90%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+}
+
+#menuButton{
+
+	position: relative;
+	display: none;
+	float: right;
+	height: 60px;
+	width: 60px;
+	background-color: white;
+	margin-right: 30px;
+	top: 50%;
+	transform: translateY(-50%);
+	vertical-align: top;
+	cursor: pointer;
+
+}
+
+#menuButton.over{
+
+	height: 54px;
+	background-color: white;
+
+}
+
+#barsContainer{
+
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+
+}
+
+.menuButtonBar{
+
+	margin: 5px;
+	margin-top: 0px;
+	margin-bottom: 7px;
+	height: 8px;
+	background-color: black;
+
+}
+
+.menuButtonBar.over{
+
+	margin: 4px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	height: 7px;
+
+}
+
+
+#menuExpanded{
+
+	display: none;
+	text-align: center;
+	background-color: white;
+
+}
+
+#menuExpanded.active{
+
+	display: block;
+
+}
+
+.menuContentHeader{
+
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	list-style: none;
+	padding: 10px;
+	padding-left: 30px;
+	padding-right: 30px;
+	font-family: BlazingSun;
+	color: rgb(128, 128, 128);
+
+}
+
+.menuContentHeader.left {
+
+	margin-left: 22px;
+
+}
+
+.menuContentHeader.right {
+
+	margin-right: 22px;
+
+}
+
+.menuContentHeader span{
+
+	font-size: 1.4em;
+	margin-bottom: 10px;
+	color: black;
+
+}
+
+.menuContentHeader ul{
+
+	margin-top: 5px;
+	padding: 0px;
+
+}
+
+
+.menuContentHeader li{
+
+	text-align: center;
+	list-style: none;
+
+}
+
+.menuContentHeader li li{
+
+	cursor: pointer;
+
+}
+
+.menuContentHeader li li:hover{
+
+	transform: scale(1.05);
+
+}
+
+#menuExpandedOptions{
+
+	position: absolute;
+	margin-top: 8px;
+	margin-left: 8px;
+	left: 0px;
+
+}
+
+#menuExpandedOptions a{
+
+	margin-bottom: 5px;
+	display: block;
+	font-size: 2.2em;
+	color: rgb(0, 102, 68);
+
+}
+
+#menuExpandedOptions a:hover{
+
+	transform: scale(1.05);
+
+}
+
+.socialMenu{
+
+	display: inline-block;
+	font-family: FontSocialMedia !important;
+	font-size: 1.6em;
+	margin: 2px;
+
+}
+
