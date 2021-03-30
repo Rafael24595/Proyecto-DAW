@@ -9,20 +9,22 @@ export class User{
     email: string;
     admin: string;
     themeLists: ThemeListsInterface[];
+    likes : string[];
 
-    private constructor(name: string, password: string, email: string, admin: string,  themeLists: ThemeListsInterface[]){
+    private constructor(name: string, password: string, email: string, admin: string,  themeLists: ThemeListsInterface[], likes: string[]){
         
         this.name = name;
         this.password = password;
         this.email = email;
         this.admin = admin;
         this.themeLists = themeLists;
+        this.likes = likes;
 
     }
 
-    public static setUser(name: string, password: string, email: string, admin: string,  themeLists: ThemeListsInterface[]){
+    public static setUser(name: string, password: string, email: string, admin: string,  themeLists: ThemeListsInterface[], likes: string[]){
 
-        User.activeUser = new User(name, password, email, admin, themeLists);
+        User.activeUser = new User(name, password, email, admin, themeLists, likes);
 
         return User.activeUser;
 
@@ -37,7 +39,7 @@ export class User{
         }
         else{
 
-            return User.setUser('@Usuario', '1234', 'user@example.com', '0',  []);
+            return User.setUser('@Usuario', '1234', 'user@example.com', '0', [], []);
 
         }
 

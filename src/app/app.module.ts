@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CentreComponent } from './components/centre/centre.component';
 import { ShowcaseComponent } from './components/centre/showcase/showcase.component';
+import { HomeComponent } from './components/centre/showcase/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,11 +16,13 @@ import { ShowcaseComponent } from './components/centre/showcase/showcase.compone
     HeaderComponent,
     FooterComponent,
     CentreComponent,
-    ShowcaseComponent
+    ShowcaseComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

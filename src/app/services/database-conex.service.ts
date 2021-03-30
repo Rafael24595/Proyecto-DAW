@@ -13,7 +13,7 @@ export class DatabaseConexService {
 
   constructor(private http: HttpClient) { }
 
-  getCategory(limit?: string): Observable<Artist[]> {
+  getArtists(limit?: string): Observable<Artist[]> {
     limit = (limit) ? limit : '-1';
     return this.http.get<Artist[]>(`http://${host}:2525/getData?count=${limit}`)
              .pipe( 
