@@ -1,1 +1,11 @@
-<div id="homeContainer"></div>
+<div id="homeContainer">
+    <div *ngFor='let category of categories | keyvalue'>
+        <h2>{{category.value.name}}</h2>
+        <div id={{category.value.code}}>
+            <div *ngFor='let item of category.value.items' id="{{item.id}}" (click)=showItem($event.target)>
+                <img src="../../../../../assets/media/images/covers/{{item.id}}.png">
+                <p>{{item.name}}</p>
+            </div>
+        </div>
+    </div>
+</div>
