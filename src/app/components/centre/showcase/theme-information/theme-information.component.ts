@@ -13,9 +13,11 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 export class ThemeInformationComponent implements OnInit {
 
   theme: Themes | undefined;
+  lyrics: string = '<p><b>Letra no disponible</b><p>';
+
   constructor(private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
 
-  ngOnInit(): void {console.log("in");
+  ngOnInit(): void {
   
     this.updateArtistList.getFromDataBase.then(()=> {
 
@@ -40,6 +42,9 @@ export class ThemeInformationComponent implements OnInit {
       artist.themeList.forEach((theme:Themes)=>{
         if(theme.id == id){
           this.theme = theme;
+          if(theme.lyrics.native){
+            this.lyrics = theme.lyrics.native;
+          }
           return true
         }
         return false})
