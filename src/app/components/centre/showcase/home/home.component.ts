@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router"
 import { DatabaseConexService } from '../../../../services/database-conex.service'
-import { sesionValues } from '../../../../../utils/sessionVariables';
+import { sesionValues } from '../../../../../utils/variables/sessionVariables';
 import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
-import { Categories } from '../../../../../utils/variables';
+import { Categories } from '../../../../../utils/variables/variables';
 import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
+import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 
 @Component({
   selector: 'app-home',
@@ -15,29 +18,15 @@ export class HomeComponent implements OnInit {
 
   categories = Categories;
 
-  constructor(private DatabaseConexService: DatabaseConexService) { }
+  constructor(private updateArtistList:UpdateArtistList ,private router: Router, private comunicationSErvice:ComunicationServiceService) { }
 
   ngOnInit(): void {
 
-    this.DatabaseConexService.getArtists().subscribe(artists =>{
-     
-      artists.forEach(artist =>{
-
-        let artistData = artist as ArtistInterface;
-
-        sesionValues.artistList.setArtist(artistData);
-
-      });
-
-      this.generateShowcaseItems();
-
-      console.log(sesionValues.artistList.list);
-    
-    });
+    this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
 
   }
 
-  generateShowcaseItems(){
+  generateShowcaseItems(){console.log(sesionValues.artistList.list)
 
     sesionValues.artistList.list.forEach(artist => {
 
@@ -63,18 +52,10 @@ export class HomeComponent implements OnInit {
 
     let elementId = element as HTMLElement;
     let itemId = (elementId.tagName == "DIV") ? elementId.id : (elementId.parentElement) ? elementId.parentElement.id : null;
-    let item:Themes | null = null;
 
-    sesionValues.artistList.list.find((artist:Artist)=>{
-      artist.themeList.forEach((theme:Themes)=>{
-        if(theme.id == itemId){
-          item = theme;
-          return true
-        }
-        return false})
-    })
+    this.router.navigate(['/Theme'], {queryParams:{id:itemId}});
 
-    console.log(item)
+    //console.log(item)
   }
 
 }

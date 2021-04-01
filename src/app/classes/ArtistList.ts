@@ -15,4 +15,8 @@ export class ArtistList{
 
     }
 
+    clearArtistList(){
+        this.list = [];
+    }
+
 }
