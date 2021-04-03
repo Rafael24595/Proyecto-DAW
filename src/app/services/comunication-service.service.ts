@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Themes } from '../classes/Themes';
+import { CandyInterface } from '../interfaces/CandyInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComunicationServiceService {
   
-  theme: Themes | undefined;
-  private sendThemeSubject = new Subject<Themes>();
-  sendThemeObservable = this.sendThemeSubject.asObservable();
+  candy: CandyInterface | undefined;
+  private sendCandySubject = new Subject<CandyInterface>();
+  sendCandyObservable = this.sendCandySubject.asObservable();
 
-  sendTheme(theme:Themes){
-    this.theme = theme;
-    this.sendThemeSubject.next(theme);
+  sendCandy(candy:CandyInterface){
+    this.candy = candy;
+    this.sendCandySubject.next(candy);
   }
 }

@@ -46,7 +46,15 @@
         </div>
     </div>
     <div id="right">
-        <div id="candyRow"><p><span class="oh_a_candy candy_home" id="candy_home"><a href="javascript:void(0);" alt="Página principal" onclick="generateHome()">Home</a></span></p></div>
+        <div id="candyRow">
+            <p>
+                <span *ngFor='let candy of candyRow; let i = index'>
+                    <a *ngIf='candy.query' href={{candy.route}}{{candy.query}} class="oh_a_candy">{{candy.name}}</a>
+                    <a *ngIf='!candy.query' href={{candy.route}} class="oh_a_candy">{{candy.name}}</a>
+                    <span *ngIf="i < candyRow.length - 1"> - </span>
+                </span>
+            </p>
+        </div>
         <div id="rightBody">
             <app-showcase></app-showcase>
         </div>

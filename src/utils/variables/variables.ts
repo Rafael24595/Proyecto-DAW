@@ -1,3 +1,4 @@
+
 import { Themes } from "src/app/classes/Themes";
 
 export const Categories:CategoriesInterface = {
@@ -6,7 +7,11 @@ export const Categories:CategoriesInterface = {
         CW:{code: 'CW', name:'Classic Wave', items:[]}
 }
 
-export interface CategoriesInterface{
+export const Variables = {
+        candyIdWhiteList : ['candy-home', 'candy-theme']
+}
+
+interface CategoriesInterface{
         OWB:{code: string, name:string, items:Themes[] | never}, 
         MR:{code: string, name:string, items:Themes[] | never}, 
         CW:{code: string, name:string, items:Themes[] | never}

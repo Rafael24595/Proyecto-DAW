@@ -8,6 +8,7 @@ import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
+import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +17,14 @@ import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 })
 export class HomeComponent implements OnInit {
 
+  candy: CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:''};
   categories = Categories;
 
-  constructor(private updateArtistList:UpdateArtistList ,private router: Router, private comunicationSErvice:ComunicationServiceService) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList ,private router: Router, private comunicationSErvice:ComunicationServiceService) { }
 
   ngOnInit(): void {
 
+    this.comunicationService.sendCandy(this.candy);
     this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
 
   }
@@ -55,7 +58,6 @@ export class HomeComponent implements OnInit {
 
     this.router.navigate(['/Theme'], {queryParams:{id:itemId}});
 
-    //console.log(item)
   }
 
 }
