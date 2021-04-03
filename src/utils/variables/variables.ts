@@ -1,6 +1,7 @@
 
 import { Artist } from "src/app/classes/Artist";
 import { Themes } from "src/app/classes/Themes";
+import { CandyInterface } from "src/app/interfaces/CandyInterface";
 
 export const Categories:CategoriesInterface = {
         OWB:{code: 'OWB', name:'Old World Blues', items:[]}, 
@@ -14,8 +15,11 @@ export const SearchQuery:SearchQueryInterface = {
 }
 
 export const Variables = {
-        candyIdWhiteList : ['candy-home', 'candy-theme', 'candy-search']
+        candyIdWhiteList : ['candy-home'],
+        candyDeadEnd:['theme']
 }
+
+export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:''};
 
 interface CategoriesInterface{
         OWB:{code: string, name:string, items:Themes[] | never}, 

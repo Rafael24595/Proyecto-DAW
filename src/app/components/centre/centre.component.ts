@@ -1,6 +1,7 @@
 import { BoundAttribute } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit } from '@angular/core';
-import { count } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { count, last } from 'rxjs/operators';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { Variables } from 'src/utils/variables/variables';
@@ -14,11 +15,15 @@ export class CentreComponent implements OnInit {
 
   candyRow:CandyInterface[] = [{id: 'home', name:'Home', family:'candy-home',route:'Home', query:''}];
 
-  constructor(private comunicationService :ComunicationServiceService) { }
+  constructor(private comunicationService :ComunicationServiceService, private router: Router) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('lastCandyRow') != null){
+      let candyRowAsString = localStorage.getItem('lastCandyRow') as string;
+      this.candyRow = JSON.parse(candyRowAsString);
+    }
     this.comunicationService.sendCandyObservable.subscribe((candy:CandyInterface)=>{
-      this.updateRow(candy);
+      console.log(this.candyRow);this.updateRow(candy);
     });
   }
 
@@ -37,8 +42,9 @@ export class CentreComponent implements OnInit {
 
   updateRow(candy:CandyInterface){
 
-    let positionInRow:number = this.findRowPosition(candy.id);
-    let newFamily: boolean = this.checkFamily(candy.family);
+    let positionInRow:number = this.findRowPosition(candy.id);console.log(positionInRow)
+    let newFamily: boolean = this.checkFamily(candy.family);console.log(newFamily)
+    let deadEnd: number = this.checkForDeadEnd();
 
     if(newFamily){
 
@@ -53,9 +59,15 @@ export class CentreComponent implements OnInit {
     }
     else if (positionInRow == -1){
 
+      if(deadEnd != -1){
+        this.candyRow.splice(deadEnd -1, deadEnd -1);
+      }
+
       this.candyRow.push(candy);
 
     }
+
+    localStorage.setItem('lastCandyRow', JSON.stringify(this.candyRow));
 
   }
 
@@ -86,6 +98,37 @@ export class CentreComponent implements OnInit {
 
     return newFamily;
 
+  }
+
+  checkForDeadEnd(){
+
+    let position = 0;
+
+    let item = this.candyRow.find(candy=>{
+      position++;
+      if (Variables.candyDeadEnd.indexOf(candy.id) != -1){
+        return true;
+      }
+      return false;
+    });
+
+    return (item) ? position : -1;
+
+  }
+
+  candyRedirect(candy:CandyInterface){
+    let query = {};
+    let queryName = candy.query.replace('?', '').split('=')[0];
+    let queryValue = candy.query.split('=')[1];
+    
+    query[queryName] = queryValue;
+    if(candy.query){
+      this.router.navigate([`/${candy.route}`], {queryParams:query});
+    }
+    else{
+      this.router.navigate([`/${candy.route}`]);
+    }
+    
   }
 
 }

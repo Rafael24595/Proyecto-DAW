@@ -16,7 +16,8 @@ export class ThemeInformationComponent implements OnInit {
 
   candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:''};
   theme: Themes | undefined;
-  lyrics: string = '<p><b>Letra no disponible</b><p>';
+  flag: string = 'eng';
+  lyrics: string | undefined;
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
 
@@ -51,12 +52,24 @@ export class ThemeInformationComponent implements OnInit {
           this.theme = theme;
           if(theme.lyrics.native){
             this.lyrics = theme.lyrics.native;
+            this.flag = theme.flag;
           }
           return true
         }
         return false})
     })
 
+  }
+
+  switchLyrics(){
+    if (this.theme && this.lyrics == this.theme.lyrics.native){
+      this.flag = 'esp';
+      this.lyrics = this.theme.lyrics.esp;
+    }
+    else if(this.theme){
+      this.flag = this.theme.flag;
+      this.lyrics = this.theme.lyrics.native;
+    }
   }
   
 }

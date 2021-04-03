@@ -5,7 +5,10 @@
                 <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
                 <p>{{theme.name}}</p>
             </div>
-            <div [innerHTML]="lyrics"></div>
+            
+            <img *ngIf='lyrics' src="../../../../../assets/media/images/flags/{{flag}}.png" (click)='switchLyrics()'>
+            <div *ngIf='lyrics' [innerHTML]="lyrics"></div>
+            <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
         </div>
         <div>
             <h3>Comentarios {{theme.comments.length}}: </h3>

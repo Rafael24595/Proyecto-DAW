@@ -12,6 +12,7 @@ import { HomeComponent } from './components/centre/showcase/home/home.component'
 import { HttpClientModule } from '@angular/common/http';
 import { ThemeInformationComponent } from './components/centre/showcase/theme-information/theme-information.component';
 import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
+import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/artist-panel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ThemeSearchComponent } from './components/centre/showcase/theme-search/
     ShowcaseComponent,
     HomeComponent,
     ThemeInformationComponent,
-    ThemeSearchComponent
+    ThemeSearchComponent,
+    ArtistPanelComponent
   ],
   imports: [
     BrowserModule,

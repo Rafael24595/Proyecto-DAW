@@ -20,7 +20,7 @@ export class UpdateArtistList{
 
             sesionValues.artistList.clearArtistList();
 
-            this.DatabaseConexService.getArtists().subscribe(artists =>{
+            this.DatabaseConexService.getArtists().subscribe(artists =>{console.log(artists)
  
                 artists.forEach(artist =>{
           

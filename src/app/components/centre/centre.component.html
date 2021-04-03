@@ -49,8 +49,7 @@
         <div id="candyRow">
             <p>
                 <span *ngFor='let candy of candyRow; let i = index'>
-                    <a *ngIf='candy.query' href={{candy.route}}{{candy.query}} class="oh_a_candy">{{candy.name}}</a>
-                    <a *ngIf='!candy.query' href={{candy.route}} class="oh_a_candy">{{candy.name}}</a>
+                    <a href="javascript:void(0);" class="oh_a_candy" (click)='candyRedirect(candy)'>{{candy.name}}</a>
                     <span *ngIf="i < candyRow.length - 1"> - </span>
                 </span>
             </p>

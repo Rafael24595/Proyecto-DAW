@@ -4,7 +4,7 @@ import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
-import { SearchQuery } from 'src/utils/variables/variables';
+import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-theme-search',
@@ -13,7 +13,7 @@ import { SearchQuery } from 'src/utils/variables/variables';
 })
 export class ThemeSearchComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-search',route:'Search', query:''};
+  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:''};
   query:string = '';
   queryResult = SearchQuery;
 
@@ -31,6 +31,7 @@ export class ThemeSearchComponent implements OnInit {
         }
       )
     
+      this.comunicationService.sendCandy(CandyBomb);
       this.comunicationService.sendCandy(this.candy);
 
     });
@@ -66,6 +67,15 @@ export class ThemeSearchComponent implements OnInit {
     let itemId = (elementId.tagName == "DIV") ? elementId.id : (elementId.parentElement) ? elementId.parentElement.id : null;
 
     this.router.navigate(['/Theme'], {queryParams:{id:itemId}});
+
+  }
+
+  showArtist(element:EventTarget | null){
+
+    let elementId = element as HTMLElement;
+    let itemId = (elementId.tagName == "DIV") ? elementId.id : (elementId.parentElement) ? elementId.parentElement.id : null;
+
+    this.router.navigate(['/Artist'], {queryParams:{id:itemId}});
 
   }
 

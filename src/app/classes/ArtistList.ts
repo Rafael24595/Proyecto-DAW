@@ -11,7 +11,7 @@ export class ArtistList{
 
     setArtist(artist: ArtistInterface){
 
-        this.list.push(new Artist(artist.id_artist, artist.name, artist.surname, artist.tags, artist.themeList));
+        this.list.push(new Artist(artist.id_artist, artist.name, artist.surname, artist.description, artist.tags, artist.themeList));
 
     }
 

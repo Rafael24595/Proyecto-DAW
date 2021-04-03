@@ -2,7 +2,7 @@
     <div *ngIf='queryResult.artists.length > 0'>
         <h2>Artistas</h2>
         <div>
-            <div *ngFor='let artist of queryResult.artists'>
+            <div *ngFor='let artist of queryResult.artists' id="{{artist.id_artist}}" (click)=showArtist($event.target)>
                 <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png">
                 <p>{{artist.name}} {{artist.surname}}</p>
             </div>
