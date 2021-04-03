@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router"
-import { DatabaseConexService } from '../../../../services/database-conex.service'
+import {Router} from "@angular/router";
 import { sesionValues } from '../../../../../utils/variables/sessionVariables';
-import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
 import { Categories } from '../../../../../utils/variables/variables';
-import { Artist } from 'src/app/classes/Artist';
-import { Themes } from 'src/app/classes/Themes';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
@@ -20,7 +16,7 @@ export class HomeComponent implements OnInit {
   candy: CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:''};
   categories = Categories;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList ,private router: Router, private comunicationSErvice:ComunicationServiceService) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private comunicationSErvice:ComunicationServiceService) { }
 
   ngOnInit(): void {
 

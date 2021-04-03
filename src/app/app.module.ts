@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
-import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -11,6 +11,7 @@ import { ShowcaseComponent } from './components/centre/showcase/showcase.compone
 import { HomeComponent } from './components/centre/showcase/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ThemeInformationComponent } from './components/centre/showcase/theme-information/theme-information.component';
+import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,14 @@ import { ThemeInformationComponent } from './components/centre/showcase/theme-in
     CentreComponent,
     ShowcaseComponent,
     HomeComponent,
-    ThemeInformationComponent
+    ThemeInformationComponent,
+    ThemeSearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

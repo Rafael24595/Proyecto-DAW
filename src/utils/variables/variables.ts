@@ -1,4 +1,5 @@
 
+import { Artist } from "src/app/classes/Artist";
 import { Themes } from "src/app/classes/Themes";
 
 export const Categories:CategoriesInterface = {
@@ -7,8 +8,13 @@ export const Categories:CategoriesInterface = {
         CW:{code: 'CW', name:'Classic Wave', items:[]}
 }
 
+export const SearchQuery:SearchQueryInterface = {
+        artists:[],
+        themes:[]
+}
+
 export const Variables = {
-        candyIdWhiteList : ['candy-home', 'candy-theme']
+        candyIdWhiteList : ['candy-home', 'candy-theme', 'candy-search']
 }
 
 interface CategoriesInterface{
@@ -16,3 +22,8 @@ interface CategoriesInterface{
         MR:{code: string, name:string, items:Themes[] | never}, 
         CW:{code: string, name:string, items:Themes[] | never}
 }
+
+interface SearchQueryInterface{
+        artists:Artist[];
+        themes:Themes[];
+    }

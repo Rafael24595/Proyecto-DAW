@@ -1,5 +1,9 @@
 <div id="header">
     <img id="logo" src="assets/media/images/PAYNES.png">
+    <div class="centerContainer">
+        <input [(ngModel)]="searchQuery" #ctrl="ngModel">
+        <input type="submit" value="[[Lens]]" (click)=launchQuery()>
+    </div>
     <div id="menuButton" (click)="expandMenu()">
         <div id="barsContainer">
             <div class="menuButtonBar"></div>
