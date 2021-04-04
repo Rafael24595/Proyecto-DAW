@@ -15,11 +15,17 @@ export class DatabaseConexService {
 
   getArtists(limit?: string): Observable<Artist[]> {
     limit = (limit) ? limit : '-1';
-    return this.http.get<Artist[]>(`http://${host}:2525/getData?count=${limit}`)
+    return this.http.get<Artist[]>(`http://${host}:2525/api/getData?count=${limit}`)
              .pipe( 
                tap(_ => console.log('Searching..')),
                catchError(this.handleError<Artist[]>('getCategory', []))
           );
+ }
+
+ signUp(email, password) {
+
+  return this.http.post<any>(`http://${host}:2525/api/signIn`, {email, password});
+
  }
 
  private handleError<T>(operation = 'operation', result?: T) {

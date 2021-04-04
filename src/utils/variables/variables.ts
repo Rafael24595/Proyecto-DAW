@@ -19,7 +19,7 @@ export const Variables = {
         candyDeadEnd:['theme']
 }
 
-export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:''};
+export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}};
 
 interface CategoriesInterface{
         OWB:{code: string, name:string, items:Themes[] | never}, 

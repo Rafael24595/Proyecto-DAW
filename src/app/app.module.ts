@@ -9,10 +9,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CentreComponent } from './components/centre/centre.component';
 import { ShowcaseComponent } from './components/centre/showcase/showcase.component';
 import { HomeComponent } from './components/centre/showcase/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ThemeInformationComponent } from './components/centre/showcase/theme-information/theme-information.component';
 import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
 import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/artist-panel.component';
+
+import { TokenInterceptorService} from './services/token-interceptor.service'
 
 @NgModule({
   declarations: [
@@ -32,7 +34,13 @@ import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,9 @@
-import { BoundAttribute } from '@angular/compiler/src/render3/r3_ast';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { count, last } from 'rxjs/operators';
+import md5 from 'md5-hash';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
+import { DatabaseConexService } from 'src/app/services/database-conex.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { Variables } from 'src/utils/variables/variables';
 
@@ -13,9 +14,13 @@ import { Variables } from 'src/utils/variables/variables';
 })
 export class CentreComponent implements OnInit {
 
-  candyRow:CandyInterface[] = [{id: 'home', name:'Home', family:'candy-home',route:'Home', query:''}];
+  candyRow:CandyInterface[] = [{id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}}];
+  user = {
+    email:'',
+    password:''
+  };
 
-  constructor(private comunicationService :ComunicationServiceService, private router: Router) { }
+  constructor(private comunicationService :ComunicationServiceService, private router: Router, private DatabaseConexService: DatabaseConexService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('lastCandyRow') != null){
@@ -116,19 +121,16 @@ export class CentreComponent implements OnInit {
 
   }
 
-  candyRedirect(candy:CandyInterface){
-    let query = {};
-    let queryName = candy.query.replace('?', '').split('=')[0];
-    let queryValue = candy.query.split('=')[1];
-    
-    query[queryName] = queryValue;
-    if(candy.query){
-      this.router.navigate([`/${candy.route}`], {queryParams:query});
-    }
-    else{
-      this.router.navigate([`/${candy.route}`]);
-    }
-    
+  signIn(){
+
+    let email = this.user.email;
+    let password = md5(this.user.password);
+
+    this.DatabaseConexService.signUp(email, password).subscribe(
+      res =>{localStorage.setItem('sessionToken', res.token); console.log(res)},
+      err=>{console.log(err)}
+    );
+
   }
 
 }

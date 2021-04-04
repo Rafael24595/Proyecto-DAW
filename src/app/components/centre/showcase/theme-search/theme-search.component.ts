@@ -13,7 +13,7 @@ import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
 })
 export class ThemeSearchComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:''};
+  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}};
   query:string = '';
   queryResult = SearchQuery;
 
@@ -25,8 +25,7 @@ export class ThemeSearchComponent implements OnInit {
 
       this.route.queryParams.subscribe(params =>{
         this.query = params['query'].toLowerCase();
-        this.candy.query = `?query=${params['query']}`;
-        console.log(params['query'])
+        this.candy.query['query'] = params['query'];
         this.searchResut();
         }
       )

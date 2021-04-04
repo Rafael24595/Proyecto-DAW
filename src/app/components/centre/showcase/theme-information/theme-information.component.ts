@@ -14,7 +14,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 })
 export class ThemeInformationComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:''};
+  candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:{}};
   theme: Themes | undefined;
   flag: string = 'eng';
   lyrics: string | undefined;
@@ -26,7 +26,7 @@ export class ThemeInformationComponent implements OnInit {
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{
-        this.candy.query = `?id=${params['id']}`
+        this.candy.query['id'] = params['id'];
         this.getThemeById(params['id']);
         }
       )

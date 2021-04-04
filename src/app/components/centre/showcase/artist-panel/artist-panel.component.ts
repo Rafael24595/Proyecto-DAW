@@ -13,7 +13,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 })
 export class ArtistPanelComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:''};
+  candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:{}};
   artist: Artist | undefined;
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
@@ -23,7 +23,7 @@ export class ArtistPanelComponent implements OnInit {
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{
-        this.candy.query = `?id=${params['id']}`;
+        this.candy.query['id'] = params['id'];
         this.getArtistById(params['id']);
         }
       )
