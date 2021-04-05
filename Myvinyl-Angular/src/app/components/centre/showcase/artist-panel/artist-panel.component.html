@@ -1,0 +1,20 @@
+<div id="homeContainer">
+    <div *ngIf='artist'>
+        <div>
+            <div>
+                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png">
+                <p>{{artist.name}} {{artist.surname}}</p>
+            </div>
+            <ng-template  [innerHTML]="artist.description"></ng-template>
+        </div>
+        <div>
+            <div>
+                <h3>Temas</h3>
+                <div *ngFor='let theme of artist.themeList' id="{{theme.id}}" (click)=showItem($event.target)>
+                    <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
+                    <p>{{theme.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

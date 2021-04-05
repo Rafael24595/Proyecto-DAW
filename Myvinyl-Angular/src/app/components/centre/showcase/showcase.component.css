@@ -1,0 +1,18 @@
+#showcase{
+
+	display: flex;
+	height: 100%;
+	margin: 5px;
+	margin-top: 0;
+	margin-right: 15px;
+	padding: 50px;
+	box-sizing: border-box;
+	border-radius: 2px;
+
+}
+
+#showcase.color{
+
+	/*background-color: rgb(102, 102, 102) rgb(128, 128, 128);*/
+
+}
