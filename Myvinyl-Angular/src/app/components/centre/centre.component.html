@@ -1,37 +1,44 @@
 <div id="center">
     <div id="left">
+        <ng-container *ngIf='!authorization.checkForToken()'>
+            <div class="title"><p>Iniciar sesión</p></div>
+            <div id="toFormMenu">
+                <p><a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">Ya tengo cuenta</a></p>
+                <p><a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a></p>
+            </div>
+        </ng-container>
+        <ng-container *ngIf='authorization.checkForToken()'>
+            <div class="title"><p>Bienvenido</p></div>
+            <app-user-data></app-user-data>
+        </ng-container>
         <div id="menuTitle" class="title"><p>Categorías</p></div>
         <div id="menuContainer">
             <ul id="menuContent">
                 <li><span class="old_world_blues_candy" (click)="expandOption($event.target)">Old World Blues</span>
                     <ul>
-                        <li class="category_ragtime">Ragtime</li>
-                        <li class="category_stride">Stride-Piano</li>
-                        <li class="category_boogie">Boogie-Woogie</li>
-                        <li class="category_jazz">Blues-Jazz</li>
-                        <li class="category_jazz">Pop-Popular</li>
-                        <li class="category_v-soundtrack">Soundtracks</li>
+                        <li class="category_ragtime"><a [routerLink]='["/Search"]' [queryParams]='{query:"ragtime"}'>Ragtime</a></li>
+                        <li class="category_stride"><a [routerLink]='["/Search"]' [queryParams]='{query:"stride"}'>Stride-Piano</a></li>
+                        <li class="category_boogie"><a [routerLink]='["/Search"]' [queryParams]='{query:"boogie"}'>Boogie-Woogie</a></li>
+                        <li class="category_jazz"><a [routerLink]='["/Search"]' [queryParams]='{query:"blues"}'>Blues-Jazz</a></li>
+                        <li class="category_jazz"><a [routerLink]='["/Search"]' [queryParams]='{query:"pop"}'>Pop-Popular</a></li>
+                        <li class="category_v-soundtrack"><a [routerLink]='["/Search"]' [queryParams]='{query:"soundtracks+owb"}'>Soundtracks</a></li>
                     </ul>
                 </li>
                 <li><span class="mojave_ride_candy" (click)="expandOption($event.target)">Mojave Ride</span>
                     <ul>
-                        <li class="category_country">Country</li>
-                        <li class="category_c-soundtrack">Soundtracks</li>
+                        <li class="category_country"><a [routerLink]='["/Search"]' [queryParams]='{query:"country"}'>Country</a></li>
+                        <li class="category_c-soundtrack"><a [routerLink]='["/Search"]' [queryParams]='{query:"soundtracks+mr"}'>Soundtracks</a></li>
                     </ul>
                 </li>
                 <li><span class="classic_wave_candy" (click)="expandOption($event.target)">Classic Wave</span>
                     <ul>
-                        <li class="category_classic">Clásica</li>
+                        <li class="category_classic"><a [routerLink]='["/Search"]' [queryParams]='{query:"classic"}'>Clásica</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
         <div class="title"><p>Galería</p></div>
         <div id="imageGalery" class="tinyFont centerText"><p>No hay contenido disponible</p></div>
-        <div class="title"><p>Iniciar sesión</p></div>
-        <div id="formMenu">
-            <a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="tinyFont whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a>
-        </div>
     </div>
     <div id="right">
         <div id="candyRow">

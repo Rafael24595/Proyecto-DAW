@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   candy: CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}};
   categories = Categories;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private comunicationSErvice:ComunicationServiceService) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router) { }
 
   ngOnInit(): void {
 

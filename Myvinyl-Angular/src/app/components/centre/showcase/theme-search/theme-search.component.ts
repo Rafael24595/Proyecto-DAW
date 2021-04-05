@@ -14,7 +14,7 @@ import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
 export class ThemeSearchComponent implements OnInit {
 
   candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}};
-  query:string = '';
+  query:string[] = [];
   queryResult = SearchQuery;
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
@@ -24,7 +24,7 @@ export class ThemeSearchComponent implements OnInit {
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{
-        this.query = params['query'].toLowerCase();
+        this.query = params['query'].toLowerCase().split('+');console.log(this.query)
         this.candy.query['query'] = params['query'];
         this.searchResut();
         }
@@ -42,21 +42,29 @@ export class ThemeSearchComponent implements OnInit {
     this.queryResult.artists = [];
     this.queryResult.themes = [];
 
-    sesionValues.artistList.list.forEach(artist=>{
+    this.query.forEach(single=>{
 
-      if (artist.name.toLowerCase().includes(this.query) || artist.surname.toLowerCase().includes(this.query) || artist.tags.lastIndexOf(this.query.toUpperCase()) != -1){
-        this.queryResult.artists.push(artist);
-      }
+      sesionValues.artistList.list.forEach(artist=>{
 
-      artist.themeList.forEach(theme => {
-        
-        if (theme.name.toLowerCase().includes(this.query) || (theme.tags.lastIndexOf(this.query.toUpperCase()) != -1 || theme.tags.lastIndexOf(this.query.toLowerCase()) != -1)){
-          this.queryResult.themes.push(theme);
+        if (artist.name.toLowerCase().includes(single) || artist.surname.toLowerCase().includes(single) || artist.tags.lastIndexOf(single.toUpperCase()) != -1){
+          let alredyIn = this.queryResult.artists.find(artistIn=>{return (artistIn.id_artist == artist.id_artist)});
+          if (!alredyIn) this.queryResult.artists.push(artist);
         }
-
+  
+        artist.themeList.forEach(theme => {
+          
+          if (theme.name.toLowerCase().includes(single) || (theme.tags.lastIndexOf(single.toUpperCase()) != -1 || theme.tags.lastIndexOf(single.toLowerCase()) != -1)){
+            let alredyIn = this.queryResult.themes.find(themeIn=>{return (themeIn.id == theme.id)});
+            if (!alredyIn) this.queryResult.themes.push(theme);
+          }
+  
+        });
+  
       });
 
-    });console.log(this.queryResult)
+    });
+
+    console.log(this.queryResult)
 
   }
 

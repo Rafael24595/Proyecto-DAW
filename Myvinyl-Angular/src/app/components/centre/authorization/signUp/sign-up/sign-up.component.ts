@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
@@ -28,9 +29,10 @@ export class SignUpComponent implements OnInit {
     repassword:''
   }
 
-  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService) { }
+  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.authorization.checkForToken()) this.router.navigate(['/Home']);
     this.comunicationService.sendCandy(this.candy);
   }
 

@@ -22,8 +22,8 @@ export class HeaderComponent implements OnInit {
   }
 
   launchQuery(){
-    this.router.navigate(['/Search'], {queryParams:{query:this.searchQuery}});
-    console.log(this.searchQuery);
+    let query = this.searchQuery.split(' ').join('+');
+    this.router.navigate(['/Search'], {queryParams:{query:query}});
   }
 
 }

@@ -23,5 +23,16 @@ export class AuthorizationService {
   
    }
 
+   checkForToken(){
+
+    return (localStorage.getItem('sessionToken'));
+
+   }
+
+   destroySession(){
+
+    localStorage.removeItem('sessionToken');
+
+   }
 
 }

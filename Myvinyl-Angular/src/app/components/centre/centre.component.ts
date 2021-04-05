@@ -5,6 +5,7 @@ import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { DatabaseConexService } from 'src/app/services/database-conex.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { Variables } from 'src/utils/variables/variables';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-centre',
@@ -19,7 +20,7 @@ export class CentreComponent implements OnInit {
     password:''
   };
 
-  constructor(private comunicationService :ComunicationServiceService, private router: Router, private DatabaseConexService: DatabaseConexService) { }
+  constructor(private comunicationService :ComunicationServiceService, public authorization: AuthorizationService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('lastCandyRow') != null){

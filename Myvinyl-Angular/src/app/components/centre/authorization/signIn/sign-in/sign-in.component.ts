@@ -4,6 +4,7 @@ import { ComunicationServiceService } from 'src/app/services/comunication-servic
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { SingInForm } from 'src/app/interfaces/AuthorizationInterfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,9 +25,10 @@ export class SignInComponent implements OnInit {
     password:''
   }
 
-  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService) { }
+  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.authorization.checkForToken()) this.router.navigate(['/Home']);
     this.comunicationService.sendCandy(this.candy);
   }
 
@@ -40,7 +42,7 @@ export class SignInComponent implements OnInit {
     if(FormValidations.checkErrors(this.formError)){
 
       this.authorization.signIn(email, password).subscribe(
-        res =>{localStorage.setItem('sessionToken', res.token); console.log(res)},
+        res =>{localStorage.setItem('sessionToken', res.token); this.router.navigate(['/Home']);},
         err=>{console.log(err.error); FormValidations.checkServerErrors(err.error, this.formError)}
       );
 
