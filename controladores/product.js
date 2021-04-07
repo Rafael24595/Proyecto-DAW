@@ -95,7 +95,24 @@ async function signIn(req, res){
 
 }
 
-function verifyToken(req, res, next){
+async function getUserData(req, res){
+  let userData = await searchUserData(req.userId);
+  res.status(200).send(userData);
+}
+
+async function getProfileData(req, res){
+
+  let profileName = req.query.profile;
+  let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
+  res.status(200).send({name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists});
+}
+
+async function searchUserData(userId){
+  let userData = await User.findOne({_id:userId}).catch(err=>{console.log(err);})
+  return userData 
+}
+
+async function verifyToken(req, res, next){
 
   if (!req.headers.authorization){
     return res.status(401).send('Unauthorize Request');
@@ -108,6 +125,11 @@ function verifyToken(req, res, next){
   }
 
   const payload = jwt.verify(token, 'secret');
+  const exsistUser = await searchUserData(payload._id);
+
+  if(!exsistUser){
+    return res.status(401).send('{"destroyToken":"true","message":"Token no válido"}');
+  }
 
   req.userId = payload._id;
 
@@ -115,4 +137,4 @@ function verifyToken(req, res, next){
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn};
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, getUserData, getProfileData};
