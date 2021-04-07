@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
@@ -17,10 +18,11 @@ export class ThemeSearchComponent implements OnInit {
   query:string[] = [];
   queryResult = SearchQuery;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
 
+    this.manageComponent.setLastURL();
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{

@@ -16,4 +16,13 @@ export class ComunicationServiceService {
     this.sendCandySubject.next(candy);
   }
   
+  candies: CandyInterface[] | undefined;
+  private sendCandiesSubject = new Subject<CandyInterface[]>();
+  sendCandiesObservable = this.sendCandiesSubject.asObservable();
+
+  sendCandies(candies:CandyInterface[]){
+    this.candies = candies;
+    this.sendCandiesSubject.next(candies);
+  }
+
 }

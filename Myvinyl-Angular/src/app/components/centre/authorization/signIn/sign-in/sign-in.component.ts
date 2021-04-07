@@ -5,6 +5,7 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { SingInForm } from 'src/app/interfaces/AuthorizationInterfaces';
 import { Router } from '@angular/router';
+import { ManageComponent } from 'src/utils/tools/ManageComponent';
 
 @Component({
   selector: 'app-sign-in',
@@ -25,9 +26,10 @@ export class SignInComponent implements OnInit {
     password:''
   }
 
-  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router) { }
+  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router, private manageComponent: ManageComponent) { }
 
   ngOnInit(): void {
+    this.manageComponent.setLastURL();
     if(this.authorization.checkForToken()) this.router.navigate(['/Home']);
     this.comunicationService.sendCandy(this.candy);
   }
@@ -42,7 +44,7 @@ export class SignInComponent implements OnInit {
     if(FormValidations.checkErrors(this.formError)){
 
       this.authorization.signIn(email, password).subscribe(
-        res =>{localStorage.setItem('sessionToken', res.token); this.router.navigate(['/Home']);},
+        res =>{localStorage.setItem('sessionToken', res.token); this.manageComponent.refreshComponent(this.manageComponent.getLastURL())},
         err=>{console.log(err.error); FormValidations.checkServerErrors(err.error, this.formError)}
       );
 

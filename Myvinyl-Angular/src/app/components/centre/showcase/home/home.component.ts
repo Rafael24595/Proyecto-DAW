@@ -5,6 +5,7 @@ import { Categories } from '../../../../../utils/variables/variables';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
+import { ManageComponent } from 'src/utils/tools/ManageComponent';
 
 @Component({
   selector: 'app-home',
@@ -16,10 +17,11 @@ export class HomeComponent implements OnInit {
   candy: CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};
   categories = Categories;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
 
+    this.manageComponent.setLastURL();
     this.comunicationService.sendCandy(this.candy);
     this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
 

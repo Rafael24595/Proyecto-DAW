@@ -4,6 +4,7 @@ import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { FormValidations } from 'src/utils/tools/FormValidations';
+import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { SingUpForm } from '../../../../../interfaces/AuthorizationInterfaces';
 
 @Component({
@@ -29,9 +30,10 @@ export class SignUpComponent implements OnInit {
     repassword:''
   }
 
-  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router) { }
+  constructor(private comunicationService :ComunicationServiceService, private authorization: AuthorizationService, private router: Router, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
+    this.manageComponent.setLastURL();
     if(this.authorization.checkForToken()) this.router.navigate(['/Home']);
     this.comunicationService.sendCandy(this.candy);
   }

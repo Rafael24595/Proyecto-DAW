@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from 'src/app/classes/Artist';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 
@@ -16,10 +17,10 @@ export class ArtistPanelComponent implements OnInit {
   candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:{}, routeQuery:''};
   artist: Artist | undefined;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }
+  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-
+    this.manageComponent.setLastURL();
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{

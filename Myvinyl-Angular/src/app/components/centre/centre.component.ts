@@ -29,6 +29,9 @@ export class CentreComponent implements OnInit {
     this.comunicationService.sendCandyObservable.subscribe((candy:CandyInterface)=>{
       this.updateRow(candy);
     });
+    this.comunicationService.sendCandiesObservable.subscribe((candies:CandyInterface[])=>{
+      this.setRow(candies);
+    })
   }
 
   expandOption(category:EventTarget | null){
@@ -42,6 +45,12 @@ export class CentreComponent implements OnInit {
         categoryTitle.className = "expand";
       }
     }
+  }
+
+  setRow(candies:CandyInterface[]){
+
+    this.candyRow = candies; 
+
   }
 
   updateRow(candy:CandyInterface){
