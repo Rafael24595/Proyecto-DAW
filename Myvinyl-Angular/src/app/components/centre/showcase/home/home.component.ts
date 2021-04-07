@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  generateShowcaseItems(){console.log(sesionValues.artistList.list)
+  generateShowcaseItems(){
 
     sesionValues.artistList.list.forEach(artist => {
 

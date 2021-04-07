@@ -28,7 +28,7 @@ export class CentreComponent implements OnInit {
       this.candyRow = JSON.parse(candyRowAsString);
     }
     this.comunicationService.sendCandyObservable.subscribe((candy:CandyInterface)=>{
-      console.log(this.candyRow);this.updateRow(candy);
+      this.updateRow(candy);
     });
   }
 
@@ -47,8 +47,8 @@ export class CentreComponent implements OnInit {
 
   updateRow(candy:CandyInterface){
 
-    let positionInRow:number = this.findRowPosition(candy.id);console.log(positionInRow)
-    let newFamily: boolean = this.checkFamily(candy.family);console.log(newFamily)
+    let positionInRow:number = this.findRowPosition(candy.id);
+    let newFamily: boolean = this.checkFamily(candy.family);
     let deadEnd: number = this.checkForDeadEnd();
 
     if(newFamily){

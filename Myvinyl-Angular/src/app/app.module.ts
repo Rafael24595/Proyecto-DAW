@@ -17,7 +17,7 @@ import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/
 import { TokenInterceptorService} from './services/token-interceptor.service';
 import { SignInComponent } from './components/centre/authorization/signIn/sign-in/sign-in.component';
 import { SignUpComponent } from './components/centre/authorization/signUp/sign-up/sign-up.component';
-import { UserDataComponent } from './components/centre/user-data/user-data.component'
+import { UserDataComponent } from './components/centre/user-data/user-data.component';
 
 @NgModule({
   declarations: [

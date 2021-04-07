@@ -24,7 +24,7 @@ export class ThemeSearchComponent implements OnInit {
     this.updateArtistList.getFromDataBase.then(()=> {
 
       this.route.queryParams.subscribe(params =>{
-        this.query = params['query'].toLowerCase().split('+');console.log(this.query)
+        this.query = params['query'].toLowerCase().split('+');
         this.candy.query['query'] = params['query'];
         this.searchResut();
         }
@@ -63,8 +63,6 @@ export class ThemeSearchComponent implements OnInit {
       });
 
     });
-
-    console.log(this.queryResult)
 
   }
 

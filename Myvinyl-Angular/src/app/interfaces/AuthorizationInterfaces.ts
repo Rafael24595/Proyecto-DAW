@@ -21,6 +21,11 @@ export interface SingUpForm{
     repassword: string;
 }
 
+export interface ServerErrorToken{
+    destroyToken:string,
+    message:string
+}
+
 export interface ServerErrorForm{
     attribute:string,
     message:string

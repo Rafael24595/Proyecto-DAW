@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
     if(FormValidations.checkErrors(this.formError)){
 
       this.authorization.signUp(name, email, password).subscribe(
-        res =>{localStorage.setItem('sessionToken', res.token); console.log(res)},
+        res =>{localStorage.setItem('sessionToken', res.token);},
         err=>{console.log(err)}
       );
 

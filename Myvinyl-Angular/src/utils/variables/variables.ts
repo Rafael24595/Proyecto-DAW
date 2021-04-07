@@ -18,7 +18,8 @@ export const Variables = {
         candyIdWhiteList : ['candy-home'],
         candyDeadEnd:['theme'],
         host:'localhost',
-        port:'2525'
+        port:'2525',
+        range:{0:'Estandard', 1:'Administrador'}
 }
 
 export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}};

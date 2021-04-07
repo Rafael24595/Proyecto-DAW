@@ -1,3 +1,4 @@
+
 import { ArtistList } from "src/app/classes/ArtistList";
 import { User } from "src/app/classes/User";
 
