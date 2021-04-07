@@ -18,6 +18,7 @@ import { TokenInterceptorService} from './services/token-interceptor.service';
 import { SignInComponent } from './components/centre/authorization/signIn/sign-in/sign-in.component';
 import { SignUpComponent } from './components/centre/authorization/signUp/sign-up/sign-up.component';
 import { UserDataComponent } from './components/centre/user-data/user-data.component';
+import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel/user-panel.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserDataComponent } from './components/centre/user-data/user-data.compo
     ArtistPanelComponent,
     SignInComponent,
     SignUpComponent,
-    UserDataComponent
+    UserDataComponent,
+    UserPanelComponent
   ],
   imports: [
     BrowserModule,

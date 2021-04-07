@@ -1,11 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { DatabaseConexService } from 'src/app/services/database-conex.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 import { Variables } from 'src/utils/variables/variables';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-centre',
@@ -14,13 +13,13 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 })
 export class CentreComponent implements OnInit {
 
-  candyRow:CandyInterface[] = [{id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}}];
+  candyRow:CandyInterface[] = [{id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''}];
   user = {
     email:'',
     password:''
   };
 
-  constructor(private comunicationService :ComunicationServiceService, public authorization: AuthorizationService) { }
+  constructor(private comunicationService :ComunicationServiceService, public authorization: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('lastCandyRow') != null){
@@ -118,6 +117,34 @@ export class CentreComponent implements OnInit {
     });
 
     return (item) ? position : -1;
+
+  }
+
+  routerLink(candy:EventTarget | null){
+
+    let position:HTMLElement | string = candy as HTMLElement;
+    position = position.id.split('-')[0];
+    let selectedCandy = this.candyRow[parseInt(position)];
+
+    if (selectedCandy.query){
+
+      this.router.navigate([selectedCandy.route], {queryParams:selectedCandy.query});
+
+      return
+
+    }
+
+    if (selectedCandy.routeQuery != ''){console.log(`/${selectedCandy.route}/${selectedCandy.routeQuery}`)
+
+      this.router.navigate([`/${selectedCandy.route}/${selectedCandy.routeQuery}`]);
+
+      return
+
+    }
+
+    this.router.navigate([selectedCandy.route]);
+
+    console.log(this.candyRow[parseInt(position)]);
 
   }
 

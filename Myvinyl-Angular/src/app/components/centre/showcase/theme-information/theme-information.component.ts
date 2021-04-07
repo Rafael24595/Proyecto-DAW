@@ -14,7 +14,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 })
 export class ThemeInformationComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:{}};
+  candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:{}, routeQuery:''};
   theme: Themes | undefined;
   flag: string = 'eng';
   lyrics: string | undefined;

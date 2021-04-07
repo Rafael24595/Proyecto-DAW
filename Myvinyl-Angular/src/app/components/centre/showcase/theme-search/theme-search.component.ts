@@ -13,7 +13,7 @@ import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
 })
 export class ThemeSearchComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}};
+  candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}, routeQuery:''};
   query:string[] = [];
   queryResult = SearchQuery;
 

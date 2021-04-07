@@ -2,5 +2,5 @@
     <img src="../../../../../assets/media/images/users/{{user.name}}.png" (click)='userRedirect()'>
     <p (click)='userRedirect()'>{{user.name}}</p>
     <p>Rango: {{range[user.admin]}}</p>
-    <p class="whiteLink centreLink" (click)='authorization.destroySession()'>Cerrar sesión</p>
+    <p class="whiteLink centreLink" (click)='closeSession()'>Cerrar sesión</p>
 </div>

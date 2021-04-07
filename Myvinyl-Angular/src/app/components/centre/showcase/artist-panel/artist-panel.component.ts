@@ -13,7 +13,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 })
 export class ArtistPanelComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:{}};
+  candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:{}, routeQuery:''};
   artist: Artist | undefined;
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute) { }

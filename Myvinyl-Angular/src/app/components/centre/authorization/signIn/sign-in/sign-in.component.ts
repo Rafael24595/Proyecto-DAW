@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'signin', name:'Sign-In', family:'candy-auth',route:'Sign-In', query:{}};
+  candy: CandyInterface = {id: 'signin', name:'Sign-In', family:'candy-auth',route:'Sign-In', query:{}, routeQuery:''};
 
   formError: SingInForm = {
     email:'',

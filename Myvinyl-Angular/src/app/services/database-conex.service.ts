@@ -6,6 +6,7 @@ import { Artist } from '../classes/Artist';
 import { Variables } from 'src/utils/variables/variables';
 import { User } from '../classes/User';
 import { ProfileData } from '../interfaces/ProfileDataInterface';
+import { UserInterface } from '../interfaces/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class DatabaseConexService {
           );
  }
 
- getProfileData(profile:string): Observable<ProfileData>{
-  return this.http.get<ProfileData>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
+ getProfileData(profile:string): Observable<UserInterface>{
+  return this.http.get<UserInterface>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
  }
 
 

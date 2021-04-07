@@ -13,7 +13,7 @@ import { SingUpForm } from '../../../../../interfaces/AuthorizationInterfaces';
 })
 export class SignUpComponent implements OnInit {
 
-  candy: CandyInterface = {id: 'signup', name:'Sign-Up', family:'candy-auth',route:'Sign-Up', query:{}};
+  candy: CandyInterface = {id: 'signup', name:'Sign-Up', family:'candy-auth',route:'Sign-Up', query:{}, routeQuery:''};
 
   formError: SingUpForm = {
     name:'',

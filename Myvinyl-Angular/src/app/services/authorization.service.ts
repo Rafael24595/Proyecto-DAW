@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
+import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { Variables } from 'src/utils/variables/variables';
+import { User } from '../classes/User';
 import { Token } from '../interfaces/AuthorizationInterfaces';
 
 @Injectable({
@@ -9,7 +12,7 @@ import { Token } from '../interfaces/AuthorizationInterfaces';
 })
 export class AuthorizationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route:ActivatedRoute) { }
 
   signIn(email, password): Observable<Token> {
 
@@ -32,6 +35,7 @@ export class AuthorizationService {
    destroySession(){
 
     localStorage.removeItem('sessionToken');
+    sesionValues.activeUser = User.destroyUser();
 
    }
 

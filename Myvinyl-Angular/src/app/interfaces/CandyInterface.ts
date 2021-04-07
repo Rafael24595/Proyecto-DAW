@@ -4,4 +4,5 @@ export interface CandyInterface{
     family:string;
     route:string;
     query:object;
+    routeQuery:string;
 }

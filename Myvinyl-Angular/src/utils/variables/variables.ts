@@ -22,7 +22,7 @@ export const Variables = {
         range:{0:'Estandard', 1:'Administrador'}
 }
 
-export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}};
+export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};
 
 interface CategoriesInterface{
         OWB:{code: string, name:string, items:Themes[] | never}, 

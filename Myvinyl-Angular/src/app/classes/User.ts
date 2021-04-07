@@ -29,17 +29,21 @@ export class User{
 
         sesionValues.activeUser = User.activeUser;
 
-        ComunicationServiceService.OnSessionUserChange.next(User.activeUser);
-
     }
 
     public static setFakeUser(){
 
         User.activeUser = new User('@Usuario', 'user@example.com', '0', [], []);
 
-        ComunicationServiceService.OnSessionUserChange.next(User.activeUser);
-
         return User.activeUser;
+
+    }
+
+    public static destroyUser(){
+
+        User.activeUser = new User('@Usuario', 'user@example.com', '0', [], []);
+
+        sesionValues.activeUser = User.activeUser;
 
     }
 

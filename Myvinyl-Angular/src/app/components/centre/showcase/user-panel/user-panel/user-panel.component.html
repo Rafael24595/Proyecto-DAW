@@ -1,3 +1,10 @@
 <div id="homeContainer">
-    
+    <div *ngIf='ProfileData && isSessionUser'>
+        <p>{{ProfileData.name}}</p>
+        <p>{{ProfileData.email}}</p>
+    </div>
+    <div *ngIf='ProfileData && !isSessionUser'>
+        <p>{{ProfileData.name}}</p>
+        <p></p>
+    </div>
 </div>

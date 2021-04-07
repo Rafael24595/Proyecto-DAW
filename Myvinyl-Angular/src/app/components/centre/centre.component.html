@@ -44,7 +44,7 @@
         <div id="candyRow">
             <p>
                 <span *ngFor='let candy of candyRow; let i = index'>
-                    <a href="javascript:void(0);" class="oh_a_candy" [routerLink]='candy.route' [queryParams]='candy.query'>{{candy.name}}</a>
+                    <a href="javascript:void(0);" class="oh_a_candy" id="{{i +'-candy'}}" (click)='routerLink($event.target)'>{{candy.name}}</a>
                     <span *ngIf="i < candyRow.length - 1"> - </span>
                 </span>
             </p>

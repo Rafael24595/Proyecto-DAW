@@ -9,7 +9,6 @@ export class ComunicationServiceService {
   
   candy: CandyInterface | undefined;
   private sendCandySubject = new Subject<CandyInterface>();
-  public static OnSessionUserChange = new BehaviorSubject('');
   sendCandyObservable = this.sendCandySubject.asObservable();
 
   sendCandy(candy:CandyInterface){

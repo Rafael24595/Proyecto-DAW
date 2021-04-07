@@ -6,6 +6,7 @@ import { sesionValues } from '../variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ProfileData } from 'src/app/interfaces/ProfileDataInterface';
+import { UserInterface } from 'src/app/interfaces/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class ManageUser{
 
     }
 
-    getProfileDataFromDataBase(profile:string): Promise<ProfileData> {
+    getProfileDataFromDataBase(profile:string): Promise<UserInterface> {
 
         return new Promise(resolve=>{
 
