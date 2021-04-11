@@ -23,7 +23,7 @@ export class ThemeInformationComponent implements OnInit {
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-  
+  /*
     this.manageComponent.setLastURL();
     this.updateArtistList.getFromDataBase.then(()=> {
 
@@ -42,7 +42,17 @@ export class ThemeInformationComponent implements OnInit {
 
       }
 
-    });
+    });*/
+
+    this.route.queryParams.subscribe(params =>{
+      this.candy.query['id'] = params['id'];
+      this.updateArtistList.getThemeDataFromDataBase(params['id']).then(theme=>{
+        this.theme = theme;
+        console.log(theme);
+      })
+      //this.getThemeById(params['id']);
+      }
+    )
 
   }
 

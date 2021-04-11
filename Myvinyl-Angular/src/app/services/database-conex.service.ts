@@ -7,6 +7,7 @@ import { Variables } from 'src/utils/variables/variables';
 import { User } from '../classes/User';
 import { ProfileData } from '../interfaces/ProfileDataInterface';
 import { UserInterface } from '../interfaces/UserInterface';
+import { Themes } from '../classes/Themes';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,10 @@ export class DatabaseConexService {
                tap(_ => console.log('Searching..')),
                catchError(this.handleError<Artist[]>())
           );
+ }
+
+ getThemeData(themeId:string): Observable<Themes>{
+  return this.http.get<Themes>(`http://${Variables.host}:${Variables.port}/api/getThemeData?theme=${themeId}`);
  }
 
  getProfileData(profile:string): Observable<UserInterface>{

@@ -3,6 +3,7 @@ import { DatabaseConexService } from '../../app/services/database-conex.service'
 import { sesionValues } from '../variables/sessionVariables';
 
 import { Injectable } from '@angular/core';
+import { Themes } from 'src/app/classes/Themes';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,15 @@ export class UpdateArtistList{
 
         })
 
+    }
+
+    getThemeDataFromDataBase(themeId:string):Promise<Themes>{
+      return new Promise(resolve=>{
+        this.DatabaseConexService.getThemeData(themeId).subscribe(theme =>{
+          console.log(theme);
+          resolve(theme);
+        })
+      })
     }
 
 }

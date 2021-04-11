@@ -2,6 +2,7 @@
 
 require('../modelos/models');
 const data = require('../data/artist-users-data');
+const tools = require('../utils/tools');
 const mongoose = require('mongoose');
 const artist = mongoose.model('Artist');
 const User = mongoose.model('User');
@@ -64,6 +65,23 @@ async function getData(req, res){
 
 }
 
+async function getThemeData(req, res){
+
+  try {
+    const themeId = req.query.theme;
+    const theme = await artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
+      let theme = artist.themeList.find(theme=>{return (theme.id == themeId)});
+      theme = await tools.usersExist(theme); console.log(theme)
+      return res.send(theme);
+    });
+  }catch (error) {console.log(error)
+    return res.status(400).send({
+      status: 'failure'
+    })
+  }
+
+}
+
 async function singUp(req, res){
 
   const {name, email, password} = req.body;
@@ -101,10 +119,26 @@ async function getUserData(req, res){
 }
 
 async function getProfileData(req, res){
-
+console.log(req.validToken + " " + req.userToken)
   let profileName = req.query.profile;
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
-  res.status(200).send({name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists});
+  if(profileData){
+    if(req.userToken == true){
+      res.status(200).send(profileData);
+    }
+    else{
+      res.status(200).send({name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists});
+    }
+  }
+  else{
+    res.status(404).send('El usuario no existe');
+  }
+  //if(!req.validToken){res.status(404).send({"destroyToken":"true","message":"Token mal formado"})}
+}
+
+async function searchUserDataByName(name){
+  let userData = await User.findOne({name:name}).lean().catch(err=>{console.log(err);})
+  return userData 
 }
 
 async function searchUserData(userId){
@@ -112,20 +146,60 @@ async function searchUserData(userId){
   return userData 
 }
 
+async function checkToken(req, res, next){
+
+  let id;
+  let token = req.headers.authorization.split(' ')[1];
+  let exsistUser;
+
+  req.validToken = false;
+  req.userToken = false; 
+
+  try {
+    let payload = jwt.verify(token, 'secret');
+    id = payload._id;
+    req.validToken = true;
+  } catch (error) {}
+
+  exsistUser = (id) ? await searchUserData(id) : undefined;
+
+  if(exsistUser){
+    req.validToken = true;
+  }
+
+  let userId = await searchUserDataByName(req.query.profile);
+
+  if(userId && userId['_id'] == id){console.log('in')
+    req.userToken = true; 
+  }
+
+  next();
+
+}
+
 async function verifyToken(req, res, next){
+
+  let payload;
+  let token;
+  let exsistUser;
 
   if (!req.headers.authorization){
     return res.status(401).send('Unauthorize Request');
   }
 
-  const token =req.headers.authorization.split(' ')[1];
+  token =req.headers.authorization.split(' ')[1];
 
   if(token == null){
     return res.status(401).send('Unauthorize Request');
   }
 
-  const payload = jwt.verify(token, 'secret');
-  const exsistUser = await searchUserData(payload._id);
+  try {
+    payload = jwt.verify(token, 'secret');
+  } catch (error) {
+    return res.status(401).send('{"destroyToken":"true","message":"Token mal formado"}');
+  }
+
+  exsistUser = await searchUserData(payload._id);
 
   if(!exsistUser){
     return res.status(401).send('{"destroyToken":"true","message":"Token no válido"}');
@@ -137,4 +211,4 @@ async function verifyToken(req, res, next){
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, getUserData, getProfileData};
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData};

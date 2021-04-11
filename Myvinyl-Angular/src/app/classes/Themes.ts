@@ -1,4 +1,5 @@
 import { Lyrics } from '../interfaces/LyricsInterface'
+import { ThemeComment } from '../interfaces/ThemesInterface';
 
 export class Themes{
     id: string;
@@ -6,11 +7,11 @@ export class Themes{
     flag: string;
     tags: string[];
     lyrics: Lyrics;
-    comments: string[];
+    comments: ThemeComment[];
     likes: number;
     views: number;
 
-    constructor(id: string, name: string, flag: string, tags: string[], lyrics:Lyrics, comments?: string[], likes?: number, views?: number){
+    constructor(id: string, name: string, flag: string, tags: string[], lyrics:Lyrics, comments?: ThemeComment[], likes?: number, views?: number){
 
         this.id = id;
         this.name = name;

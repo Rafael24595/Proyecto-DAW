@@ -5,9 +5,10 @@ const controller = require('../controladores/product');
 
 router.get("/generateDatabase", controller.generateDatabase);
 router.get("/getData", controller.getData);
+router.get("/getThemeData", controller.getThemeData);
 router.post("/signUp", controller.singUp);
 router.post("/signIn", controller.signIn);
 router.get("/getUserData", controller.verifyToken , controller.getUserData);
-router.get("/getProfileData", controller.getProfileData);
+router.get("/getProfileData", controller.checkToken , controller.getProfileData);
 
 module.exports = router;

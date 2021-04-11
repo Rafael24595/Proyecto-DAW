@@ -29,15 +29,10 @@ export class UserPanelComponent implements OnInit {
     this.route.params.subscribe(params =>{
       this.userName = params['username'];
       this.manageUser.getProfileDataFromDataBase(this.userName).then((profile)=>{
-        if(sesionValues.activeUser && this.userName == sesionValues.activeUser.name){
-          this.isSessionUser = true;
-          this.ProfileData = sesionValues.activeUser; console.log(this.ProfileData);
-          this.setCandy()
-        }
-        else{
-          this.ProfileData = profile; console.log(this.ProfileData);
-          this.setCandy()
-        }
+        console.log(profile);
+        this.isSessionUser = (profile.email) ? true :false;
+        this.ProfileData = profile;
+        this.setCandy();
       })
     })
 

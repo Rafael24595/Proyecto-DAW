@@ -51,7 +51,12 @@ const artistData = [
                             <p>Mantengo todo mi corazón y alma</p>
                             <p class="title">-</p>`
                 },
-                "comments": [],
+                "comments": [
+                    {"userName":"admin",
+                     "comment":"Comentario primero en tema Al Bowly"},
+                     {"userName":"UnknownUser",
+                     "comment":"Comentario Segundo en tema Al Bowly"},
+                ],
                 "likes": 0,
                 "views": 0
             },

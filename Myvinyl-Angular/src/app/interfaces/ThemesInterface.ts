@@ -6,7 +6,13 @@ export interface ThemesInterface{
     flag: string;
     tags: string[];
     lyrics: Lyrics;
-    comments: string[];
+    comments: ThemeComment[];
     likes: number;
     views: number;
+}
+
+export interface ThemeComment{
+    userName:string,
+    activeUser:string,
+    comment:string,
 }
