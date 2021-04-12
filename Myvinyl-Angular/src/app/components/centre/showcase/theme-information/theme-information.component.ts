@@ -8,6 +8,7 @@ import { DatabaseConexService } from '../../../../services/database-conex.servic
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
+import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
 
 @Component({
   selector: 'app-theme-information',
@@ -21,17 +22,19 @@ export class ThemeInformationComponent implements OnInit {
   flag: string = 'eng';
   lyrics: string | undefined;
   comment:string | undefined;
+  user = sesionValues.activeUser.name;
 
-  constructor(private autorization :AuthorizationService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
+  constructor(private comunicationService :ComunicationServiceService, private autorization :AuthorizationService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
-
     this.manageComponent.setLastURL();
     this.route.queryParams.subscribe(params =>{
       this.candy.query['id'] = params['id'];
+      this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
         this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics,theme.comments,theme.likes,theme.views);
         this.checkForLastComment();
+        this.user = sesionValues.activeUser.name;
       });
       }
     )
@@ -53,15 +56,14 @@ export class ThemeInformationComponent implements OnInit {
       localStorage.setItem('lastComment', JSON.stringify({themeId:this.theme?.id,comment:this.comment}));
       if(this.autorization.checkForToken() && this.theme){
         this.DatabaseConexService.setThemeComment(this.theme.id,sesionValues.activeUser.name,this.comment).subscribe(
-          sucess=>{
+          sucess=>{console.log(sucess);
             localStorage.removeItem('lastComment');
             if(this.theme && this.comment){
-              this.theme.setNewComment(sesionValues.activeUser.name, 'true', this.comment);
+              this.theme.setNewComment(sucess.commentId,sucess.userName,'true',sucess.comment);
               this.comment = '';
             }
           },
           err=>{
-            console.log(err)
             let serverError = err.error as ServerErrorToken;
             if(serverError.destroyToken){
                 this.autorizationService.destroySession();
@@ -73,6 +75,25 @@ export class ThemeInformationComponent implements OnInit {
       else{
         this.router.navigate(['/Sign-In']);
       }
+    }
+  }
+
+  removeComment(commentId:string){
+    if(this.theme){
+      this.DatabaseConexService.removeThemeComment(this.theme.id,sesionValues.activeUser.name,commentId).subscribe(
+        success=>{
+          if(this.theme){
+            this.theme.removeComment(commentId);
+          }
+        },
+        err=>{
+          let serverError = err.error as ServerErrorToken;
+            if(serverError.destroyToken){
+                this.autorizationService.destroySession();
+                this.router.navigate(['/Sign-In']);
+            } 
+        }
+      );
     }
   }
 

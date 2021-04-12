@@ -38,8 +38,12 @@ export class DatabaseConexService {
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }
 
- setThemeComment(themeId:string,userName:string,comment:string):Observable<{refresh:boolean}>{
-   return this.http.post<{refresh:boolean}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
+ setThemeComment(themeId:string,userName:string,comment:string):Observable<{commentId:string,userName:string,comment:string}>{
+   return this.http.post<{commentId:string,userName:string,comment:string}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
+ }
+
+ removeThemeComment(themeId:string,userName:string,commentId:string):Observable<{status:string}>{
+   return this.http.post<{status:string}>(`http://${Variables.host}:${Variables.port}/api/deleteComment`, {themeId, userName, commentId});
  }
 
  private handleError<T>(operation = 'operation', result?: T) {

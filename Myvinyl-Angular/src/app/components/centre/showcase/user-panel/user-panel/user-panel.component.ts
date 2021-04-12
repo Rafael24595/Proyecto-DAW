@@ -25,7 +25,6 @@ export class UserPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.manageComponent.setLastURL();
-    this.manageComponent.setLastURL();
     this.route.params.subscribe(params =>{
       this.userName = params['username'];
       this.manageUser.getProfileDataFromDataBase(this.userName).then((profile)=>{

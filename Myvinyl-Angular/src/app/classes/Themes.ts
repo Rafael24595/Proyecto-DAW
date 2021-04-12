@@ -24,7 +24,20 @@ export class Themes{
 
     }
 
-    setNewComment(userName:string, activeUser:string,comment:string,){
-        this.comments.push({userName:userName,activeUser:activeUser,comment:comment});
+    setNewComment(commentId:string,userName:string, activeUser:string,comment:string,){
+        this.comments.push({commentId,userName:userName,activeUser:activeUser,comment:comment});
     }
+
+    removeComment(commentId:string){
+        let index = 0;
+        this.comments.find(comment=>{
+            if(comment.commentId == commentId){
+                this.comments.splice(index,1);
+                return true;
+            }
+            index++;
+            return false;
+        })
+    }
+
 }

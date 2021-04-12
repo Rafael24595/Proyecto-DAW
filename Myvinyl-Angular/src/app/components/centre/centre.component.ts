@@ -53,7 +53,7 @@ export class CentreComponent implements OnInit {
 
   }
 
-  updateRow(candy:CandyInterface){
+  updateRow(candy:CandyInterface){console.log(this.candyRow)
 
     let positionInRow:number = this.findRowPosition(candy.id);
     let newFamily: boolean = this.checkFamily(candy.family);

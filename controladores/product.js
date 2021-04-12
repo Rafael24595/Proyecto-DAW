@@ -1,6 +1,7 @@
 
 
 require('../modelos/models');
+const sha256 = require('js-sha256');
 const data = require('../data/artist-users-data');
 const tools = require('../utils/tools');
 const mongoose = require('mongoose');
@@ -69,10 +70,10 @@ async function getThemeData(req, res){
 
   try {
     const themeId = req.query.theme;
-    const theme = await artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
+    await artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
       let theme = artist.themeList.find(theme=>{return (theme.id == themeId)});
       if(theme.comments.length > 0){
-        theme = await tools.usersExist(theme); console.log(theme)
+        theme = await tools.usersExist(theme);
       }
       return res.send(theme);
     });
@@ -98,7 +99,7 @@ async function singUp(req, res){
 
 async function signIn(req, res){
 
-  const { email, password } = req.body;console.log(req.body)
+  const { email, password } = req.body;
   const user = await User.findOne({email});
 
   if (!user){
@@ -116,20 +117,50 @@ async function signIn(req, res){
 }
 
 async function publishComment(req, res){
-  let themeId = req.body.themeId;console.log(themeId)
-  let userName = req.body.userName;console.log(userName)
-  let comment = req.body.comment;console.log(comment)
+  let themeId = req.body.themeId;
+  let userName = req.body.userName;
+  let comment = req.body.comment;
+  let commentId = await sha256(`${themeId}-${userName}-${comment}-${Date.now()}`);
   let artistData = await artist.findOne({"themeList.id":themeId}).lean();
   let index = 0;
   artistData.themeList.find(theme=>{
     if(theme.id == themeId){
-      artistData.themeList[index].comments.push({userName:userName,comment:comment});
+      artistData.themeList[index].comments.push({comment:comment,userName:userName,commentId:commentId});
       return true;
     }
     index++;
   });
   await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
-  res.status(200).json({refresh:false})
+  res.status(200).json({commentId:commentId,userName:userName,comment:comment});
+}
+
+async function deleteComment(req, res){
+  let themeId = req.body.themeId;console.log(themeId);
+  let commentId = req.body.commentId;console.log(commentId);
+  let userName = req.body.userName;console.log(userName);
+  if(userName == req.userName){
+    let indexLevelI = 0;
+    let indexLevelII = 0;
+    //let artistData = await artist.find({"themeList.id.comments.commentId":''});
+    let artistData = await artist.findOne({"themeList.id":themeId}).lean();
+    artistData.themeList.forEach(theme=>{
+      if(theme.id == themeId){
+        theme.comments.forEach(comment=>{
+          if(comment.commentId == commentId){
+            artistData.themeList[indexLevelI].comments.splice(indexLevelII,1);
+          }
+          indexLevelII++;
+        })
+      }
+      indexLevelI++;
+    });
+    await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
+    //console.log(artistData.themeList[0].comments);
+    res.status(200).json({status:'correct'});
+  }
+  else{
+    res.status(404).send('{"destroyToken":"true","message":"Sesión no válida"}');
+  }
 }
 
 async function getUserData(req, res){
@@ -187,7 +218,7 @@ async function checkToken(req, res, next){
 
   let userId = await searchUserDataByName(req.query.profile);
 
-  if(userId && userId['_id'] == id){console.log('in')
+  if(userId && userId['_id'] == id){
     req.userToken = true; 
   }
 
@@ -223,10 +254,13 @@ async function verifyToken(req, res, next){
     return res.status(401).send('{"destroyToken":"true","message":"Token no válido"}');
   }
 
+  let user = await searchUserData(payload._id)
+
   req.userId = payload._id;
+  req.userName = user.name;
 
   next();
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment};
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment, deleteComment};

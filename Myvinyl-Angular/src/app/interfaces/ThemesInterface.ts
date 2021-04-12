@@ -12,6 +12,7 @@ export interface ThemesInterface{
 }
 
 export interface ThemeComment{
+    commentId:string,
     userName:string,
     activeUser:string,
     comment:string,
