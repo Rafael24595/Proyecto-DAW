@@ -24,12 +24,11 @@ export class UserPanelComponent implements OnInit {
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-
+    this.manageComponent.setLastURL();
     this.manageComponent.setLastURL();
     this.route.params.subscribe(params =>{
       this.userName = params['username'];
       this.manageUser.getProfileDataFromDataBase(this.userName).then((profile)=>{
-        console.log(profile);
         this.isSessionUser = (profile.email) ? true :false;
         this.ProfileData = profile;
         this.setCandy();

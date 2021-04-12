@@ -29,13 +29,17 @@ export class DatabaseConexService {
   return this.http.get<Themes>(`http://${Variables.host}:${Variables.port}/api/getThemeData?theme=${themeId}`);
  }
 
- getProfileData(profile:string): Observable<UserInterface>{
-  return this.http.get<UserInterface>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
+ getProfileData(profile:string): Observable<{validToken:boolean,data:UserInterface}>{
+  return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
  }
 
 
  getUserData(): Observable<User>{
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
+ }
+
+ setThemeComment(themeId:string,userName:string,comment:string):Observable<{refresh:boolean}>{
+   return this.http.post<{refresh:boolean}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
  }
 
  private handleError<T>(operation = 'operation', result?: T) {

@@ -71,7 +71,9 @@ async function getThemeData(req, res){
     const themeId = req.query.theme;
     const theme = await artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
       let theme = artist.themeList.find(theme=>{return (theme.id == themeId)});
-      theme = await tools.usersExist(theme); console.log(theme)
+      if(theme.comments.length > 0){
+        theme = await tools.usersExist(theme); console.log(theme)
+      }
       return res.send(theme);
     });
   }catch (error) {console.log(error)
@@ -113,21 +115,37 @@ async function signIn(req, res){
 
 }
 
+async function publishComment(req, res){
+  let themeId = req.body.themeId;console.log(themeId)
+  let userName = req.body.userName;console.log(userName)
+  let comment = req.body.comment;console.log(comment)
+  let artistData = await artist.findOne({"themeList.id":themeId}).lean();
+  let index = 0;
+  artistData.themeList.find(theme=>{
+    if(theme.id == themeId){
+      artistData.themeList[index].comments.push({userName:userName,comment:comment});
+      return true;
+    }
+    index++;
+  });
+  await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
+  res.status(200).json({refresh:false})
+}
+
 async function getUserData(req, res){
   let userData = await searchUserData(req.userId);
   res.status(200).send(userData);
 }
 
 async function getProfileData(req, res){
-console.log(req.validToken + " " + req.userToken)
   let profileName = req.query.profile;
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
   if(profileData){
     if(req.userToken == true){
-      res.status(200).send(profileData);
+      res.status(200).send({validToken:req.validToken, data:profileData});
     }
     else{
-      res.status(200).send({name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists});
+      res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists}});
     }
   }
   else{
@@ -211,4 +229,4 @@ async function verifyToken(req, res, next){
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData};
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment};

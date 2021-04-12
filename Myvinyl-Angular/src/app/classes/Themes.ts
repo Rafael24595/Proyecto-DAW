@@ -23,4 +23,8 @@ export class Themes{
         this.views = views || 0;
 
     }
+
+    setNewComment(userName:string, activeUser:string,comment:string,){
+        this.comments.push({userName:userName,activeUser:activeUser,comment:comment});
+    }
 }

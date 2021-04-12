@@ -18,34 +18,16 @@ export class UpdateArtistList{
     getDataFromDataBase(): Promise<boolean> {
 
         return new Promise(resolve=>{
-
             sesionValues.artistList.clearArtistList();
-
             this.DatabaseConexService.getArtists().subscribe(artists =>{
- 
                 artists.forEach(artist =>{
-          
                   let artistData = artist as ArtistInterface;
-          
                   sesionValues.artistList.setArtist(artistData);
-          
                 });
-    
                 resolve(true);
-              
             });
-
         })
 
-    }
-
-    getThemeDataFromDataBase(themeId:string):Promise<Themes>{
-      return new Promise(resolve=>{
-        this.DatabaseConexService.getThemeData(themeId).subscribe(theme =>{
-          console.log(theme);
-          resolve(theme);
-        })
-      })
     }
 
 }

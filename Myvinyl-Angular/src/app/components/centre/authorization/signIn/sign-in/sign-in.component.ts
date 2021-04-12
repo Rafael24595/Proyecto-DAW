@@ -42,7 +42,6 @@ export class SignInComponent implements OnInit {
     this.formError = FormValidations.checkForErrors(this.user, this.formError) as SingInForm;
 
     if(FormValidations.checkErrors(this.formError)){
-
       this.authorization.signIn(email, password).subscribe(
         res =>{localStorage.setItem('sessionToken', res.token); this.manageComponent.refreshComponent(this.manageComponent.getLastURL())},
         err=>{console.log(err.error); FormValidations.checkServerErrors(err.error, this.formError)}

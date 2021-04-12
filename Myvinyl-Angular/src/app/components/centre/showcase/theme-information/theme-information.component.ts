@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { AuthorizationService } from 'src/app/services/authorization.service';
+import { DatabaseConexService } from '../../../../services/database-conex.service'
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
-import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
+import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 
 @Component({
   selector: 'app-theme-information',
@@ -19,58 +20,21 @@ export class ThemeInformationComponent implements OnInit {
   theme: Themes | undefined;
   flag: string = 'eng';
   lyrics: string | undefined;
+  comment:string | undefined;
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
+  constructor(private autorization :AuthorizationService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
-  /*
+
     this.manageComponent.setLastURL();
-    this.updateArtistList.getFromDataBase.then(()=> {
-
-      this.route.queryParams.subscribe(params =>{
-        this.candy.query['id'] = params['id'];
-        this.getThemeById(params['id']);
-        }
-      )
-    
-      this.comunicationService.sendCandy(this.candy);
-      console.log(this.theme);
-
-      if(this.theme == undefined){
-
-        this.router.navigate(['/Home']);
-
-      }
-
-    });*/
-
     this.route.queryParams.subscribe(params =>{
       this.candy.query['id'] = params['id'];
-      this.updateArtistList.getThemeDataFromDataBase(params['id']).then(theme=>{
-        this.theme = theme;
-        console.log(theme);
-      })
-      //this.getThemeById(params['id']);
+      this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
+        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics,theme.comments,theme.likes,theme.views);
+        this.checkForLastComment();
+      });
       }
     )
-
-  }
-
-  getThemeById(id:string){
-
-    sesionValues.artistList.list.find((artist:Artist)=>{
-      artist.themeList.forEach((theme:Themes)=>{
-        if(theme.id == id){
-          this.theme = theme;
-          if(theme.lyrics.native){
-            this.lyrics = theme.lyrics.native;
-            this.flag = theme.flag;
-          }
-          return true
-        }
-        return false})
-    })
-
   }
 
   switchLyrics(){
@@ -84,4 +48,42 @@ export class ThemeInformationComponent implements OnInit {
     }
   }
   
+  publicateComment(){
+    if(this.comment){
+      localStorage.setItem('lastComment', JSON.stringify({themeId:this.theme?.id,comment:this.comment}));
+      if(this.autorization.checkForToken() && this.theme){
+        this.DatabaseConexService.setThemeComment(this.theme.id,sesionValues.activeUser.name,this.comment).subscribe(
+          sucess=>{
+            localStorage.removeItem('lastComment');
+            if(this.theme && this.comment){
+              this.theme.setNewComment(sesionValues.activeUser.name, 'true', this.comment);
+              this.comment = '';
+            }
+          },
+          err=>{
+            console.log(err)
+            let serverError = err.error as ServerErrorToken;
+            if(serverError.destroyToken){
+                this.autorizationService.destroySession();
+            }  
+          }
+        )
+      }
+      else{
+        this.router.navigate(['/Sign-In']);
+      }
+    }
+  }
+
+  checkForLastComment(){
+    if(localStorage.getItem('lastComment')){
+      let lastComment = JSON.parse(localStorage.getItem('lastComment') as string);
+      
+      if(lastComment.themeId == this.theme?.id){console.log(lastComment.themeId + " - " + this.theme?.id)
+        this.comment = lastComment.comment;
+      }     
+      localStorage.removeItem('lastComment');
+    }
+  }
+
 }

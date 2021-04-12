@@ -5,7 +5,6 @@ import { User } from 'src/app/classes/User';
 import { sesionValues } from '../variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import { ProfileData } from 'src/app/interfaces/ProfileDataInterface';
 import { UserInterface } from 'src/app/interfaces/UserInterface';
 
 @Injectable({
@@ -17,27 +16,19 @@ export class ManageUser{
     constructor(private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService){};
 
     getUserDataFromDataBase(): Promise<boolean> {
-
         return new Promise(resolve=>{
-
             this.DatabaseConexService.getUserData().subscribe(user =>{
- 
                 User.setUser(user.name, user.email, user.admin, user.themeLists, user.likes);
-                
-                resolve(true);
-              
+                sesionValues.activeUser = User.getUser();                
+                resolve(true);             
             },
-            err=>{
-                
+            err=>{                
                 let serverError = err.error as ServerErrorToken;
-
                 if(serverError.destroyToken){
                     this.autorizationService.destroySession();
-                }
-            
+                }           
             }
             );
-
         })
 
     }
@@ -45,20 +36,17 @@ export class ManageUser{
     getProfileDataFromDataBase(profile:string): Promise<UserInterface> {
 
         return new Promise(resolve=>{
-
             this.DatabaseConexService.getProfileData(profile).subscribe(user =>{
-                
-                resolve(user);
-              
+                resolve(user.data);
+                if(!user.validToken){
+                    this.autorizationService.destroySession();
+                }
             },
             err=>{
-                
                 let serverError = err.error as ServerErrorToken;
-
                 if(serverError.destroyToken){
                     this.autorizationService.destroySession();
                 }
-            
             }
             );
 

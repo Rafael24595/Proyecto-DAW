@@ -12,9 +12,9 @@
         </div>
         <div>
             <h3>Comentarios {{theme.comments.length}}: </h3>
-            <textarea></textarea>
+            <textarea [(ngModel)]="comment"></textarea>
             <br>
-            <input type="submit" value="Enviar">
+            <input type="submit" value="Enviar" (click)='publicateComment()'>
             <div *ngFor='let comment of theme.comments'>
                 <p *ngIf='comment.activeUser' routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
                 <p *ngIf='!comment.activeUser'><b><s>{{comment.userName}}</s></b>:</p>

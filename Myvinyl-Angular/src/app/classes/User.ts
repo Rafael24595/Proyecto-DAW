@@ -1,7 +1,6 @@
 
 import { sesionValues } from 'src/utils/variables/sessionVariables';
-import { ThemeListsInterface } from '../interfaces/ThemeListsInterface'
-import { ComunicationServiceService } from '../services/comunication-service.service';
+import { ThemeListsInterface } from '../interfaces/ThemeListsInterface';
 
 export class User{
 
@@ -27,21 +26,13 @@ export class User{
 
         User.activeUser = new User(name, email, admin, themeLists, likes);
 
-        sesionValues.activeUser = User.activeUser;
-
-    }
-
-    public static setFakeUser(){
-
-        User.activeUser = new User('@Usuario', 'user@example.com', '0', [], []);
-
         return User.activeUser;
 
     }
 
     public static destroyUser(){
 
-        User.activeUser = new User('@Usuario', 'user@example.com', '0', [], []);
+        User.setUser('@Usuario', 'user@example.com', '0', [], []);
 
         sesionValues.activeUser = User.activeUser;
 
@@ -56,7 +47,7 @@ export class User{
         }
         else{
 
-            return User.setFakeUser();
+            return User.setUser('@Usuario', 'user@example.com', '0', [], []);
 
         }
 

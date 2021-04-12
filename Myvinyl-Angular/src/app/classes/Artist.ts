@@ -2,14 +2,14 @@ import { ThemesInterface } from '../interfaces/ThemesInterface';
 import { Themes } from './Themes';
 
 export class Artist {
-	id_artist: String;
-	name: String;
-	surname: String;
-	description:String;	
-	tags: String[];
+	id_artist: string;
+	name: string;
+	surname: string;
+	description:string;	
+	tags: string[];
 	themeList: Themes[];
 
-	constructor(id_artist:string, name: String, surname: String, description:string, tags: String[], themeList: ThemesInterface[]){
+	constructor(id_artist:string, name: string, surname: string, description:string, tags: string[], themeList: ThemesInterface[]){
 
 		this.id_artist = id_artist;
 		this.name = name;
