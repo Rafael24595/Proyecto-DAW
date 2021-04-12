@@ -65,6 +65,7 @@ export class ThemeInformationComponent implements OnInit {
             let serverError = err.error as ServerErrorToken;
             if(serverError.destroyToken){
                 this.autorizationService.destroySession();
+                this.router.navigate(['/Sign-In']);
             }  
           }
         )
