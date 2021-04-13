@@ -141,7 +141,7 @@ async function deleteComment(req, res){
   if(userName == req.userName){
     let indexLevelI = 0;
     let indexLevelII = 0;
-    //let artistData = await artist.find({"themeList.id.comments.commentId":''});
+    //let artistData = await artist.updateOne({"themeList.id.comments.commentId":commentId},{$pull:{themeList.id.comments.commentId":commentId}});
     let artistData = await artist.findOne({"themeList.id":themeId}).lean();
     artistData.themeList.forEach(theme=>{
       if(theme.id == themeId){

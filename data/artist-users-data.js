@@ -550,100 +550,134 @@ const usersData = [
         "email": "Admin@example.com",
         "admin": "1",
         "themeLists":[
-            {"admin":[
             {
-                "listId": "ab",
-                "themeId": "ab-3"
+                "name":'@likes-list',
+                "userView":"true",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-3"
+                    },
+                    {
+                        "listId": "fw",
+                        "themeId": "fw-1"
+                    },
+                    {
+                        "listId": "pl",
+                        "themeId": "pl-1"
+                    },
+                    {
+                        "listId": "fw",
+                        "themeId": "fw-3"
+                    },
+                    {
+                        "listId": "gm",
+                        "themeId": "gm-2"
+                    },
+                    {
+                        "listId": "m_x",
+                        "themeId": "m_x-1"
+                    },
+                    {
+                        "listId": "m_x",
+                        "themeId": "m_x-2"
+                    },
+                    {
+                        "listId": "m_x",
+                        "themeId": "m_x-3"
+                    },
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-1"
+                    },
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-2"
+                    },
+                    {
+                        "listId": "bh",
+                        "themeId": "bh-3"
+                    },
+                    {
+                        "listId": "bh",
+                        "themeId": "bh-2"
+                    },
+                    {
+                        "listId": "bh",
+                        "themeId": "bh-1"
+                    },
+                    {
+                        "listId": "fw",
+                        "themeId": "fw-2"
+                    },
+                    {
+                        "listId": "gm",
+                        "themeId": "gm-1"
+                    },
+                    {
+                        "listId": "gm",
+                        "themeId": "gm-3"
+                    },
+                    {
+                        "listId": "is",
+                        "themeId": "is-1"
+                    },
+                    {
+                        "listId": "is",
+                        "themeId": "is-3"
+                    },
+                    {
+                        "listId": "is",
+                        "themeId": "is-2"
+                    },
+                    {
+                        "listId": "pl",
+                        "themeId": "pl-2"
+                    },
+                    {
+                        "listId": "pl",
+                        "themeId": "pl-3"
+                    }
+                ]
             },
             {
-                "listId": "fw",
-                "themeId": "fw-1"
-            },
-            {
-                "listId": "pl",
-                "themeId": "pl-1"
-            },
-            {
-                "listId": "fw",
-                "themeId": "fw-3"
-            },
-            {
-                "listId": "gm",
-                "themeId": "gm-2"
-            },
-            {
-                "listId": "m_x",
-                "themeId": "m_x-1"
-            },
-            {
-                "listId": "m_x",
-                "themeId": "m_x-2"
-            },
-            {
-                "listId": "m_x",
-                "themeId": "m_x-3"
-            },
-            {
-                "listId": "ab",
-                "themeId": "ab-1"
-            },
-            {
-                "listId": "ab",
-                "themeId": "ab-2"
-            },
-            {
-                "listId": "bh",
-                "themeId": "bh-3"
-            },
-            {
-                "listId": "bh",
-                "themeId": "bh-2"
-            },
-            {
-                "listId": "bh",
-                "themeId": "bh-1"
-            },
-            {
-                "listId": "fw",
-                "themeId": "fw-2"
-            },
-            {
-                "listId": "gm",
-                "themeId": "gm-1"
-            },
-            {
-                "listId": "gm",
-                "themeId": "gm-3"
-            },
-            {
-                "listId": "is",
-                "themeId": "is-1"
-            },
-            {
-                "listId": "is",
-                "themeId": "is-3"
-            },
-            {
-                "listId": "is",
-                "themeId": "is-2"
-            },
-            {
-                "listId": "pl",
-                "themeId": "pl-2"
-            },
-            {
-                "listId": "pl",
-                "themeId": "pl-3"
+                "name":'@dislikes-list',
+                "userView":"false",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
             }
-        ]}
-    ]
+        ]
     },
     {
         "name": "User01",
         "password": "814f06ab7f40b2cff77f2c7bdffd3415",
         "email": "User01@example.com",
         "admin": "0",
-        "themeLists":[],
+        "themeLists":[
+            {
+                "name":'@likes-list',
+                "userView":"true",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            },
+            {
+                "name":'@dislikes-list',
+                "userView":"false",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            }
+        ],
         "likes": []
     },
     {
@@ -651,7 +685,26 @@ const usersData = [
         "password": "7e16036a55664f22e6511e460ee09d4f",
         "email": "User02@example.com",
         "admin": "0",
-        "themeLists":[],
+        "themeLists":[
+            {
+                "name":'@likes-list',
+                "userView":"true",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            },
+            {
+                "name":'@dislikes-list',
+                "userView":"false",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            }
+        ],
         "likes": []
     },
     {
@@ -659,7 +712,26 @@ const usersData = [
         "password": "087c8abfaee44ebbf0c2871976a2ab18",
         "email": "User03@example.com",
         "admin": "0",
-        "themeLists":[],
+        "themeLists":[
+            {
+                "name":'@likes-list',
+                "userView":"true",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            },
+            {
+                "name":'@dislikes-list',
+                "userView":"false",
+                "userManage":"false",
+                "private":"true",
+                "list":[
+
+                ]
+            }
+        ],
         "likes": []
     }
 ]
