@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -24,7 +23,7 @@ export class ThemeInformationComponent implements OnInit {
   comment:string | undefined;
   user = sesionValues.activeUser.name;
 
-  constructor(private comunicationService :ComunicationServiceService, private autorization :AuthorizationService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
+  constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
     this.manageComponent.setLastURL();
@@ -54,7 +53,7 @@ export class ThemeInformationComponent implements OnInit {
   publicateComment(){
     if(this.comment){
       localStorage.setItem('lastComment', JSON.stringify({themeId:this.theme?.id,comment:this.comment}));
-      if(this.autorization.checkForToken() && this.theme){
+      if(this.autorizationService.checkForToken() && this.theme){
         this.DatabaseConexService.setThemeComment(this.theme.id,sesionValues.activeUser.name,this.comment).subscribe(
           sucess=>{console.log(sucess);
             localStorage.removeItem('lastComment');

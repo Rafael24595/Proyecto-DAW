@@ -2,6 +2,21 @@
     <div *ngIf='ProfileData && isSessionUser'>
         <p>{{ProfileData.name}}</p>
         <p>{{ProfileData.email}}</p>
+        <select [(ngModel)]='selectedThemeList' (change)=changeList()>
+            <ng-container *ngFor='let list of ProfileData.themeLists'>
+                <option *ngIf='list.userView'>{{list.name}}</option>
+            </ng-container>   
+        </select>
+        <div>
+            <ng-container *ngIf='themeList'>
+                <span>[[private]]:<p (click)='privatizeThemeList()'>{{privatizeThemeListValue}}</p></span>
+                <span *ngIf='themeList.userManage'>[[trash-can]]</span>
+                <p>{{selectedThemeList}}:</p>
+                <div *ngFor='let singleTheme of themeList.list'>
+                    <p>{{singleTheme.listId}}</p>
+                </div>
+            </ng-container>
+        </div>
     </div>
     <div *ngIf='ProfileData && !isSessionUser'>
         <p>{{ProfileData.name}}</p>

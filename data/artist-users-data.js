@@ -554,7 +554,7 @@ const usersData = [
                 "name":'@likes-list',
                 "userView":"true",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
                     {
                         "listId": "ab",
@@ -646,9 +646,29 @@ const usersData = [
                 "name":'@dislikes-list',
                 "userView":"false",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
+                ]
+            },
+            {
+                "name":'Favoritos',
+                "userView":"true",
+                "userManage":"true",
+                "privateState":"true",
+                "list":[
+                    {
+                        "listId": "is",
+                        "themeId": "is-2"
+                    },
+                    {
+                        "listId": "pl",
+                        "themeId": "pl-2"
+                    },
+                    {
+                        "listId": "pl",
+                        "themeId": "pl-3"
+                    }
                 ]
             }
         ]
@@ -663,7 +683,7 @@ const usersData = [
                 "name":'@likes-list',
                 "userView":"true",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]
@@ -672,7 +692,7 @@ const usersData = [
                 "name":'@dislikes-list',
                 "userView":"false",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]
@@ -690,7 +710,7 @@ const usersData = [
                 "name":'@likes-list',
                 "userView":"true",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]
@@ -699,7 +719,7 @@ const usersData = [
                 "name":'@dislikes-list',
                 "userView":"false",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]
@@ -717,7 +737,7 @@ const usersData = [
                 "name":'@likes-list',
                 "userView":"true",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]
@@ -726,7 +746,7 @@ const usersData = [
                 "name":'@dislikes-list',
                 "userView":"false",
                 "userManage":"false",
-                "private":"true",
+                "privateState":"true",
                 "list":[
 
                 ]

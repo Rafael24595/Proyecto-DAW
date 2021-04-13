@@ -12,5 +12,6 @@ router.get("/getUserData", controller.verifyToken , controller.getUserData);
 router.get("/getProfileData", controller.checkToken , controller.getProfileData);
 router.post("/publishComment", controller.verifyToken , controller.publishComment);
 router.post("/deleteComment", controller.verifyToken , controller.deleteComment);
+router.post("/PrivatizeThemeList", controller.verifyToken , controller.privatizeThemeList);
 
 module.exports = router;

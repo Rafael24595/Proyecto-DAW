@@ -1,8 +1,12 @@
 export interface ThemeListsInterface{
-    ListName : ThemeDataInterface[];
+    name:string;
+    userView:boolean;
+    userManage:boolean;
+    privateState:boolean;
+    list:ThemeDataInterface[];
 }
 
-interface ThemeDataInterface{
+export interface ThemeDataInterface{
     listId: string,
     themeId: string
 }

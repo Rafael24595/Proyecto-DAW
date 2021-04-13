@@ -33,7 +33,6 @@ export class DatabaseConexService {
   return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
  }
 
-
  getUserData(): Observable<User>{
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }
@@ -44,6 +43,10 @@ export class DatabaseConexService {
 
  removeThemeComment(themeId:string,userName:string,commentId:string):Observable<{status:string}>{
    return this.http.post<{status:string}>(`http://${Variables.host}:${Variables.port}/api/deleteComment`, {themeId, userName, commentId});
+ }
+
+ updateThemeListPrivacity(themeListName:string, state:string, userName:string):Observable<{state:boolean}>{
+  return this.http.post<{state:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});
  }
 
  private handleError<T>(operation = 'operation', result?: T) {

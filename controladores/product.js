@@ -163,6 +163,33 @@ async function deleteComment(req, res){
   }
 }
 
+async function privatizeThemeList(req, res){console.log(req.body)
+  let themeListName = req.body.themeListName;console.log(themeListName);
+  let state = JSON.parse(req.body.state);console.log(state);
+  let userName = req.body.userName;console.log(userName);
+  let index = 0;
+  state = (state != true && state != false) ? false : state;console.log(state);
+  state = JSON.stringify(!state);
+  if(userName == req.body.userName){
+    let user = await User.findOne({name:userName}).lean();
+    user.themeLists.find(themeList=>{
+      if(themeList.name == themeListName){
+        if (JSON.parse(user.themeLists[index].userView)){
+          user.themeLists[index].privateState = state;
+        }
+        else{
+          res.status(401).json({mesage:'Bad petition'});
+        }
+        return true
+      }
+      index++;
+      return false
+    })
+    await User.findOneAndUpdate({name:userName},user);
+    res.status(200).json({state:state});
+  }
+}
+
 async function getUserData(req, res){
   let userData = await searchUserData(req.userId);
   res.status(200).send(userData);
@@ -263,4 +290,4 @@ async function verifyToken(req, res, next){
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment, deleteComment};
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment, deleteComment, privatizeThemeList };

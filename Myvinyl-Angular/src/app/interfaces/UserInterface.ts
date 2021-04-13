@@ -1,9 +1,9 @@
-import { ThemeListsInterface } from "./ThemeListsInterface";
+import { ThemeList } from "../classes/ThemeList";
 
 export interface UserInterface{
     name: string;
     email: string;
     admin: string;
-    themeLists: ThemeListsInterface[];
+    themeLists: ThemeList[];
     likes : string[];
 }
