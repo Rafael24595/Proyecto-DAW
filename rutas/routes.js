@@ -13,5 +13,8 @@ router.get("/getProfileData", controller.checkToken , controller.getProfileData)
 router.post("/publishComment", controller.verifyToken , controller.publishComment);
 router.post("/deleteComment", controller.verifyToken , controller.deleteComment);
 router.post("/PrivatizeThemeList", controller.verifyToken , controller.privatizeThemeList);
+router.post("/CreateNewThemeList", controller.verifyToken , controller.createNewThemeList);
+router.post("/DeleteThemeList", controller.verifyToken , controller.deleteThemeList);
+router.post("/AddToUserThemeList", controller.verifyToken , controller.addToUserThemeList);
 
 module.exports = router;

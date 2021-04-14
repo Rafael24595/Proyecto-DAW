@@ -120,25 +120,30 @@ async function publishComment(req, res){
   let themeId = req.body.themeId;
   let userName = req.body.userName;
   let comment = req.body.comment;
-  let commentId = await sha256(`${themeId}-${userName}-${comment}-${Date.now()}`);
-  let artistData = await artist.findOne({"themeList.id":themeId}).lean();
-  let index = 0;
-  artistData.themeList.find(theme=>{
-    if(theme.id == themeId){
-      artistData.themeList[index].comments.push({comment:comment,userName:userName,commentId:commentId});
-      return true;
-    }
-    index++;
-  });
-  await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
-  res.status(200).json({commentId:commentId,userName:userName,comment:comment});
+  if(userName == req.userNameToken){
+    let commentId = await sha256(`${themeId}-${userName}-${comment}-${Date.now()}`);
+    let artistData = await artist.findOne({"themeList.id":themeId}).lean();
+    let index = 0;
+    artistData.themeList.find(theme=>{
+      if(theme.id == themeId){
+        artistData.themeList[index].comments.push({comment:comment,userName:userName,commentId:commentId});
+        return true;
+      }
+      index++;
+    });
+    await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
+    res.status(200).json({commentId:commentId,userName:userName,comment:comment});
+  }
+  else{
+    res.status(401).json({status:'Invalid petition'});
+  }
 }
 
 async function deleteComment(req, res){
   let themeId = req.body.themeId;console.log(themeId);
   let commentId = req.body.commentId;console.log(commentId);
   let userName = req.body.userName;console.log(userName);
-  if(userName == req.userName){
+  if(userName == req.userNameToken){
     let indexLevelI = 0;
     let indexLevelII = 0;
     //let artistData = await artist.updateOne({"themeList.id.comments.commentId":commentId},{$pull:{themeList.id.comments.commentId":commentId}});
@@ -164,13 +169,13 @@ async function deleteComment(req, res){
 }
 
 async function privatizeThemeList(req, res){console.log(req.body)
-  let themeListName = req.body.themeListName;console.log(themeListName);
-  let state = JSON.parse(req.body.state);console.log(state);
-  let userName = req.body.userName;console.log(userName);
+  let themeListName = req.body.themeListName;
+  let state = JSON.parse(req.body.state);
+  let userName = req.body.userName;
   let index = 0;
   state = (state != true && state != false) ? false : state;console.log(state);
   state = JSON.stringify(!state);
-  if(userName == req.body.userName){
+  if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     user.themeLists.find(themeList=>{
       if(themeList.name == themeListName){
@@ -178,7 +183,8 @@ async function privatizeThemeList(req, res){console.log(req.body)
           user.themeLists[index].privateState = state;
         }
         else{
-          res.status(401).json({mesage:'Bad petition'});
+          res.headerSent = true;
+          res.status(401).json({status:'Invalid petition'});
         }
         return true
       }
@@ -186,7 +192,71 @@ async function privatizeThemeList(req, res){console.log(req.body)
       return false
     })
     await User.findOneAndUpdate({name:userName},user);
-    res.status(200).json({state:state});
+    if(!res.headerSent) res.status(200).json({state:state});
+  }
+}
+
+async function createNewThemeList(req, res){
+  let themeListName = req.body.themeListName;
+  let state = req.body.state;
+  let userName = req.body.userName;
+  if(userName == req.userNameToken){
+    let newThemeList = {name:themeListName,userView:'true',userManage:'true',privateState:state,list:[]};
+    let user = await User.findOne({name:userName}).lean();
+    let existList = user.themeLists.find(themeList=>{return (themeList.name == themeListName)});
+    console.log(existList)
+    if(!existList){
+      user.themeLists.push(newThemeList);
+      await User.findOneAndUpdate({name:userName},user);
+      res.status(200).json({list:newThemeList});
+    }
+    else{
+      res.status(401).json({status:'List-Exists'})
+    }
+  }
+  else{
+    res.status(401).json({status:'Invalid petition'})
+  }
+}
+
+async function deleteThemeList(req, res){
+  let themeListName = req.body.themeListName;
+  let userName = req.body.userName;
+  let index = 0;
+  if(userName == req.userNameToken){
+    let user = await User.findOne({name:userName}).lean();
+    user.themeLists.find(themeList=>{
+      if(themeList.name == themeListName){
+        if(JSON.parse(themeList.userManage)){
+          user.themeLists.splice(index, 1);
+        }
+        else{
+          res.headerSent = true;
+          res.status(401).json({status:'Invalid petition'});
+        }
+        return true;
+      }
+      index++;
+      return false;
+    });
+    await User.findOneAndUpdate({name:userName},user);
+    if(!res.headerSent) res.status(200).json({status:'Ok'});
+  }
+  else{
+    res.status(401).json({status:'Invalid petition'});
+  }
+}
+
+async function addToUserThemeList(req, res){
+  let newTheme = req.body.theme;console.log(newTheme);
+  let themeListName = req.body.themeListName;console.log(themeListName);
+  let userName = req.body.userName;console.log(userName);
+  let index = 0;
+  if(userName == req.userNameToken){
+    let user = await User.findOne({name:userName}).lean();
+  }
+  else{
+    res.status(401).json({status:'Invalid petition'});
   }
 }
 
@@ -284,10 +354,11 @@ async function verifyToken(req, res, next){
   let user = await searchUserData(payload._id)
 
   req.userId = payload._id;
-  req.userName = user.name;
+  req.userNameToken = user.name;
+  res.headerSent = false;
 
   next();
 
 }
 
-module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment, deleteComment, privatizeThemeList };
+module.exports = { generateDatabase, getData , singUp, signIn, verifyToken, checkToken, getUserData, getProfileData, getThemeData, publishComment, deleteComment, privatizeThemeList, createNewThemeList, deleteThemeList, addToUserThemeList };
