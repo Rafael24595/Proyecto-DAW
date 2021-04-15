@@ -1,7 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-const router = require('./rutas/routes');
+const router = require('./routes/routes');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
@@ -25,8 +24,8 @@ let connectWithRetry= function() {
 app.use(methodOverride('_method'));
 app.use(express.static('public'));
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 connectWithRetry();
 
