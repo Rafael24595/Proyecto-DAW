@@ -67,4 +67,4 @@ async function getUserData(req, res){
     //if(!req.validToken){res.status(404).send({"destroyToken":"true","message":"Token mal formado"})}
   }
 
-module.exports = { singUp, signIn, getUserData, getProfileData, searchUserData };
+module.exports = { singUp, signIn, getUserData, getProfileData, searchUserData, searchUserDataByName };

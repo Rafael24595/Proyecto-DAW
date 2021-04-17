@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Themes } from 'src/app/classes/Themes';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { AuthorizationService } from 'src/app/services/authorization.service';
-import { DatabaseConexService } from '../../../../services/database-conex.service'
+import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service'
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
-import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 
 @Component({
   selector: 'app-theme-information',

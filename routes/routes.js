@@ -26,6 +26,7 @@ router.post("/PrivatizeThemeList", SecurityManage.verifyToken , ThemeListsManage
 router.post("/CreateNewThemeList", SecurityManage.verifyToken , ThemeListsManage.createNewThemeList);
 router.post("/DeleteThemeList", SecurityManage.verifyToken , ThemeListsManage.deleteThemeList);
 router.post("/AddToUserThemeList", SecurityManage.verifyToken , ThemeListsManage.addToUserThemeList);
-router.post("/RemoveUserThemeList", SecurityManage.verifyToken , ThemeListsManage.removeUserThemeList);
+router.post("/RemoveUserThemeList", SecurityManage.verifyToken , ThemeListsManage.removeFromUserThemeList);
+router.post("/UpdateUserThemeList", SecurityManage.verifyToken , ThemeListsManage.updateUserThemeList);
 
 module.exports = router;

@@ -3,6 +3,7 @@
         <p>{{ProfileData.name}}</p>
         <p>{{ProfileData.email}}</p>
         <select [(ngModel)]='selectedThemeList' (change)=changeList()>
+            <option selected="selected">-- Selecciona lista --</option>
             <ng-container *ngFor='let list of ProfileData.themeLists'>
                 <option *ngIf='list.userView'>{{list.name}}</option>
             </ng-container>   
@@ -10,7 +11,7 @@
         <div>
             <ng-container *ngIf='themeList'>
                 <span>[[private]]:<p (click)='privatizeThemeList()'>{{privatizeThemeListValue}}</p></span>
-                <span *ngIf='themeList.userManage'>[[trash-can]]</span>
+                <span *ngIf='themeList.userManage' (click)='removeThemeList()'>[[trash-can]]</span>
                 <p>{{selectedThemeList}}:</p>
                 <div *ngFor='let singleTheme of themeList.list'>
                     <p>{{singleTheme.listId}}</p>
@@ -22,4 +23,6 @@
         <p>{{ProfileData.name}}</p>
         <p></p>
     </div>
+    <p (click)='displayThemelistForm =!displayThemelistForm'>[[Nueva lista]]</p>
+    <app-theme-list-form *ngIf='displayThemelistForm' (outputToparent)='dataObservable($event)'></app-theme-list-form>
 </div>

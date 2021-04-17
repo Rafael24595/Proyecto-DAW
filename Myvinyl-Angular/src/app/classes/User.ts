@@ -38,6 +38,22 @@ export class User{
 
     }
 
+    setNewThemeList(themeList:ThemeList){
+        this.themeLists.push(themeList);
+    }
+
+    removeThemeList(themeListName:string){
+        let index = 0;
+        this.themeLists.find(themeList=>{
+            if(themeList.name == themeListName){
+                this.themeLists.splice(index, 1);
+                return true;
+            }
+            index++;
+            return false;
+        })
+    }
+
     setThemeListPrivacity(themeListName:string, status:boolean){
         let index = 0;
         this.themeLists.find(themeList=>{

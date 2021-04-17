@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from 'src/app/classes/Artist';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';

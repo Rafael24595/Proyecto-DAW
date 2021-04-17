@@ -1,10 +1,10 @@
 
-import { DatabaseConexService } from '../../app/services/database-conex.service'
+import { DatabaseConexService } from '../../app/services/database-conex-service/database-conex.service'
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/classes/User';
 import { sesionValues } from '../variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { UserInterface } from 'src/app/interfaces/UserInterface';
 
 @Injectable({

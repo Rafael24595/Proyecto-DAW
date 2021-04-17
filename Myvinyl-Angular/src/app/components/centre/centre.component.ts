@@ -1,9 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { Variables } from 'src/utils/variables/variables';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { Router } from '@angular/router';
 
 @Component({

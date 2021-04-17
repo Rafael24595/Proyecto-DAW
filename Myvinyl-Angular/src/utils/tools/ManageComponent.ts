@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { ComunicationServiceService } from "src/app/services/comunication-service.service";
+import { ComunicationServiceService } from "src/app/services/comunication-service/comunication-service.service";
 
 @Injectable({
     providedIn: 'root'

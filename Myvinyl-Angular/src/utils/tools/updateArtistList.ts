@@ -1,5 +1,5 @@
 import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
-import { DatabaseConexService } from '../../app/services/database-conex.service'
+import { DatabaseConexService } from '../../app/services/database-conex-service/database-conex.service'
 import { sesionValues } from '../variables/sessionVariables';
 
 import { Injectable } from '@angular/core';

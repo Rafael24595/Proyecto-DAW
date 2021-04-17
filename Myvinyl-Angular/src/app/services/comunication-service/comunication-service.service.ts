@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CandyInterface } from '../interfaces/CandyInterface';
+import { CandyInterface } from '../../interfaces/CandyInterface';
 
 @Injectable({
   providedIn: 'root'

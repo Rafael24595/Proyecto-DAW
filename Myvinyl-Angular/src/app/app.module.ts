@@ -14,11 +14,12 @@ import { ThemeInformationComponent } from './components/centre/showcase/theme-in
 import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
 import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/artist-panel.component';
 
-import { TokenInterceptorService} from './services/token-interceptor.service';
+import { TokenInterceptorService} from './services/token-interceptor/token-interceptor.service';
 import { SignInComponent } from './components/centre/authorization/signIn/sign-in/sign-in.component';
 import { SignUpComponent } from './components/centre/authorization/signUp/sign-up/sign-up.component';
 import { UserDataComponent } from './components/centre/user-data/user-data.component';
 import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel/user-panel.component';
+import { ThemeListFormComponent } from './components/centre/showcase/user-panel/themeListForm/theme-list-form/theme-list-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UserPanelComponent } from './components/centre/showcase/user-panel/user
     SignInComponent,
     SignUpComponent,
     UserDataComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    ThemeListFormComponent
   ],
   imports: [
     BrowserModule,

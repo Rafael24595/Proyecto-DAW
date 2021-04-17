@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { Variables } from 'src/utils/variables/variables';
-import { User } from '../classes/User';
-import { Token } from '../interfaces/AuthorizationInterfaces';
+import { User } from '../../classes/User';
+import { Token } from '../../interfaces/AuthorizationInterfaces';
 
 @Injectable({
   providedIn: 'root'

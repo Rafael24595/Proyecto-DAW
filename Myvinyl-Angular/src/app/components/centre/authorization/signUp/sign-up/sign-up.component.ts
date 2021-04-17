@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { AuthorizationService } from 'src/app/services/authorization.service';
-import { ComunicationServiceService } from 'src/app/services/comunication-service.service';
+import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
+import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { SingUpForm } from '../../../../../interfaces/AuthorizationInterfaces';

@@ -1,0 +1,10 @@
+<div>
+    <h3>Nueva lista:</h3>
+    <label for="name">Nombre:</label>
+    <input type="text" name="name" [(ngModel)]='themeListName' (keyup)='verifyThemeName()'>
+    <br>
+    <label for="privacity">Privada</label>
+    <input type="checkbox" name="privacity" [(ngModel)]='themeListPrivacity'>
+    <br>
+    <input type="button" value="Crear" (click)='createList()'>
+</div>

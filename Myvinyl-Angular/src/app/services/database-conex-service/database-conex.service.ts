@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Artist } from '../classes/Artist';
+import { Artist } from '../../classes/Artist';
 import { Variables } from 'src/utils/variables/variables';
-import { User } from '../classes/User';
-import { ProfileData } from '../interfaces/ProfileDataInterface';
-import { UserInterface } from '../interfaces/UserInterface';
-import { Themes } from '../classes/Themes';
+import { User } from '../../classes/User';
+import { ProfileData } from '../../interfaces/ProfileDataInterface';
+import { UserInterface } from '../../interfaces/UserInterface';
+import { Themes } from '../../classes/Themes';
+import { ThemeList } from 'src/app/classes/ThemeList';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +46,16 @@ export class DatabaseConexService {
    return this.http.post<{status:string}>(`http://${Variables.host}:${Variables.port}/api/deleteComment`, {themeId, userName, commentId});
  }
 
- updateThemeListPrivacity(themeListName:string, state:string, userName:string):Observable<{state:boolean}>{
-  return this.http.post<{state:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});
+ updateThemeListPrivacity(themeListName:string, state:string, userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});
+ }
+
+ newThemeList(themeListName:string, privacy:string, userName:string):Observable<{list:{themeList:ThemeList}}>{
+  return this.http.post<{list:{themeList:ThemeList}}>(`http://${Variables.host}:${Variables.port}/api/CreateNewThemeList`, {themeListName, privacy, userName});
+ }
+
+ removeThemeList(themeListName:string, userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/DeleteThemeList`, {themeListName, userName});
  }
 
  private handleError<T>(operation = 'operation', result?: T) {
