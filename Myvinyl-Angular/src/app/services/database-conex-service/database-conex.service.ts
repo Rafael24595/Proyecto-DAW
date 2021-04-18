@@ -58,6 +58,14 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/DeleteThemeList`, {themeListName, userName});
  }
 
+ modifyThemeList(themeList:ThemeList, themeListName:string, userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/UpdateUserThemeList`, {themeList, themeListName, userName});
+ }
+
+ modifyUserData(attribute:string, oldAttribute:string, newAttribute:string, userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/UpdateUserData`, {attribute, oldAttribute, newAttribute, userName});
+ }
+
  private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
           console.error(error);

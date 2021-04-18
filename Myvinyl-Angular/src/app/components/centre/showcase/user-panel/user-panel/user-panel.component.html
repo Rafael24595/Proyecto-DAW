@@ -1,28 +1,52 @@
 <div id="homeContainer">
-    <div *ngIf='ProfileData && isSessionUser'>
-        <p>{{ProfileData.name}}</p>
-        <p>{{ProfileData.email}}</p>
+    <div *ngIf='ProfileData'>
+        <ng-container *ngIf='isSessionUser'>
+            <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
+                <p>{{ProfileData.name}}</p>
+                <span (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>[[pencil]]</span>
+                <br>
+            </ng-container>
+            <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
+                <br>
+                <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value' (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
+            </ng-container>
+            <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                <p>{{ProfileData.email}}</p>
+                <span (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id)'>[[pencil]]</span>
+                <br>
+            </ng-container>
+            <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
+                <br>
+                <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value' (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
+                <br>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf='!isSessionUser'>
+            <p>{{ProfileData.name}}</p>
+            <p></p>
+        </ng-container>
         <select [(ngModel)]='selectedThemeList' (change)=changeList()>
             <option selected="selected">-- Selecciona lista --</option>
             <ng-container *ngFor='let list of ProfileData.themeLists'>
-                <option *ngIf='list.userView'>{{list.name}}</option>
+                <option *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>{{list.name}}</option>
             </ng-container>   
         </select>
         <div>
             <ng-container *ngIf='themeList'>
-                <span>[[private]]:<p (click)='privatizeThemeList()'>{{privatizeThemeListValue}}</p></span>
-                <span *ngIf='themeList.userManage' (click)='removeThemeList()'>[[trash-can]]</span>
-                <p>{{selectedThemeList}}:</p>
+                <p *ngIf='isSessionUser'><span>[[private]]:</span><span (click)='privatizeThemeList()'>{{privatizeThemeListValue}}</span></p>
+                <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()'>[[trash-can]]</span>
+                <span *ngIf='isSessionUser && themeList.userManage && !modifyValuesData.themeListName.status' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)'>[[pencil]]</span>
+                <p *ngIf='!modifyValuesData.themeListName.status'>{{modifyValuesData.themeListName.value}}:</p>
+                <ng-container *ngIf='modifyValuesData.themeListName.status'>
+                    <br>
+                    <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
+                </ng-container>
                 <div *ngFor='let singleTheme of themeList.list'>
                     <p>{{singleTheme.listId}}</p>
                 </div>
             </ng-container>
         </div>
     </div>
-    <div *ngIf='ProfileData && !isSessionUser'>
-        <p>{{ProfileData.name}}</p>
-        <p></p>
-    </div>
-    <p (click)='displayThemelistForm =!displayThemelistForm'>[[Nueva lista]]</p>
-    <app-theme-list-form *ngIf='displayThemelistForm' (outputToparent)='dataObservable($event)'></app-theme-list-form>
+    <p *ngIf='isSessionUser && ProfileData' (click)='formTask = (formTask != "new") ?  "new" : ""'>[[Nueva lista]]</p>
+    <app-theme-list-form *ngIf='formTask != ""' (outputToparent)='dataObservable($event)' [task]='formTask'></app-theme-list-form>
 </div>

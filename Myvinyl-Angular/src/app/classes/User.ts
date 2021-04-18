@@ -32,14 +32,42 @@ export class User{
 
     }
 
+    getThemeList(themeListName:string){
+        return this.themeLists.find(themeList=>{
+            return (themeList.name == themeListName);
+        })
+    }
+
     setBasicThemeLists(){
         this.themeLists.push(new ThemeList('@likes-list', true, false,true,[]));
         this.themeLists.push(new ThemeList('@dislikes-list', false, false,true,[]));
 
     }
 
+    setAttribute(attribute:string, value:string){
+        switch (attribute){
+            case 'name':
+                this.name = value;
+            break;
+            case 'email':
+                this.email = value;
+            break;
+        }
+    }
+
     setNewThemeList(themeList:ThemeList){
         this.themeLists.push(themeList);
+    }
+
+    setThemeListPrivacity(themeListName:string, status:boolean){
+        let index = 0;
+        this.themeLists.find(themeList=>{
+            if(themeList.name == themeListName){
+                this.themeLists[index].privateState = status;
+                return true
+            }
+            return false;
+        });
     }
 
     removeThemeList(themeListName:string){
@@ -52,17 +80,6 @@ export class User{
             index++;
             return false;
         })
-    }
-
-    setThemeListPrivacity(themeListName:string, status:boolean){
-        let index = 0;
-        this.themeLists.find(themeList=>{
-            if(themeList.name == themeListName){
-                this.themeLists[index].privateState = status;
-                return true
-            }
-            return false;
-        });
     }
 
     public static setUser(name: string, email: string, admin: string,  themeLists: ThemeListsInterface[], likes: string[]){

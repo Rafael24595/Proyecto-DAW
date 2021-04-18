@@ -28,7 +28,7 @@ async function privatizeThemeList(req, res){console.log(req.body)
         return false
       })
       await User.findOneAndUpdate({name:userName},user);
-      if(!res.headerSent) res.status(200).json({state:state});
+      if(!res.headerSent) res.status(200).json({status:state});
     }
   }
   
@@ -172,7 +172,7 @@ async function privatizeThemeList(req, res){console.log(req.body)
         return false;
       });
       await User.findOneAndUpdate({name:userName},user);
-      if(!res.headerSent) res.status(200).json({status:'Ok'});
+      if(!res.headerSent) res.status(200).json({status:true});
     }
     else{
       res.status(401).json({status:'Invalid petition'});

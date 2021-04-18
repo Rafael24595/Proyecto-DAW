@@ -105,4 +105,8 @@ export class FormValidations{
 
     }
 
+    public static setErrorClass(id:string){
+        document.getElementById(id)?.classList.add('input-error');
+    }
+
 }

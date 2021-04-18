@@ -1,5 +1,6 @@
 <div>
-    <h3>Nueva lista:</h3>
+    <h3 *ngIf='task=="new"'>Nueva lista:</h3>
+    <h3 *ngIf='task=="modify"'>Modificar:</h3>
     <label for="name">Nombre:</label>
     <input type="text" name="name" [(ngModel)]='themeListName' (keyup)='verifyThemeName()'>
     <br>

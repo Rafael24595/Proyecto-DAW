@@ -18,7 +18,7 @@ async function checkToken(req, res, next){
     req.validToken = true;
   } catch (error) {}
 
-  exsistUser = (id) ? await userManage.searchUserData(id) : undefined;
+  exsistUser = (id) ? await userManage.searchUserDataById(id) : undefined;
 
   if(exsistUser){
     req.validToken = true;
@@ -56,13 +56,13 @@ async function verifyToken(req, res, next){
     return res.status(401).send('{"destroyToken":"true","message":"Token mal formado"}');
   }
 
-  exsistUser = await userManage.searchUserData(payload._id);
+  exsistUser = await userManage.searchUserDataById(payload._id);
 
   if(!exsistUser){
     return res.status(401).send('{"destroyToken":"true","message":"Token no válido"}');
   }
 
-  let user = await userManage.searchUserData(payload._id)
+  let user = await userManage.searchUserDataById(payload._id)
 
   req.userId = payload._id;
   req.userNameToken = user.name;

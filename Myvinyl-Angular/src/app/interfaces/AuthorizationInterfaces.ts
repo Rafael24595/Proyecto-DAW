@@ -23,6 +23,7 @@ export interface SingUpForm{
 
 export interface ServerErrorToken{
     destroyToken:string,
+    updateToken:string,
     message:string
 }
 

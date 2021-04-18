@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { sesionValues } from 'src/utils/variables/sessionVariables';
 
 @Component({
   selector: 'app-theme-list-form',
@@ -12,19 +13,19 @@ export class ThemeListFormComponent implements OnInit {
 
   constructor() { }
 
+  @Input() task:string = '';
   @Output() outputToparent = new EventEmitter<string>();
 
   ngOnInit(): void {
   }
 
   verifyThemeName(){
-    console.log('console')
     this.themeListName = this.themeListName.replace(/[@,.]/g,'');
   }
 
   createList(){
     if(this.themeListName != ''){
-      let themeList = {themeList:{themeListName:this.themeListName,privacy:this.themeListPrivacity}}
+      let themeList = {task:this.task ,themeList:{themeListName:this.themeListName,privacy:this.themeListPrivacity}}
       this.outputToparent.emit(JSON.stringify(themeList));
     }
   }

@@ -2,6 +2,7 @@
 require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Tools = require('../utils/tools');
 const jwt = require('jsonwebtoken');
 
 async function singUp(req, res){
@@ -40,31 +41,56 @@ async function searchUserDataByName(name){
     return userData 
   }
   
-async function searchUserData(userId){
+async function searchUserDataById(userId){
     let userData = await User.findOne({_id:userId}).catch(err=>{console.log(err);})
     return userData 
 }
 
 async function getUserData(req, res){
-    let userData = await searchUserData(req.userId);
+    let userData = await searchUserDataById(req.userId);
     res.status(200).send(userData);
   }
   
-  async function getProfileData(req, res){
-    let profileName = req.query.profile;
-    let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
-    if(profileData){
-      if(req.userToken == true){
-        res.status(200).send({validToken:req.validToken, data:profileData});
-      }
-      else{
-        res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists}});
-      }
+async function getProfileData(req, res){
+  let profileName = req.query.profile;
+  let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
+  if(profileData){
+    if(req.userToken == true){
+      res.status(200).send({validToken:req.validToken, data:profileData});
     }
     else{
-      res.status(404).send('El usuario no existe');
+      res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists}});
     }
-    //if(!req.validToken){res.status(404).send({"destroyToken":"true","message":"Token mal formado"})}
   }
+  else{
+    res.status(404).send('El usuario no existe');
+  }
+  //if(!req.validToken){res.status(404).send({"destroyToken":"true","message":"Token mal formado"})}
+}
 
-module.exports = { singUp, signIn, getUserData, getProfileData, searchUserData, searchUserDataByName };
+async function updateUserData(req, res){
+  let attribute = req.body.attribute;
+  let oldAttribute = req.body.oldAttribute;
+  let newAttribute = req.body.newAttribute;
+  let userName = req.body.userName;console.log(userName + " " + req.userNameToken)
+  if(userName == req.userNameToken){
+    let user = await User.findOne({name:userName}).lean();
+    let userModify = await Tools.setUserAttribute(user, attribute, oldAttribute, newAttribute);
+    if(userModify.status){
+      await User.findOneAndUpdate({name:userName},user);
+      res.headerSent = true;
+      res.status(200).json({status:true});
+    }
+    else{
+      let message = (userModify.inUse) ? 'in-use' : 'invalid-petition';
+      if(!res.headerSent) res.status(401).json({status:message});
+      res.headerSent = true;
+    }
+  }
+  else{
+    if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    res.headerSent = true;
+  }
+}
+
+module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData };

@@ -14,10 +14,11 @@ router.get("/generateDatabase", DevManageTools.generateDatabase);
 router.get("/getData", ArtistThemeManage.getArtistDataCount);
 router.get("/getThemeData", ArtistThemeManage.getThemeData);
 
-router.post("/signUp", UserManage.singUp);
-router.post("/signIn", UserManage.signIn);
 router.get("/getUserData", SecurityManage.verifyToken , UserManage.getUserData);
 router.get("/getProfileData", SecurityManage.checkToken , UserManage.getProfileData);
+router.post("/signUp", UserManage.singUp);
+router.post("/signIn", UserManage.signIn);
+router.post("/UpdateUserData", SecurityManage.verifyToken , UserManage.updateUserData);
 
 router.post("/publishComment", SecurityManage.verifyToken , ComentsManage.publishComment);
 router.post("/deleteComment", SecurityManage.verifyToken , ComentsManage.deleteComment);
