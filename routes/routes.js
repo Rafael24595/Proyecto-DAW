@@ -18,6 +18,7 @@ router.get("/getUserData", SecurityManage.verifyToken , UserManage.getUserData);
 router.get("/getProfileData", SecurityManage.checkToken , UserManage.getProfileData);
 router.post("/signUp", UserManage.singUp);
 router.post("/signIn", UserManage.signIn);
+router.post("/checkPassword", UserManage.checkPassword);
 router.post("/UpdateUserData", SecurityManage.verifyToken , UserManage.updateUserData);
 
 router.post("/publishComment", SecurityManage.verifyToken , ComentsManage.publishComment);

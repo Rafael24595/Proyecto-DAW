@@ -89,8 +89,20 @@ async function updateUserData(req, res){
   }
   else{
     if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
-    res.headerSent = true;
   }
 }
 
-module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData };
+async function checkPassword(req, res){
+  let userName = req.body.userName;console.log(userName)
+  let password = req.body.password;console.log(password)
+  if(userName == req.userNameToken){
+    let user = await User.findOne({name:userName}).lean();
+    res.headerSent = true;
+    (user.password == password) ? res.status(200).json({status:true}) : res.status(401).json({status:false});
+  }
+  else{
+    if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+  }
+}
+
+module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword };
