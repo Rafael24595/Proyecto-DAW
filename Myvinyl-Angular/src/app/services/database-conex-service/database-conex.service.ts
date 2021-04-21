@@ -66,6 +66,10 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/UpdateUserData`, {attribute, oldAttribute, newAttribute, userName});
  }
 
+ checkPassword(userName:string, password:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/checkPassword`, {userName, password});
+ }
+
  private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
           console.error(error);

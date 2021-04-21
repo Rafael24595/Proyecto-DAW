@@ -12,13 +12,24 @@
             </ng-container>
             <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
                 <p>{{ProfileData.email}}</p>
-                <span (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id)'>[[pencil]]</span>
+                <span (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>[[pencil]]</span>
                 <br>
             </ng-container>
             <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
                 <br>
                 <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value' (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
                 <br>
+            </ng-container>
+            <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
+                <p>********</p>
+                <span (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual"'>[[pencil]]</span>
+                <br><br>
+            </ng-container>
+            <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
+                <br>
+                <p *ngIf='modifyPasswordData.passwordMessage != ""' >{{modifyPasswordData.passwordMessage}}</p>
+                <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value' (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
+                <br><br>
             </ng-container>
         </ng-container>
         <ng-container *ngIf='!isSessionUser'>

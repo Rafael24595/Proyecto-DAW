@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Event, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { User } from 'src/app/classes/User';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
@@ -10,7 +10,6 @@ import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { ManageUser } from 'src/utils/tools/ManageUser';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
-import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 
@@ -34,8 +33,17 @@ export class UserPanelComponent implements OnInit {
   modifyValuesData = {
     themeListName:{id:'themeName', status:false,value:''},
     modifyUserName:{id:'userName', status:false,value:''},
-    modifyEmail:{id:'userEmail', status:false,value:''}
+    modifyEmail:{id:'userEmail', status:false,value:''},
+    modifyPassword:{id:'userPassword', status:false,value:''}
   };
+
+  modifyPasswordData = {
+    passwordCounter : 0,
+    passwordRoundI : '',
+    passwordMessage : '' 
+  }
+  
+  
 
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
@@ -169,12 +177,74 @@ export class UserPanelComponent implements OnInit {
 
   }
 
+  modifyPassword(event:Event, exit?:number){
+
+    let keyCode:KeyboardEvent | string = event as KeyboardEvent;
+    keyCode = keyCode.code;console.log(exit)
+
+    if(((keyCode == 'Enter' || keyCode == 'Escape') && this.modifyValuesData.modifyPassword.status) || exit){
+
+      this.modifyPasswordData.passwordCounter = (keyCode == 'Escape' || exit) ? -1 : this.modifyPasswordData.passwordCounter;
+
+      switch (this.modifyPasswordData.passwordCounter){
+
+        case -1:
+          this.resetPasswordInput();
+        break;
+
+        case 0:
+
+          let password =  FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
+
+          this.DatabaseConexService.checkPassword(sesionValues.activeUser.name, password).subscribe(
+            sucess=>{
+              if(sucess.status){
+                this.modifyPasswordData.passwordCounter++;
+                this.modifyValuesData.modifyPassword.value = '';
+                this.modifyPasswordData.passwordMessage="Introduce tu nueva contraseña";
+              }
+            },
+            err=>{
+              this.modifyPasswordData.passwordMessage="Contraseña incorrecta";
+              console.log(`Error: ${err}`);
+            }
+          );
+
+        break;
+
+        case 1:
+            this.modifyPasswordData.passwordRoundI = this.modifyValuesData.modifyPassword.value;
+            this.modifyValuesData.modifyPassword.value = '';
+            this.modifyPasswordData.passwordCounter++;
+            this.modifyPasswordData.passwordMessage="Introduce nuevamente la nueva contraseña";
+        break;
+
+        case 2:
+          if(this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value){
+            console.log('inx')
+            let password =  FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
+            let sucess = this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
+            if(sucess){
+              this.resetPasswordInput();
+            }
+          }
+          else{
+            this.modifyPasswordData.passwordMessage="Las contraseñas no coinciden.";
+          }
+        break;
+
+      }
+
+    }
+
+  }
+
   modifyData(data:{event:KeyboardEvent | FocusEvent, attribute:string}){
     let attribute = data.attribute;
     let keyCode:KeyboardEvent | string | undefined = data.event as KeyboardEvent;
     keyCode = (keyCode.code) ? keyCode.code : undefined;
 
-    if(keyCode == 'Enter' || keyCode == undefined){
+    if(keyCode == 'Enter' || keyCode == 'Escape' || keyCode == undefined){
 
       if(this.ProfileData && this.autorizationService.checkForToken()){
 
@@ -191,22 +261,31 @@ export class UserPanelComponent implements OnInit {
           break;
           case "userName":
             activeInput = this.modifyValuesData.modifyUserName.status
-            if(activeInput){
+            if(activeInput && keyCode != 'Escape'){
               userAttribute = 'name'; 
               oldAttribute = this.ProfileData.name; 
               newAttribute = this.modifyValuesData.modifyUserName.value; 
               input = this.modifyValuesData.modifyUserName;console.log(userName)
-              this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+              let sucess = this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+              if(sucess){
+                this.router.navigate([`/Profile/${newAttribute}`]);
+              }
+            }
+            else if(keyCode == 'Escape'){
+              this.modifyValuesData.modifyUserName.status = false
             }
           break;
           case "userEmail":
             activeInput = this.modifyValuesData.modifyEmail.status;
-            if(activeInput) {
+            if(activeInput && keyCode != 'Escape') {
               userAttribute = 'email'; 
               oldAttribute = this.ProfileData.email; 
               newAttribute = this.modifyValuesData.modifyEmail.value; 
               input = this.modifyValuesData.modifyEmail;
               this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+            }
+            else if(keyCode == 'Escape'){
+              this.modifyValuesData.modifyEmail.status = false
             }
           break;
         }
@@ -218,25 +297,26 @@ export class UserPanelComponent implements OnInit {
   }
 
   modifyUserData(input:{id:string, status:boolean,value:string}, attributte:string, oldAttribute:string, newAttribute:string, userName:string){
-    if(oldAttribute != newAttribute){
-      this.DatabaseConexService.modifyUserData(attributte, oldAttribute, newAttribute, userName).subscribe(
-        sucess=>{console.log(sucess)
-          sesionValues.activeUser.setAttribute(attributte, newAttribute);
-          this.ProfileData = sesionValues.activeUser
-          input.status = false;
-          if(attributte == 'name'){
-            this.router.navigate([`/Profile/${newAttribute}`]);
+    return new Promise(resolve=>{
+      if(oldAttribute != newAttribute){
+        this.DatabaseConexService.modifyUserData(attributte, oldAttribute, newAttribute, userName).subscribe(
+          sucess=>{console.log(sucess)
+            sesionValues.activeUser.setAttribute(attributte, newAttribute);
+            this.ProfileData = sesionValues.activeUser
+            input.status = false;
+            resolve(true);
+          },
+          err=>{console.log(err)
+            FormValidations.setErrorClass(input.id);
+            this.autorizationService.updateToken(err);
+            resolve(false);
           }
-        },
-        err=>{console.log(err)
-          FormValidations.setErrorClass(input.id);
-          this.autorizationService.updateToken(err);
-        }
-      );
-    }
-    else{
-      input.status = false;
-    }
+        );
+      }
+      else{
+        input.status = false;
+      }
+    })
   }
 
   modifyThemeList(){
@@ -260,6 +340,13 @@ export class UserPanelComponent implements OnInit {
 
   setFocus(id:string){
     DataManage.setFocus(id);
+  }
+
+  resetPasswordInput(){
+    this.modifyPasswordData.passwordCounter = 0;
+    this.modifyValuesData.modifyPassword.value = '';
+    this.modifyPasswordData.passwordMessage = '';
+    this.modifyValuesData.modifyPassword.status = false;
   }
 
   changeList(){

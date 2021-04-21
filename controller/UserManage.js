@@ -93,7 +93,7 @@ async function updateUserData(req, res){
 }
 
 async function checkPassword(req, res){
-  let userName = req.body.userName;console.log(userName)
+  let userName = req.body.userName;console.log(userName + " " + req.userNameToken)
   let password = req.body.password;console.log(password)
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
