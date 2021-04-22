@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ThemeList } from 'src/app/classes/ThemeList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { Variables } from 'src/utils/variables/variables';
 import { User } from '../../classes/User';
@@ -32,8 +33,16 @@ export class AuthorizationService {
 
     destroySession(){
       localStorage.removeItem('sessionToken');
-      sesionValues.activeUser = User.destroyUser();
+      this.destroyUser();
     }
+
+    destroyUser(){
+
+      User.setUser('@Usuario', 'user@example.com', '0', [ThemeList.emptyThemeList()]);
+
+      sesionValues.activeUser = User.activeUser;
+
+  }
 
     updateToken(err){
       let serverError = err.error as ServerErrorToken;

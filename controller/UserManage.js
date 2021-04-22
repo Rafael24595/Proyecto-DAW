@@ -2,6 +2,7 @@
 require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Artist = mongoose.model('Artist');
 const Tools = require('../utils/tools');
 const jwt = require('jsonwebtoken');
 
@@ -68,6 +69,52 @@ async function getProfileData(req, res){
   //if(!req.validToken){res.status(404).send({"destroyToken":"true","message":"Token mal formado"})}
 }
 
+async function getThemesFromList(req, res){
+  let themeListName = req.body.themeListName;
+  let profileName = req.body.profile;
+
+  if(req.existsUser){
+    let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);});
+    let themeList = profileData.themeLists.find(list=>{return(list.name == themeListName)});
+    if(JSON.parse(themeList && (req.userToken == true && JSON.parse(themeList.userView) || req.userToken != true && JSON.parse(themeList.userView) && !JSON.parse(themeList.privateState)))){
+      themeList = await fillThemeList(themeList.list);
+      res.status(200).json({status:true, list:themeList});
+    }
+    else{
+      res.status(404).json({status:false,list:'not-found'});
+    }
+  }
+  else{
+    res.status(404).json({status:false,list:'not-found'});
+  }
+}
+
+async function fillThemeList(themeList){
+  return new Promise(resolve=>{
+    var count = 0;
+    var list = [];
+    themeList.forEach(async theme => {
+      await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
+        if(artist && artist.themeList && artist.themeList.length > 0){
+          await artist.themeList.find(themeListData=>{
+            if(themeListData.id == theme.themeId){
+              list.push(themeListData);
+              
+              return true;
+            }
+            return false;
+          });
+        }
+      });
+      count++;
+      if(count == themeList.length){
+        resolve(list);
+      }
+    });
+  });
+  
+}
+
 async function updateUserData(req, res){
   let attribute = req.body.attribute;
   let oldAttribute = req.body.oldAttribute;
@@ -105,4 +152,4 @@ async function checkPassword(req, res){
   }
 }
 
-module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword };
+module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword, getThemesFromList };

@@ -1,4 +1,5 @@
 import { ThemeDataInterface } from '../interfaces/ThemeListsInterface'
+import { Themes } from './Themes';
 
 export class ThemeList{
 

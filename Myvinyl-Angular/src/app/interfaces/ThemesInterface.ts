@@ -9,6 +9,7 @@ export interface ThemesInterface{
     comments: ThemeComment[];
     likes: number;
     views: number;
+    artist:{id:string, name:string, surname:string},
 }
 
 export interface ThemeComment{

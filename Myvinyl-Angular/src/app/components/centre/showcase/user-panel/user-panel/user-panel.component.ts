@@ -83,7 +83,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   setGlobalUser(profile:UserInterface){
-    sesionValues.activeUser = User.setUser(profile.name,profile.email,profile.admin,profile.themeLists,profile.likes);
+    sesionValues.activeUser = User.setUser(profile.name,profile.email,profile.admin,profile.themeLists);
     this.ProfileData = sesionValues.activeUser;
   }
 
@@ -141,7 +141,7 @@ export class UserPanelComponent implements OnInit {
       this.DatabaseConexService.newThemeList(themeListData.themeListName, JSON.stringify(themeListData.privacy), this.ProfileData.name).subscribe(
         sucess=>{
           console.log(sucess)
-          sesionValues.activeUser.setNewThemeList(sucess.list);
+          sesionValues.activeUser.setNewThemeList(sucess.list.themeList);
           this.ProfileData = sesionValues.activeUser;
         },
         err=>{
@@ -350,12 +350,32 @@ export class UserPanelComponent implements OnInit {
   }
 
   changeList(){
-    this.themeList = this.ProfileData?.themeLists.find(themeList=>{
-      return (themeList.name == this.selectedThemeList)
-    });
-    this.modifyValuesData.themeListName.value = this.themeList?.name as string;
-    this.formTask = '';
-    this.privatizeThemeListValue = JSON.stringify(this.themeList?.privateState);
+    if(this.ProfileData){
+      this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
+        sucess=>{
+          console.log(sucess.list)
+          let count = 0;
+          this.themeList = this.ProfileData?.themeLists.find(themeList=>{
+            if(themeList.name == this.selectedThemeList){
+              sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
+              return true;
+            }
+            count++;
+            return false;
+          });
+          if(this.themeList){
+            this.themeList.list = sucess.list as any;
+          }
+          this.modifyValuesData.themeListName.value = this.themeList?.name as string;
+          this.formTask = '';
+          this.privatizeThemeListValue = JSON.stringify(this.themeList?.privateState);
+        },
+        err=>{
+
+        }
+      );
+      
+    }
   }
 
 }

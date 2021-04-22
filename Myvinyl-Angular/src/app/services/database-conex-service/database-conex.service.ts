@@ -30,8 +30,12 @@ export class DatabaseConexService {
   return this.http.get<Themes>(`http://${Variables.host}:${Variables.port}/api/getThemeData?theme=${themeId}`);
  }
 
+ getArtistData(artistId:string): Observable<{status:boolean, artist: Artist | null}>{
+  return this.http.get<{status:boolean, artist: Artist | null}>(`http://${Variables.host}:${Variables.port}/api/getArtistData?artist=${artistId}`);
+ }
+
  getProfileData(profile:string): Observable<{validToken:boolean,data:UserInterface}>{
-  return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`)
+  return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`);
  }
 
  getUserData(): Observable<User>{
@@ -68,6 +72,10 @@ export class DatabaseConexService {
 
  checkPassword(userName:string, password:string):Observable<{status:boolean}>{
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/checkPassword`, {userName, password});
+ }
+
+ getThemesFromList(profile:string, themeListName:string):Observable<{status:boolean, list:Themes[]}>{
+  return this.http.post<{status:boolean, list:Themes[]}>(`http://${Variables.host}:${Variables.port}/api/getThemesFromList`, {profile, themeListName});
  }
 
  private handleError<T>(operation = 'operation', result?: T) {

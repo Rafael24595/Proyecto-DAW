@@ -697,8 +697,7 @@ const usersData = [
 
                 ]
             }
-        ],
-        "likes": []
+        ]
     },
     {
         "name": "User02",
@@ -724,8 +723,7 @@ const usersData = [
 
                 ]
             }
-        ],
-        "likes": []
+        ]
     },
     {
         "name": "User03",
@@ -751,8 +749,7 @@ const usersData = [
 
                 ]
             }
-        ],
-        "likes": []
+        ]
     }
 ]
 

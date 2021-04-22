@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Themes } from 'src/app/classes/Themes';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
-import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service'
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
@@ -31,7 +31,7 @@ export class ThemeInformationComponent implements OnInit {
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
-        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics,theme.comments,theme.likes,theme.views);
+        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes,theme.views,);
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
       });
@@ -94,6 +94,10 @@ export class ThemeInformationComponent implements OnInit {
         }
       );
     }
+  }
+
+  routeArtist(){
+    this.router.navigate(['/Artist'], {queryParams:{id:this.theme?.artist.id}});
   }
 
   checkForLastComment(){

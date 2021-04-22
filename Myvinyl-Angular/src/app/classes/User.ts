@@ -1,7 +1,7 @@
 
-import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ThemeListsInterface } from '../interfaces/ThemeListsInterface';
 import { ThemeList } from './ThemeList';
+import { Themes } from './Themes';
 
 export class User{
 
@@ -11,15 +11,13 @@ export class User{
     email: string;
     admin: string;
     themeLists: ThemeList[];
-    likes : string[];
 
-    private constructor(name: string, email: string, admin: string, likes: string[], themeLists?: ThemeListsInterface[]){
+    private constructor(name: string, email: string, admin: string, themeLists?: ThemeListsInterface[]){
         
         this.name = name;
         this.email = email;
         this.admin = admin;
         this.themeLists = [];
-        this.likes = likes;
 
         if(themeLists){
             themeLists.forEach(themeList=>{
@@ -79,22 +77,26 @@ export class User{
             }
             index++;
             return false;
-        })
+        });
     }
 
-    public static setUser(name: string, email: string, admin: string,  themeLists: ThemeListsInterface[], likes: string[]){
+    replaceThemeList(themeListName:string, newList){
+        let count = 0;
+        this.themeLists.find(themeList=>{
+            if(themeList.name == themeListName){
+                this.themeLists[count].list = newList;
+                return true;
+            } 
+            count++;
+            return false
+        });
+    }
 
-        User.activeUser = new User(name, email, admin, likes, themeLists);
+    public static setUser(name: string, email: string, admin: string,  themeLists: ThemeListsInterface[]){
+
+        User.activeUser = new User(name, email, admin, themeLists);
 
         return User.activeUser;
-
-    }
-
-    public static destroyUser(){
-
-        User.setUser('@Usuario', 'user@example.com', '0', [ThemeList.emptyThemeList()], []);
-
-        sesionValues.activeUser = User.activeUser;
 
     }
 
@@ -107,7 +109,7 @@ export class User{
         }
         else{
 
-            return User.setUser('@Usuario', 'user@example.com', '0', [ThemeList.emptyThemeList()], []);
+            return User.setUser('@Usuario', 'user@example.com', '0', [ThemeList.emptyThemeList()]);
 
         }
 

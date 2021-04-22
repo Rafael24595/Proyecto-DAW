@@ -15,11 +15,28 @@ async function getArtistDataCount(req, res){
   
   }
   
+  async function getArtistData(req, res){
+    try {
+      const artistId = req.query.artist;
+      await Artist.findOne({"id_artist":artistId}).lean().then(async artist=>{
+        if(artist){
+          return res.send({status:true, artist:artist});
+        }
+        return res.status(404).send({status: false, artist:null})
+      });
+    }catch (error) {
+      return res.status(400).send({
+        status: 'failure'
+      })
+    }
+  }
+
   async function getThemeData(req, res){
     try {
       const themeId = req.query.theme;
       await Artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
         let theme = artist.themeList.find(theme=>{return (theme.id == themeId)});
+        theme['artist'] = {id:artist.id_artist,name:artist.name,surname:artist.surname};
         if(theme.comments.length > 0){
           theme = await tools.usersExist(theme);
         }
@@ -32,4 +49,4 @@ async function getArtistDataCount(req, res){
     }
   }
 
-  module.exports = { getArtistDataCount , getThemeData };
+  module.exports = { getArtistDataCount , getArtistData, getThemeData };

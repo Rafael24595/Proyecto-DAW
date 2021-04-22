@@ -4,6 +4,7 @@
             <div>
                 <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
                 <p>{{theme.name}}</p>
+                <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
             </div>
             
             <img *ngIf='lyrics' src="../../../../../assets/media/images/flags/{{flag}}.png" (click)='switchLyrics()'>

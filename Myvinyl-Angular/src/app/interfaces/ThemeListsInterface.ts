@@ -1,3 +1,5 @@
+import { Themes } from "../classes/Themes";
+
 export interface ThemeListsInterface{
     name:string;
     userView:boolean;

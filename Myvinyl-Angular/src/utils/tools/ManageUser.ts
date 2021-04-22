@@ -18,7 +18,7 @@ export class ManageUser{
     getUserDataFromDataBase(): Promise<boolean> {
         return new Promise(resolve=>{
             this.DatabaseConexService.getUserData().subscribe(user =>{
-                User.setUser(user.name, user.email, user.admin, user.themeLists, user.likes);
+                User.setUser(user.name, user.email, user.admin, user.themeLists);
                 sesionValues.activeUser = User.getUser();                
                 resolve(true);             
             },

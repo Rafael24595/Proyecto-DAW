@@ -7,10 +7,11 @@ async function checkToken(req, res, next){
 
   let id;
   let token = req.headers.authorization.split(' ')[1];
-  let exsistUser;
+  let existsUser;
 
   req.validToken = false;
   req.userToken = false; 
+  req.existsUser = false
 
   try {
     let payload = jwt.verify(token, 'secret');
@@ -18,13 +19,18 @@ async function checkToken(req, res, next){
     req.validToken = true;
   } catch (error) {}
 
-  exsistUser = (id) ? await userManage.searchUserDataById(id) : undefined;
+  existsUser = (id) ? await userManage.searchUserDataById(id) : undefined;
 
-  if(exsistUser){
+  if(existsUser){
     req.validToken = true;
   }
 
-  let userId = await userManage.searchUserDataByName(req.query.profile);
+  let userName = (Object.keys(req.query).length != 0) ? req.query.profile : req.body.profile;
+  let userId = await userManage.searchUserDataByName(userName);
+
+  if(userId){
+    req.existsUser = true;
+  }
 
   if(userId && userId['_id'] == id){
     req.userToken = true; 
