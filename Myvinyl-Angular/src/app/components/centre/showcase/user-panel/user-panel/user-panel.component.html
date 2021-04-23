@@ -53,7 +53,10 @@
                     <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
                 </ng-container>
                 <div *ngFor='let singleTheme of themeList.list'>
-                    <p>{{singleTheme}}</p>
+                    <ng-container *ngIf='singleTheme.name'>
+                        <p>{{singleTheme.name}} - {{singleTheme.artist.name}} {{singleTheme.artist.surname}}</p>
+                        <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeFromList(singleTheme.id)'>[[trash-can]]</span>
+                    </ng-container>
                 </div>
             </ng-container>
         </div>

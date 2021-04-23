@@ -113,7 +113,7 @@ async function privatizeThemeList(req, res){console.log(req.body)
   }
   
   async function removeFromUserThemeList(req, res){
-    let themeName = req.body.theme;console.log(themeName);
+    let themeId = req.body.themeId;console.log(themeId);
     let themeListName = req.body.themeListName;console.log(themeListName);
     let userName = req.body.userName;console.log(userName);
     let themeToRemove;
@@ -125,7 +125,7 @@ async function privatizeThemeList(req, res){console.log(req.body)
         if(themeList.name == themeListName){
           if(JSON.parse(themeList.userManage)){
             themeToRemove = themeList.list.find(theme=>{
-              if(theme.themeId == themeName.themeId){
+              if(theme.themeId == themeId){
                 user.themeLists[indexLevelI].list.splice(indexLevelII, 1);
                 return true;
               }
@@ -142,8 +142,15 @@ async function privatizeThemeList(req, res){console.log(req.body)
         indexLevelI++;
         return false;
       });
-      (themeToRemove) ? await User.findOneAndUpdate({name:userName},user) : res.headerSent = true; res.status(401).json({status:'Invalid petition'});
-      if(!res.headerSent) res.status(200).json({status:'Ok'});
+      if(!res.headerSent && themeToRemove){
+        await User.findOneAndUpdate({name:userName},user)
+        res.headerSent = true;
+        res.status(200).json({status:true});
+      }
+      else if(!res.headerSent){
+        res.headerSent = true;
+        res.status(401).json({status:'Invalid putition'});
+      } 
     }
     else{
       res.status(401).json({status:'Invalid petition'});

@@ -221,7 +221,6 @@ export class UserPanelComponent implements OnInit {
 
         case 2:
           if(this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value){
-            console.log('inx')
             let password =  FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
             let sucess = this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
             if(sucess){
@@ -302,7 +301,7 @@ export class UserPanelComponent implements OnInit {
         this.DatabaseConexService.modifyUserData(attributte, oldAttribute, newAttribute, userName).subscribe(
           sucess=>{console.log(sucess)
             sesionValues.activeUser.setAttribute(attributte, newAttribute);
-            this.ProfileData = sesionValues.activeUser
+            this.ProfileData = sesionValues.activeUser;
             input.status = false;
             resolve(true);
           },
@@ -338,6 +337,20 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
+  removeThemeFromList(id:string){
+    this.DatabaseConexService.removeFromThemeList(id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
+      sucess=>{
+        if(sucess.status){console.log(sucess.status)
+          sesionValues.activeUser.removeFromThemeList(this.selectedThemeList, id);
+          this.ProfileData = sesionValues.activeUser;
+        }
+      },
+      err=>{console.log(err)
+
+      }
+    );
+  }
+
   setFocus(id:string){
     DataManage.setFocus(id);
   }
@@ -358,6 +371,7 @@ export class UserPanelComponent implements OnInit {
           this.themeList = this.ProfileData?.themeLists.find(themeList=>{
             if(themeList.name == this.selectedThemeList){
               sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
+              console.log(sesionValues.activeUser);
               return true;
             }
             count++;

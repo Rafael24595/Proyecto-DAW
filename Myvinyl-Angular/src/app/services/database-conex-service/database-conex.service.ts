@@ -62,6 +62,10 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/DeleteThemeList`, {themeListName, userName});
  }
 
+ removeFromThemeList(themeId:string, themeListName:string, userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/RemoveUserThemeList`, {themeId, themeListName, userName});
+ }
+
  modifyThemeList(themeList:ThemeList, themeListName:string, userName:string):Observable<{status:boolean}>{
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/UpdateUserThemeList`, {themeList, themeListName, userName});
  }

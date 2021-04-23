@@ -98,6 +98,10 @@ async function fillThemeList(themeList){
         if(artist && artist.themeList && artist.themeList.length > 0){
           await artist.themeList.find(themeListData=>{
             if(themeListData.id == theme.themeId){
+              themeListData.artist = {};
+              themeListData.artist.id = artist.id_artist;
+              themeListData.artist.name = artist.name;
+              themeListData.artist.surname = artist.surname;
               list.push(themeListData);
               
               return true;

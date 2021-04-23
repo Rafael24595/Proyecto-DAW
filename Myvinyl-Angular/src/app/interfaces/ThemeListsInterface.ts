@@ -5,10 +5,11 @@ export interface ThemeListsInterface{
     userView:boolean;
     userManage:boolean;
     privateState:boolean;
-    list:ThemeDataInterface[];
+    list:Themes[];
 }
 
 export interface ThemeDataInterface{
     listId: string,
-    themeId: string
+    themeId: string,
+    name?:string,
 }

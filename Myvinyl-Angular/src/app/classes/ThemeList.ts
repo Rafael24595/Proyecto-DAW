@@ -7,9 +7,9 @@ export class ThemeList{
     userView:boolean;
     userManage:boolean;
     privateState:boolean;
-    list:ThemeDataInterface[];
+    list:Themes[];
 
-    constructor(name:string, userView:boolean | string, userManage:boolean | string, privateState:boolean | string, list:ThemeDataInterface[]){
+    constructor(name:string, userView:boolean | string, userManage:boolean | string, privateState:boolean | string, list:Themes[]){
         this.name = name;
         this.userView = (typeof userManage == 'string') ? JSON.parse(userView as string) : userView;
         this.userManage = (typeof userManage == 'string') ? JSON.parse(userManage as string) : userManage;

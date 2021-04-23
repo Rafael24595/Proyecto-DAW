@@ -12,7 +12,7 @@ export class User{
     admin: string;
     themeLists: ThemeList[];
 
-    private constructor(name: string, email: string, admin: string, themeLists?: ThemeListsInterface[]){
+    private constructor(name: string, email: string, admin: string, themeLists?: ThemeList[]){
         
         this.name = name;
         this.email = email;
@@ -80,6 +80,30 @@ export class User{
         });
     }
 
+    removeFromThemeList(themeListName:string, themeId:string){
+        let indexLevelI = 0;
+        let indexLevelII = 0;
+        this.themeLists.find(themeList=>{
+            if(themeList.name == themeListName){
+                themeList.list.find(theme=>{
+                    if(theme.id == themeId){
+                        this.themeLists[indexLevelI].list.splice(indexLevelII, 1);
+                        return true
+                    }
+                    if(theme['themeId'] == themeId){
+                        this.themeLists[indexLevelI].list.splice(indexLevelII, 1);
+                        return true
+                    }
+                    indexLevelII++;
+                    return false;
+                });
+                return true;
+            }
+            indexLevelI++;
+            return false;
+        });
+    }
+
     replaceThemeList(themeListName:string, newList){
         let count = 0;
         this.themeLists.find(themeList=>{
@@ -92,7 +116,7 @@ export class User{
         });
     }
 
-    public static setUser(name: string, email: string, admin: string,  themeLists: ThemeListsInterface[]){
+    public static setUser(name: string, email: string, admin: string,  themeLists: ThemeList[]){
 
         User.activeUser = new User(name, email, admin, themeLists);
 
