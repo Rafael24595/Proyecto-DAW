@@ -25,6 +25,7 @@ router.post("/UpdateUserData", SecurityManage.verifyToken , UserManage.updateUse
 
 router.post("/publishComment", SecurityManage.verifyToken , ComentsManage.publishComment);
 router.post("/deleteComment", SecurityManage.verifyToken , ComentsManage.deleteComment);
+router.post("/thumbValueTheme", SecurityManage.verifyToken , ComentsManage.thumbValueTheme);
 
 router.post("/PrivatizeThemeList", SecurityManage.verifyToken , ThemeListsManage.privatizeThemeList);
 router.post("/CreateNewThemeList", SecurityManage.verifyToken , ThemeListsManage.createNewThemeList);

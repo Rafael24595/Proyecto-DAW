@@ -5,6 +5,7 @@
                 <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
                 <p>{{theme.name}}</p>
                 <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
+                <p><span (click)="thumbValue(1)">[[thumb-up]] <ng-container *ngIf='isLike == 1'><b>{{theme.likes}}</b></ng-container><ng-container *ngIf='isLike != 1'>{{theme.likes}}</ng-container></span> <span (click)="thumbValue(-1)"> [[thumb-down]] <ng-container *ngIf='isLike == -1'><b>{{theme.dislikes}}</b></ng-container><ng-container *ngIf='isLike != -1'>{{theme.dislikes}}</ng-container></span></p>
             </div>
             
             <img *ngIf='lyrics' src="../../../../../assets/media/images/flags/{{flag}}.png" (click)='switchLyrics()'>

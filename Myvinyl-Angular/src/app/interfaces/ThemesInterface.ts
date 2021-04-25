@@ -8,6 +8,7 @@ export interface ThemesInterface{
     lyrics: Lyrics;
     comments: ThemeComment[];
     likes: number;
+    dislikes: number;
     views: number;
     artist:{id:string, name:string, surname:string},
 }

@@ -128,7 +128,7 @@ async function updateUserData(req, res){
     let user = await User.findOne({name:userName}).lean();
     let userModify = await Tools.setUserAttribute(user, attribute, oldAttribute, newAttribute);
     if(userModify.status){
-      await User.findOneAndUpdate({name:userName},user);
+      await User.findOneAndUpdate({name:userName}, user);
       res.headerSent = true;
       res.status(200).json({status:true});
     }

@@ -46,9 +46,13 @@ export class DatabaseConexService {
    return this.http.post<{commentId:string,userName:string,comment:string}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
  }
 
- removeThemeComment(themeId:string,userName:string,commentId:string):Observable<{status:string}>{
-   return this.http.post<{status:string}>(`http://${Variables.host}:${Variables.port}/api/deleteComment`, {themeId, userName, commentId});
+ thumbValueTheme(themeId:string, thumbValue:number, userName:string):Observable<{status:string, userThemeLists:ThemeList[], likes:number, dislikes:number}>{
+   return this.http.post<{status:string, userThemeLists:ThemeList[], likes:number, dislikes:number}>(`http://${Variables.host}:${Variables.port}/api/thumbValueTheme`, {themeId, thumbValue, userName});
  }
+
+ removeThemeComment(themeId:string,userName:string,commentId:string):Observable<{status:string}>{
+  return this.http.post<{status:string}>(`http://${Variables.host}:${Variables.port}/api/deleteComment`, {themeId, userName, commentId});
+}
 
  updateThemeListPrivacity(themeListName:string, state:string, userName:string):Observable<{status:boolean}>{
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});

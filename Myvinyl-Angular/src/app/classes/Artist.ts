@@ -19,7 +19,7 @@ export class Artist {
 		this.themeList = [];
 
 		themeList.forEach(theme=>{
-			this.themeList.push(new Themes(theme.id, theme.name, theme.flag, theme.tags, theme.lyrics, theme.artist, theme.comments, theme.likes, theme.views))
+			this.themeList.push(new Themes(theme.id, theme.name, theme.flag, theme.tags, theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views))
 		})
 
 	}

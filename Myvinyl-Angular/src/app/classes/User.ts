@@ -1,5 +1,5 @@
 
-import { ThemeListsInterface } from '../interfaces/ThemeListsInterface';
+import { ThemeDataInterface, ThemeListsInterface } from '../interfaces/ThemeListsInterface';
 import { ThemeList } from './ThemeList';
 import { Themes } from './Themes';
 
@@ -114,6 +114,22 @@ export class User{
             count++;
             return false
         });
+    }
+
+    isThemeLike(themeId:string){
+        let likeList = this.themeLists.find(theme=>(theme.name == '@likes-list'));
+        let dislikeList = this.themeLists.find(theme=>(theme.name == '@dislikes-list'));
+        let isLike = 0;
+        if(likeList){
+            isLike = (likeList.list.find(themeData=>(themeData.id == themeId || themeData.themeId == themeId))) ? 1 : 0 ;
+        }
+        if(dislikeList && isLike == 0){
+            isLike = (dislikeList.list.find(themeData=>(themeData.id == themeId || themeData.themeId == themeId))) ? -1 : 0 ;
+        }
+        else if (isLike == 0){
+            
+        }
+        return isLike;
     }
 
     public static setUser(name: string, email: string, admin: string,  themeLists: ThemeList[]){

@@ -59,7 +59,8 @@ const artistData = [
                      "userName":"UnknownUser",
                      "comment":"Comentario Segundo en tema Al Bowly"},
                 ],
-                "likes": 0,
+                "likes": 10,
+                "dislikes": 5,
                 "views": 0
             },
             {
@@ -82,6 +83,7 @@ const artistData = [
                      "comment":"Comentario Segundo en tema Al Bowly"},
                 ],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -97,6 +99,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -122,6 +125,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -137,6 +141,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -152,6 +157,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -177,6 +183,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -192,6 +199,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -207,6 +215,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -232,6 +241,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -247,6 +257,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -262,6 +273,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -287,6 +299,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -302,6 +315,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -317,6 +331,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -342,6 +357,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -357,6 +373,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -372,6 +389,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -397,6 +415,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -412,6 +431,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -427,6 +447,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -452,6 +473,7 @@ const artistData = [
                 },
                 "comments": ['Comentario Primero', 'Comentario Segundo', 'Comentario Tercero'],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -467,6 +489,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -482,6 +505,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]
@@ -507,6 +531,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -522,6 +547,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             },
             {
@@ -537,6 +563,7 @@ const artistData = [
                 },
                 "comments": [],
                 "likes": 0,
+                "dislikes": 0,
                 "views": 0
             }
         ]

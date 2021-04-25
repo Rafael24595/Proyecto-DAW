@@ -22,6 +22,7 @@ export class ThemeInformationComponent implements OnInit {
   lyrics: string | undefined;
   comment:string | undefined;
   user = sesionValues.activeUser.name;
+  isLike = 0;
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
@@ -31,9 +32,10 @@ export class ThemeInformationComponent implements OnInit {
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
-        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes,theme.views,);
+        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views,);
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
+        this.isLike = sesionValues.activeUser.isThemeLike(theme.id);
       });
       }
     )
@@ -78,7 +80,7 @@ export class ThemeInformationComponent implements OnInit {
   }
 
   removeComment(commentId:string){
-    if(this.theme){
+    if(this.autorizationService.checkForToken() && this.theme){
       this.DatabaseConexService.removeThemeComment(this.theme.id,sesionValues.activeUser.name,commentId).subscribe(
         success=>{
           if(this.theme){
@@ -91,6 +93,31 @@ export class ThemeInformationComponent implements OnInit {
                 this.autorizationService.destroySession();
                 this.router.navigate(['/Sign-In']);
             } 
+        }
+      );
+    }
+  }
+
+  thumbValue(value:number){
+    let thumb = (this.isLike != value) ? value : 0;
+
+    if(this.autorizationService.checkForToken() && this.theme){
+      this.DatabaseConexService.thumbValueTheme(this.theme.id, thumb, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          if(this.theme){
+            this.theme.likes = sucess.likes;
+            this.theme.dislikes = sucess.dislikes;
+            sucess.userThemeLists.forEach(themeList=>{
+              sesionValues.activeUser.replaceThemeList(themeList.name ,themeList.list);
+            });
+            this.isLike = sesionValues.activeUser.isThemeLike(this.theme.id);           
+          }
+        },
+        err=>{console.log(err);
+          if(err.destroyToken){
+            this.autorizationService.destroySession();
+            this.router.navigate(['/Sign-In']);
+        } 
         }
       );
     }
