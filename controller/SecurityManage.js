@@ -71,6 +71,7 @@ async function verifyToken(req, res, next){
   let user = await userManage.searchUserDataById(payload._id)
 
   req.userId = payload._id;
+  req.isAdmin = (parseInt(user.admin) == 1) ? true : false;
   req.userNameToken = user.name;
   res.headerSent = false;
 

@@ -2,17 +2,50 @@
     <div *ngIf='artist'>
         <div>
             <div>
-                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png">
-                <p>{{artist.name}} {{artist.surname}}</p>
+                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png"><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"picture", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
+                <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id", attrId:"", value:artist.id_artist})'>[[pencil]]</span></p>
             </div>
-            <span [innerHTML]="artist.description"></span>
+            <span *ngIf='artist.description != ""' [innerHTML]="artist.description"></span>
+            <span *ngIf='artist.description == ""'>Descripción no disponible</span>
+            <span *ngIf='isAdmin' (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>[[pencil]]</span>
         </div>
         <div>
             <div>
+                <ng-container *ngIf='isAdmin'>
+                    <h3>Etiquetas</h3>
+                    <div *ngFor='let artistTag of artist.tags'>
+                        <p>{{artistTag}} <span (click)='modifyArtistTag(artistTag)'>[[trash-can]]</span></p>
+                    </div>
+                    <div>
+                        <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
+                    </div>
+                </ng-container>
                 <h3>Temas</h3>
-                <div *ngFor='let theme of artist.themeList' id="{{theme.id}}" (click)=showItem($event.target)>
+                <div *ngFor='let theme of artist.themeList' id="{{theme.id}}">
                     <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                    <p>{{theme.name}}</p>
+                    <p><span *ngIf='isAdmin'> Nombre: </span> <span (click)=showItem(theme.id)>{{theme.name}}</span> <span *ngIf='isAdmin'> - Id: <span (click)=showItem(theme.id)>{{theme.id}}</span> </span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"deleteTheme", attrId:theme.id, value:""})'>[[trash-can]]</span></p>
+                </div>
+                <div *ngIf='isAdmin' (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
+                    <img src="../../../../../assets/media/images/covers/new_theme.png">
+                    <p>Nuevo tema</p>
+                </div>
+                <div *ngIf='showInput'>
+                    <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
+                    <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}</p>
+                        <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "picture"' type="text" [(ngModel)]="inputValue">
+                        <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
+                    </label>
+                    <ng-container *ngIf='inputAttr == "name"'>
+                        <br>
+                        <label for="surname"><p>{{attrTranslation['surname']}}</p>
+                            <input  type="text" [(ngModel)]="inputSecondValue">
+                        </label>
+                    </ng-container>
+                    <label  *ngIf='inputAttr == "picture"' for="{{inputAttr}}">
+                        <input id="{{inputAttr}}" type="file">
+                    </label>
+                    <br><br>
+                    <button (click)='confirmFrom()' >Modificar</button>
                 </div>
             </div>
         </div>

@@ -109,7 +109,7 @@ const artistData = [
         "name": "Billie",
         "surname": "Holliday",
         "description":
-            " ",
+            "",
         "tags": ['OWB'],
         "themeList": [
             {
@@ -167,7 +167,7 @@ const artistData = [
         "name": "Fats",
         "surname": "Waller",
         "description":
-            " ",
+            "",
         "tags": ['OWB'],
         "themeList": [
             {
@@ -225,7 +225,7 @@ const artistData = [
         "name": "Guy",
         "surname": "Mitchell",
         "description":
-            " ",
+            "",
         "tags": ['OWB', 'MR'],
         "themeList": [
             {
@@ -283,7 +283,7 @@ const artistData = [
         "name": "Ink",
         "surname": "Spots",
         "description":
-            " ",
+            "",
         "tags": ['OWB'],
         "themeList": [
             {
@@ -339,9 +339,9 @@ const artistData = [
     {
         "id_artist": "m_x",
         "name": "Varios",
-        "surname": " ",
+        "surname": "",
         "description":
-            " ",
+            "",
         "tags": ['OWB', 'MR', 'CW'],
         "themeList": [
             {
@@ -399,7 +399,7 @@ const artistData = [
         "name": "Peggy",
         "surname": "Lee",
         "description":
-            " ",
+            "",
         "tags": ['OWB', 'MR'],
         "themeList": [
             {
@@ -457,7 +457,7 @@ const artistData = [
         "name": "Frédéric",
         "surname": "Chopin",
         "description":
-            " ",
+            "",
         "tags": ['CW'],
         "themeList": [
             {
@@ -515,7 +515,7 @@ const artistData = [
         "name": "Piotr",
         "surname": "Ilich Chaikovski",
         "description":
-            " ",
+            "",
         "tags": ['CW'],
         "themeList": [
             {

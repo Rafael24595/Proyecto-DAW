@@ -49,4 +49,47 @@ async function getArtistDataCount(req, res){
     }
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData };
+  async function setArtistAttribute(req, res){
+    let artistId = req.body.artistId;console.log(artistId)
+    let attribute = req.body.attribute;console.log(attribute)
+    let value = req.body.value;console.log(value)
+    let userName = req.body.userName;console.log(userName)
+    
+    if(userName == req.userNameToken && req.isAdmin){
+      console.log(userName == req.userNameToken, req.isAdmin)
+      let artist = await Artist.findOne({id_artist:artistId}).lean();
+      if(artist[attribute] && typeof artist[attribute] == typeof value){
+        if(attribute != 'id_artist' || attribute == 'id_artist' && await Artist.findOne({id_artist:value}) == null){
+          artist[attribute] = value;
+          if(attribute == 'id_artist'){
+            artist = updateThemesId(artist);
+          }
+          await Artist.findOneAndUpdate({id_artist:artistId});
+          res.headerSent = true;
+          res.status(200).json({status:true});
+        }
+        else{
+          if(!res.headerSent) res.status(401).json({status:'id-exists'});
+          res.headerSent = true;
+        }
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
+  async function updateThemesId(artist){
+    var cont = 0;
+    artist.themeList.forEach(theme => {
+      artist.themeList[cont] = theme.id = artist.id_artist + (cont + 1);
+      cont++;
+    });
+    return artist;
+  }
+
+  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute };
