@@ -8,6 +8,12 @@ const UserManage = require('../controller/UserManage');
 const ThemeListsManage = require('../controller/ThemeListsManage');
 const ComentsManage = require('../controller/ComentsManage');
 const ArtistThemeManage = require('../controller/ArtistThemeManage');
+const FilesManage = require('../controller/FilesManage');
+
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart({
+    uploadDir:'./.temp'
+});
 
 router.get("/generateDatabase", DevManageTools.generateDatabase);
 
@@ -34,5 +40,8 @@ router.post("/DeleteThemeList", SecurityManage.verifyToken , ThemeListsManage.de
 router.post("/AddToUserThemeList", SecurityManage.verifyToken , ThemeListsManage.addToUserThemeList);
 router.post("/RemoveUserThemeList", SecurityManage.verifyToken , ThemeListsManage.removeFromUserThemeList);
 router.post("/UpdateUserThemeList", SecurityManage.verifyToken , ThemeListsManage.updateUserThemeList);
+
+router.post("/uploadFile", SecurityManage.verifyToken, multipartMiddleware , FilesManage.uploadFile);
+router.post("/removeFile", SecurityManage.verifyToken, FilesManage.removeFile);
 
 module.exports = router;
