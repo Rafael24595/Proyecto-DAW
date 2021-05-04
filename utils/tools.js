@@ -35,6 +35,8 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
         user.email = newAttribute;
       }else{inUse = true}
     break;
+    case "admin":
+    break;
     default:
       if(user[attribute] && typeof newAttribute == typeof user[attribute]){
         isChanged = true;

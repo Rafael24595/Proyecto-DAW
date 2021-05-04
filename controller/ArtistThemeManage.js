@@ -2,6 +2,7 @@ require('../models/models');
 const tools = require('../utils/tools');
 const mongoose = require('mongoose');
 const Artist = mongoose.model('Artist');
+const FilesManage = require('../controller/FilesManage');
 
 async function getArtistDataCount(req, res){
     try {
@@ -49,6 +50,87 @@ async function getArtistDataCount(req, res){
     }
   }
 
+  async function setArtist(req, res){
+    let artistId = req.body.artistId;
+    let name = req.body.name;
+    let surname = req.body.surname;
+    let description = req.body.description;
+    let tags = req.body.tags;
+    let userName = req.body.userName;
+
+    if(artistId && userName == req.userNameToken && req.isAdmin){
+      let artistExists = await Artist.findOne({id_artist:artistId}).lean();
+      if(artistExists == null){
+        let newArtist = new Artist({id_artist: artistId, name: name, surname: surname, description: description, tags: tags, themeList:[]});
+        await newArtist.save();
+        res.headerSent = true;
+        res.status(200).json({status:true});
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-exists'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
+  async function removeArtist(req, res){
+    let artistId = req.body.artistId;
+    let userName = req.body.userName;
+
+    if(userName == req.userNameToken && req.isAdmin){
+      let artistExists = await Artist.findOne({id_artist:artistId}).lean();
+      if(artistExists != null){
+        await Artist.deleteOne({id_artist:artistId});
+        FilesManage.removeFileAction('artist_avatar', `${artistId}.png`);
+        res.headerSent = true;
+        res.status(200).json({status:true});
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
+  async function reassignArtistThemes(req, res){
+    let mainArtistId = req.body.mainArtistId;
+    let targetArtistId = req.body.targetArtistId;
+    let userName = req.body.userName;
+    if(userName == req.userNameToken && req.isAdmin){
+      let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
+      let targetArtistExists = await Artist.findOne({id_artist:targetArtistId}).lean();
+      if(mainArtistExists != null && targetArtistExists != null){
+        let count = targetArtistExists.themeList.length + 1;
+        mainArtistExists.themeList.forEach(theme=>{
+          let oldThemeId = theme.id;
+          let newThemeId = `${targetArtistExists.id_artist}-${count}`;
+          theme.id = newThemeId;
+          targetArtistExists.themeList.push(theme);console.log(oldThemeId)
+          FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${newThemeId}.png`);
+          FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${newThemeId}.mp3`);
+          count++;
+
+        });
+        mainArtistExists.themeList = [];
+        console.log(mainArtistExists.themeList);
+        console.log(targetArtistExists.themeList);
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
   async function setArtistAttribute(req, res){
     let artistId = req.body.artistId;console.log(artistId)
     let attribute = req.body.attribute;console.log(attribute)
@@ -56,7 +138,6 @@ async function getArtistDataCount(req, res){
     let userName = req.body.userName;console.log(userName)
     
     if(userName == req.userNameToken && req.isAdmin){
-      console.log(userName == req.userNameToken, req.isAdmin)
       let artist = await Artist.findOne({id_artist:artistId}).lean();
       if(artist[attribute] && typeof artist[attribute] == typeof value){
         if(attribute != 'id_artist' || attribute == 'id_artist' && await Artist.findOne({id_artist:value}) == null){
@@ -83,6 +164,47 @@ async function getArtistDataCount(req, res){
     }
   }
 
+  async function setThemesAttribute(req, res){
+    let artistId = req.body.artistId;console.log(artistId)
+    let themeId = req.body.themeId;console.log(themeId)
+    let attribute = req.body.attribute;console.log(attribute)
+    let value = req.body.value;console.log(value)
+    let userName = req.body.userName;console.log(userName)
+    
+    if(userName == req.userNameToken && req.isAdmin){
+      let artist = await Artist.findOne({id_artist:artistId}).lean();
+      let themeIndex = artist.themeList.map(theme=>{return theme.id}).indexOf(themeId);
+      if(themeIndex != -1){
+        console.log(artist.themeList[themeIndex][attribute], typeof artist.themeList[themeIndex][attribute] == typeof value)
+        if(artist.themeList[themeIndex][attribute] && typeof artist.themeList[themeIndex][attribute] == typeof value){
+          if(attribute != 'id'){
+            console.log( artist.themeList[themeIndex])
+            artist.themeList[themeIndex][attribute] = value;
+            console.log( artist.themeList[themeIndex])
+            await Artist.findOneAndUpdate({id_artist:artistId});
+            res.headerSent = true;
+            res.status(200).json({status:true});
+          }
+          else{
+            if(!res.headerSent) res.status(403).json({status:'cannot-modify-attribute'});
+            res.headerSent = true;
+          }
+        }
+        else{
+          if(!res.headerSent) res.status(403).json({status:'invalid-petition'});
+          res.headerSent = true;
+        }
+      }
+      else{
+        if(!res.headerSent) res.status(404).json({status:'source-not-found'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
   async function updateThemesId(artist){
     var cont = 0;
     artist.themeList.forEach(theme => {
@@ -92,4 +214,4 @@ async function getArtistDataCount(req, res){
     return artist;
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute };
+  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes };

@@ -21,6 +21,9 @@ router.get("/getData", ArtistThemeManage.getArtistDataCount);
 router.get("/getThemeData", ArtistThemeManage.getThemeData);
 router.get("/getArtistData", ArtistThemeManage.getArtistData);
 router.post("/setArtistAttribute", SecurityManage.verifyToken , ArtistThemeManage.setArtistAttribute);
+router.post("/setArtist", SecurityManage.verifyToken, ArtistThemeManage.setArtist);
+router.post("/removeArtist", SecurityManage.verifyToken, ArtistThemeManage.removeArtist);
+router.post("/reassignArtistThemes", SecurityManage.verifyToken, ArtistThemeManage.reassignArtistThemes);
 
 router.get("/getUserData", SecurityManage.verifyToken , UserManage.getUserData);
 router.get("/getProfileData", SecurityManage.checkToken , UserManage.getProfileData);
@@ -40,8 +43,10 @@ router.post("/DeleteThemeList", SecurityManage.verifyToken , ThemeListsManage.de
 router.post("/AddToUserThemeList", SecurityManage.verifyToken , ThemeListsManage.addToUserThemeList);
 router.post("/RemoveUserThemeList", SecurityManage.verifyToken , ThemeListsManage.removeFromUserThemeList);
 router.post("/UpdateUserThemeList", SecurityManage.verifyToken , ThemeListsManage.updateUserThemeList);
+router.post("/setThemesAttribute", SecurityManage.verifyToken , ArtistThemeManage.setThemesAttribute);
 
 router.post("/uploadFile", SecurityManage.verifyToken, multipartMiddleware , FilesManage.uploadFile);
 router.post("/removeFile", SecurityManage.verifyToken, FilesManage.removeFile);
+router.post("/renameFile", SecurityManage.verifyToken, FilesManage.renameFile);
 
 module.exports = router;
