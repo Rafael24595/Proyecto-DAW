@@ -44,6 +44,8 @@ router.post("/AddToUserThemeList", SecurityManage.verifyToken , ThemeListsManage
 router.post("/RemoveUserThemeList", SecurityManage.verifyToken , ThemeListsManage.removeFromUserThemeList);
 router.post("/UpdateUserThemeList", SecurityManage.verifyToken , ThemeListsManage.updateUserThemeList);
 router.post("/setThemesAttribute", SecurityManage.verifyToken , ArtistThemeManage.setThemesAttribute);
+router.post("/setTheme", SecurityManage.verifyToken , ArtistThemeManage.setTheme);
+router.post("/removeTheme", SecurityManage.verifyToken , ArtistThemeManage.removeTheme);
 
 router.post("/uploadFile", SecurityManage.verifyToken, multipartMiddleware , FilesManage.uploadFile);
 router.post("/removeFile", SecurityManage.verifyToken, FilesManage.removeFile);

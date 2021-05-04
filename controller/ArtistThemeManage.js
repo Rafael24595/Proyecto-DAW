@@ -118,6 +118,8 @@ async function getArtistDataCount(req, res){
 
         });
         mainArtistExists.themeList = [];
+        await Artist.findOneAndUpdate({id_artist:mainArtistId}, mainArtistExists);
+        await Artist.findOneAndUpdate({id_artist:targetArtistId}, targetArtistExists);
         console.log(mainArtistExists.themeList);
         console.log(targetArtistExists.themeList);
       }
@@ -145,7 +147,7 @@ async function getArtistDataCount(req, res){
           if(attribute == 'id_artist'){
             artist = updateThemesId(artist);
           }
-          await Artist.findOneAndUpdate({id_artist:artistId});
+          await Artist.findOneAndUpdate({id_artist:artistId}, artist);
           res.headerSent = true;
           res.status(200).json({status:true});
         }
@@ -156,6 +158,67 @@ async function getArtistDataCount(req, res){
       }
       else{
         if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
+  async function setTheme(req, res){
+    let artistId = req.body.artistId;console.log(artistId)
+    let name = req.body.name;console.log(name)
+    let flag = req.body.flag;console.log(flag)
+    let tags = req.body.tags;console.log(tags)
+    let lyrics = req.body.lyrics;console.log(lyrics)
+    let userName = req.body.userName;console.log(userName)
+
+    if(artistId && userName == req.userNameToken && req.isAdmin){
+      let artistExists = await Artist.findOne({id_artist:artistId}).lean();
+      if(artistExists != null){
+        let themeId = `${artistExists.id_artist}-${artistExists.themeList.length + 1}`
+        artistExists.themeList.push({id: themeId, name: name, flag: flag, tags: tags, lyrics: lyrics, comments: [], likes: 0, dislikes: 0, views: 0});
+        await Artist.findOneAndUpdate({id_artist:artistId}, artistExists);
+        console.log(artistExists)
+        res.headerSent = true;
+        res.status(200).json({status:true});
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
+  async function removeTheme(req, res){
+    let artistId = req.body.artistId;
+    let themeId = req.body.themeId;
+    let userName = req.body.userName;
+
+    if(userName == req.userNameToken && req.isAdmin){
+      let artistExists = await Artist.findOne({id_artist:artistId}).lean();
+      if(artistExists != null){
+        let themeExists = artistExists.themeList.map(theme=>{return theme.id}).indexOf(themeId);
+        if(themeExists != -1){
+          artistExists.themeList.splice(themeExists, 1);
+          FilesManage.removeFileAction('theme_cover', `${themeId}.png`);
+          FilesManage.removeFileAction('theme_audio', `${themeId}.mp3`);
+          await Artist.findOneAndUpdate({id_artist:artistId}, artistExists);
+          console.log(artistExists.themeList)
+          res.headerSent = true;
+          res.status(200).json({status:true});
+        }
+        else{
+          if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+          res.headerSent = true;
+        }
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
         res.headerSent = true;
       }
     }
@@ -181,7 +244,7 @@ async function getArtistDataCount(req, res){
             console.log( artist.themeList[themeIndex])
             artist.themeList[themeIndex][attribute] = value;
             console.log( artist.themeList[themeIndex])
-            await Artist.findOneAndUpdate({id_artist:artistId});
+            await Artist.findOneAndUpdate({id_artist:artistId}, artist);
             res.headerSent = true;
             res.status(200).json({status:true});
           }
@@ -214,4 +277,4 @@ async function getArtistDataCount(req, res){
     return artist;
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes };
+  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes, setTheme, removeTheme };
