@@ -129,6 +129,7 @@ export class User{
         else if (isLike == 0){
             
         }
+        console.log(isLike)
         return isLike;
     }
 

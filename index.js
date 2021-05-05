@@ -14,10 +14,10 @@ let db = mongoose.connection;
 let connectWithRetry= function() {
   return mongoose.connect(mongoUri, {
     useUnifiedTopology: true,
-    useNewUrlParser: true,/*
+    useNewUrlParser: true,
     auth: { authSource: "admin" },
     user: "root",
-    pass: "example"*/
+    pass: "example"
   });
 };
 
@@ -38,5 +38,6 @@ db.on('error', () => {
 
 db.on('connected', () => {
   app.use('/api', router);
-  app.listen(port, () => console.log(`Todo OK. Servidor escuchando en ${port}!`))
+  let server = app.listen(port, () => console.log(`Todo OK. Servidor escuchando en ${port}!`));
+  //process.on('uncaughtException', ()=>{server.close()});
 });

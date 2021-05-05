@@ -92,7 +92,7 @@ async function publishComment(req, res){
 
         let index = artistData.themeList.map(theme=>{return theme.id}).indexOf(themeId);
         artistData.themeList[index][likes_dislikes] = artistData.themeList[index][likes_dislikes] + Math.abs(thumbValue);
-        if(themeInUnusedList) artistData.themeList[index][dislikes_likes] = artistData.themeList[index][dislikes_likes] - 1;
+        if(themeInUnusedList) artistData.themeList[index][dislikes_likes] = (artistData.themeList[index][dislikes_likes] - 1 > -1) ? artistData.themeList[index][dislikes_likes] - 1 : 0;
 
         await User.findOneAndUpdate({name:userName}, user);
         await artist.findOneAndUpdate({"themeList.id":themeId}, artistData).catch(err=>{console.log(err);});
@@ -102,8 +102,8 @@ async function publishComment(req, res){
       }
       else{
           let index = artistData.themeList.map(theme=>{return theme.id}).indexOf(themeId);
-          if(themeInActiveList) artistData.themeList[index][likes_dislikes] = artistData.themeList[index][likes_dislikes] - 1;
-          if(themeInUnusedList) artistData.themeList[index][dislikes_likes] = artistData.themeList[index][dislikes_likes] - 1;
+          if(themeInActiveList) artistData.themeList[index][likes_dislikes] = (artistData.themeList[index][likes_dislikes] -1 > -1) ? artistData.themeList[index][likes_dislikes] - 1 : 0;
+          if(themeInUnusedList) artistData.themeList[index][dislikes_likes] = (artistData.themeList[index][dislikes_likes] - 1 > -1) ? artistData.themeList[index][dislikes_likes] - 1 : 0;
           resetThumbList(user, indexActive, indexUnused, {listId:artistData.id_artist, themeId:themeId});
           await User.findOneAndUpdate({name:userName}, user);
           await artist.findOneAndUpdate({"themeList.id":themeId}, artistData).catch(err=>{console.log(err);});

@@ -2,8 +2,8 @@
     <div *ngIf="theme">
         <div>
             <div>
-                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                <p>{{theme.name}}</p>
+                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"picture", attrId:theme.id, value:theme.id})'>[[pencil]]</span>
+                <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"id", attrId:"", value:theme.name})'>[[pencil]]</span></p>
                 <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
                 <p><span (click)="thumbValue(1)">[[thumb-up]] <ng-container *ngIf='isLike == 1'><b>{{theme.likes}}</b></ng-container><ng-container *ngIf='isLike != 1'>{{theme.likes}}</ng-container></span> <span (click)="thumbValue(-1)"> [[thumb-down]] <ng-container *ngIf='isLike == -1'><b>{{theme.dislikes}}</b></ng-container><ng-container *ngIf='isLike != -1'>{{theme.dislikes}}</ng-container></span></p>
             </div>
@@ -20,9 +20,21 @@
             <div *ngFor='let comment of theme.comments'>
                 <p *ngIf='comment.activeUser' routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
                 <span *ngIf='comment.userName == user' (click)='removeComment(comment.commentId)'>[[trash-can]]</span>
+                <span *ngIf='isAdmin' (click)='deleteComment(comment.commentId)'>[[trash-can-admin]]</span>
                 <p *ngIf='!comment.activeUser'><b><s>{{comment.userName}}</s></b>:</p>
                 <p>{{comment.comment}}</p>
             </div>
+        </div>
+        <div *ngIf='showInput'>
+            <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
+            <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}:</p>
+                <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "picture"' type="text" [(ngModel)]="inputValue">
+                <input id="{{inputAttr}}" *ngIf='inputAttr == "picture"' type="file">
+                <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
+            </label>
+            <br><br>
+            <button (click)='confirmFrom()' >Modificar</button>
+            <button (click)='showInput = false' >Cancelar</button>
         </div>
     </div>
 </div>

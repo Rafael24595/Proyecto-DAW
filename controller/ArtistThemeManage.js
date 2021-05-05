@@ -16,6 +16,17 @@ async function getArtistDataCount(req, res){
   
   }
   
+  async function getArtistsAttributes(req, res){
+    try {
+      let attribute = req.query.attribute;
+      let artists = await Artist.find({}).lean();
+      let artistsList = artists.map(artist=>{return (artist[attribute]) ? artist[attribute] : artist.id_artist});
+      res.send({status: true, message: artistsList});
+    } catch (error) {
+      res.status(400).send({status:'failure'});
+    }
+  }
+
   async function getArtistData(req, res){
     try {
       const artistId = req.query.artist;
@@ -277,4 +288,4 @@ async function getArtistDataCount(req, res){
     return artist;
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes, setTheme, removeTheme };
+  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };

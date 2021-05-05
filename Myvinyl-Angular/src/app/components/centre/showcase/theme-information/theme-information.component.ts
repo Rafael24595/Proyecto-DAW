@@ -8,6 +8,8 @@ import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
+import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
+import { DataManage } from 'src/utils/tools/DataManage';
 
 @Component({
   selector: 'app-theme-information',
@@ -23,6 +25,12 @@ export class ThemeInformationComponent implements OnInit {
   comment:string | undefined;
   user = sesionValues.activeUser.name;
   isLike = 0;
+  isAdmin: boolean = false;
+  showInput: boolean = false;
+  inputValue: string |string[] = '';
+  inputSecondValue: string |string[] = '';
+  inputAttr: string = '';
+  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", picture:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas"};
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
@@ -36,6 +44,11 @@ export class ThemeInformationComponent implements OnInit {
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
         this.isLike = sesionValues.activeUser.isThemeLike(theme.id);
+        this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
+        if(this.isLike < 0 && theme.likes == 0 || this.isLike > 0 && theme.dislikes == 0) {
+          let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
+          this.modifyThemeData({attrName:likeValue, attrId:'', value:theme[likeValue] + 1});
+        }
       });
       }
     )
@@ -121,6 +134,41 @@ export class ThemeInformationComponent implements OnInit {
         }
       );
     }
+  }
+
+  showThemeForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
+    this.showInput = true;
+    this.inputAttr = attribute.attrName;
+    this.inputValue = attribute.value;
+    this.inputSecondValue = (attribute.secondValue) ? attribute.secondValue : this.inputSecondValue;
+  }
+
+  confirmFrom(){
+    this.modifyThemeData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
+    if(this.inputAttr == 'name'){
+      this.modifyThemeData({attrName:'surname', attrId:'', value: this.inputSecondValue});
+    }
+    this.showInput = false;
+    this.inputAttr = '';
+    this.inputValue = '';
+    this.inputSecondValue = '';
+  }
+
+  deleteComment(commentId:string){
+
+    if(this.theme){
+      let commentIndex = this.theme?.comments.map(comment=>{return comment.commentId}).indexOf(commentId);
+      if(commentIndex != -1){
+        let list = DataManage.copyObject(this.theme.comments);
+        list = list.splice(commentIndex, 1);
+        this.modifyThemeData({attrName:'comments', attrId:'', value:list});
+      }
+    }
+
+  }
+
+  modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[]}){
+    console.log(attribute)
   }
 
   routeArtist(){

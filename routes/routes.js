@@ -20,6 +20,7 @@ router.get("/generateDatabase", DevManageTools.generateDatabase);
 router.get("/getData", ArtistThemeManage.getArtistDataCount);
 router.get("/getThemeData", ArtistThemeManage.getThemeData);
 router.get("/getArtistData", ArtistThemeManage.getArtistData);
+router.get("/getArtistsAttributes", ArtistThemeManage.getArtistsAttributes);
 router.post("/setArtistAttribute", SecurityManage.verifyToken , ArtistThemeManage.setArtistAttribute);
 router.post("/setArtist", SecurityManage.verifyToken, ArtistThemeManage.setArtist);
 router.post("/removeArtist", SecurityManage.verifyToken, ArtistThemeManage.removeArtist);
@@ -47,6 +48,7 @@ router.post("/setThemesAttribute", SecurityManage.verifyToken , ArtistThemeManag
 router.post("/setTheme", SecurityManage.verifyToken , ArtistThemeManage.setTheme);
 router.post("/removeTheme", SecurityManage.verifyToken , ArtistThemeManage.removeTheme);
 
+router.get("/getFlagsList", FilesManage.getFlagsList);
 router.post("/uploadFile", SecurityManage.verifyToken, multipartMiddleware , FilesManage.uploadFile);
 router.post("/removeFile", SecurityManage.verifyToken, FilesManage.removeFile);
 router.post("/renameFile", SecurityManage.verifyToken, FilesManage.renameFile);

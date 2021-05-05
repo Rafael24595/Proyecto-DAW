@@ -11,12 +11,10 @@ const ArtistSchema = new Schema({
 		required: true
 	},
 	surname: {
-		type: String,
-		required: true
+		type: String
 	},	
 	description: {
-		type: String,
-		required: true
+		type: String
 	},	
 	tags: {
 		type: Array,

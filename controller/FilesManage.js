@@ -183,4 +183,11 @@ async function uploadFile(req, res){
     });
   }
 
-module.exports = { uploadFile, removeFile, renameFile, removeFileAction, renameFileAction };
+  async function getFlagsList(req, res){
+    let flags = fs.readdirSync('./uploads/media/image/flags');
+    console.log(flags[0].includes('_'));
+    flags = flags.filter(flag=> !flag.includes('_'));
+    res.status(200).json({status:true,message:flags});
+  }
+
+module.exports = { uploadFile, removeFile, renameFile, removeFileAction, renameFileAction, getFlagsList };

@@ -24,7 +24,9 @@ export class ArtistPanelComponent implements OnInit {
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
-  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", picture:'Avatar'};
+  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", picture:'Avatar', newTheme:"Nuevo tema", reassign:'Reasignar'};
+  newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}};
+  reassignArtist = '';
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -66,10 +68,14 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = '';
     this.inputValue = '';
     this.inputSecondValue = '';
+    this.newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}}
   }
 
   modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
     console.log(attribute)
+    if(attribute.attrName = 'newTheme'){
+      console.log(this.newTheme)
+    }
   }
 
   modifyArtistTag(artistTag:string){
