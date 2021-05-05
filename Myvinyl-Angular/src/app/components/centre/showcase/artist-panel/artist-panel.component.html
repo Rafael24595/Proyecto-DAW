@@ -20,17 +20,18 @@
                         <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
                     </div>
                 </ng-container>
-                <h3>Temas</h3><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassign", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
+                <h3>Temas</h3><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>[[reasign]]</span>
                 <div *ngFor='let theme of artist.themeList' id="{{theme.id}}">
                     <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                    <p><span *ngIf='isAdmin'> Nombre: </span> <span (click)=showItem(theme.id)>{{theme.name}}</span> <span *ngIf='isAdmin'> - Id: <span (click)=showItem(theme.id)>{{theme.id}}</span> </span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"deleteTheme", attrId:theme.id, value:""})'>[[trash-can]]</span></p>
+                    <p><span *ngIf='isAdmin'> Nombre: </span> <span (click)=showItem(theme.id)>{{theme.name}}</span> <span *ngIf='isAdmin'> - Id: <span (click)=showItem(theme.id)>{{theme.id}}</span> </span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"deleteTheme", attrId:theme.id, value:""})'>[[trash-can]]</span>
+                    <span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>[[reasign]]</span></p>
                 </div>
                 <div *ngIf='isAdmin' (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
                     <img src="../../../../../assets/media/images/covers/new_theme.png">
                     <p>Nuevo tema</p>
                 </div>
                 <div *ngIf='showInput'>
-                    <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign"'>
+                    <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>
                         <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
                         <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}</p>
                             <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "picture"' type="text" [(ngModel)]="inputValue">
@@ -50,7 +51,8 @@
                             <input  type="text" [(ngModel)]="newTheme.name">
                         </label>
                         <label for="flag"><p>Idioma: </p>
-                            <input id="flag"  type="text" [(ngModel)]="newTheme.flag">
+                            <input id="flag"  type="text" [(ngModel)]="newTheme.flag" [(ngModel)]="flagName"(keydown)="searchFlag()">
+                            <img src="{{flagSRC}}">
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
                             <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">
@@ -62,10 +64,15 @@
                             <textarea name="lyrics_esp" id="" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.esp"></textarea>
                         </label>
                     </ng-container>
-                    <ng-container *ngIf='inputAttr == "reassign"'>
+                    <ng-container *ngIf='inputAttr == "reassign" || inputAttr == "reassignMulti"'>
                         <h2>Resignar temas:</h2>
-                        <label for="reassignArtist"><p>Letra traducida: </p>
-                            <select name="reassignArtist" id="reassignArtist" [(ngModel)]="reassignArtist"></select>
+                        <label for="reassignArtist"><p>Mover <span *ngIf='inputAttr == "reassign"'>tema</span><span *ngIf='inputAttr == "reassignMulti"'>temas</span> de {{artist.name}} {{artist.surname}} a:</p>
+                            <select name="reassignArtist" id="reassignArtist" [(ngModel)]="reassignArtist">
+                                <option disabled value='default'>Selecciona una</option>
+                                <ng-container *ngFor='let artistId of arstistIds'>
+                                    <option *ngIf='artistId.id != artist.id_artist' value='{{artistId.id}}'>{{artistId.id}} - {{artistId.name}}</option>
+                                </ng-container>
+                            </select>
                         </label>
                     </ng-container>
                     <br><br>

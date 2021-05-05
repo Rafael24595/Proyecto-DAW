@@ -26,7 +26,11 @@ export class ArtistPanelComponent implements OnInit {
   inputAttr: string = '';
   attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", picture:'Avatar', newTheme:"Nuevo tema", reassign:'Reasignar'};
   newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}};
-  reassignArtist = '';
+  reassignArtist = 'default';
+  arstistIds:{id:string, name:string}[] = [];
+  availableFlags: string[] = [];
+  flagSRC: string = 'ghostFlag.png'
+  flagName: string = '';
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -49,7 +53,6 @@ export class ArtistPanelComponent implements OnInit {
         );
       });
     });
-
   }
 
   showArtistForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
@@ -57,6 +60,34 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = attribute.attrName;
     this.inputValue = attribute.value;
     this.inputSecondValue = (attribute.secondValue) ? attribute.secondValue : this.inputSecondValue;
+    if(attribute.attrName == 'reassign'){
+      this.arstistIds = [];
+      this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
+        sucess=>{
+          sucess.message.forEach(artistData=>{
+            let artistDataSplited = artistData.split('&');
+            if(artistDataSplited.length == 2){
+              this.arstistIds.push({id:artistDataSplited[0], name:artistDataSplited[1]});
+            }
+          });
+        },
+        err=>{
+
+        }
+      );
+    }
+    if(attribute.attrName == 'newTheme'){
+      this.DatabaseConexService.getFlagsNames().subscribe(
+        sucess=>{
+          this.availableFlags = sucess.message;
+          console.log(this.availableFlags)
+        },
+        err=>{
+          console.log(err);
+        }
+      );
+
+    }
   }
 
   confirmFrom(){
@@ -68,29 +99,66 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = '';
     this.inputValue = '';
     this.inputSecondValue = '';
-    this.newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}}
+    this.newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}};
+    this.reassignArtist = 'default';
   }
 
   modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
     console.log(attribute)
-    if(attribute.attrName = 'newTheme'){
-      console.log(this.newTheme)
+    switch (attribute.attrName){
+
+      case 'newTheme':
+
+        console.log(this.newTheme)
+
+      break;
+
+      case 'reassignMulti':
+
+        if(this.reassignArtist != 'default'){
+
+        }
+
+      break;
+
+      case 'reassign':
+
+        if(this.reassignArtist != 'default'){
+          console.log(this.reassignArtist)
+        }
+
+      break
+
+      case 'tags':
+
+
+
+      break;
+
+      default:
+
+      break;
+
     }
   }
 
   modifyArtistTag(artistTag:string){
     if (this.artist){
       let newTags = [...this.artist.tags];
-      let tagExists = this.artist?.tags.indexOf(artistTag);
+      let tagExists = this.artist.tags.indexOf(artistTag);
       (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(artistTag) ;
       this.modifyArtistData({attrName:'tags', attrId:'', value: newTags});
     }
   }
 
+  searchFlag(){
+    let path = (this.availableFlags.indexOf(this.flagName) != -1) ? this.flagName : 'ghostFlag';
+    this.flagSRC = `/uploads/media/image/flags/${path}.png`;
+    console.log(this.flagSRC)
+  }
+
   showItem(id:string){
-
     this.router.navigate(['/Theme'], {queryParams:{id:id}});
-
   }
 
 }

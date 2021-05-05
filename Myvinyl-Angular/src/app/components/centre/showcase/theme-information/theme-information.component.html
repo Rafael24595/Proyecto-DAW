@@ -12,6 +12,15 @@
             <div *ngIf='lyrics' [innerHTML]="lyrics"></div>
             <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
         </div>
+        <div *ngIf='isAdmin'>
+            <h3>Etiquetas</h3>
+            <div *ngFor='let themeTag of theme.tags'>
+                <p>{{themeTag}} <span (click)='modifyThemeTag(themeTag)'>[[trash-can]]</span></p>
+            </div>
+            <div>
+                <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
+            </div>
+        </div>
         <div>
             <h3>Comentarios {{theme.comments.length}}: </h3>
             <textarea [(ngModel)]="comment"></textarea>

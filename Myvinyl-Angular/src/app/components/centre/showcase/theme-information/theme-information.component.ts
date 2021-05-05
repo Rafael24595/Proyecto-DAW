@@ -171,6 +171,15 @@ export class ThemeInformationComponent implements OnInit {
     console.log(attribute)
   }
 
+  modifyThemeTag(themeTag:string){
+    if (this.theme){
+      let newTags = [...this.theme.tags];
+      let tagExists = this.theme.tags.indexOf(themeTag);
+      (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(themeTag) ;
+      this.modifyThemeData({attrName:'tags', attrId:'', value: newTags});
+    }
+  }
+
   routeArtist(){
     this.router.navigate(['/Artist'], {queryParams:{id:this.theme?.artist.id}});
   }

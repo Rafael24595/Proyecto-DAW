@@ -9,4 +9,11 @@ export class DataManage{
         setTimeout(() => {document.getElementById(id)?.focus();}, 100);
       }
 
+    public static syncForEach(list:any, func:Function){
+        return new Promise(resolve=>{
+            let result = list.array.forEach(func);
+            resolve(result);
+        });
+    }
+
 }

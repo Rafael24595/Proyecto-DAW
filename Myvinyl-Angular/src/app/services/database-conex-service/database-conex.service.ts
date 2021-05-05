@@ -86,6 +86,14 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean, list:Themes[]}>(`http://${Variables.host}:${Variables.port}/api/getThemesFromList`, {profile, themeListName});
  }
 
+ getArtistsIds(attribute:string):Observable<{status:boolean, message:string[]}>{
+  return this.http.get<{status:boolean, message:string[]}>(`http://${Variables.host}:${Variables.port}/api/getArtistsAttributes?attribute=${attribute}`);
+ }
+
+ getFlagsNames():Observable<{status:boolean, message:string[]}>{
+  return this.http.get<{status:boolean, message:string[]}>(`http://${Variables.host}:${Variables.port}/api/getFlagsList`);
+ }
+
  private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
           console.error(error);

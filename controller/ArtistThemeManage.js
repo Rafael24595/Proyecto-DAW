@@ -21,6 +21,15 @@ async function getArtistDataCount(req, res){
       let attribute = req.query.attribute;
       let artists = await Artist.find({}).lean();
       let artistsList = artists.map(artist=>{return (artist[attribute]) ? artist[attribute] : artist.id_artist});
+      if(attribute == 'id_artist'){
+        artistsList = await new Promise(resolve=>{
+          artistsList.forEach(artist=>{
+            let index = artistsList.indexOf(artist);
+            artistsList[index] = `${artistsList[index]}&${artists[index].name} ${artists[index].surname}`;
+          });
+          resolve(artistsList);
+        })
+      }
       res.send({status: true, message: artistsList});
     } catch (error) {
       res.status(400).send({status:'failure'});
