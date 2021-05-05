@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   categories = Categories;
   isAdmin: boolean = false;
   showForm: boolean = false;
-  newArtist = {id: '', name:'', surname:'', tags: [], avatar:[]};
-  avatarSRC = 'ghostAvatar.png';
+  newArtist = {id: '', name:'', surname:'', tags: [], avatarFile:[]};
+  avatarInputErr = '';
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private manageComponent:ManageComponent) { }
 
@@ -64,11 +64,57 @@ export class HomeComponent implements OnInit {
 
   confirmFrom(){
     this.modifyThemeData();
-    this.newArtist = {id: '', name:'', surname:'', tags: [], avatar:[]};
+    this.newArtist = {id: '', name:'', surname:'', tags: [], avatarFile:[]};
   }
 
   modifyThemeData(){
     console.log(this.newArtist)
+    let formDataFiles = new FormData();
+    let avatarFile = document.getElementById('avatarFile') as HTMLInputElement;
+    if(avatarFile.files && avatarFile.files.length > 0){
+      formDataFiles.append('artist_avatar', avatarFile.files[0]);
+      console.log(formDataFiles.getAll('artist_avatar'));
+    }
   }
 
+  async setImagePreview(mode:string){
+
+    var reader = new FileReader();
+    let files:undefined | HTMLInputElement;
+    let imagePreview: undefined | HTMLImageElement;
+    let errMessage: undefined | string ;
+
+    switch (mode){
+
+      case 'avatar':
+        files = document.getElementById('avatarFile') as HTMLInputElement;
+        imagePreview = document.getElementById('avatarPreview') as HTMLImageElement;
+      break;
+
+    }
+
+    errMessage = await new Promise(resolve=>{
+      reader.onload = function(){
+        let result = reader.result as string;
+        if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
+          imagePreview.src = reader.result as string;
+          files?.classList.remove('input-error');
+          errMessage = '';
+        }
+        else{
+          files?.classList.add('input-error');
+          errMessage = 'Formato incorrecto';
+        }
+        resolve(errMessage)
+      }
+      if(files && files.files)
+      reader.readAsDataURL(files.files[0]);
+    });
+
+    if(mode == 'avatar'){
+      this.avatarInputErr = errMessage as string;
+    }
+
+  }
+  
 }

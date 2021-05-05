@@ -15,8 +15,8 @@
     <div *ngIf='showForm'>
         <h2>Nuevo artista:</h2>
         <label for="avatar"><p>Avatar: </p>
-            <input id="avatar"  type="file" [(ngModel)]="newArtist.avatar">
-            <img src="{{avatarSRC}}">
+            <input id="avatarFile"  type="file" [(ngModel)]="newArtist.avatarFile" (change)='setImagePreview("avatar")'>
+            <img id="avatarPreview" src="ghostAvatar.png">
         </label>
         <label for="id"><p>Id: </p>
             <input  type="text" [(ngModel)]="newArtist.id">

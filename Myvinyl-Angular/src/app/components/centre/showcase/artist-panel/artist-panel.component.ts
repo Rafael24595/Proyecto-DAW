@@ -25,11 +25,13 @@ export class ArtistPanelComponent implements OnInit {
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
   attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar'};
-  newTheme = {name:'', flag:'', flagFile: '', cover:[], theme:[], tags:[], lyrics:{native:'', esp:''}};
+  newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:[], lyrics:{native:'', esp:''}};
   reassignArtist = 'default';
   arstistIds:{id:string, name:string}[] = [];
   availableFlags: string[] = [];
-  flagSRC: string = 'ghostFlag.png';
+  coverInputErr:string = '';
+  flagInputErr:string = '';
+  themeInputErr:string = '';
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -98,7 +100,7 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = '';
     this.inputValue = '';
     this.inputSecondValue = '';
-    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], theme:[], tags:[], lyrics:{native:'', esp:''}};
+    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:[], lyrics:{native:'', esp:''}};
     this.reassignArtist = 'default';
   }
 
@@ -110,11 +112,21 @@ export class ArtistPanelComponent implements OnInit {
 
         console.log(this.newTheme)
 
-        let formData = new FormData();
-        let files = document.getElementById('flagFile') as HTMLInputElement;
-        if(files.files && files.files.length > 0){
-          formData.append('user-avatar', files.files[0]);
-          console.log(formData.getAll('user-avatar'));
+        let formDataFiles = new FormData();
+        let flagFile = document.getElementById('flagFile') as HTMLInputElement;
+        let coverFile = document.getElementById('coverFile') as HTMLInputElement;
+        let themeFile = document.getElementById('themeFile') as HTMLInputElement;
+        if(flagFile.files && flagFile.files.length > 0){
+          formDataFiles.append('theme_flag', flagFile.files[0]);
+          console.log(formDataFiles.getAll('theme_flag'));
+        }
+        if(coverFile.files && coverFile.files.length > 0){
+          formDataFiles.append('theme_cover', coverFile.files[0]);
+          console.log(formDataFiles.getAll('theme_cover'));
+        }
+        if(themeFile.files && themeFile.files.length > 0){
+          formDataFiles.append('theme_audio', themeFile.files[0]);
+          console.log(formDataFiles.getAll('theme_audio'));
         }
 
       break;
@@ -158,37 +170,73 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   searchFlag(){
+    let flagPreview = document.getElementById('flagPreview') as HTMLImageElement;
     let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'ghostFlag';
-    this.flagSRC = `/uploads/media/image/flags/${path}.png`;
-    console.log(this.flagSRC)
+    flagPreview.src = `/uploads/media/image/flags/${path}.png`;
   }
 
-  setFlagPreview(){
+  async setImagePreview(mode:string){
 
     var reader = new FileReader();
-    let files = document.getElementById('flagFile') as HTMLInputElement;
-    let SRC: any;
+    let files:undefined | HTMLInputElement;
+    let imagePreview: undefined | HTMLImageElement;
+    let errMessage: undefined | string ;
 
-    if(files.files){
+    switch (mode){
 
-      reader.onload = function(){
+      case 'flag':
+        files = document.getElementById('flagFile') as HTMLInputElement;
+        imagePreview = document.getElementById('flagPreview') as HTMLImageElement;
+      break;
 
-        let result = reader.result as string;
-
-				SRC = reader.result;
-
-        console.log(reader)
-				
-			}
-
-			reader.readAsDataURL(files.files[0]);
-
-      this.flagSRC = SRC;
-
-      console.log(this.flagSRC)
+      case 'cover':
+        files = document.getElementById('coverFile') as HTMLInputElement;
+        imagePreview = document.getElementById('coverPreview') as HTMLImageElement;
+      break;
 
     }
 
+    errMessage = await new Promise(resolve=>{
+      reader.onload = function(){
+        let result = reader.result as string;
+        if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
+          imagePreview.src = reader.result as string;
+          files?.classList.remove('input-error');
+          errMessage = '';
+        }
+        else{
+          files?.classList.add('input-error');
+          errMessage = 'Formato incorrecto';
+        }
+        resolve(errMessage)
+      }
+      if(files && files.files)
+      reader.readAsDataURL(files.files[0]);
+    });
+
+    if(mode == 'cover'){
+      this.coverInputErr = errMessage as string;
+    }
+
+    if(mode == 'flag'){
+      this.flagInputErr = errMessage as string;
+    }
+
+  }
+
+  checkAudioFile(){
+    let files = document.getElementById('themeFile') as HTMLInputElement;
+    if(files.files){
+      let extension = files.files[0].name.split('.')[1];
+      if(extension == 'mp3'){
+        this.themeInputErr = '';
+        files.classList.remove('input-error');
+      }
+      else{
+        files.classList.add('input-error');
+        this.themeInputErr = 'Formato incorrecto';
+      }
+    }
   }
 
   showItem(id:string){

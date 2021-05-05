@@ -50,15 +50,17 @@
                         <label for="name"><p>Nombre: </p>
                             <input  type="text" [(ngModel)]="newTheme.name">
                         </label>
-                        <label for="avatar"><p>Carátula: </p>
-                            <input id="avatar"  type="file" [(ngModel)]="newTheme.cover">
-                            <img src="{{flagSRC}}">
+                        <label for="cover"><p>Carátula: </p>
+                            <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview("cover")'>
+                            <img id="coverPreview" src="ghostCover.png">
+                            <p *ngIf='coverInputErr != ""'>{{coverInputErr}}</p>
                         </label>
                         <label for="flag"><p>Idioma: </p>
                             <input id="flag"  type="text" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
                             <br><br>
-                            <input id="flagFile" type="file" [(ngModel)]="newTheme.flagFile" (change)='setFlagPreview()'>
-                            <img src="{{flagSRC}}">
+                            <input id="flagFile" type="file" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
+                            <img id="flagPreview" src="ghostFlag.png">
+                            <p *ngIf='flagInputErr != ""'>{{flagInputErr}}</p>
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
                             <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">
@@ -70,8 +72,8 @@
                             <textarea name="lyrics_esp" id="" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.esp"></textarea>
                         </label>
                         <label for="theme"><p>Tema: </p>
-                            <input id="theme"  type="file" [(ngModel)]="newTheme.theme">
-                            <img src="{{flagSRC}}">
+                            <input id="themeFile" type="file" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
+                            <p *ngIf='themeInputErr != ""'>{{themeInputErr}}</p>
                         </label>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "reassign" || inputAttr == "reassignMulti"'>
