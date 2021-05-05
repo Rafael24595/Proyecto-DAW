@@ -24,6 +24,7 @@ router.get("/getArtistsAttributes", ArtistThemeManage.getArtistsAttributes);
 router.post("/setArtistAttribute", SecurityManage.verifyToken , ArtistThemeManage.setArtistAttribute);
 router.post("/setArtist", SecurityManage.verifyToken, ArtistThemeManage.setArtist);
 router.post("/removeArtist", SecurityManage.verifyToken, ArtistThemeManage.removeArtist);
+router.post("/reassignArtistTheme", SecurityManage.verifyToken, ArtistThemeManage.reassignArtistTheme);
 router.post("/reassignArtistThemes", SecurityManage.verifyToken, ArtistThemeManage.reassignArtistThemes);
 
 router.get("/getUserData", SecurityManage.verifyToken , UserManage.getUserData);

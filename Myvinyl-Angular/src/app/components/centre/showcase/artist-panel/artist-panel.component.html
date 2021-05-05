@@ -50,8 +50,14 @@
                         <label for="name"><p>Nombre: </p>
                             <input  type="text" [(ngModel)]="newTheme.name">
                         </label>
+                        <label for="avatar"><p>Carátula: </p>
+                            <input id="avatar"  type="file" [(ngModel)]="newTheme.cover">
+                            <img src="{{flagSRC}}">
+                        </label>
                         <label for="flag"><p>Idioma: </p>
-                            <input id="flag"  type="text" [(ngModel)]="newTheme.flag" [(ngModel)]="flagName"(keydown)="searchFlag()">
+                            <input id="flag"  type="text" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
+                            <br><br>
+                            <input id="flagFile" type="file" [(ngModel)]="newTheme.flagFile" (change)='setFlagPreview()'>
                             <img src="{{flagSRC}}">
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
@@ -62,6 +68,10 @@
                         </label>
                         <label for="lyrics_esp"><p>Letra traducida: </p>
                             <textarea name="lyrics_esp" id="" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.esp"></textarea>
+                        </label>
+                        <label for="theme"><p>Tema: </p>
+                            <input id="theme"  type="file" [(ngModel)]="newTheme.theme">
+                            <img src="{{flagSRC}}">
                         </label>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "reassign" || inputAttr == "reassignMulti"'>

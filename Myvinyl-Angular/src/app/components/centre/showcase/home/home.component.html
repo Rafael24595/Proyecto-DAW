@@ -1,4 +1,8 @@
 <div id="homeContainer">
+    <div *ngIf='isAdmin'>
+        <h2>Nuevo artista</h2>
+        <p (click)=showHomeForm()>Nuevo</p>
+    </div>
     <div *ngFor='let category of categories | keyvalue'>
         <h2>{{category.value.name}}</h2>
         <div id={{category.value.code}}>
@@ -7,5 +11,27 @@
                 <p>{{item.name}}</p>
             </div>
         </div>
+    </div>
+    <div *ngIf='showForm'>
+        <h2>Nuevo artista:</h2>
+        <label for="avatar"><p>Avatar: </p>
+            <input id="avatar"  type="file" [(ngModel)]="newArtist.avatar">
+            <img src="{{avatarSRC}}">
+        </label>
+        <label for="id"><p>Id: </p>
+            <input  type="text" [(ngModel)]="newArtist.id">
+        </label>
+        <label for="name"><p>Nombre: </p>
+            <input  type="text" [(ngModel)]="newArtist.name">
+        </label>
+        <label for="surname"><p>Apellidos: </p>
+            <input  type="text" [(ngModel)]="newArtist.surname">
+        </label>
+        <label for="tags"><p>Etiquetas: </p>
+            <input id="tags" type="text" [(ngModel)]="newArtist.tags" placeholder="tag, tag, tag">
+        </label>
+        <br><br>
+        <button (click)='confirmFrom()' >Modificar</button>
+        <button (click)='showForm = false' >Cancelar</button>
     </div>
 </div>

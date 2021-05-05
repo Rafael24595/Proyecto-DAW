@@ -123,7 +123,7 @@ async function updateUserData(req, res){
   let attribute = req.body.attribute;
   let oldAttribute = req.body.oldAttribute;
   let newAttribute = req.body.newAttribute;
-  let userName = req.body.userName;console.log(userName + " " + req.userNameToken)
+  let userName = req.body.userName;
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     let userModify = await Tools.setUserAttribute(user, attribute, oldAttribute, newAttribute);
@@ -144,8 +144,8 @@ async function updateUserData(req, res){
 }
 
 async function checkPassword(req, res){
-  let userName = req.body.userName;console.log(userName + " " + req.userNameToken)
-  let password = req.body.password;console.log(password)
+  let userName = req.body.userName;
+  let password = req.body.password;
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     res.headerSent = true;

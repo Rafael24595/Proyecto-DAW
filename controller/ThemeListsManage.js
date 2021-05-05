@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const jwt = require('jsonwebtoken');
 
-async function privatizeThemeList(req, res){console.log(req.body)
+async function privatizeThemeList(req, res){
     let themeListName = req.body.themeListName;
-    let state = JSON.parse(req.body.state);console.log(state);
+    let state = JSON.parse(req.body.state);
     let userName = req.body.userName;
     let index = 0;
-    state = (state != true && state != false) ? false : state;console.log(state);
+    state = (state != true && state != false) ? false : state;
     state = JSON.stringify(!state);
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
@@ -113,9 +113,9 @@ async function privatizeThemeList(req, res){console.log(req.body)
   }
   
   async function removeFromUserThemeList(req, res){
-    let themeId = req.body.themeId;console.log(themeId);
-    let themeListName = req.body.themeListName;console.log(themeListName);
-    let userName = req.body.userName;console.log(userName);
+    let themeId = req.body.themeId;
+    let themeListName = req.body.themeListName;
+    let userName = req.body.userName;
     let themeToRemove;
     let indexLevelI = 0;
     let indexLevelII = 0;
@@ -158,9 +158,9 @@ async function privatizeThemeList(req, res){console.log(req.body)
   }
 
   async function updateUserThemeList(req, res){
-    let newThemeList = req.body.themeList;console.log(newThemeList);
-    let themeListName = req.body.themeListName;console.log(themeListName);
-    let userName = req.body.userName;console.log(userName);
+    let newThemeList = req.body.themeList;
+    let themeListName = req.body.themeListName;
+    let userName = req.body.userName;
     let index = 0;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();

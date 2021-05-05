@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from 'src/app/classes/Artist';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
@@ -24,13 +24,12 @@ export class ArtistPanelComponent implements OnInit {
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
-  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", picture:'Avatar', newTheme:"Nuevo tema", reassign:'Reasignar'};
-  newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}};
+  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar'};
+  newTheme = {name:'', flag:'', flagFile: '', cover:[], theme:[], tags:[], lyrics:{native:'', esp:''}};
   reassignArtist = 'default';
   arstistIds:{id:string, name:string}[] = [];
   availableFlags: string[] = [];
-  flagSRC: string = 'ghostFlag.png'
-  flagName: string = '';
+  flagSRC: string = 'ghostFlag.png';
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -99,7 +98,7 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = '';
     this.inputValue = '';
     this.inputSecondValue = '';
-    this.newTheme = {name:'', flag:'', tags:[], lyrics:{native:'', esp:''}};
+    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], theme:[], tags:[], lyrics:{native:'', esp:''}};
     this.reassignArtist = 'default';
   }
 
@@ -111,12 +110,19 @@ export class ArtistPanelComponent implements OnInit {
 
         console.log(this.newTheme)
 
+        let formData = new FormData();
+        let files = document.getElementById('flagFile') as HTMLInputElement;
+        if(files.files && files.files.length > 0){
+          formData.append('user-avatar', files.files[0]);
+          console.log(formData.getAll('user-avatar'));
+        }
+
       break;
 
       case 'reassignMulti':
 
         if(this.reassignArtist != 'default'){
-
+          
         }
 
       break;
@@ -152,9 +158,37 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   searchFlag(){
-    let path = (this.availableFlags.indexOf(this.flagName) != -1) ? this.flagName : 'ghostFlag';
+    let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'ghostFlag';
     this.flagSRC = `/uploads/media/image/flags/${path}.png`;
     console.log(this.flagSRC)
+  }
+
+  setFlagPreview(){
+
+    var reader = new FileReader();
+    let files = document.getElementById('flagFile') as HTMLInputElement;
+    let SRC: any;
+
+    if(files.files){
+
+      reader.onload = function(){
+
+        let result = reader.result as string;
+
+				SRC = reader.result;
+
+        console.log(reader)
+				
+			}
+
+			reader.readAsDataURL(files.files[0]);
+
+      this.flagSRC = SRC;
+
+      console.log(this.flagSRC)
+
+    }
+
   }
 
   showItem(id:string){

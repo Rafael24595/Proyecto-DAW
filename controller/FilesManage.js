@@ -19,7 +19,7 @@ async function uploadFile(req, res){
             else{
                 correctFiles = await acceptFile(files[file], fileType, correctFiles);
             }
-        }console.log(correctFiles);
+        }
         if(!res.headerSent && correctFiles.total == correctFiles.count) {res.headerSent = true; res.status(200).json({status:true, files_total: correctFiles.total, files_uploaded: correctFiles.count, files_errors:correctFiles.messages});}
         else {res.headerSent = true; res.status(500).json({status:false, files_total: correctFiles.total, files_uploaded: correctFiles.count, files_errors:correctFiles.messages});}
     }

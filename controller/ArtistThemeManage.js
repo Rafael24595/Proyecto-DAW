@@ -153,6 +153,40 @@ async function getArtistDataCount(req, res){
     }
   }
 
+  async function reassignArtistTheme(req, res){
+    let mainArtistId = req.body.mainArtistId;
+    let targetArtistId = req.body.targetArtistId;
+    let oldThemeId = req.body.themeId;
+    let userName = req.body.userName;
+    if(userName == req.userNameToken && req.isAdmin){
+      let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
+      let targetArtistExists = await Artist.findOne({id_artist:targetArtistId}).lean();
+      if(mainArtistExists != null && targetArtistExists != null){
+        let count = targetArtistExists.themeList.length + 1;
+        let newThemeId = `${targetArtistExists.id_artist}-${count}`;
+        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id =oldThemeId)});
+        let themeIndex = mainArtistExists.themeList.map(theme=>{return theme.id}).indexOf(oldThemeId); 
+        themeToReassign.id = newThemeId;
+        targetArtistExists.themeList.push(themeToReassign);
+        FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${newThemeId}.png`);
+        FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${newThemeId}.mp3`);
+        mainArtistExists.themeList.splice(themeIndex, 1);
+        mainArtistExists = await updateThemesId(mainArtistExists);
+        await Artist.findOneAndUpdate({id_artist:mainArtistId}, mainArtistExists);
+        await Artist.findOneAndUpdate({id_artist:targetArtistId}, targetArtistExists);
+        res.headerSent = true;
+        res.status(200).json({status:true});
+      }
+      else{
+        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+        res.headerSent = true;
+      }
+    }
+    else{
+      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    }
+  }
+
   async function setArtistAttribute(req, res){
     let artistId = req.body.artistId;console.log(artistId)
     let attribute = req.body.attribute;console.log(attribute)
@@ -291,10 +325,10 @@ async function getArtistDataCount(req, res){
   async function updateThemesId(artist){
     var cont = 0;
     artist.themeList.forEach(theme => {
-      artist.themeList[cont] = theme.id = artist.id_artist + (cont + 1);
+      artist.themeList[cont].id = artist.id_artist + "-" + (cont + 1);
       cont++;
     });
     return artist;
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };
+  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };
