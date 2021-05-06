@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import { sesionValues } from '../../../../../utils/variables/sessionVariables';
 import { Categories } from '../../../../../utils/variables/variables';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
@@ -18,10 +19,14 @@ export class HomeComponent implements OnInit {
   categories = Categories;
   isAdmin: boolean = false;
   showForm: boolean = false;
-  newArtist = {id: '', name:'', surname:'', tags: [], avatarFile:[]};
-  avatarInputErr = '';
+  newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
+  artistIds:string[] = [];
+  artistIdsLoad = false;
+  idErr = {text:'', class:''};
+  nameErr = {text:'', class:''};
+  avatarErr = {text:'', class:''};
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private manageComponent:ManageComponent) { }
+  constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
 
@@ -57,24 +62,138 @@ export class HomeComponent implements OnInit {
   }
 
   showHomeForm(){
-
     this.showForm = true;
-
+    this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
+      sucess=>{
+        sucess.message.forEach(artistData=>{
+          let artistDataSplited = artistData.split('&');
+          if(artistDataSplited.length == 2){
+            this.artistIds.push(artistDataSplited[0]);
+            this.artistIdsLoad = true;
+          }
+        });
+      },
+      err=>{
+        console.log(err);
+      }
+    );
   }
 
   confirmFrom(){
-    this.modifyThemeData();
-    this.newArtist = {id: '', name:'', surname:'', tags: [], avatarFile:[]};
+    let sendForm = this.modifyThemeData();
+    if(sendForm){
+      this.setImagePreview('default')
+      this.newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
+      this.showForm = false;
+    }
   }
 
   modifyThemeData(){
     console.log(this.newArtist)
+    let sendSucess = false;
+    let id = this.newArtist.id.toLowerCase();
+    let name = this.newArtist.name;
+    let surname = this.newArtist.surname;
+    let description = this.newArtist.description;
+    let tags = this.checkTags(this.newArtist.tags);
     let formDataFiles = new FormData();
     let avatarFile = document.getElementById('avatarFile') as HTMLInputElement;
     if(avatarFile.files && avatarFile.files.length > 0){
-      formDataFiles.append('artist_avatar', avatarFile.files[0]);
-      console.log(formDataFiles.getAll('artist_avatar'));
+      formDataFiles.append(`artist_avatar-${id}`, avatarFile.files[0]);
+      formDataFiles.append(`userName`, sesionValues.activeUser.name);
     }
+    let correctForm = this.checkForm([{id:'id', value:id}, {id:'name', value:name}, {id:'avatar', value:''}]);
+    if(correctForm){
+      this.DatabaseConexService.setNewArtist(id, name, surname, description, tags, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+            sucess=>{
+              console.log(sucess);
+              sendSucess = true;
+            },
+            err=>{
+              console.log(err);
+            }
+          );
+        },
+        err=>{
+          console.log(err);
+        }
+      );
+    }
+    console.log(sendSucess)
+    return sendSucess;
+  }
+
+  checkForm(data: {id:string, value:string}[]){
+
+    let correctFiles = 0;
+
+    data.forEach(singleData=>{
+      
+      switch (singleData.id){
+
+        case 'id':
+
+          if(singleData.value != ''){
+            if(this.checkId(singleData.value)){
+              this.idErr.class = '';
+              this.idErr.text = '';
+              correctFiles++;
+            }
+            else{
+              this.idErr.class = 'input-error';
+              this.idErr.text = 'Id en uso';
+            }
+          }
+          else{
+            this.idErr.class = 'input-error';
+            this.idErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+        case 'name':
+
+          if(singleData.value != ''){
+            this.nameErr.class = '';
+            this.nameErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.nameErr.class = 'input-error';
+            this.nameErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+        case 'avatar':
+
+          if(this.avatarErr.text == '' && this.avatarErr.class == ''){
+            this.avatarErr.class = '';
+            this.avatarErr.text = '';
+            correctFiles++;
+          }
+          
+        break;
+
+      }
+
+    });
+
+    return (correctFiles == data.length);
+
+  }
+
+  checkId(id:string){
+    let idExists = this.artistIds.indexOf(id);
+    return (this.artistIdsLoad && idExists == -1) ? true : false;
+  }
+
+  checkTags(tags:string){
+    let tagsSplitted = tags.replace(/ /g, '').split(',');
+    let tagsClean = [...new Set(tagsSplitted)];
+    return tagsClean;
   }
 
   async setImagePreview(mode:string){
@@ -82,37 +201,50 @@ export class HomeComponent implements OnInit {
     var reader = new FileReader();
     let files:undefined | HTMLInputElement;
     let imagePreview: undefined | HTMLImageElement;
-    let errMessage: undefined | string ;
+    let errMessage: undefined | string;
+    let errClass: undefined | string;
+    let loadFile = false;
 
     switch (mode){
 
       case 'avatar':
         files = document.getElementById('avatarFile') as HTMLInputElement;
         imagePreview = document.getElementById('avatarPreview') as HTMLImageElement;
+        loadFile = true;
+      break;
+
+      case 'default':
+        let avatarPreview = document.getElementById('avatarPreview') as HTMLImageElement;
+        avatarPreview.src = 'ghotAvatar.png' 
       break;
 
     }
 
-    errMessage = await new Promise(resolve=>{
-      reader.onload = function(){
-        let result = reader.result as string;
-        if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
-          imagePreview.src = reader.result as string;
-          files?.classList.remove('input-error');
-          errMessage = '';
-        }
-        else{
-          files?.classList.add('input-error');
-          errMessage = 'Formato incorrecto';
-        }
-        resolve(errMessage)
-      }
-      if(files && files.files)
-      reader.readAsDataURL(files.files[0]);
-    });
+    if(loadFile){
 
-    if(mode == 'avatar'){
-      this.avatarInputErr = errMessage as string;
+      errMessage = await new Promise(resolve=>{
+        reader.onload = function(){
+          let result = reader.result as string;
+          if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
+            imagePreview.src = reader.result as string;
+            errClass = '';
+            errMessage = '';
+          }
+          else{
+            errClass ='input-error';
+            errMessage = 'Formato incorrecto';
+          }
+          resolve(errMessage)
+        }
+        if(files && files.files)
+        reader.readAsDataURL(files.files[0]);
+      });
+  
+      if(mode == 'avatar'){
+        this.avatarErr.text = errMessage as string;
+        this.avatarErr.class = errClass as string;
+      }
+
     }
 
   }

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Artist = mongoose.model('Artist');
 const FilesManage = require('../controller/FilesManage');
 
-async function getArtistDataCount(req, res){
+  async function getArtistDataCount(req, res){
     try {
       const artists = (parseInt(req.query.count) == -1) ? await Artist.find({}) : await Artist.find({}).limit(parseInt(req.query.count));
       return res.send(artists && artists.length ? artists : ["Not Found"]);
@@ -16,6 +16,24 @@ async function getArtistDataCount(req, res){
   
   }
   
+  async function getArtistDataQuery(req, res){
+    try {
+      let queryData = req.body.queryData;
+      queryData.forEach(data=>{
+        let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).lean();
+        console.log(artistByName);
+        let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
+        console.log(artistBySurname);
+      });
+      return res.send('');
+    } catch (error) {
+      return res.status(400).send({
+        status: 'failure'
+      });
+    }
+  
+  }
+
   async function getArtistsAttributes(req, res){
     try {
       let attribute = req.query.attribute;
@@ -331,4 +349,4 @@ async function getArtistDataCount(req, res){
     return artist;
   }
 
-  module.exports = { getArtistDataCount , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };
+  module.exports = { getArtistDataCount, getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };

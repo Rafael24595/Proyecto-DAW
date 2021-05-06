@@ -1,23 +1,40 @@
 var fs = require("fs");
 
 async function uploadFile(req, res){
-    let userName = req.body.userName;
-    let fileType = req.body.fileType;
-    let files = req.files;
+    let userName = req.body.userName;console.log(userName)
+    let files = req.files;console.log(files)
     let correctFiles = {total:Object.keys(files).length, count:0, messages:[]};
-
-    if((userName == req.userNameToken && fileType == 'user_avatar') || (userName == req.userNameToken && fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
+    if(userName == req.userNameToken){
         for (const file in files) {
-            if(file == 'null'){
+            if(files[file].length > 1){
                 correctFiles.total = correctFiles.total + files[file].length - 1;
                 correctFiles = await new Promise(async resolve=>{
-                    files[file].forEach(async nullKeyFile => {
-                        resolve (await acceptFile(nullKeyFile, fileType, correctFiles));
+                    files[file].forEach(async keyFile => {
+                        let fileData = keyFile.fieldName.split('-');
+                        let fileType = fileData[0];
+                        let name = fileData[1];
+                        if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
+                            resolve (await acceptFile(keyFile, fileType, name, correctFiles));
+                        }
+                        else{
+                            res.headerSent = true;
+                            res.status(401).json({status:false});
+                        }
                     });
-                });
+                });     
             }
             else{
-                correctFiles = await acceptFile(files[file], fileType, correctFiles);
+                let fileData = files[file].fieldName.split('-');
+                let fileType = fileData[0];
+                let name = fileData[1];
+                if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
+                    correctFiles = await acceptFile(files[file], fileType, name, correctFiles);
+                }
+                else{
+                    console.log('xxx');
+                    res.headerSent = true;
+                    res.status(401).json({status:false});
+                }
             }
         }
         if(!res.headerSent && correctFiles.total == correctFiles.count) {res.headerSent = true; res.status(200).json({status:true, files_total: correctFiles.total, files_uploaded: correctFiles.count, files_errors:correctFiles.messages});}
@@ -94,7 +111,7 @@ async function uploadFile(req, res){
 
   }
 
-  async function acceptFile(file, fileType, correctFiles){
+  async function acceptFile(file, fileType, fileName, correctFiles){
 
     let maxFileSize= 157286400;
     let folder = await locateFolder(fileType);
@@ -102,7 +119,7 @@ async function uploadFile(req, res){
     if(file.type == 'image/jpeg' || file.type == 'image/png' || (fileType == 'theme_audio' && file.type == 'audio/mpeg')){
         let fileData = fs.statSync(file.path);
         if(fileData.size <= maxFileSize){
-            fs.copyFileSync(file.path, `./${folder}/${file.name}`);
+            fs.copyFileSync(file.path, `./${folder}/${fileName}`);
             correctFiles.count = correctFiles.count + 1;
         }
         else{

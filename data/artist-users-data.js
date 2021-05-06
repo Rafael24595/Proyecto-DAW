@@ -471,7 +471,7 @@ const artistData = [
                     "esp":
                             ""
                 },
-                "comments": ['Comentario Primero', 'Comentario Segundo', 'Comentario Tercero'],
+                "comments": [],
                 "likes": 0,
                 "dislikes": 0,
                 "views": 0

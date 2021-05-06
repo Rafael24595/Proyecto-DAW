@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Artist } from 'src/app/classes/Artist';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
-import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service'
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
@@ -61,10 +61,10 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = attribute.attrName;
     this.inputValue = attribute.value;
     this.inputSecondValue = (attribute.secondValue) ? attribute.secondValue : this.inputSecondValue;
-    if(attribute.attrName == 'reassign'){
+    if(attribute.attrName == 'reassign' || attribute.attrName == 'reassignMulti'){
       this.arstistIds = [];
       this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
-        sucess=>{
+        sucess=>{console.log(sucess)
           sucess.message.forEach(artistData=>{
             let artistDataSplited = artistData.split('&');
             if(artistDataSplited.length == 2){
@@ -73,7 +73,7 @@ export class ArtistPanelComponent implements OnInit {
           });
         },
         err=>{
-
+          console.log(err)
         }
       );
     }

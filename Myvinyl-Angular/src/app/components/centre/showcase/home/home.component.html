@@ -15,17 +15,23 @@
     <div *ngIf='showForm'>
         <h2>Nuevo artista:</h2>
         <label for="avatar"><p>Avatar: </p>
-            <input id="avatarFile"  type="file" [(ngModel)]="newArtist.avatarFile" (change)='setImagePreview("avatar")'>
+            <input id="avatarFile" type="file" class="{{avatarErr.class}}" [(ngModel)]="newArtist.avatarFile" (change)='setImagePreview("avatar")'>
             <img id="avatarPreview" src="ghostAvatar.png">
+            <p *ngIf='avatarErr.text != ""'>{{avatarErr.text}}</p>
         </label>
         <label for="id"><p>Id: </p>
-            <input  type="text" [(ngModel)]="newArtist.id">
+            <input  type="text" class="{{idErr.class}}" [(ngModel)]="newArtist.id">
+            <p *ngIf='idErr.text != ""'>{{idErr.text}}</p>
         </label>
         <label for="name"><p>Nombre: </p>
-            <input  type="text" [(ngModel)]="newArtist.name">
+            <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newArtist.name">
+            <p *ngIf='nameErr.text != ""'>{{idErr.text}}</p>
         </label>
         <label for="surname"><p>Apellidos: </p>
             <input  type="text" [(ngModel)]="newArtist.surname">
+        </label>
+        <label for="description"><p>Descripción: </p>
+            <textarea name="description" id="" cols="30" rows="10" [(ngModel)]="newArtist.description"></textarea>
         </label>
         <label for="tags"><p>Etiquetas: </p>
             <input id="tags" type="text" [(ngModel)]="newArtist.tags" placeholder="tag, tag, tag">

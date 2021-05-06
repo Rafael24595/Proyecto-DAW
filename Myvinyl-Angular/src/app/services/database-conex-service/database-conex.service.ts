@@ -94,6 +94,14 @@ export class DatabaseConexService {
   return this.http.get<{status:boolean, message:string[]}>(`http://${Variables.host}:${Variables.port}/api/getFlagsList`);
  }
 
+ sendFilesToServer(FormData: FormData):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/uploadFile`, FormData);
+ }
+
+ setNewArtist(artistId:string, name: string, surname:string, description: string, tags: string[], userName: string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/setArtist`, {artistId, name, surname, description, tags, userName});
+ }
+
  private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
           console.error(error);
