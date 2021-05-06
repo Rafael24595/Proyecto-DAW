@@ -139,7 +139,7 @@ async function uploadFile(req, res){
 
     let maxFileSize= 157286400;
     let folder = await locateFolder(fileType);
-    let extension = (file.type == 'image/png' || file.type == 'audio/mpeg') ? 'png' : (file.type == 'audio/mpeg') ? 'mp3' : 'erase'; 
+    let extension = (file.type == 'image/png' || file.type == 'image/jpeg') ? 'png' : (file.type == 'audio/mpeg') ? 'mp3' : 'erase'; 
 
     if(file.type == 'image/jpeg' || file.type == 'image/png' || (fileType == 'theme_audio' && file.type == 'audio/mpeg')){
         let fileData = fs.statSync(file.path);

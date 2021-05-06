@@ -23,4 +23,24 @@ export class Artist {
 		})
 
 	}
+
+	setThemeList(themeList:Themes[]){
+		this.themeList = themeList;
+	}
+
+	removeTheme(themeId:string){
+		let themeIndex = this.themeList.map(theme=>{return theme.id}).indexOf(themeId);
+		let index = 1;
+		if(themeIndex != -1){
+			this.themeList.splice(themeIndex, 1);
+		}
+		this.themeList.forEach(theme=>{
+			theme.id = `${this.id_artist}-${index}`;
+			index++;
+		});
+	}
+
+	removeAllThemes(){
+		this.themeList = [];
+	}
 }

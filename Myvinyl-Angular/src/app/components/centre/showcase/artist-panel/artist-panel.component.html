@@ -3,7 +3,7 @@
         <div>
             <div>
                 <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png"><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"picture", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
-                <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id", attrId:"", value:artist.id_artist})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='deleteArtist(artist.id_artist)'>[[trash-can]]</span></p>
+                <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='deleteArtist(artist.id_artist)'>[[trash-can]]</span></p>
             </div>
             <span *ngIf='artist.description != ""' [innerHTML]="artist.description"></span>
             <span *ngIf='artist.description == ""'>Descripción no disponible</span>
@@ -17,14 +17,16 @@
                         <p>{{artistTag}} <span (click)='modifyArtistTag(artistTag)'>[[trash-can]]</span></p>
                     </div>
                     <div>
-                        <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
+                        <p (click)='modifyArtistData({attrName:"tagsRemove", attrId:"", value:"artistTag"})'> + Nueva etiqueta</p>
                     </div>
                 </ng-container>
                 <h3>Temas</h3><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>[[reasign]]</span>
                 <div *ngFor='let theme of artist.themeList' id="{{theme.id}}">
                     <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                    <p><span *ngIf='isAdmin'> Nombre: </span> <span (click)=showItem(theme.id)>{{theme.name}}</span> <span *ngIf='isAdmin'> - Id: <span (click)=showItem(theme.id)>{{theme.id}}</span> </span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"deleteTheme", attrId:theme.id, value:""})'>[[trash-can]]</span>
-                    <span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>[[reasign]]</span></p>
+                    <p><span *ngIf='isAdmin'> Nombre: </span> <span (click)=showItem(theme.id)>{{theme.name}}</span> <span *ngIf='isAdmin'> - Id: <span (click)=showItem(theme.id)>{{theme.id}}</span></span>
+                        <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)'>[[trash-can]]</span>
+                        <span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>[[reasign]]</span>
+                    </p>
                 </div>
                 <div *ngIf='isAdmin' (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
                     <img src="../../../../../assets/media/images/covers/new_theme.png">

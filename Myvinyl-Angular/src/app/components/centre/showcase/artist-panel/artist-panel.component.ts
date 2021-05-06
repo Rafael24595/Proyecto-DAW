@@ -46,11 +46,16 @@ export class ArtistPanelComponent implements OnInit {
       this.route.queryParams.subscribe(params =>{
         this.DatabaseConexService.getArtistData(params['id']).subscribe(
           sucess=>{
-            this.candy.query['id'] = params['id'];
-            this.artist = sucess.artist as Artist;
-            this.comunicationService.sendCandy(this.candy);
-            this.user = sesionValues.activeUser;
-            this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
+            if(sucess.artist){
+              this.candy.query['id'] = params['id'];
+              this.artist = new Artist(sucess.artist.id_artist, sucess.artist?.name, sucess.artist?.surname, sucess.artist.description, sucess.artist.tags, sucess.artist.themeList);
+              this.comunicationService.sendCandy(this.candy);
+              this.user = sesionValues.activeUser;
+              this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
+            }
+            else{
+              this.router.navigate(['/Home']);
+            }
           },
           err=>{
             this.router.navigate(['/Home']);
@@ -155,7 +160,7 @@ export class ArtistPanelComponent implements OnInit {
             if(this.artist){
               this.DatabaseConexService.setNewTheme(this.artist?.id_artist, name, flag, tags, {native:lyricsNative, esp:lyricsEsp}, sesionValues.activeUser.name).subscribe(
                 sucess=>{
-                  if(this.artist) this.artist.themeList = sucess.message;
+                  if(this.artist) this.artist.setThemeList(sucess.message);
                   if(hasFiles){
                     this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
                       sucess=>{
@@ -186,7 +191,26 @@ export class ArtistPanelComponent implements OnInit {
       case 'reassignMulti':
 
         if(this.reassignArtist != 'default'){
-          
+          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+            if(this.artist){
+              this.DatabaseConexService.reassignArtistThemes(this.artist.id_artist, this.reassignArtist, sesionValues.activeUser.name).subscribe(
+                sucess=>{console.log('inxa')
+                  if(this.artist){console.log('inx')
+                    this.artist.removeAllThemes();
+                    sendSucess = true;
+                    resolve(sendSucess);
+                  }
+                  else{
+                    resolve(sendSucess);
+                  }
+                },
+                err=>{
+                  console.log(err);
+                  resolve(sendSucess);
+                }
+              );
+            }
+          }); 
         }
 
         return sendSucess;
@@ -194,17 +218,58 @@ export class ArtistPanelComponent implements OnInit {
       case 'reassign':
 
         if(this.reassignArtist != 'default'){
-          console.log(this.reassignArtist)
+          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+            if(this.artist){
+              this.DatabaseConexService.reassignArtistTheme(this.artist.id_artist, this.reassignArtist, attribute.value as string, sesionValues.activeUser.name).subscribe(
+                sucess=>{
+                  if(this.artist){
+                    this.artist.removeTheme(attribute.value as string);
+                    sendSucess = true;
+                    resolve(sendSucess);
+                  }
+                  else{
+                    resolve(sendSucess);
+                  }
+                },
+                err=>{
+                  console.log(err);
+                  resolve(sendSucess);
+                }
+              );
+            }
+          }); 
         }
 
         return sendSucess;
 
-      case 'tags':
-
-
-        return sendSucess;
-
       default:
+
+        attribute.value = (attribute.attrName == 'tags') ? FormValidations.checkTags(attribute.value as string) : attribute.value ;
+        attribute.attrName = (attribute.attrName == 'tagsRemove') ? 'tags' : attribute.attrName;
+
+        await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+          if(this.artist){
+            this.DatabaseConexService.setArtistAttribute(this.artist.id_artist, attribute.attrName, (attribute.value) ? attribute.value: '', sesionValues.activeUser.name).subscribe(
+              sucess=>{
+                if(sucess.message){
+                  this.artist = new Artist(sucess.message.id_artist, sucess.message.name, sucess.message.surname, sucess.message.description, sucess.message.tags, sucess.message.themeList);
+                  sendSucess = true;
+                  if(attribute.attrName == 'id_artist'){
+                    this.router.navigate(['/Artist'], {queryParams:{id:this.artist.id_artist}});
+                  }
+                  resolve(sendSucess);
+                }
+                else{
+                  resolve(sendSucess);
+                }
+              },
+              err=>{
+                console.log(err);
+                resolve(sendSucess);
+              }
+            );
+          }
+        });
 
         return sendSucess;
 
@@ -274,7 +339,7 @@ export class ArtistPanelComponent implements OnInit {
       let newTags = [...this.artist.tags];
       let tagExists = this.artist.tags.indexOf(artistTag);
       (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(artistTag) ;
-      this.modifyArtistData({attrName:'tags', attrId:'', value: newTags});
+      this.modifyArtistData({attrName:'tagsRemove', attrId:'', value: newTags});
     }
   }
 
@@ -283,6 +348,22 @@ export class ArtistPanelComponent implements OnInit {
       this.DatabaseConexService.removeArtist(this.artist.id_artist, sesionValues.activeUser.name).subscribe(
         sucess=>{
           this.router.navigate(['/Home']);
+        },
+        err=>{
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  deleteTheme(themeId:string){
+    if(this.artist){
+      this.DatabaseConexService.removeTheme(this.artist.id_artist, themeId, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          if(this.artist){
+            this.artist.removeTheme(themeId);
+          }
+          this.artist?.themeList.map
         },
         err=>{
           console.log(err);

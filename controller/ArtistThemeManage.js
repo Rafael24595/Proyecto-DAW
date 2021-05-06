@@ -170,8 +170,8 @@ const FilesManage = require('../controller/FilesManage');
         mainArtistExists.themeList = [];
         await Artist.findOneAndUpdate({id_artist:mainArtistId}, mainArtistExists);
         await Artist.findOneAndUpdate({id_artist:targetArtistId}, targetArtistExists);
-        console.log(mainArtistExists.themeList);
-        console.log(targetArtistExists.themeList);
+        res.headerSent = true;
+        res.status(200).json({status:true});
       }
       else{
         if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
@@ -184,9 +184,9 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function reassignArtistTheme(req, res){
-    let mainArtistId = req.body.mainArtistId;
-    let targetArtistId = req.body.targetArtistId;
-    let oldThemeId = req.body.themeId;
+    let mainArtistId = req.body.mainArtistId;console.log(mainArtistId)
+    let targetArtistId = req.body.targetArtistId;console.log(targetArtistId)
+    let oldThemeId = req.body.themeId;console.log(oldThemeId)
     let userName = req.body.userName;
     if(userName == req.userNameToken && req.isAdmin){
       let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
@@ -194,7 +194,7 @@ const FilesManage = require('../controller/FilesManage');
       if(mainArtistExists != null && targetArtistExists != null){
         let count = targetArtistExists.themeList.length + 1;
         let newThemeId = `${targetArtistExists.id_artist}-${count}`;
-        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id =oldThemeId)});
+        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id == oldThemeId)});console.log(themeToReassign)
         let themeIndex = mainArtistExists.themeList.map(theme=>{return theme.id}).indexOf(oldThemeId); 
         themeToReassign.id = newThemeId;
         targetArtistExists.themeList.push(themeToReassign);
@@ -225,22 +225,23 @@ const FilesManage = require('../controller/FilesManage');
     
     if(userName == req.userNameToken && req.isAdmin){
       let artist = await Artist.findOne({id_artist:artistId}).lean();
-      if(artist[attribute] && typeof artist[attribute] == typeof value){
+      if(artist[attribute] != undefined && typeof artist[attribute] == typeof value){
         if(attribute != 'id_artist' || attribute == 'id_artist' && await Artist.findOne({id_artist:value}) == null){
           artist[attribute] = value;
           if(attribute == 'id_artist'){
-            artist = updateThemesId(artist);
+            artist = await updateThemesId(artist);
           }
+          console.log(artist)
           await Artist.findOneAndUpdate({id_artist:artistId}, artist);
           res.headerSent = true;
-          res.status(200).json({status:true});
+          res.status(200).json({status:true, message: artist});
         }
         else{
           if(!res.headerSent) res.status(401).json({status:'id-exists'});
           res.headerSent = true;
         }
       }
-      else{
+      else{console.log('inx')
         if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
         res.headerSent = true;
       }
