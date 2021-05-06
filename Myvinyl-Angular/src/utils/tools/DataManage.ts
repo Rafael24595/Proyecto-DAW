@@ -11,9 +11,15 @@ export class DataManage{
 
     public static syncForEach(list:any, func:Function){
         return new Promise(resolve=>{
-            let result = list.array.forEach(func);
+            let result = list.forEach(func);
             resolve(result);
         });
+    }
+
+    public static toAsync(func:Function){
+        return new Promise(resolve=>{
+            func(resolve);
+        })
     }
 
 }

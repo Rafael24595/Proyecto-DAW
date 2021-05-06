@@ -7,6 +7,8 @@ import { DatabaseConexService } from '../../../../services/database-conex-servic
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
+import { DataManage } from 'src/utils/tools/DataManage';
+import { FormValidations } from 'src/utils/tools/FormValidations';
 
 @Component({
   selector: 'app-home',
@@ -79,8 +81,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  confirmFrom(){
-    let sendForm = this.modifyThemeData();
+  async confirmFrom(){
+    console.log('xxx')
+    let sendForm = await this.modifyThemeData();
+    console.log(sendForm)
     if(sendForm){
       this.setImagePreview('default')
       this.newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
@@ -88,40 +92,50 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  modifyThemeData(){
+  async modifyThemeData(){
     console.log(this.newArtist)
     let sendSucess = false;
+    let hasFiles = false;
     let id = this.newArtist.id.toLowerCase();
     let name = this.newArtist.name;
     let surname = this.newArtist.surname;
     let description = this.newArtist.description;
-    let tags = this.checkTags(this.newArtist.tags);
+    let tags = FormValidations.checkTags(this.newArtist.tags);
     let formDataFiles = new FormData();
     let avatarFile = document.getElementById('avatarFile') as HTMLInputElement;
     if(avatarFile.files && avatarFile.files.length > 0){
       formDataFiles.append(`artist_avatar-${id}`, avatarFile.files[0]);
       formDataFiles.append(`userName`, sesionValues.activeUser.name);
+      hasFiles = true;
     }
     let correctForm = this.checkForm([{id:'id', value:id}, {id:'name', value:name}, {id:'avatar', value:''}]);
     if(correctForm){
-      this.DatabaseConexService.setNewArtist(id, name, surname, description, tags, sesionValues.activeUser.name).subscribe(
-        sucess=>{
-          this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
-            sucess=>{
-              console.log(sucess);
-              sendSucess = true;
-            },
-            err=>{
-              console.log(err);
+      await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+        this.DatabaseConexService.setNewArtist(id, name, surname, description, tags, sesionValues.activeUser.name).subscribe(
+          sucess=>{
+            if(hasFiles){
+              this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+                sucess=>{
+                  sendSucess = true;
+                  resolve(sendSucess);
+                },
+                err=>{
+                  resolve(sendSucess);
+                }
+              );
             }
-          );
-        },
-        err=>{
-          console.log(err);
-        }
-      );
+            else{
+              sendSucess = true;
+              resolve(sendSucess);
+            }
+          },
+          err=>{
+            console.log(err);
+            resolve(sendSucess);
+          }
+        );
+      });
     }
-    console.log(sendSucess)
     return sendSucess;
   }
 
@@ -188,12 +202,6 @@ export class HomeComponent implements OnInit {
   checkId(id:string){
     let idExists = this.artistIds.indexOf(id);
     return (this.artistIdsLoad && idExists == -1) ? true : false;
-  }
-
-  checkTags(tags:string){
-    let tagsSplitted = tags.replace(/ /g, '').split(',');
-    let tagsClean = [...new Set(tagsSplitted)];
-    return tagsClean;
   }
 
   async setImagePreview(mode:string){

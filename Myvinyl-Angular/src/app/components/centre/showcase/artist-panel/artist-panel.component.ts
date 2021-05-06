@@ -8,6 +8,8 @@ import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { User } from 'src/app/classes/User';
+import { FormValidations } from 'src/utils/tools/FormValidations';
+import { DataManage } from 'src/utils/tools/DataManage';
 
 @Component({
   selector: 'app-artist-panel',
@@ -25,13 +27,15 @@ export class ArtistPanelComponent implements OnInit {
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
   attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar'};
-  newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:[], lyrics:{native:'', esp:''}};
+  newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
   reassignArtist = 'default';
   arstistIds:{id:string, name:string}[] = [];
   availableFlags: string[] = [];
-  coverInputErr:string = '';
-  flagInputErr:string = '';
-  themeInputErr:string = '';
+  nameErr = {text:'', class:''};
+  flagErr = {text:'', class:''};
+  coverErr = {text:'', class:''};
+  flagFileErr = {text:'', class:''};
+  themeErr = {text:'', class:''};
 
   constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -100,34 +104,78 @@ export class ArtistPanelComponent implements OnInit {
     this.inputAttr = '';
     this.inputValue = '';
     this.inputSecondValue = '';
-    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:[], lyrics:{native:'', esp:''}};
+    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
     this.reassignArtist = 'default';
   }
 
-  modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
+  async modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
     console.log(attribute)
     switch (attribute.attrName){
 
       case 'newTheme':
 
         console.log(this.newTheme)
+        let sendSucess = false;
+        let hasFiles = false;
+        let name = this.newTheme.name;
+        let flag = this.newTheme.flag;
+        let tags = FormValidations.checkTags(this.newTheme.tags);
+        let lyricsNative = this.newTheme.lyrics.native;
+        let lyricsEsp = this.newTheme.lyrics.esp;
 
         let formDataFiles = new FormData();
         let flagFile = document.getElementById('flagFile') as HTMLInputElement;
         let coverFile = document.getElementById('coverFile') as HTMLInputElement;
         let themeFile = document.getElementById('themeFile') as HTMLInputElement;
+        
         if(flagFile.files && flagFile.files.length > 0){
-          formDataFiles.append('theme_flag', flagFile.files[0]);
+          formDataFiles.append('theme_flag-', flagFile.files[0]);
           console.log(formDataFiles.getAll('theme_flag'));
+          hasFiles = true;
         }
         if(coverFile.files && coverFile.files.length > 0){
           formDataFiles.append('theme_cover', coverFile.files[0]);
           console.log(formDataFiles.getAll('theme_cover'));
+          hasFiles = true;
         }
         if(themeFile.files && themeFile.files.length > 0){
           formDataFiles.append('theme_audio', themeFile.files[0]);
           console.log(formDataFiles.getAll('theme_audio'));
+          hasFiles = true;
         }
+
+        let correctForm = this.checkForm([{id:'name', value:name}, {id:'flag', value:flag}, {id:'files', value:''}]);
+        if(correctForm){
+          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+            if(this.artist){
+              this.DatabaseConexService.setNewTheme(this.artist?.id_artist, name, flag, tags, {native:lyricsNative, esp:lyricsEsp}, sesionValues.activeUser.name).subscribe(
+                sucess=>{
+                  if(hasFiles){
+                    this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+                      sucess=>{
+                        sendSucess = true;
+                        resolve(sendSucess);
+                      },
+                      err=>{
+                        resolve(sendSucess);
+                      }
+                    );
+                  }
+                  else{
+                    sendSucess = true;
+                    resolve(sendSucess);
+                  }
+                },
+                err=>{
+                  console.log(err);
+                  resolve(sendSucess);
+                }
+              );
+            }
+          });
+        }
+
+        return sendSucess;
 
       break;
 
@@ -160,12 +208,84 @@ export class ArtistPanelComponent implements OnInit {
     }
   }
 
+  checkForm(data: {id:string, value:string}[]){
+
+    let correctFiles = 0;
+
+    data.forEach(singleData=>{
+      
+      switch (singleData.id){
+
+        case 'name':
+
+          if(singleData.value != ''){
+            this.nameErr.class = '';
+            this.nameErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.nameErr.class = 'input-error';
+            this.nameErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+        case 'flag':
+
+          if(singleData.value != ''){
+            this.flagErr.class = '';
+            this.flagErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.flagErr.class = 'input-error';
+            this.flagErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+        case 'files':
+
+          let files = [this.coverErr, this.flagFileErr, this.themeErr];
+          let checkFilesError = true;
+
+          files.forEach(file=>{
+            if(file.text != '' || file.class != ''){
+              checkFilesError = false;
+            }
+          });
+
+          correctFiles = (checkFilesError) ? correctFiles + 1 : correctFiles;
+          
+        break;
+
+      }
+
+    });
+
+    return (correctFiles == data.length);
+
+  }
+
   modifyArtistTag(artistTag:string){
     if (this.artist){
       let newTags = [...this.artist.tags];
       let tagExists = this.artist.tags.indexOf(artistTag);
       (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(artistTag) ;
       this.modifyArtistData({attrName:'tags', attrId:'', value: newTags});
+    }
+  }
+
+  deleteArtist(id:string){
+    if(this.artist){
+      this.DatabaseConexService.removeArtist(this.artist.id_artist, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          this.router.navigate(['/Home']);
+        },
+        err=>{
+          console.log(err);
+        }
+      );
     }
   }
 
@@ -180,7 +300,8 @@ export class ArtistPanelComponent implements OnInit {
     var reader = new FileReader();
     let files:undefined | HTMLInputElement;
     let imagePreview: undefined | HTMLImageElement;
-    let errMessage: undefined | string ;
+    let errMessage: undefined | string;
+    let errClass: undefined | string;
 
     switch (mode){
 
@@ -201,11 +322,11 @@ export class ArtistPanelComponent implements OnInit {
         let result = reader.result as string;
         if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
           imagePreview.src = reader.result as string;
-          files?.classList.remove('input-error');
+          errClass = '';
           errMessage = '';
         }
         else{
-          files?.classList.add('input-error');
+          errClass = 'input-error';
           errMessage = 'Formato incorrecto';
         }
         resolve(errMessage)
@@ -215,11 +336,13 @@ export class ArtistPanelComponent implements OnInit {
     });
 
     if(mode == 'cover'){
-      this.coverInputErr = errMessage as string;
+      this.coverErr.text = errMessage as string;
+      this.coverErr.class = errClass as string;
     }
 
     if(mode == 'flag'){
-      this.flagInputErr = errMessage as string;
+      this.flagFileErr.text = errMessage as string;
+      this.flagFileErr.class = errClass as string;
     }
 
   }
@@ -229,12 +352,12 @@ export class ArtistPanelComponent implements OnInit {
     if(files.files){
       let extension = files.files[0].name.split('.')[1];
       if(extension == 'mp3'){
-        this.themeInputErr = '';
-        files.classList.remove('input-error');
+        this.themeErr.text = '';
+        this.themeErr.class = '';
       }
       else{
-        files.classList.add('input-error');
-        this.themeInputErr = 'Formato incorrecto';
+        this.themeErr.text = 'Formato incorrecto';
+        this.themeErr.class = 'input-error';
       }
     }
   }

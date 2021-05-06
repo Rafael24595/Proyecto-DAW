@@ -18,18 +18,31 @@ const FilesManage = require('../controller/FilesManage');
   
   async function getArtistDataQuery(req, res){
     try {
-      let queryData = req.body.queryData;
-      queryData.forEach(data=>{
-        let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).lean();
-        console.log(artistByName);
-        let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
-        console.log(artistBySurname);
+      let queryData = req.body.queryData;console.log(queryData)
+      let artistsQuery = await new Promise(resolve=>{
+        let query = [];
+        queryData.forEach(async data=>{
+          let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).lean();
+          //console.log(artistByName);
+          query = query.concat(artistByName);
+          let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
+          //console.log(artistBySurname);
+          query = query.concat(artistBySurname);
+          let artistByTags = await Artist.find({"tags":{ "$regex": data, "$options": "i" }}).lean();
+          //console.log(artistByTags);
+          query = query.concat(artistByTags);
+          let themeByName = await Artist.find({"themeList.name":{ "$regex": data, "$options": "i" }}).lean();
+          //console.log(themeByName);
+          query = query.concat(themeByName);
+          let themeByTags = await Artist.find({"themeList.tags":{ "$regex": data, "$options": "i" }}).lean();
+          //console.log(artistByTags);
+          query = query.concat(themeByTags);
+          resolve(query);
+        });
       });
-      return res.send('');
+      res.send({status:true, message:artistsQuery});
     } catch (error) {
-      return res.status(400).send({
-        status: 'failure'
-      });
+      res.status(400).send({status: 'failure'});
     }
   
   }

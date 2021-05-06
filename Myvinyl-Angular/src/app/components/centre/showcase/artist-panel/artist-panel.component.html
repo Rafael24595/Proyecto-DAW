@@ -3,7 +3,7 @@
         <div>
             <div>
                 <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png"><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"picture", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
-                <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id", attrId:"", value:artist.id_artist})'>[[pencil]]</span></p>
+                <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id", attrId:"", value:artist.id_artist})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='deleteArtist(artist.id_artist)'>[[trash-can]]</span></p>
             </div>
             <span *ngIf='artist.description != ""' [innerHTML]="artist.description"></span>
             <span *ngIf='artist.description == ""'>Descripción no disponible</span>
@@ -52,15 +52,16 @@
                         </label>
                         <label for="cover"><p>Carátula: </p>
                             <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview("cover")'>
-                            <img id="coverPreview" src="ghostCover.png">
-                            <p *ngIf='coverInputErr != ""'>{{coverInputErr}}</p>
+                            <img id="coverPreview" class="{{coverErr.class}}" src="ghostCover.png">
+                            <p *ngIf='coverErr.text != ""'>{{coverErr.text}}</p>
                         </label>
                         <label for="flag"><p>Idioma: </p>
                             <input id="flag"  type="text" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
                             <br><br>
-                            <input id="flagFile" type="file" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
-                            <img id="flagPreview" src="ghostFlag.png">
-                            <p *ngIf='flagInputErr != ""'>{{flagInputErr}}</p>
+                            <input id="flagFile" type="file" class="{{flagErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
+                            <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
+                            <img id="flagPreview" class="{{flagFileErr.class}}" src="ghostFlag.png">
+                            <p *ngIf='flagFileErr.text != ""'>{{flagFileErr.text}}</p>
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
                             <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">
@@ -72,8 +73,8 @@
                             <textarea name="lyrics_esp" id="" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.esp"></textarea>
                         </label>
                         <label for="theme"><p>Tema: </p>
-                            <input id="themeFile" type="file" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
-                            <p *ngIf='themeInputErr != ""'>{{themeInputErr}}</p>
+                            <input id="themeFile" type="file" class="{{themeErr.class}}" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
+                            <p *ngIf='themeErr.text != ""'>{{themeErr.text}}</p>
                         </label>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "reassign" || inputAttr == "reassignMulti"'>

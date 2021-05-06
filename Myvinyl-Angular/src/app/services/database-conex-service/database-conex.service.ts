@@ -34,12 +34,24 @@ export class DatabaseConexService {
   return this.http.get<{status:boolean, artist: Artist | null}>(`http://${Variables.host}:${Variables.port}/api/getArtistData?artist=${artistId}`);
  }
 
+ getArtistDataByQuery(queryData:string[]):Observable<{status:boolean, message: Artist[] | undefined}>{
+  return this.http.post<{status:boolean, message: Artist[] | undefined}>(`http://${Variables.host}:${Variables.port}/api/getArtistDataQuery`, {queryData});
+}
+
  getProfileData(profile:string): Observable<{validToken:boolean,data:UserInterface}>{
   return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`);
  }
 
  getUserData(): Observable<User>{
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
+ }
+
+ setNewTheme(artistId: string, name: string, flag: string, tags: string[], lyrics: {native:string, esp:string}, userName: string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/setTheme`, {artistId, name, flag, tags, lyrics, userName});
+ }
+
+ removeArtist(artistId:string,userName:string):Observable<{status:boolean}>{
+  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/removeArtist`, {artistId, userName});
  }
 
  setThemeComment(themeId:string,userName:string,comment:string):Observable<{commentId:string,userName:string,comment:string}>{

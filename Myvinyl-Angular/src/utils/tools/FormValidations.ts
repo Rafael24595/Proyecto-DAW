@@ -109,4 +109,10 @@ export class FormValidations{
         document.getElementById(id)?.classList.add('input-error');
     }
 
+    public static checkTags(tags:string){
+        let tagsSplitted = tags.replace(/ /g, '').split(',');
+        let tagsClean = [...new Set(tagsSplitted)];
+        return tagsClean;
+      }
+
 }
