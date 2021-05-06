@@ -48,7 +48,8 @@
                     <ng-container *ngIf='inputAttr == "newTheme"'>
                         <h2>Nuevo tema: </h2>
                         <label for="name"><p>Nombre: </p>
-                            <input  type="text" [(ngModel)]="newTheme.name">
+                            <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newTheme.name">
+                            <p *ngIf='nameErr.text != ""'>{{nameErr.text}}</p>
                         </label>
                         <label for="cover"><p>Carátula: </p>
                             <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview("cover")'>
@@ -56,12 +57,12 @@
                             <p *ngIf='coverErr.text != ""'>{{coverErr.text}}</p>
                         </label>
                         <label for="flag"><p>Idioma: </p>
-                            <input id="flag"  type="text" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
-                            <br><br>
-                            <input id="flagFile" type="file" class="{{flagErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
+                            <input id="flag"  type="text" class="{{flagErr.class}}" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
                             <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
-                            <img id="flagPreview" class="{{flagFileErr.class}}" src="ghostFlag.png">
+                            <br><br>
+                            <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
                             <p *ngIf='flagFileErr.text != ""'>{{flagFileErr.text}}</p>
+                            <img id="flagPreview" src="ghostFlag.png">
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
                             <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">

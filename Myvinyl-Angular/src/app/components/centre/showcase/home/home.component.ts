@@ -82,7 +82,6 @@ export class HomeComponent implements OnInit {
   }
 
   async confirmFrom(){
-    console.log('xxx')
     let sendForm = await this.modifyThemeData();
     console.log(sendForm)
     if(sendForm){
@@ -104,7 +103,7 @@ export class HomeComponent implements OnInit {
     let formDataFiles = new FormData();
     let avatarFile = document.getElementById('avatarFile') as HTMLInputElement;
     if(avatarFile.files && avatarFile.files.length > 0){
-      formDataFiles.append(`artist_avatar-${id}`, avatarFile.files[0]);
+      formDataFiles.append(`artist_avatar&${id}`, avatarFile.files[0]);
       formDataFiles.append(`userName`, sesionValues.activeUser.name);
       hasFiles = true;
     }

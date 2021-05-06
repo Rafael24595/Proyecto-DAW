@@ -70,16 +70,15 @@ const FilesManage = require('../controller/FilesManage');
   async function getArtistData(req, res){
     try {
       const artistId = req.query.artist;
-      await Artist.findOne({"id_artist":artistId}).lean().then(async artist=>{
-        if(artist){
-          return res.send({status:true, artist:artist});
-        }
-        return res.status(404).send({status: false, artist:null})
-      });
+      let artist = await tools.getArtistById(artistId);
+      if(artist){
+        res.status(200).send({status:true, artist:artist});
+      }
+      else{
+        res.status(404).send({status: false, artist:null})
+      }
     }catch (error) {
-      return res.status(400).send({
-        status: 'failure'
-      })
+      res.status(400).send({status: 'failure'});
     }
   }
 
@@ -267,7 +266,7 @@ const FilesManage = require('../controller/FilesManage');
         await Artist.findOneAndUpdate({id_artist:artistId}, artistExists);
         console.log(artistExists)
         res.headerSent = true;
-        res.status(200).json({status:true});
+        res.status(200).json({status:true, message:artistExists.themeList});
       }
       else{
         if(!res.headerSent) res.status(401).json({status:'id-not-exists'});

@@ -46,8 +46,8 @@ export class DatabaseConexService {
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }
 
- setNewTheme(artistId: string, name: string, flag: string, tags: string[], lyrics: {native:string, esp:string}, userName: string):Observable<{status:boolean}>{
-  return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/setTheme`, {artistId, name, flag, tags, lyrics, userName});
+ setNewTheme(artistId: string, name: string, flag: string, tags: string[], lyrics: {native:string, esp:string}, userName: string):Observable<{status:boolean, message:Themes[]}>{
+  return this.http.post<{status:boolean, message:Themes[]}>(`http://${Variables.host}:${Variables.port}/api/setTheme`, {artistId, name, flag, tags, lyrics, userName});
  }
 
  removeArtist(artistId:string,userName:string):Observable<{status:boolean}>{

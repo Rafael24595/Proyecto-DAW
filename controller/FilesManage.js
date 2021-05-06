@@ -1,4 +1,5 @@
 var fs = require("fs");
+const tools = require('../utils/tools');
 
 async function uploadFile(req, res){
     let userName = req.body.userName;console.log(userName)
@@ -10,9 +11,16 @@ async function uploadFile(req, res){
                 correctFiles.total = correctFiles.total + files[file].length - 1;
                 correctFiles = await new Promise(async resolve=>{
                     files[file].forEach(async keyFile => {
-                        let fileData = keyFile.fieldName.split('-');
+                        let fileData = keyFile.fieldName.split('&');
                         let fileType = fileData[0];
                         let name = fileData[1];
+                        if(fileType == 'theme_audio' || fileType == 'theme_cover'){
+                            name = await setThemeCoverName(name);
+                            if(!name){
+                                res.headerSent = true;
+                                res.status(404).json({status:false});
+                            }
+                        }
                         if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
                             resolve (await acceptFile(keyFile, fileType, name, correctFiles));
                         }
@@ -24,14 +32,20 @@ async function uploadFile(req, res){
                 });     
             }
             else{
-                let fileData = files[file].fieldName.split('-');
+                let fileData = files[file].fieldName.split('&');
                 let fileType = fileData[0];
                 let name = fileData[1];
+                if(fileType == 'theme_audio' || fileType == 'theme_cover'){
+                    name = await setThemeCoverName(name);
+                    if(!name){
+                        res.headerSent = true;
+                        res.status(404).json({status:false});
+                    }
+                }
                 if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
                     correctFiles = await acceptFile(files[file], fileType, name, correctFiles);
                 }
                 else{
-                    console.log('xxx');
                     res.headerSent = true;
                     res.status(401).json({status:false});
                 }
@@ -44,6 +58,16 @@ async function uploadFile(req, res){
         res.status(401).json({status:false});
     }
     checkTempSize();
+  }
+
+  async function setThemeCoverName(name){
+    let artist = await tools.getArtistById(name);
+    if(artist){
+        return `${name}-${artist.themeList.length}`;
+    }
+    else{
+        return undefined;
+    }
   }
 
   async function renameFile(req, res){
@@ -115,11 +139,12 @@ async function uploadFile(req, res){
 
     let maxFileSize= 157286400;
     let folder = await locateFolder(fileType);
+    let extension = (file.type == 'image/png' || file.type == 'audio/mpeg') ? 'png' : (file.type == 'audio/mpeg') ? 'mp3' : 'erase'; 
 
     if(file.type == 'image/jpeg' || file.type == 'image/png' || (fileType == 'theme_audio' && file.type == 'audio/mpeg')){
         let fileData = fs.statSync(file.path);
         if(fileData.size <= maxFileSize){
-            fs.copyFileSync(file.path, `./${folder}/${fileName}`);
+            fs.copyFileSync(file.path, `./${folder}/${fileName}.${extension}`);
             correctFiles.count = correctFiles.count + 1;
         }
         else{

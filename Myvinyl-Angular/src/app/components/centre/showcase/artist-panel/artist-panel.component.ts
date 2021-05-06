@@ -95,27 +95,33 @@ export class ArtistPanelComponent implements OnInit {
     }
   }
 
-  confirmFrom(){
-    this.modifyArtistData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
+  async confirmFrom(){
+    let sendForm = await this.modifyArtistData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
     if(this.inputAttr == 'name'){
       this.modifyArtistData({attrName:'surname', attrId:'', value: this.inputSecondValue});
     }
-    this.showInput = false;
-    this.inputAttr = '';
-    this.inputValue = '';
-    this.inputSecondValue = '';
-    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
-    this.reassignArtist = 'default';
+    if(sendForm){
+      this.showInput = false;
+      this.inputAttr = '';
+      this.inputValue = '';
+      this.inputSecondValue = '';
+      this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
+      this.reassignArtist = 'default';
+    }
+    
   }
 
   async modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
     console.log(attribute)
+
+    let sendSucess = false;
+
     switch (attribute.attrName){
 
       case 'newTheme':
 
         console.log(this.newTheme)
-        let sendSucess = false;
+        
         let hasFiles = false;
         let name = this.newTheme.name;
         let flag = this.newTheme.flag;
@@ -128,19 +134,18 @@ export class ArtistPanelComponent implements OnInit {
         let coverFile = document.getElementById('coverFile') as HTMLInputElement;
         let themeFile = document.getElementById('themeFile') as HTMLInputElement;
         
+        formDataFiles.append(`userName`, sesionValues.activeUser.name);
+
         if(flagFile.files && flagFile.files.length > 0){
-          formDataFiles.append('theme_flag-', flagFile.files[0]);
-          console.log(formDataFiles.getAll('theme_flag'));
+          formDataFiles.append(`theme_flag&${flag}`, flagFile.files[0]);
           hasFiles = true;
         }
-        if(coverFile.files && coverFile.files.length > 0){
-          formDataFiles.append('theme_cover', coverFile.files[0]);
-          console.log(formDataFiles.getAll('theme_cover'));
+        if(this.artist && coverFile.files && coverFile.files.length > 0){
+          formDataFiles.append(`theme_cover&${this.artist.id_artist}`, coverFile.files[0]);
           hasFiles = true;
         }
-        if(themeFile.files && themeFile.files.length > 0){
-          formDataFiles.append('theme_audio', themeFile.files[0]);
-          console.log(formDataFiles.getAll('theme_audio'));
+        if(this.artist && themeFile.files && themeFile.files.length > 0){
+          formDataFiles.append(`theme_audio&${this.artist.id_artist}`, themeFile.files[0]);
           hasFiles = true;
         }
 
@@ -150,6 +155,7 @@ export class ArtistPanelComponent implements OnInit {
             if(this.artist){
               this.DatabaseConexService.setNewTheme(this.artist?.id_artist, name, flag, tags, {native:lyricsNative, esp:lyricsEsp}, sesionValues.activeUser.name).subscribe(
                 sucess=>{
+                  if(this.artist) this.artist.themeList = sucess.message;
                   if(hasFiles){
                     this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
                       sucess=>{
@@ -177,15 +183,13 @@ export class ArtistPanelComponent implements OnInit {
 
         return sendSucess;
 
-      break;
-
       case 'reassignMulti':
 
         if(this.reassignArtist != 'default'){
           
         }
 
-      break;
+        return sendSucess;
 
       case 'reassign':
 
@@ -193,17 +197,16 @@ export class ArtistPanelComponent implements OnInit {
           console.log(this.reassignArtist)
         }
 
-      break
+        return sendSucess;
 
       case 'tags':
 
 
-
-      break;
+        return sendSucess;
 
       default:
 
-      break;
+        return sendSucess;
 
     }
   }
@@ -212,12 +215,11 @@ export class ArtistPanelComponent implements OnInit {
 
     let correctFiles = 0;
 
-    data.forEach(singleData=>{
+    data.forEach(singleData=>{console.log(singleData.id)
       
       switch (singleData.id){
 
         case 'name':
-
           if(singleData.value != ''){
             this.nameErr.class = '';
             this.nameErr.text = '';

@@ -2,6 +2,7 @@
 require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Artist = mongoose.model('Artist');
 
 async function usersExist(theme){
   return new Promise(resolve=>{
@@ -47,4 +48,13 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
   return {status:isChanged, user:user, inUse:inUse};
 }
 
-module.exports = { usersExist, setUserAttribute }
+async function getArtistById(artistId){
+  try {
+    let artist = await Artist.findOne({"id_artist":artistId}).lean();
+    return (artist != null) ? artist : undefined;
+  }catch (error) {
+    return undefined;
+  }
+}
+
+module.exports = { usersExist, setUserAttribute, getArtistById }
