@@ -303,6 +303,7 @@ export class UserPanelComponent implements OnInit {
             sesionValues.activeUser.setAttribute(attributte, newAttribute);
             this.ProfileData = sesionValues.activeUser;
             input.status = false;
+            this.manageComponent.refreshComponent(this.router.url);
             resolve(true);
           },
           err=>{console.log(err)

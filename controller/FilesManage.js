@@ -14,7 +14,8 @@ async function uploadFile(req, res){
                         let fileData = keyFile.fieldName.split('&');
                         let fileType = fileData[0];
                         let name = fileData[1];
-                        if(fileType == 'theme_audio' || fileType == 'theme_cover'){
+                        let isNameComplete = (name.split('-').length > 1);
+                        if(!isNameComplete && fileType == 'theme_audio' || fileType == 'theme_cover'){
                             name = await setThemeCoverName(name);
                             if(!name){
                                 res.headerSent = true;

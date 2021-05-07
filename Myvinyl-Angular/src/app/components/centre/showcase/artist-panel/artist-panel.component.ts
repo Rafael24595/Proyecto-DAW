@@ -50,7 +50,7 @@ export class ArtistPanelComponent implements OnInit {
               this.candy.query['id'] = params['id'];
               this.artist = new Artist(sucess.artist.id_artist, sucess.artist?.name, sucess.artist?.surname, sucess.artist.description, sucess.artist.tags, sucess.artist.themeList);
               this.comunicationService.sendCandy(this.candy);
-              this.user = sesionValues.activeUser;
+              this.user = sesionValues.activeUser;console.log(this.user)
               this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
             }
             else{
@@ -244,8 +244,7 @@ export class ArtistPanelComponent implements OnInit {
 
       default:
 
-        attribute.value = (attribute.attrName == 'tags') ? FormValidations.checkTags(attribute.value as string) : attribute.value ;
-        attribute.attrName = (attribute.attrName == 'tagsRemove') ? 'tags' : attribute.attrName;
+        attribute.value = (attribute.attrName == 'tags') ? this.modifyArtistTag(attribute.value as string) : attribute.value ;
 
         await DataManage.toAsync((resolve: (value: unknown) => void)=>{
           if(this.artist){
@@ -339,8 +338,9 @@ export class ArtistPanelComponent implements OnInit {
       let newTags = [...this.artist.tags];
       let tagExists = this.artist.tags.indexOf(artistTag);
       (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(artistTag) ;
-      this.modifyArtistData({attrName:'tagsRemove', attrId:'', value: newTags});
+      return newTags;
     }
+    return [];
   }
 
   deleteArtist(id:string){

@@ -9,6 +9,7 @@ import { ProfileData } from '../../interfaces/ProfileDataInterface';
 import { UserInterface } from '../../interfaces/UserInterface';
 import { Themes } from '../../classes/Themes';
 import { ThemeList } from 'src/app/classes/ThemeList';
+import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,11 @@ export class DatabaseConexService {
 
  setArtistAttribute(artistId:string, attribute:string, value:string | string[], userName:string):Observable<{status:boolean,message:Artist}>{
   return this.http.post<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/setArtistAttribute`, {artistId, attribute, value, userName});
-}
+ }
+
+ setThemeAttribute(artistId:string, themeId: string, attribute: string, value: string | string[] | ThemeComment[], userName: string):Observable<{status:boolean,message:Themes}>{
+  return this.http.post<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/setThemesAttribute`, {artistId, themeId, attribute, value, userName});
+ }
 
 reassignArtistTheme(mainArtistId: string, targetArtistId:string, themeId:string, userName:string):Observable<{status:boolean,message:Artist}>{
   return this.http.post<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/reassignArtistTheme`, {mainArtistId, targetArtistId, themeId, userName});

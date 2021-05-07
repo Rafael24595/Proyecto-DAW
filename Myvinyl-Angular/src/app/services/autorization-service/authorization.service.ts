@@ -15,12 +15,12 @@ export class AuthorizationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-    signIn(email, password): Observable<Token> {
-      return this.http.post<Token>(`http://${Variables.host}:${Variables.port}/api/signIn`, {email, password});
+    signIn(email, password): Observable<{status:boolean, token: string, user:User}> {
+      return this.http.post<{status:boolean, token: string, user:User}>(`http://${Variables.host}:${Variables.port}/api/signIn`, {email, password});
     }
 
-    signUp(name, email, password): Observable<Token> {
-      return this.http.post<Token>(`http://${Variables.host}:${Variables.port}/api/signUp`, {name, email, password});
+    signUp(name, email, password): Observable<{status:boolean, token: string, user:User}> {
+      return this.http.post<{status:boolean, token: string, user:User}>(`http://${Variables.host}:${Variables.port}/api/signUp`, {name, email, password});
     }
 
     setToken(token:string){

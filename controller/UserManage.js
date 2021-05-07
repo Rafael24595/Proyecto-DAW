@@ -9,15 +9,35 @@ const jwt = require('jsonwebtoken');
 async function singUp(req, res){
 
     const {name, email, password} = req.body;
-    const newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
+    let newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
+    newUser = await setBasicThemeLists(newUser);
     const token = jwt.sign({_id: newUser._id}, 'secret');
   
     await newUser.save();
     
-    res.status(200).json({token});
+    res.status(200).json({status:true, token:token, user: newUser});
   
   }
   
+  async function setBasicThemeLists(user){
+    console.log(user)
+    user.themeLists.push({
+      "name":'@likes-list',
+      "userView":"true",
+      "userManage":"false",
+      "privateState":"true",
+      "list":[]
+    });
+    user.themeLists.push({
+      "name":'@dislikes-list',
+      "userView":"false",
+      "userManage":"false",
+      "privateState":"true",
+      "list":[]
+    });
+    return user;
+  }
+
   async function signIn(req, res){
   
     const { email, password } = req.body;
@@ -33,7 +53,7 @@ async function singUp(req, res){
     
     const token = jwt.sign({_id: user._id}, 'secret');
   
-    return res.status(200).json({token})
+    return res.status(200).json({status:true, token:token, user: user});
   
   }
 

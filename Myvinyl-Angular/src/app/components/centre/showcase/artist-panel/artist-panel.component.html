@@ -14,10 +14,10 @@
                 <ng-container *ngIf='isAdmin'>
                     <h3>Etiquetas</h3>
                     <div *ngFor='let artistTag of artist.tags'>
-                        <p>{{artistTag}} <span (click)='modifyArtistTag(artistTag)'>[[trash-can]]</span></p>
+                        <p>{{artistTag}} <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})'>[[trash-can]]</span></p>
                     </div>
                     <div>
-                        <p (click)='modifyArtistData({attrName:"tagsRemove", attrId:"", value:"artistTag"})'> + Nueva etiqueta</p>
+                        <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
                     </div>
                 </ng-container>
                 <h3>Temas</h3><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>[[reasign]]</span>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/classes/User';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
+import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { SingUpForm } from '../../../../../interfaces/AuthorizationInterfaces';
 
 @Component({
@@ -49,7 +51,11 @@ export class SignUpComponent implements OnInit {
     if(FormValidations.checkErrors(this.formError)){
 
       this.authorization.signUp(name, email, password).subscribe(
-        res =>{localStorage.setItem('sessionToken', res.token);},
+        res =>{
+          localStorage.setItem('sessionToken', res.token);
+          sesionValues.activeUser = User.setUser(res.user.name, res.user.email, res.user.admin, res.user.themeLists);
+          this.manageComponent.refreshComponent(this.manageComponent.getLastURL());
+        },
         err=>{console.log(err)}
       );
 

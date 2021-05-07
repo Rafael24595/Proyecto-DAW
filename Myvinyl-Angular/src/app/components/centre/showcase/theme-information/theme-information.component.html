@@ -2,8 +2,8 @@
     <div *ngIf="theme">
         <div>
             <div>
-                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"picture", attrId:theme.id, value:theme.id})'>[[pencil]]</span>
-                <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"id", attrId:"", value:theme.name})'>[[pencil]]</span></p>
+                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"picture", attrId:cover, value:theme.id})'>[[pencil]]</span>
+                <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})'>[[pencil]]</span></p>
                 <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
                 <p><span (click)="thumbValue(1)">[[thumb-up]] <ng-container *ngIf='isLike == 1'><b>{{theme.likes}}</b></ng-container><ng-container *ngIf='isLike != 1'>{{theme.likes}}</ng-container></span> <span (click)="thumbValue(-1)"> [[thumb-down]] <ng-container *ngIf='isLike == -1'><b>{{theme.dislikes}}</b></ng-container><ng-container *ngIf='isLike != -1'>{{theme.dislikes}}</ng-container></span></p>
             </div>
@@ -15,7 +15,7 @@
         <div *ngIf='isAdmin'>
             <h3>Etiquetas</h3>
             <div *ngFor='let themeTag of theme.tags'>
-                <p>{{themeTag}} <span (click)='modifyThemeTag(themeTag)'>[[trash-can]]</span></p>
+                <p>{{themeTag}} <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})'>[[trash-can]]</span></p>
             </div>
             <div>
                 <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>

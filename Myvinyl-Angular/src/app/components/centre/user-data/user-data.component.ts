@@ -39,7 +39,7 @@ export class UserDataComponent implements OnInit {
 
     this.authorization.destroySession();
 
-    if(this.router.url.indexOf(`/Profile/${this.user.name}`) != -1){
+    if(this.router.url.indexOf(`/Profile/${this.user.name}`) != -1 || this.router.url.includes('/Artist') || this.router.url.includes('/Theme')){
       this.manageComponent.refreshComponent(this.router.url);
     }
 

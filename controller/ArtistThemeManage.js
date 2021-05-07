@@ -331,7 +331,7 @@ const FilesManage = require('../controller/FilesManage');
             console.log( artist.themeList[themeIndex])
             await Artist.findOneAndUpdate({id_artist:artistId}, artist);
             res.headerSent = true;
-            res.status(200).json({status:true});
+            res.status(200).json({status:true, message:artist.themeList[themeIndex]});
           }
           else{
             if(!res.headerSent) res.status(403).json({status:'cannot-modify-attribute'});

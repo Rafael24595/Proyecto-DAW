@@ -6,6 +6,8 @@ import { FormValidations } from 'src/utils/tools/FormValidations';
 import { SingInForm } from 'src/app/interfaces/AuthorizationInterfaces';
 import { Router } from '@angular/router';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
+import { sesionValues } from 'src/utils/variables/sessionVariables';
+import { User } from 'src/app/classes/User';
 
 @Component({
   selector: 'app-sign-in',
@@ -43,7 +45,11 @@ export class SignInComponent implements OnInit {
 
     if(FormValidations.checkErrors(this.formError)){
       this.authorization.signIn(email, password).subscribe(
-        res =>{localStorage.setItem('sessionToken', res.token); this.manageComponent.refreshComponent(this.manageComponent.getLastURL())},
+        res =>{
+          localStorage.setItem('sessionToken', res.token); 
+          sesionValues.activeUser = User.setUser(res.user.name, res.user.email, res.user.admin, res.user.themeLists);
+          this.manageComponent.refreshComponent(this.manageComponent.getLastURL());
+        },
         err=>{console.log(err.error); FormValidations.checkServerErrors(err.error, this.formError)}
       );
 

@@ -143,15 +143,14 @@ export class ThemeInformationComponent implements OnInit {
     this.inputSecondValue = (attribute.secondValue) ? attribute.secondValue : this.inputSecondValue;
   }
 
-  confirmFrom(){
-    this.modifyThemeData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
-    if(this.inputAttr == 'name'){
-      this.modifyThemeData({attrName:'surname', attrId:'', value: this.inputSecondValue});
+  async confirmFrom(){
+    let sendForm = await this.modifyThemeData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
+    if(sendForm){
+      this.showInput = false;
+      this.inputAttr = '';
+      this.inputValue = '';
+      this.inputSecondValue = '';
     }
-    this.showInput = false;
-    this.inputAttr = '';
-    this.inputValue = '';
-    this.inputSecondValue = '';
   }
 
   deleteComment(commentId:string){
@@ -160,15 +159,77 @@ export class ThemeInformationComponent implements OnInit {
       let commentIndex = this.theme?.comments.map(comment=>{return comment.commentId}).indexOf(commentId);
       if(commentIndex != -1){
         let list = DataManage.copyObject(this.theme.comments);
-        list = list.splice(commentIndex, 1);
+        list.splice(commentIndex, 1);
         this.modifyThemeData({attrName:'comments', attrId:'', value:list});
       }
     }
 
   }
 
-  modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[]}){
+  async modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[]}){
     console.log(attribute)
+    
+    let sendSucess = false;
+
+    switch (attribute.attrName){
+
+      case 'picture':
+
+        let formDataFiles = new FormData();
+        let file = document.getElementById('picture') as HTMLInputElement;
+
+        let fileType = ()
+
+        if(file.files && file.files.length > 0){
+          formDataFiles.append(`theme_flag&${flag}`, file.files[0]);
+          formDataFiles.append(`userName`, sesionValues.activeUser.name);
+          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+            if(this.artist){
+              this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+                sucess=>{
+                  sendSucess = true;
+                  resolve(sendSucess);
+                },
+                err=>{
+                  resolve(sendSucess);
+                }
+              );
+            }
+          });
+        }
+
+        return sendSucess;
+
+      default:
+
+        attribute.value = (attribute.attrName == 'tags') ? this.modifyThemeTag(attribute.value as string) : attribute.value ;
+
+        await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+          if(this.theme){
+            this.DatabaseConexService.setThemeAttribute(this.theme.artist.id, this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
+              sucess=>{
+                if(this.theme && sucess.message){
+                  this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
+                  console.log(this.theme)
+                  sendSucess = true;
+                  resolve(sendSucess);
+                }
+                else{
+                  resolve(sendSucess);
+                }
+              },
+              err=>{
+                console.log(err);
+                resolve(sendSucess);
+              }
+            );
+          }
+        });
+
+        return sendSucess;
+      
+    }
+
   }
 
   modifyThemeTag(themeTag:string){
@@ -176,8 +237,9 @@ export class ThemeInformationComponent implements OnInit {
       let newTags = [...this.theme.tags];
       let tagExists = this.theme.tags.indexOf(themeTag);
       (tagExists > -1) ? newTags.splice(tagExists, 1) : newTags.push(themeTag) ;
-      this.modifyThemeData({attrName:'tags', attrId:'', value: newTags});
+      return newTags;
     }
+    return [];
   }
 
   routeArtist(){
