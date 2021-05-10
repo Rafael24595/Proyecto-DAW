@@ -14,7 +14,7 @@
                 <ng-container *ngIf='isAdmin'>
                     <h3>Etiquetas</h3>
                     <div *ngFor='let artistTag of artist.tags'>
-                        <p>{{artistTag}} <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})'>[[trash-can]]</span></p>
+                        <p>{{artistTag}} <span (click)='modifyArtistTag(artistTag)'>[[trash-can]]</span></p>
                     </div>
                     <div>
                         <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>

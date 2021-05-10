@@ -2,8 +2,8 @@
     <div *ngIf="theme">
         <div>
             <div>
-                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"picture", attrId:cover, value:theme.id})'>[[pencil]]</span>
-                <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})'>[[pencil]]</span></p>
+                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})'>[[mini-vinyl]]</span>
+                <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})'>[[mini-flag]]</span></p>
                 <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
                 <p><span (click)="thumbValue(1)">[[thumb-up]] <ng-container *ngIf='isLike == 1'><b>{{theme.likes}}</b></ng-container><ng-container *ngIf='isLike != 1'>{{theme.likes}}</ng-container></span> <span (click)="thumbValue(-1)"> [[thumb-down]] <ng-container *ngIf='isLike == -1'><b>{{theme.dislikes}}</b></ng-container><ng-container *ngIf='isLike != -1'>{{theme.dislikes}}</ng-container></span></p>
             </div>
@@ -37,9 +37,13 @@
         <div *ngIf='showInput'>
             <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
             <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}:</p>
-                <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "picture"' type="text" [(ngModel)]="inputValue">
-                <input id="{{inputAttr}}" *ngIf='inputAttr == "picture"' type="file">
+                <input id="{{inputAttr}}"  *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover"' type="text" [(ngModel)]="inputValue">
+                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
+                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
+                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag")'>
+                <img id="imagePreview" src="ghostFlag.png" *ngIf='inputAttr == "cover" || inputAttr == "flag"'>
                 <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
+                <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
             </label>
             <br><br>
             <button (click)='confirmFrom()' >Modificar</button>

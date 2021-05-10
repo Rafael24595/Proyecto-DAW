@@ -30,7 +30,8 @@ export class ThemeInformationComponent implements OnInit {
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
-  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", picture:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas"};
+  formErr = {text:'', class:''};
+  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", picture:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas", audio: "Audio"};
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
@@ -136,6 +137,55 @@ export class ThemeInformationComponent implements OnInit {
     }
   }
 
+  async setImagePreview(mode:string){
+
+    var reader = new FileReader();
+    let files:undefined | HTMLInputElement;
+    let imagePreview: undefined | HTMLImageElement;
+    let errMessage: undefined | string;
+    let errClass: undefined | string;
+
+    files = document.getElementById(mode) as HTMLInputElement;
+    imagePreview = document.getElementById('imagePreview') as HTMLImageElement;
+
+    errMessage = await new Promise(resolve=>{
+      reader.onload = function(){
+        let result = reader.result as string;
+        if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
+          imagePreview.src = reader.result as string;
+          errClass = '';
+          errMessage = '';
+        }
+        else{
+          errClass = 'input-error';
+          errMessage = 'Formato incorrecto';
+        }
+        resolve(errMessage)
+      }
+      if(files && files.files)
+      reader.readAsDataURL(files.files[0]);
+    });
+
+    this.formErr.text = errMessage as string;
+    this.formErr.class = errClass as string;
+
+  }
+
+  checkAudioFile(mode:string){
+    let files = document.getElementById(mode) as HTMLInputElement;
+    if(files.files){
+      let extension = files.files[0].name.split('.')[1];
+      if(extension == 'mp3'){
+        this.formErr.text = '';
+        this.formErr.class = '';
+      }
+      else{
+        this.formErr.text = 'Formato incorrecto';
+        this.formErr.class = 'input-error';
+      }
+    }
+  }
+
   showThemeForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
     this.showInput = true;
     this.inputAttr = attribute.attrName;
@@ -173,28 +223,29 @@ export class ThemeInformationComponent implements OnInit {
 
     switch (attribute.attrName){
 
-      case 'picture':
+      case 'audio':
+      case 'flag':
+      case 'cover':
 
         let formDataFiles = new FormData();
-        let file = document.getElementById('picture') as HTMLInputElement;
+        let file = document.getElementById(attribute.attrName) as HTMLInputElement;
 
-        let fileType = ()
+        let fileType = (attribute.attrName == 'cover') ? 'theme_cover' : (attribute.attrName == 'audio') ? 'theme_audio' : 'theme_flag' ;
+        let fileName = (attribute.attrName == 'flag') ? attribute.value : this.theme?.id;
 
-        if(file.files && file.files.length > 0){
-          formDataFiles.append(`theme_flag&${flag}`, file.files[0]);
+        if(this.theme && file.files && file.files.length > 0){
+          formDataFiles.append(`${fileType}&${fileName}`, file.files[0]);
           formDataFiles.append(`userName`, sesionValues.activeUser.name);
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
-            if(this.artist){
-              this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
-                sucess=>{
-                  sendSucess = true;
-                  resolve(sendSucess);
-                },
-                err=>{
-                  resolve(sendSucess);
-                }
-              );
-            }
+            this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+              sucess=>{
+                sendSucess = true;
+                resolve(sendSucess);
+              },
+              err=>{
+                resolve(sendSucess);
+              }
+            );
           });
         }
 

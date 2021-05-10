@@ -15,7 +15,7 @@ async function uploadFile(req, res){
                         let fileType = fileData[0];
                         let name = fileData[1];
                         let isNameComplete = (name.split('-').length > 1);
-                        if(!isNameComplete && fileType == 'theme_audio' || fileType == 'theme_cover'){
+                        if(!isNameComplete && (fileType == 'theme_audio' || fileType == 'theme_cover')){
                             name = await setThemeCoverName(name);
                             if(!name){
                                 res.headerSent = true;
@@ -35,15 +35,17 @@ async function uploadFile(req, res){
             else{
                 let fileData = files[file].fieldName.split('&');
                 let fileType = fileData[0];
-                let name = fileData[1];
-                if(fileType == 'theme_audio' || fileType == 'theme_cover'){
+                let name = fileData[1];console.log(name)
+                let isNameComplete = (name.split('-').length > 1);
+                if(!isNameComplete && (fileType == 'theme_audio' || fileType == 'theme_cover')){
                     name = await setThemeCoverName(name);
                     if(!name){
                         res.headerSent = true;
                         res.status(404).json({status:false});
                     }
-                }
+                }console.log(name)
                 if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
+                    console.log(name)
                     correctFiles = await acceptFile(files[file], fileType, name, correctFiles);
                 }
                 else{
