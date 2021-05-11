@@ -37,7 +37,10 @@
         <div *ngIf='showInput'>
             <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
             <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}:</p>
-                <input id="{{inputAttr}}"  *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover"' type="text" [(ngModel)]="inputValue">
+                <ng-container *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover"'>
+                    <input id="{{inputAttr}}" type="text" [(ngModel)]="inputValue">
+                    <br>
+                </ng-container>
                 <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
                 <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
                 <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag")'>

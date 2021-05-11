@@ -232,6 +232,23 @@ export class ThemeInformationComponent implements OnInit {
 
         let fileType = (attribute.attrName == 'cover') ? 'theme_cover' : (attribute.attrName == 'audio') ? 'theme_audio' : 'theme_flag' ;
         let fileName = (attribute.attrName == 'flag') ? attribute.value : this.theme?.id;
+        let correctionValues = await ()=>{
+          switch (attribute.attrName){
+            
+            case 'flag':
+
+              return 
+
+            break;
+
+          }
+        }
+
+        let correctForm = this.checkForm([{id:'name', value:name}, {id:'flag', value:flag}, {id:'files', value:''}]);
+
+        if(correctForm){
+          
+        }
 
         if(this.theme && file.files && file.files.length > 0){
           formDataFiles.append(`${fileType}&${fileName}`, file.files[0]);
