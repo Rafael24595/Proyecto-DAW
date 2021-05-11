@@ -31,6 +31,7 @@ export class ThemeInformationComponent implements OnInit {
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
   formErr = {text:'', class:''};
+  formErrFile = {text:'', class:''};
   attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", picture:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas", audio: "Audio"};
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
@@ -167,7 +168,7 @@ export class ThemeInformationComponent implements OnInit {
     });
 
     this.formErr.text = errMessage as string;
-    this.formErr.class = errClass as string;
+    this.formErrFile.class = errClass as string;
 
   }
 
@@ -181,7 +182,7 @@ export class ThemeInformationComponent implements OnInit {
       }
       else{
         this.formErr.text = 'Formato incorrecto';
-        this.formErr.class = 'input-error';
+        this.formErrFile.class = 'input-error';
       }
     }
   }
@@ -196,10 +197,16 @@ export class ThemeInformationComponent implements OnInit {
   async confirmFrom(){
     let sendForm = await this.modifyThemeData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
     if(sendForm){
+      let imagePreview =  document.getElementById('imagePreview') as HTMLImageElement;
       this.showInput = false;
       this.inputAttr = '';
       this.inputValue = '';
       this.inputSecondValue = '';
+      this.formErrFile.class = '';
+      this.formErrFile.text = '';
+      this.formErr.class = '';
+      this.formErr.text = '';
+      if(imagePreview) imagePreview.src = '';
     }
   }
 
@@ -232,38 +239,76 @@ export class ThemeInformationComponent implements OnInit {
 
         let fileType = (attribute.attrName == 'cover') ? 'theme_cover' : (attribute.attrName == 'audio') ? 'theme_audio' : 'theme_flag' ;
         let fileName = (attribute.attrName == 'flag') ? attribute.value : this.theme?.id;
-        let correctionValues = await ()=>{
-          switch (attribute.attrName){
-            
-            case 'flag':
+        let correctionValues :{id:string, value:string}[] = [];
 
-              return 
+        switch (attribute.attrName){
+          
+          case 'flag':
 
-            break;
+            correctionValues.push({id:'flag', value:this.inputValue as string});
 
-          }
+          break;
+
+          case 'cover':
+
+            correctionValues.push({id:'cover', value:''});
+
+          break;
+
+          case 'audio':
+
+            correctionValues.push({id:'audio', value:''});
+
+          break;
+
         }
 
-        let correctForm = this.checkForm([{id:'name', value:name}, {id:'flag', value:flag}, {id:'files', value:''}]);
+        let correctForm = this.checkForm(correctionValues);console.log(correctForm)
 
         if(correctForm){
           
-        }
+          if(this.theme && file.files && file.files.length > 0){
+            formDataFiles.append(`${fileType}&${fileName}`, file.files[0]);
+            formDataFiles.append(`userName`, sesionValues.activeUser.name);
+            await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+              this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
+                sucess=>{
+                  sendSucess = true;
+                  resolve(sendSucess);
+                },
+                err=>{
+                  resolve(sendSucess);
+                }
+              );
+            });
+          }
 
-        if(this.theme && file.files && file.files.length > 0){
-          formDataFiles.append(`${fileType}&${fileName}`, file.files[0]);
-          formDataFiles.append(`userName`, sesionValues.activeUser.name);
-          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
-            this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
-              sucess=>{
-                sendSucess = true;
-                resolve(sendSucess);
-              },
-              err=>{
-                resolve(sendSucess);
+          if(attribute.attrName == 'flag'){
+            await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+              if(this.theme){
+                this.DatabaseConexService.setThemeAttribute(this.theme.artist.id, this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
+                  sucess=>{
+                    if(this.theme && sucess.message){
+                      this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
+                      console.log(this.theme)
+                      sendSucess = true;
+                      resolve(sendSucess);
+                    }
+                    else{
+                      sendSucess = false;
+                      resolve(sendSucess);
+                    }
+                  },
+                  err=>{
+                    console.log(err);
+                    sendSucess = false;
+                    resolve(sendSucess);
+                  }
+                );
               }
-            );
-          });
+            });      
+          }
+
         }
 
         return sendSucess;
@@ -297,6 +342,50 @@ export class ThemeInformationComponent implements OnInit {
         return sendSucess;
       
     }
+
+  }
+
+  checkForm(data: {id:string, value:string}[]){
+
+    let correctFiles = 0;
+
+    data.forEach(singleData=>{
+      
+      switch (singleData.id){
+
+        case 'flag':
+          if(singleData.value != '' || this.formErrFile.class != ''){
+            this.formErr.class = '';
+            this.formErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.formErr.class = 'input-error';
+            this.formErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+        case 'cover':
+        case 'audio':
+
+          if(this.formErr.text != '' && this.formErrFile.class != ''){
+            this.formErrFile.class = '';
+            this.formErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.formErrFile.class = 'input-error';
+            this.formErr.text = 'Campo obligatorio';
+          }
+
+        break;
+
+      }
+
+    });
+
+    return (correctFiles == data.length);
 
   }
 

@@ -41,9 +41,9 @@
                     <input id="{{inputAttr}}" type="text" [(ngModel)]="inputValue">
                     <br>
                 </ng-container>
-                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
-                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
-                <input id="{{inputAttr}}" class="{{formErr.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag")'>
+                <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
+                <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
+                <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag")'>
                 <img id="imagePreview" src="ghostFlag.png" *ngIf='inputAttr == "cover" || inputAttr == "flag"'>
                 <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
                 <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
