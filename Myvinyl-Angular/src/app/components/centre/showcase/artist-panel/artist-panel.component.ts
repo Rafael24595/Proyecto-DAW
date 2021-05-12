@@ -26,11 +26,12 @@ export class ArtistPanelComponent implements OnInit {
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
-  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar'};
+  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar', avatar:'Avatar'};
   newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
   reassignArtist = 'default';
   arstistIds:{id:string, name:string}[] = [];
   availableFlags: string[] = [];
+  formErr = {text:'', class:''};
   nameErr = {text:'', class:''};
   flagErr = {text:'', class:''};
   coverErr = {text:'', class:''};
@@ -120,14 +121,49 @@ export class ArtistPanelComponent implements OnInit {
     console.log(attribute)
 
     let sendSucess = false;
+    let hasFiles = false;
+    let correctForm = false;
 
     switch (attribute.attrName){
 
+      case 'avatar':
+
+        let cover = document.getElementById('avatar') as HTMLInputElement;
+        let formData = new FormData();
+        
+        if(this.artist && cover.files && cover.files.length > 0){
+          formData.append(`artist_avatar&${this.artist.id_artist}`, cover.files[0]);
+          hasFiles = true;
+        }
+
+        formData.append(`userName`, sesionValues.activeUser.name);
+
+        correctForm = this.checkForm([{id:'avatar', value:''}]);console.log(correctForm)
+
+        if(correctForm){
+          await DataManage.toAsync((resolve: (value: unknown) => void)=>{
+            if(hasFiles){
+              this.DatabaseConexService.sendFilesToServer(formData).subscribe(
+                sucess=>{
+                  sendSucess = true;
+                  resolve(sendSucess);
+                },
+                err=>{
+                  resolve(sendSucess);
+                }
+              );
+            }
+            else{
+              sendSucess = true;
+              resolve(sendSucess);
+            }
+          });
+        }
+
+      return sendSucess;
+
       case 'newTheme':
 
-        console.log(this.newTheme)
-        
-        let hasFiles = false;
         let name = this.newTheme.name;
         let flag = this.newTheme.flag;
         let tags = FormValidations.checkTags(this.newTheme.tags);
@@ -154,7 +190,7 @@ export class ArtistPanelComponent implements OnInit {
           hasFiles = true;
         }
 
-        let correctForm = this.checkForm([{id:'name', value:name}, {id:'flag', value:flag}, {id:'files', value:''}]);
+        correctForm = this.checkForm([{id:'name', value:name}, {id:'flag', value:flag}, {id:'files', value:''}]);
         if(correctForm){
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
             if(this.artist){
@@ -310,6 +346,20 @@ export class ArtistPanelComponent implements OnInit {
 
         break;
 
+        case 'avatar':
+
+          if(this.formErr.text == '' || this.formErr.class == ''){
+            this.formErr.class = '';
+            this.formErr.text = '';
+            correctFiles++;
+          }
+          else{
+            this.formErr.class = 'input-error';
+            this.formErr.text = 'Formato incorrecto';
+          }
+          
+        break;
+
         case 'files':
 
           let files = [this.coverErr, this.flagFileErr, this.themeErr];
@@ -378,7 +428,7 @@ export class ArtistPanelComponent implements OnInit {
     flagPreview.src = `/uploads/media/image/flags/${path}.png`;
   }
 
-  async setImagePreview(mode:string){
+  async setImagePreview(mode:{input:string, preview:string, errObj:{text:string, class:string}}){
 
     var reader = new FileReader();
     let files:undefined | HTMLInputElement;
@@ -386,7 +436,12 @@ export class ArtistPanelComponent implements OnInit {
     let errMessage: undefined | string;
     let errClass: undefined | string;
 
-    switch (mode){
+    switch (mode.input){
+
+      case 'avatar':
+        files = document.getElementById('avatar') as HTMLInputElement;
+        imagePreview = document.getElementById('formPreview') as HTMLImageElement;
+      break;
 
       case 'flag':
         files = document.getElementById('flagFile') as HTMLInputElement;
@@ -418,12 +473,15 @@ export class ArtistPanelComponent implements OnInit {
       reader.readAsDataURL(files.files[0]);
     });
 
-    if(mode == 'cover'){
+    mode.errObj.text = errMessage as string;
+    mode.errObj.class = errClass as string;
+
+    if(mode.input == 'cover'){
       this.coverErr.text = errMessage as string;
       this.coverErr.class = errClass as string;
     }
 
-    if(mode == 'flag'){
+    if(mode.input == 'flag'){
       this.flagFileErr.text = errMessage as string;
       this.flagFileErr.class = errClass as string;
     }

@@ -2,7 +2,7 @@
     <div *ngIf='artist'>
         <div>
             <div>
-                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png"><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"picture", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
+                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png"><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>[[pencil]]</span>
                 <p><span *ngIf='isAdmin'> Nombre: </span> {{artist.name}} {{artist.surname}}<span *ngIf='isAdmin' (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>[[pencil]]</span> <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span><span *ngIf='isAdmin' (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='deleteArtist(artist.id_artist)'>[[trash-can]]</span></p>
             </div>
             <span *ngIf='artist.description != ""' [innerHTML]="artist.description"></span>
@@ -36,9 +36,11 @@
                     <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>
                         <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
                         <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}</p>
-                            <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "picture"' type="text" [(ngModel)]="inputValue">
-                            <input id="{{inputAttr}}" *ngIf='inputAttr == "picture"' type="file">
+                            <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "avatar"' type="text" [(ngModel)]="inputValue">
+                            <input id="{{inputAttr}}" class="{{formErr.class}}"  *ngIf='inputAttr == "avatar"' type="file" (change)='setImagePreview({input:"avatar", preview:"formPreview", errObj:formErr})'>
                             <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
+                            <img id="formPreview" src="ghostCover.png">
+                            <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
                         </label>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "name"'>
@@ -54,7 +56,7 @@
                             <p *ngIf='nameErr.text != ""'>{{nameErr.text}}</p>
                         </label>
                         <label for="cover"><p>Carátula: </p>
-                            <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview("cover")'>
+                            <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview({input: "cover", preview: "coverPreview", errObj:coverErr})'>
                             <img id="coverPreview" class="{{coverErr.class}}" src="ghostCover.png">
                             <p *ngIf='coverErr.text != ""'>{{coverErr.text}}</p>
                         </label>
@@ -62,7 +64,7 @@
                             <input id="flag"  type="text" class="{{flagErr.class}}" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
                             <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
                             <br><br>
-                            <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview("flag")'>
+                            <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview({input:"flag", preview:"flagFile", errObj:flagFileErr})'>
                             <p *ngIf='flagFileErr.text != ""'>{{flagFileErr.text}}</p>
                             <img id="flagPreview" src="ghostFlag.png">
                         </label>
