@@ -30,9 +30,7 @@ export class UserDataComponent implements OnInit {
   }
 
   userRedirect(){
-
     this.router.navigate([`/Profile/${this.user.name}`]);
-
   }
 
   closeSession(){

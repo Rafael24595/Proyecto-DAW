@@ -39,7 +39,7 @@ export class AudioBarComponent implements OnInit {
   /////////////*/
 
   isThemeList:Boolean = false;
-  audio = new Audio();
+  audio: HTMLAudioElement | undefined;
   themesList:BarThemesListInterface[] = [];/* = [
     {id: 'test-001', name:'The Last Bible III - Forest:'}, 
     {id: 'test-002', name:'Sim City 2000 - Subway Song:'}, 
@@ -101,36 +101,46 @@ export class AudioBarComponent implements OnInit {
   /////////////////////////
 
   prepareTheme(theme?:BarThemesListInterface){
-    
-    if(theme){
-      this.isReverse =  false;
-      this.reverseSrc = '';
-      this.normalSrc = `../../../assets/${theme.id}.mp3`;
-      //this.outputToparent.emit(status:'finish', JSON.stringify(theme));
-    }
 
-    this.audio.pause();
-    this.audio = new Audio();
-    this.audio.src = (this.isReverse) ? this.reverseSrc : this.normalSrc;
-    this.audio.load();
-    this.audio.onloadedmetadata = ()=>{
-      this.audio.onloadeddata = ()=>{
-        this.audio.onpause = ()=>{this.setPlay()}
-        this.audio.onplay = ()=>{this.setPlay()}
-        this.audio.onvolumechange = ()=>{this.progressBarVolume()};
-        this.audio.ontimeupdate = ()=>{this.progressBarAudio()}
-        this.audio.onended = ()=>{this.calculeNextThemePosition(1)}
-
-        this.setDefaultThemeValues();
-        this.setDefaultInterfaceValues();
-
+      if(theme){
+        this.isReverse =  false;
+        this.reverseSrc = '';
+        this.normalSrc = `../../../assets/${theme.id}.mp3`;
+        //this.outputToparent.emit(status:'finish', JSON.stringify(theme));
       }
-    }
+      
+      if(this.audio) {this.audio.pause();}
+      this.audio = new Audio();
+      this.audio.src = (this.isReverse) ? this.reverseSrc : this.normalSrc;
+      this.audio.load();console.log(this.audio)
+      this.audio.onloadedmetadata = ()=>{
+        if(this.audio){
+          this.audio.onloadeddata = ()=>{
+            if(this.audio){
+              this.audio.onpause = ()=>{this.setPlay()}
+              this.audio.onplay = ()=>{this.setPlay()}
+              this.audio.onvolumechange = ()=>{this.progressBarVolume()};
+              this.audio.ontimeupdate = ()=>{this.progressBarAudio()}
+              this.audio.onended = ()=>{this.calculeNextThemePosition(1)}
+      
+              this.setDefaultThemeValues();
+              this.setDefaultInterfaceValues();
+            }
+          }
+        }
+      }
+      this.audio.onerror = ()=>{this.audio = undefined};
   }
 
   //////////////////////////
   //REPRODUCTION FUNCTIONS//
   //////////////////////////
+
+  setPlayPause(){
+    if(this.audio){
+      (this.audio.paused) ? this.audio.play() : this.audio.pause()
+    }
+  }
 
   setDefaultInterfaceValues(){
 
@@ -142,7 +152,7 @@ export class AudioBarComponent implements OnInit {
     this.setReverse();
     this.setPlay();
 
-    (!this.launchPaused) ? this.audio.play() : this.launchPaused = !this.launchPaused;
+    (this.audio && !this.launchPaused) ? this.audio.play() : this.launchPaused = !this.launchPaused;
 
   }
 
@@ -155,12 +165,14 @@ export class AudioBarComponent implements OnInit {
     let listLoop = localStorage.getItem('isListLoop');
     let listRandom = localStorage.getItem('isListRandom');
 
-    this.audio.muted = (muted) ? JSON.parse(muted) : this.audio.muted;
-    this.audio.loop = (loop) ? JSON.parse(loop) : this.audio.loop;
-    this.audio.volume = (volume) ? JSON.parse(volume) : this.audio.volume;
-    this.audio.playbackRate = (velocity) ? JSON.parse(velocity) : this.audio.playbackRate;
-    this.loopList = (listLoop) ? JSON.parse(listLoop) : false;
-    this.randomList = (listRandom) ? JSON.parse(listRandom) : false;
+    if(this.audio){
+      this.audio.muted = (muted) ? JSON.parse(muted) : this.audio.muted;
+      this.audio.loop = (loop) ? JSON.parse(loop) : this.audio.loop;
+      this.audio.volume = (volume) ? JSON.parse(volume) : this.audio.volume;
+      this.audio.playbackRate = (velocity) ? JSON.parse(velocity) : this.audio.playbackRate;
+      this.loopList = (listLoop) ? JSON.parse(listLoop) : false;
+      this.randomList = (listRandom) ? JSON.parse(listRandom) : false;
+    }
 
   }
 
@@ -171,24 +183,28 @@ export class AudioBarComponent implements OnInit {
   }
 
   setPlay(){
-    if(this.audio.paused){
-      this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
-      this.playButtonColor = Color_Vars.button_play_color.pause;
-    }
-    else{
-      this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
-      this.playButtonColor = Color_Vars.button_play_color.play;
+    if(this.audio){
+      if(this.audio.paused){
+        this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
+        this.playButtonColor = Color_Vars.button_play_color.pause;
+      }
+      else{
+        this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
+        this.playButtonColor = Color_Vars.button_play_color.play;
+      }
     }
   }
 
   setReverse(){
-    if(this.isReverse){
-      this.reverseColor = Color_Vars.button_reverse_color.reverse;
-      this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.reverse_play;
-    }
-    else{
-      this.reverseColor = Color_Vars.button_reverse_color.normal;
-      this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.pause : Color_Vars.bar_progress_color.play;
+    if(this.audio){
+      if(this.isReverse){
+        this.reverseColor = Color_Vars.button_reverse_color.reverse;
+        this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.reverse_play;
+      }
+      else{
+        this.reverseColor = Color_Vars.button_reverse_color.normal;
+        this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.pause : Color_Vars.bar_progress_color.play;
+      }
     }
   }
 
@@ -202,13 +218,15 @@ export class AudioBarComponent implements OnInit {
   }
 
   loopAudio(){
-    this.audio.loop = !this.audio.loop;
-    this.setLoopAudio()
-    localStorage.setItem('isLoop', JSON.stringify(this.audio.loop));
+    if(this.audio){
+      this.audio.loop = !this.audio.loop;
+      this.setLoopAudio()
+      localStorage.setItem('isLoop', JSON.stringify(this.audio.loop));
+    }
   }
 
   setLoopAudio(){
-    this.loopColor = (this.audio.loop) ? Color_Vars.button_loop_color.loop : Color_Vars.button_loop_color.normal;
+    this.loopColor = (this.audio && this.audio.loop) ? Color_Vars.button_loop_color.loop : Color_Vars.button_loop_color.normal;
   }
 
   randomReproduction(){
@@ -262,30 +280,38 @@ export class AudioBarComponent implements OnInit {
   }
 
   calculeTimeByPixel(position:number){
-    let timeTotal = this.audio.duration
-    return position * timeTotal / this.barAudioSize ;
-
+    if(this.audio){
+      let timeTotal = this.audio.duration
+      return position * timeTotal / this.barAudioSize ;
+    }
+    return 0;
   }
 
   calculeTimeBySeconds(position?:number){
-    let timeActual = (position) ? position : this.audio.currentTime;
-    let timeTotal = this.audio.duration;
-    return timeActual * this.barAudioSize / timeTotal;
-
+    if(this.audio){
+      let timeActual = (position) ? position : this.audio.currentTime;
+      let timeTotal = this.audio.duration;
+      return timeActual * this.barAudioSize / timeTotal;
+    }
+    return 0;
   }
 
   calculateAudioPosition(coorY:number){
-    this.audio.currentTime = coorY * this.audio.duration / this.barAudioSize;
+    if(this.audio){
+      this.audio.currentTime = coorY * this.audio.duration / this.barAudioSize;
+    }
   }
 
   calculateVolumePosition(coorY:number){
-    let vol = 
+    if(this.audio){
+      let vol = 
       (coorY / this.barVolumeSize > 1) 
         ? 1 
         : (coorY / this.barVolumeSize < 0.001)
           ? 0
           : coorY / this.barVolumeSize;
-    this.audio.volume = vol;
+      this.audio.volume = vol;
+    }
   }
 
   //////////////////////
@@ -346,23 +372,27 @@ export class AudioBarComponent implements OnInit {
   }
 
   progressBarVolume(){
-    let volActual = this.audio.volume;
-    let movement = volActual * this.barVolumeSize;
-    this.pointVolumePosition = movement;
-    this.barVolumeSizeProgress = movement;
+    if(this.audio){
+      let volActual = this.audio.volume;
+      let movement = volActual * this.barVolumeSize;
+      this.pointVolumePosition = movement;
+      this.barVolumeSizeProgress = movement;
 
-    //this.vol = `${Math.round(this.audio.volume * 100)}%`;
-    this.setMuted();
-    localStorage.setItem('volVal', JSON.stringify(this.audio.volume));
+      //this.vol = `${Math.round(this.audio.volume * 100)}%`;
+      this.setMuted();
+      localStorage.setItem('volVal', JSON.stringify(this.audio.volume));
+    }
   }
 
   muteVol(){
-    this.audio.muted = !this.audio.muted;
-    localStorage.setItem('isMuted', JSON.stringify(this.audio.muted));
+    if(this.audio){
+      this.audio.muted = !this.audio.muted;
+      localStorage.setItem('isMuted', JSON.stringify(this.audio.muted));
+    }
   }
 
   setMuted(){
-    if(this.audio.muted){
+    if(this.audio && this.audio.muted){
       //this.vol = `<del>${this.vol}</del>`;
       this.muteColor = Color_Vars.button_mute_color.muted;
       this.barVolColor = Color_Vars.bar_volume_color.front.muted;
@@ -410,13 +440,15 @@ export class AudioBarComponent implements OnInit {
   }
 
   mouseDownAudio(){
-    this.audioStatus = (this.audio.paused) ? false : true; 
-    this.audio.pause();
-    this.mouseDwnAudio = true;
+    if(this.audio){
+      this.audioStatus = (this.audio.paused) ? false : true; 
+      this.audio.pause();
+      this.mouseDwnAudio = true;
+    }
   }
 
   mouseUpAudio(){
-    if(this.mouseDwnAudio == true){
+    if(this.audio && this.mouseDwnAudio == true){
       (!this.isReverse) ? this.calculateAudioPosition(this.pointAudioPosition) : this.calculateAudioPosition(this.barAudioSize - this.pointAudioPosition);
       (this.audioStatus) ? this.audio.play(): this.audio.pause();
       this.mouseDwnAudio = false;
@@ -424,40 +456,50 @@ export class AudioBarComponent implements OnInit {
   }
 
   progressBarAudio(){
-    let movement = (!this.isReverse) ? this.calculeTimeBySeconds() : this.calculeTimeBySeconds(this.audio.duration - this.audio.currentTime);
-    this.pointAudioPosition = movement;
-    this.barAudioSizeProgress = movement;
-    this.time = BarUtils.getSeconds((!this.isReverse) ? Math.trunc(this.audio.currentTime) : Math.trunc(this.audio.duration - this.audio.currentTime));
+    if(this.audio){
+      let movement = (!this.isReverse) ? this.calculeTimeBySeconds() : this.calculeTimeBySeconds(this.audio.duration - this.audio.currentTime);
+      this.pointAudioPosition = movement;
+      this.barAudioSizeProgress = movement;
+      this.time = BarUtils.getSeconds((!this.isReverse) ? Math.trunc(this.audio.currentTime) : Math.trunc(this.audio.duration - this.audio.currentTime));
+    }
   }
 
   showTimePointer(event:MouseEvent){
-    let item:HTMLElement | string = event.target as HTMLElement;
-    let itemId = item.id;
-    item = (itemId == 'Meatball' && item.parentElement) ? item.parentElement : item;
-    if(itemId == 'audio-bar-padding' || itemId == 'Meatball' ){
-      this.overBar = 'block';
-      let positionInPage = BarUtils.positionInBar(event.clientX, item);
-      let time = this.calculeTimeByPixel(positionInPage);
-      this.timePointer = BarUtils.getSeconds(time);
-      this.timePointerPosition = positionInPage;
-    }
-    else{
-      this.overBar = 'none';
+    if(this.audio){
+      let item:HTMLElement | string = event.target as HTMLElement;
+      let itemId = item.id;
+      item = (itemId == 'Meatball' && item.parentElement) ? item.parentElement : item;
+      if(itemId == 'audio-bar-padding' || itemId == 'Meatball' ){
+        this.overBar = 'block';
+        let positionInPage = BarUtils.positionInBar(event.clientX, item);
+        let time = this.calculeTimeByPixel(positionInPage);
+        this.timePointer = BarUtils.getSeconds(time);
+        this.timePointerPosition = positionInPage;
+      }
+      else{
+        this.overBar = 'none';
+      }
     }
   }
 
   selectVelocity(){
-    this.speed = this.audio.playbackRate;
+    if(this.audio){
+      this.speed = this.audio.playbackRate;
+    }
   }
 
   updateSpeed(){
-    this.audio.playbackRate = this.speed;
-    localStorage.setItem('velVal', JSON.stringify(this.audio.playbackRate));
+    if(this.audio){
+      this.audio.playbackRate = this.speed;
+      localStorage.setItem('velVal', JSON.stringify(this.audio.playbackRate));
+    }
   }
 
   stopAudio(){
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    if(this.audio){
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
 }
 
   /*incrementTime(){
@@ -477,44 +519,47 @@ export class AudioBarComponent implements OnInit {
   ////////////////////
 
   revertAudioImplement(){
+    if(this.audio){
+      this.loadGif = Color_Vars.load_gif_status.visible;
+      this.audioStatus = (this.audio.paused) ? false : true;
 
-    this.loadGif = Color_Vars.load_gif_status.visible;
-    this.audioStatus = (this.audio.paused) ? false : true;
-
-    if(this.audio.src != this.reverseSrc){
-      this.audio.pause();
-      (this.reverseSrc == '')
-        ? this.revertAudio(this.audio.src).then(()=>{this.isReverse = true; this.switchSRC()})
-        : (this.isReverse = true, this.switchSRC()) ;  
-    }
-    else{
-      this.isReverse = false;
-      this.switchSRC();
+      if(this.audio.src != this.reverseSrc){
+        this.audio.pause();
+        (this.reverseSrc == '')
+          ? this.revertAudio(this.audio.src).then(()=>{this.isReverse = true; this.switchSRC()})
+          : (this.isReverse = true, this.switchSRC()) ;  
+      }
+      else{
+        this.isReverse = false;
+        this.switchSRC();
+      }
     }
   }
 
   switchSRC(){
 
-    if(this.isReverse){
+    if(this.audio){
+      if(this.isReverse){
 
-      this.loadGif = Color_Vars.load_gif_status.hidden;
-      let time = this.audio.duration - this.audio.currentTime;
-      this.prepareTheme();
-      this.audio.currentTime = time;
-      this.audio.play();
-
-    }else{
-
-      this.loadGif = Color_Vars.load_gif_status.hidden;
-      let time = this.audio.duration - this.audio.currentTime;
-      this.prepareTheme();
-      this.audio.currentTime = time;
-
+        this.loadGif = Color_Vars.load_gif_status.hidden;
+        let time = this.audio.duration - this.audio.currentTime;
+        this.prepareTheme();
+        this.audio.currentTime = time;
+        this.audio.play();
+  
+      }else{
+  
+        this.loadGif = Color_Vars.load_gif_status.hidden;
+        let time = this.audio.duration - this.audio.currentTime;
+        this.prepareTheme();
+        this.audio.currentTime = time;
+  
+      }
+  
+      this.setReverse();
+      (this.audioStatus) ? this.audio.play() : this.audio.pause();
+      this.audioStatus = (this.audio.paused) ? false : true; 
     }
-
-    this.setReverse();
-    (this.audioStatus) ? this.audio.play() : this.audio.pause();
-    this.audioStatus = (this.audio.paused) ? false : true; 
 
   }
 

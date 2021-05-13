@@ -437,7 +437,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   changeList(){
-    if(this.ProfileData){
+    if(this.ProfileData && this.selectedThemeList != '-- Selecciona lista --'){
       this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
         sucess=>{
           let count = 0;

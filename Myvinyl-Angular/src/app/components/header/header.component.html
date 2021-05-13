@@ -13,40 +13,32 @@
     </div>
 </div>
 <div id="menuExpanded" [ngClass]="expandStatus ? 'active' : '' ">
-    <div id="menuExpandedOptions">
-        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" onclick="generateLogIn()">º</a>
-        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" onclick="showImage()">9</a>
-    </div>
     <ul class="menuContentHeader left">
-        <li><span class="superior_candy">Superior</span>
+        <li><span class="category_candy">Perfil</span>
             <ul>
-                <li class="category_shirt" onclick="generateShopShowcase()">Camisas</li>
-                <li class="category_t-shirt" onclick="generateShopShowcase()">Camisetas</li>
+                <li class="category_shirt" onclick="generateShopShowcase()">
+                    <div>
+                        <img src="ghostUser.png" >
+                        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" (click)="userRedirect()">{{userName.activeUser.name}}</a>
+                    </div>
+                </li>
             </ul>
         </li>
     </ul>
     <ul class="menuContentHeader">
-        <li><span class="inferior_candy">Inferior</span>
+        <li><span class="category_candy">Categorías</span>
             <ul>
-                <li class="category_short" onclick="generateShopShowcase()">Bermudas</li>
-                <li class="category_skirt" onclick="generateShopShowcase()">Faldas</li>
-                <li class="category_socks" onclick="generateShopShowcase()">Calcetines</li>
-                <li class="category_shoes" onclick="generateShopShowcase()">Calzado</li>
+                <li class="category_owb" [routerLink]='["/Search"]' [queryParams]='{query:"owb"}'>Old World Blues</li>
+                <li class="category_mr" [routerLink]='["/Search"]' [queryParams]='{query:"mr"}'>Mojave Ride</li>
+                <li class="category_cw" [routerLink]='["/Search"]' [queryParams]='{query:"cw"}'>Classic Wave</li>
             </ul>
         </li>
     </ul>
     <ul class="menuContentHeader">
-        <li><span class="accesorios_candy">Accesorios</span>
+        <li><span class="inferior_candy">Otros</span>
             <ul>
-                <li class="category_caps" onclick="generateShopShowcase()">Gorras</li>
-                <li class="category_jewely" onclick="generateShopShowcase()">Bisuteria</li>
-            </ul>
-        </li>
-    </ul>
-    <ul class="menuContentHeader">
-        <li><span class="souvenires_candy">Souvenires</span>
-            <ul>
-                <li class="category_necklace" onclick="generateShopShowcase()">Collares</li>
+                <li class="category_shirt" [routerLink]='["/Home"]'>Portada</li>
+                <li class="category_shirt" onclick="generateShopShowcase()">Galería</li>
             </ul>
         </li>
     </ul>

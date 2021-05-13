@@ -11,7 +11,7 @@
         <div>
             <button (click)='calculeNextThemePosition($event)' value="-1" class="buttonStyle left-button cursor-pointer" >Prev</button>
             <button (click)='calculeNextThemePosition($event)' value="1" class="buttonStyle rigth-button-block cursor-pointer">Next</button>
-            <button (click)='(audio.paused) ? audio.play() : audio.pause()' class="centre-button cursor-pointer" style="background-color: {{playButtonColor}};">Play</button>
+            <button (click)='setPlayPause()' class="centre-button cursor-pointer" style="background-color: {{playButtonColor}};">Play</button>
             <!--<button (click)='audio.pause()'style="background-color: transparent; margin-left: 2.5px; margin-right: 2.5px;">Pause</button>-->
             <button (click)='stopAudio()' class="buttonStyle right-button cursor-pointer">Stop</button>
             <!--<button (click)='decrementVol()' style="background-color: transparent; margin-right: 2.5px;">V-</button>-->

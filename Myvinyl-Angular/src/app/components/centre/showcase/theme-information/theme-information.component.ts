@@ -103,7 +103,7 @@ export class ThemeInformationComponent implements OnInit {
       localStorage.setItem('lastComment', JSON.stringify({themeId:this.theme?.id,comment:this.comment}));
       if(this.autorizationService.checkForToken() && this.theme){
         this.DatabaseConexService.setThemeComment(this.theme.id,sesionValues.activeUser.name,this.comment).subscribe(
-          sucess=>{console.log(sucess);
+          sucess=>{
             localStorage.removeItem('lastComment');
             if(this.theme && this.comment){
               this.theme.setNewComment(sucess.commentId,sucess.userName,'true',sucess.comment);
@@ -170,11 +170,10 @@ export class ThemeInformationComponent implements OnInit {
   }
 
   addToThmemeList(){
-    console.log(this.selectedThemeList);
     if(this.theme){
       this.DatabaseConexService.addToThemeList(this.theme.artist.id, this.theme.id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
         sucess=>{
-          sesionValues.activeUser.setThemeListList(this.selectedThemeList, sucess.message);console.log(sesionValues.activeUser)
+          sesionValues.activeUser.setThemeListList(this.selectedThemeList, sucess.message);
           this.showThemeListForm = false;
           this.selectedThemeList = '';
         },
@@ -190,8 +189,6 @@ export class ThemeInformationComponent implements OnInit {
     let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
     if(this.theme && list){
       inList = (list.list.map(theme=>{return (theme.id) ? theme.id : theme.themeId}).indexOf(this.theme.id) != -1);
-      console.log(inList)
-      console.log(list.list.map(theme=>{return (theme.id) ? theme.id : theme.themeId}))
     }
 
     this.buttonThemeList = (inList) ? 'Eliminar' : "Añadir";
@@ -284,7 +281,6 @@ export class ThemeInformationComponent implements OnInit {
   }
 
   async modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[]}){
-    console.log(attribute)
     
     let sendSucess = false;
 
@@ -323,7 +319,7 @@ export class ThemeInformationComponent implements OnInit {
 
         }
 
-        let correctForm = this.checkForm(correctionValues);console.log(correctForm)
+        let correctForm = this.checkForm(correctionValues);
 
         if(correctForm){
           
@@ -350,7 +346,6 @@ export class ThemeInformationComponent implements OnInit {
                   sucess=>{
                     if(this.theme && sucess.message){
                       this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
-                      console.log(this.theme)
                       sendSucess = true;
                       resolve(sendSucess);
                     }
@@ -383,7 +378,6 @@ export class ThemeInformationComponent implements OnInit {
               sucess=>{
                 if(this.theme && sucess.message){
                   this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
-                  console.log(this.theme)
                   sendSucess = true;
                   resolve(sendSucess);
                 }
@@ -467,7 +461,7 @@ export class ThemeInformationComponent implements OnInit {
     if(localStorage.getItem('lastComment')){
       let lastComment = JSON.parse(localStorage.getItem('lastComment') as string);
       
-      if(lastComment.themeId == this.theme?.id){console.log(lastComment.themeId + " - " + this.theme?.id)
+      if(lastComment.themeId == this.theme?.id){
         this.comment = lastComment.comment;
       }     
       localStorage.removeItem('lastComment');
