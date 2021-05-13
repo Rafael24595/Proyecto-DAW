@@ -1,3 +1,7 @@
+:root{
+	--containers: rgb(0, 102, 68);
+}
+
 @media (max-width: 999px) {
 
 	#footer{
@@ -339,6 +343,14 @@ html, body{
 	font-size: 0.8em;
 	text-decoration: underline;
 
+}
+
+.theme-container{
+	background-color: var(--containers);
+}
+
+.theme-container.selected{
+	border: 2px solid black;
 }
 
 .input-error{

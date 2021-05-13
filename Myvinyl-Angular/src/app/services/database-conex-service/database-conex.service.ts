@@ -99,6 +99,10 @@ reassignArtistThemes(mainArtistId: string, targetArtistId:string, userName:strin
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/DeleteThemeList`, {themeListName, userName});
  }
 
+ addToThemeList(artistId:string, themeId:string, themeListName:string, userName:string):Observable<{status:boolean, message: Themes[]}>{
+  return this.http.post<{status:boolean, message: Themes[]}>(`http://${Variables.host}:${Variables.port}/api/AddToUserThemeList`, {artistId, themeId, themeListName, userName});
+ }
+
  removeFromThemeList(themeId:string, themeListName:string, userName:string):Observable<{status:boolean}>{
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/RemoveUserThemeList`, {themeId, themeListName, userName});
  }

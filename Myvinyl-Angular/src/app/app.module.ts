@@ -20,6 +20,7 @@ import { SignUpComponent } from './components/centre/authorization/signUp/sign-u
 import { UserDataComponent } from './components/centre/user-data/user-data.component';
 import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel/user-panel.component';
 import { ThemeListFormComponent } from './components/centre/showcase/user-panel/themeListForm/theme-list-form/theme-list-form.component';
+import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio-bar.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ThemeListFormComponent } from './components/centre/showcase/user-panel/
     SignUpComponent,
     UserDataComponent,
     UserPanelComponent,
-    ThemeListFormComponent
+    ThemeListFormComponent,
+    AudioBarComponent
   ],
   imports: [
     BrowserModule,

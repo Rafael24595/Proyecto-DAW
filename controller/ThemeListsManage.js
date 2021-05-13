@@ -2,6 +2,7 @@
 require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Artist = mongoose.model('Artist');
 const jwt = require('jsonwebtoken');
 
 async function privatizeThemeList(req, res){
@@ -84,16 +85,24 @@ async function privatizeThemeList(req, res){
   }
   
   async function addToUserThemeList(req, res){
-    let newTheme = req.body.theme;
-    let themeListName = req.body.themeListName;
-    let userName = req.body.userName;
+    let artistId = req.body.artistId;console.log(artistId)
+    let newTheme = req.body.themeId;      console.log(newTheme)
+    let themeListName = req.body.themeListName;      console.log(themeListName)
+    let userName = req.body.userName;      console.log(userName)
     let index = 0;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
       user.themeLists.find(themeList=>{
+        console.log(themeList.name == themeListName)
         if(themeList.name == themeListName){
+          let themeExists = user.themeLists[index].list.map(theme=>{return theme.themeId}).indexOf(newTheme);
           if(JSON.parse(themeList.userManage)){
-            user.themeLists[index].list.push(newTheme);
+            if(themeExists == -1){
+              user.themeLists[index].list.push({listId:artistId, themeId:newTheme});
+            }
+            else{
+              user.themeLists[index].list.splice(themeExists, 1);
+            }
           }
           else{
             res.headerSent = true;
@@ -105,7 +114,7 @@ async function privatizeThemeList(req, res){
         return false;
       });
       await User.findOneAndUpdate({name:userName},user);
-      if(!res.headerSent) res.status(200).json({status:'Ok'});
+      if(!res.headerSent) res.status(200).json({status:'Ok', message:user.themeLists[index].list});
     }
     else{
       res.status(401).json({status:'Invalid petition'});

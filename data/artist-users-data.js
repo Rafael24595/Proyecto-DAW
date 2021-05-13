@@ -14,7 +14,7 @@ const artistData = [
         "themeList": [
             {
                 "id": "ab-1",
-                "name": "Heart and Sou",
+                "name": "Heart and Soul",
                 "flag": "eng",
                 "tags": ['_OWB', 'soundtracks', 'blues'],
                 "lyrics": {
@@ -304,7 +304,7 @@ const artistData = [
             },
             {
                 "id": "is-2",
-                "name": "I Don`t Want to Set",
+                "name": "I Don`t Want to Set the World on Fire",
                 "flag": "eng",
                 "tags": ['_OWB', 'blues'],
                 "lyrics": {

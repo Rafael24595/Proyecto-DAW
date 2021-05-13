@@ -67,10 +67,84 @@ export class UserPanelComponent implements OnInit {
 
   }
 
+  themeObservable(message:{status:string, value:string | number}){
+    
+    let status = message.status;
+    let value = message.value;
+    
+    switch (status){
+
+      case 'ready':
+
+        this.setAudioBarThemeList();
+        
+
+      break;
+
+      case 'ended':
+
+        this.addSelectedContainer(value as string);
+
+      break;
+
+    }
+    
+  }
+
+  addSelectedContainer(value:string){
+
+    let themeListName = this.selectedThemeList;console.log(`theme-container-${themeListName}-${value}`)
+    let element = document.getElementById(`theme-container-${themeListName}-${value}`);console.log(element)
+
+    this.removeSelectedContainer();
+
+    if(element){
+      element.classList.add('selected');
+      return true
+    }
+    return false;
+  }
+
+  removeSelectedContainer(){
+    let elements = document.getElementsByClassName('selected');
+    for (let index = 0; index < elements.length; index++) {
+      elements[index].classList.remove('selected');
+    }
+
+  }
+
+  setAudioBarThemeList(){
+    let themeList = sesionValues.activeUser.getThemeList(this.selectedThemeList);
+    let themeId = (themeList) ? themeList.list.map(theme=>{return theme})[0].id : '';
+    if(themeList){
+      this.comunicationService.sendThemes(false, themeList.list);
+      let correct = false;
+      setTimeout(()=>{correct = this.addSelectedContainer(themeId);},100);
+      let ready = setInterval(()=>{
+        if(correct){
+          clearInterval(ready);
+        }
+        else{
+          correct = this.addSelectedContainer(themeId);
+        }
+      }, 100);
+    }
+  }
+
+  setAudioBarListPosition(themeId:string){
+    let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
+    if(list){
+      let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
+      if(position != -1){
+        this.comunicationService.sendListPosition(position);
+      }
+    }
+  }
+
   dataObservable(dataToString:string){
     let data = JSON.parse(dataToString);
 
-    if(data['task'] == 'new'){console.log('inx')
+    if(data['task'] == 'new'){
       let newThemeList = data.themeList;
       this.newThemeList(newThemeList);
       this.formTask = '';
@@ -140,7 +214,6 @@ export class UserPanelComponent implements OnInit {
     if(this.autorizationService.checkForToken() && this.ProfileData){
       this.DatabaseConexService.newThemeList(themeListData.themeListName, JSON.stringify(themeListData.privacy), this.ProfileData.name).subscribe(
         sucess=>{
-          console.log(sucess)
           sesionValues.activeUser.setNewThemeList(sucess.list.themeList);
           this.ProfileData = sesionValues.activeUser;
         },
@@ -180,7 +253,7 @@ export class UserPanelComponent implements OnInit {
   modifyPassword(event:Event, exit?:number){
 
     let keyCode:KeyboardEvent | string = event as KeyboardEvent;
-    keyCode = keyCode.code;console.log(exit)
+    keyCode = keyCode.code;
 
     if(((keyCode == 'Enter' || keyCode == 'Escape') && this.modifyValuesData.modifyPassword.status) || exit){
 
@@ -264,7 +337,7 @@ export class UserPanelComponent implements OnInit {
               userAttribute = 'name'; 
               oldAttribute = this.ProfileData.name; 
               newAttribute = this.modifyValuesData.modifyUserName.value; 
-              input = this.modifyValuesData.modifyUserName;console.log(userName)
+              input = this.modifyValuesData.modifyUserName;
               let sucess = this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
               if(sucess){
                 this.router.navigate([`/Profile/${newAttribute}`]);
@@ -299,7 +372,7 @@ export class UserPanelComponent implements OnInit {
     return new Promise(resolve=>{
       if(oldAttribute != newAttribute){
         this.DatabaseConexService.modifyUserData(attributte, oldAttribute, newAttribute, userName).subscribe(
-          sucess=>{console.log(sucess)
+          sucess=>{
             sesionValues.activeUser.setAttribute(attributte, newAttribute);
             this.ProfileData = sesionValues.activeUser;
             input.status = false;
@@ -326,8 +399,8 @@ export class UserPanelComponent implements OnInit {
       this.DatabaseConexService.modifyThemeList(newThemeList, this.themeList.name, sesionValues.activeUser.name).subscribe(
         sucess=>{
           if(this.themeList && this.ProfileData && sucess.status){
-            this.themeList.name = this.modifyValuesData.themeListName.value;console.log(this.modifyValuesData.themeListName.status)
-            this.modifyValuesData.themeListName.status = false;console.log(this.modifyValuesData.themeListName.status)
+            this.themeList.name = this.modifyValuesData.themeListName.value;
+            this.modifyValuesData.themeListName.status = false;
           }
         },
         err=>{console.log(err)
@@ -341,7 +414,7 @@ export class UserPanelComponent implements OnInit {
   removeThemeFromList(id:string){
     this.DatabaseConexService.removeFromThemeList(id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
       sucess=>{
-        if(sucess.status){console.log(sucess.status)
+        if(sucess.status){
           sesionValues.activeUser.removeFromThemeList(this.selectedThemeList, id);
           this.ProfileData = sesionValues.activeUser;
         }
@@ -367,12 +440,10 @@ export class UserPanelComponent implements OnInit {
     if(this.ProfileData){
       this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
         sucess=>{
-          console.log(sucess.list)
           let count = 0;
           this.themeList = this.ProfileData?.themeLists.find(themeList=>{
             if(themeList.name == this.selectedThemeList){
               sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
-              console.log(sesionValues.activeUser);
               return true;
             }
             count++;
@@ -384,6 +455,7 @@ export class UserPanelComponent implements OnInit {
           this.modifyValuesData.themeListName.value = this.themeList?.name as string;
           this.formTask = '';
           this.privatizeThemeListValue = JSON.stringify(this.themeList?.privateState);
+          this.setAudioBarThemeList();
         },
         err=>{
 

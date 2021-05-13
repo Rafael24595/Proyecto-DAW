@@ -42,6 +42,7 @@
                 <option *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>{{list.name}}</option>
             </ng-container>   
         </select>
+        <p *ngIf='isSessionUser && ProfileData' (click)='formTask = (formTask != "new") ?  "new" : ""'>[[Nueva lista]]</p>
         <div>
             <ng-container *ngIf='themeList'>
                 <p *ngIf='isSessionUser'><span>[[private]]:</span><span (click)='privatizeThemeList()'>{{privatizeThemeListValue}}</span></p>
@@ -52,15 +53,17 @@
                     <br>
                     <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id}) (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
                 </ng-container>
-                <div *ngFor='let singleTheme of themeList.list'>
+            </ng-container>
+            <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
+            <ng-container *ngIf='themeList'>
+                <div *ngFor='let singleTheme of themeList.list' id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container">
                     <ng-container *ngIf='singleTheme.name'>
-                        <p>{{singleTheme.name}} - {{singleTheme.artist.name}} {{singleTheme.artist.surname}}</p>
+                        <p><span (click)='setAudioBarListPosition(singleTheme.id)'>[[play-icon]]</span> {{singleTheme.name}} - {{singleTheme.artist.name}} {{singleTheme.artist.surname}}</p>
                         <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeFromList(singleTheme.id)'>[[trash-can]]</span>
                     </ng-container>
                 </div>
             </ng-container>
         </div>
     </div>
-    <p *ngIf='isSessionUser && ProfileData' (click)='formTask = (formTask != "new") ?  "new" : ""'>[[Nueva lista]]</p>
     <app-theme-list-form *ngIf='formTask != ""' (outputToparent)='dataObservable($event)' [task]='formTask'></app-theme-list-form>
 </div>

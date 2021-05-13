@@ -36,6 +36,20 @@ export class User{
         })
     }
 
+    setThemeListList(themeListName:string, newThemeList:Themes[]){
+
+        console.log(newThemeList)
+
+        let posicion = this.themeLists.map(theme=>{return theme.name}).indexOf(themeListName);
+        console.log(this.themeLists)
+        if(posicion != -1){
+
+            this.themeLists[posicion].list = newThemeList;
+
+        }
+        console.log(this.themeLists)
+    }
+
     setBasicThemeLists(){
         this.themeLists.push(new ThemeList('@likes-list', true, false,true,[]));
         this.themeLists.push(new ThemeList('@dislikes-list', false, false,true,[]));

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Themes } from 'src/app/classes/Themes';
+import { ThemesInterface } from 'src/app/interfaces/ThemesInterface';
 import { CandyInterface } from '../../interfaces/CandyInterface';
 
 @Injectable({
@@ -23,6 +25,26 @@ export class ComunicationServiceService {
   sendCandies(candies:CandyInterface[]){
     this.candies = candies;
     this.sendCandiesSubject.next(candies);
+  }
+
+  isThemeList: boolean | undefined;
+  themesArray: Themes[] | undefined;
+  private sendThemesSubject = new Subject<{isThemeList:Boolean, themes:Themes[]}>();
+  sendThemesObservable = this.sendThemesSubject.asObservable();
+
+  sendThemes(isThemeList:boolean, themes:Themes[]){
+    this.isThemeList = isThemeList;
+    this.themesArray = themes;
+    this.sendThemesSubject.next({isThemeList, themes});
+  }
+
+  listPosition: number | undefined;
+  private sendListPositionSubject = new Subject<number>();
+  sendListPositionObservable = this.sendListPositionSubject.asObservable();
+
+  sendListPosition(listPosition:number){
+    this.listPosition = listPosition
+    this.sendListPositionSubject.next(listPosition);
   }
 
 }

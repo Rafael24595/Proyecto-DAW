@@ -5,7 +5,9 @@
                 <img src="../../../../../assets/media/images/covers/{{theme.id}}.png"><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})'>[[mini-vinyl]]</span>
                 <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})'>[[mini-flag]]</span></p>
                 <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
+                <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
                 <p><span (click)="thumbValue(1)">[[thumb-up]] <ng-container *ngIf='isLike == 1'><b>{{theme.likes}}</b></ng-container><ng-container *ngIf='isLike != 1'>{{theme.likes}}</ng-container></span> <span (click)="thumbValue(-1)"> [[thumb-down]] <ng-container *ngIf='isLike == -1'><b>{{theme.dislikes}}</b></ng-container><ng-container *ngIf='isLike != -1'>{{theme.dislikes}}</ng-container></span></p>
+                <p><span (click)="showThemeListForm = true">[[+]]</span></p>
             </div>
             
             <img *ngIf='lyrics' src="../../../../../assets/media/images/flags/{{flag}}.png" (click)='switchLyrics()'>
@@ -33,6 +35,19 @@
                 <p *ngIf='!comment.activeUser'><b><s>{{comment.userName}}</s></b>:</p>
                 <p>{{comment.comment}}</p>
             </div>
+        </div>
+        <div *ngIf='showThemeListForm'>
+            <select [(ngModel)]='selectedThemeList' (change)='checkInList()'>
+                <option selected="selected">-- Selecciona lista --</option>
+                <ng-container *ngFor='let list of userThemeLists'>
+                    <option *ngIf='isSessionUser && list.userManage'>{{list.name}}</option>
+                </ng-container> 
+            </select>
+            <br><br>
+            <ng-container *ngIf='selectedThemeList != ""'>
+                <button (click)='addToThmemeList()' >{{buttonThemeList}}</button>
+                <button (click)='showThemeListForm = false' >Cancelar</button>
+            </ng-container>
         </div>
         <div *ngIf='showInput'>
             <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>

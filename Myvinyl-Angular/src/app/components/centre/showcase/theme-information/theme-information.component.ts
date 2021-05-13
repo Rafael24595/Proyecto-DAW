@@ -10,6 +10,7 @@ import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
+import { ThemeList } from 'src/app/classes/ThemeList';
 
 @Component({
   selector: 'app-theme-information',
@@ -23,9 +24,16 @@ export class ThemeInformationComponent implements OnInit {
   flag: string = 'eng';
   lyrics: string | undefined;
   comment:string | undefined;
+  selectedThemeList: string = '';
+  userThemeLists:ThemeList[] = [];
   user = sesionValues.activeUser.name;
   isLike = 0;
+  isSessionUser: boolean = false;
   isAdmin: boolean = false;
+
+  showThemeListForm: boolean = false;
+  buttonThemeList = 'Añadir';
+
   showInput: boolean = false;
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
@@ -45,6 +53,8 @@ export class ThemeInformationComponent implements OnInit {
         this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views,);
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
+        this.userThemeLists = sesionValues.activeUser.themeLists;
+        this.isSessionUser = (sesionValues.activeUser.email) ? true :false;
         this.isLike = sesionValues.activeUser.isThemeLike(theme.id);
         this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
         if(this.isLike < 0 && theme.likes == 0 || this.isLike > 0 && theme.dislikes == 0) {
@@ -54,6 +64,27 @@ export class ThemeInformationComponent implements OnInit {
       });
       }
     )
+  }
+
+  themeObservable(message:{status:string, value:string | number}){
+    
+    let status = message.status;
+    let value = message.value;
+    
+    switch (status){
+
+      case 'ready':
+
+        if(this.theme){
+
+          this.comunicationService.sendThemes(false, [this.theme]);
+
+        }
+
+      break;
+
+    }
+    
   }
 
   switchLyrics(){
@@ -136,6 +167,35 @@ export class ThemeInformationComponent implements OnInit {
         }
       );
     }
+  }
+
+  addToThmemeList(){
+    console.log(this.selectedThemeList);
+    if(this.theme){
+      this.DatabaseConexService.addToThemeList(this.theme.artist.id, this.theme.id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          sesionValues.activeUser.setThemeListList(this.selectedThemeList, sucess.message);console.log(sesionValues.activeUser)
+          this.showThemeListForm = false;
+          this.selectedThemeList = '';
+        },
+        err=>{
+          console.log(`Error: ${err}`);
+        }
+      );
+    }
+  }
+
+  checkInList(){
+    let inList = false;
+    let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
+    if(this.theme && list){
+      inList = (list.list.map(theme=>{return (theme.id) ? theme.id : theme.themeId}).indexOf(this.theme.id) != -1);
+      console.log(inList)
+      console.log(list.list.map(theme=>{return (theme.id) ? theme.id : theme.themeId}))
+    }
+
+    this.buttonThemeList = (inList) ? 'Eliminar' : "Añadir";
+
   }
 
   async setImagePreview(mode:string){
