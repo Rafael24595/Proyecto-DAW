@@ -26,7 +26,7 @@ export class UserPanelComponent implements OnInit {
   selectedThemeList:string = '';
   themeList:ThemeList | undefined;
   isSessionUser:boolean = false;
-  privatizeThemeListValue:string = 'false';
+  privateValue = false;
 
   formTask = '';
 
@@ -48,6 +48,7 @@ export class UserPanelComponent implements OnInit {
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
+    this.selectedThemeList = '-- Selecciona lista --';
     this.manageComponent.setLastURL();
     this.route.params.subscribe(params =>{
       this.userName = params['username'];
@@ -148,6 +149,7 @@ export class UserPanelComponent implements OnInit {
       let newThemeList = data.themeList;
       this.newThemeList(newThemeList);
       this.formTask = '';
+      this.selectedThemeList = '-- Selecciona lista --';
     }
 
     if(data['task'] == 'close'){
@@ -190,13 +192,14 @@ export class UserPanelComponent implements OnInit {
   privatizeThemeList(){
 
     if(this.autorizationService.checkForToken() && this.themeList){
-      this.DatabaseConexService.updateThemeListPrivacity(this.themeList.name, JSON.parse(this.privatizeThemeListValue), sesionValues.activeUser.name).subscribe(
+      this.DatabaseConexService.updateThemeListPrivacity(this.themeList.name, JSON.stringify(this.privateValue), sesionValues.activeUser.name).subscribe(
         sucess=>{
           if(this.themeList && this.ProfileData){
-            this.themeList.privateState = sucess.status;
-            sesionValues.activeUser.setThemeListPrivacity(this.themeList.name, sucess.status);
+            let status = (typeof sucess.status == 'string') ? JSON.parse(sucess.status) : sucess.status;
+            this.themeList.privateState = status;
+            sesionValues.activeUser.setThemeListPrivacity(this.themeList.name, status);
             this.ProfileData = sesionValues.activeUser;
-            this.privatizeThemeListValue = JSON.stringify(this.themeList.privateState);
+            this.privateValue = status;
           }
         },
         err=>{console.log(err)
@@ -438,30 +441,40 @@ export class UserPanelComponent implements OnInit {
 
   changeList(){
     if(this.ProfileData && this.selectedThemeList != '-- Selecciona lista --'){
-      this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
-        sucess=>{
-          let count = 0;
-          this.themeList = this.ProfileData?.themeLists.find(themeList=>{
-            if(themeList.name == this.selectedThemeList){
-              sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
-              return true;
+      if(this.selectedThemeList == '-- Nueva lista --'){
+        this.formTask = (this.formTask != "new") ?  "new" : "";
+      }
+      else{
+        this.formTask = "";
+        this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
+          sucess=>{
+            console.log(sucess)
+            let count = 0;
+            this.themeList = this.ProfileData?.themeLists.find(themeList=>{
+              if(themeList.name == this.selectedThemeList){
+                sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
+                return true;
+              }
+              count++;
+              return false;
+            });
+            if(this.themeList){
+              this.themeList.list = sucess.list as any;
+              this.privateValue = this.themeList.privateState;
+              console.log(this.themeList)
             }
-            count++;
-            return false;
-          });
-          if(this.themeList){
-            this.themeList.list = sucess.list as any;
+            this.modifyValuesData.themeListName.value = this.themeList?.name as string;
+            this.formTask = '';
+            this.setAudioBarThemeList();
+          },
+          err=>{
+            console.log(`Error: ${err}`)
           }
-          this.modifyValuesData.themeListName.value = this.themeList?.name as string;
-          this.formTask = '';
-          this.privatizeThemeListValue = JSON.stringify(this.themeList?.privateState);
-          this.setAudioBarThemeList();
-        },
-        err=>{
-
-        }
-      );
-      
+        );
+      }
+    }
+    else{
+      this.themeList = undefined;
     }
   }
 

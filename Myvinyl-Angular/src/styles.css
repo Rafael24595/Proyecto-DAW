@@ -1,5 +1,10 @@
 :root{
 	--containers: rgb(0, 102, 68);
+	--warn: orange;
+}
+
+*:focus {
+    outline: 0 !important;
 }
 
 @media (max-width: 999px) {
@@ -183,6 +188,10 @@ html, body{
 
 }
 
+input{
+	margin: 5px;
+}
+
 .greenButton{
 
 	font-family: BlazingSun;
@@ -339,10 +348,44 @@ html, body{
 
 	font-family: BlazingSun;
 	text-align: center;
-	color: orange;
+	color: var(--warn);
 	font-size: 0.8em;
 	text-decoration: underline;
 
+}
+
+.title-backg{
+
+	background-color: var(--containers);
+	height: 8%;
+	top: 50%;
+	margin-top: 25px;
+    margin-bottom: 16px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 15px;
+
+}
+
+.title, .title-backg p{
+
+	text-align: center;
+	font-size: 1.5em;
+	color: white;
+	font-family: BlazingSun;
+	margin: 0px;
+	background-color: transparent;
+
+}
+
+.title-backg.line{
+	display: inline-block;
+	padding-left: 70px;
+	padding-right: 70px;
+}
+
+.user-data-container-small{
+	height: 85px;
 }
 
 .theme-container{
@@ -355,8 +398,57 @@ html, body{
 
 .input-error{
 
-	box-shadow: 0px 0px 2px 3px orange;
+	box-shadow: 0px 0px 2px 3px var(--warn);
 
+}
+
+.text-centre{
+	text-align: center;
+}
+
+.text-left{
+	text-align: left;
+}
+
+.height-100{
+	height: 100%;
+}
+
+.width-50{
+	width: 50%;
+}
+
+.marg-bott-0{
+	margin-bottom: 0px;
+}
+
+.avatar-small{
+	width: 85px;
+}
+
+.avatar-back{
+	border-radius: 50%;
+	background-color: black;
+}
+
+.display-inline{
+	display: inline-block;
+}
+
+.txt-horizontal-left{
+	text-align: left;
+}
+
+.vertical-top{
+	vertical-align: top;
+}
+
+.overflow-auto{
+	overflow: auto;
+}
+
+.cursor-pointer{
+	cursor: pointer;
 }
 
 .centerContainer{

@@ -173,9 +173,10 @@ async function privatizeThemeList(req, res){
     let index = 0;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
-      user.themeLists.find(themeList=>{
+      user.themeLists.find(async themeList=>{
         if(themeList.name == themeListName){
           if(JSON.parse(themeList.userManage)){
+            newThemeList = await simplifyThemeList(newThemeList.list)
             user.themeLists[index] = newThemeList;
           }
           else{
@@ -193,6 +194,27 @@ async function privatizeThemeList(req, res){
     else{
       res.status(401).json({status:'Invalid petition'});
     }
+  }
+
+  async function simplifyThemeList(themeListList){
+    let list = []
+    await new Promise(resolve=>{
+      themeListList.forEach(themeData => {
+        if(themeData.listId){
+          list.push(themeData)
+        }
+        else{
+          let themeId = themeData.id;
+          let listId = themeData.artist;
+          listId = listId.id;
+          if(listId && themeId){
+            list.push({listId:listId, themeId: themeId});
+          }
+        }
+      });
+      resolve(true)
+    });
+    return list;
   }
 
   module.exports = { privatizeThemeList, createNewThemeList, deleteThemeList, addToUserThemeList, removeFromUserThemeList, updateUserThemeList };

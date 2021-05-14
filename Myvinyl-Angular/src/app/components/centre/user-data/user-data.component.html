@@ -1,6 +1,12 @@
 <div id="userData">
-    <img src="../../../../../assets/media/images/users/{{user.name}}.png" (click)='userRedirect()'>
-    <p (click)='userRedirect()'>{{user.name}}</p>
-    <p>Rango: {{range[user.admin]}}</p>
-    <p class="whiteLink centreLink" (click)='closeSession()'>Cerrar sesión</p>
+    <div class="user-data-container-small text-centre">
+        <div style="margin-right: 7px;" class="display-inline height-100 avatar-back cursor-pointer" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>
+            <img class="avatar-small height-100" src="../../../../assets/media/images/users/{{sessionValues.activeUser.name}}.png">
+        </div>
+        <div style="margin-left:7px;" class="display-inline vertical-top text-left">
+            <p class="cursor-pointer" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>{{sessionValues.activeUser.name}}</p>
+            <p>Rango: {{range[sessionValues.activeUser.admin]}}</p>
+        </div>
+    </div>
+    <p class="whiteLink centreLink marg-bott-0 cursor-pointer" (click)='closeSession()'>Cerrar sesión</p>
 </div>

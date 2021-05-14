@@ -134,30 +134,6 @@
 
 }
 
-.title{
-
-	background-color: rgb(0, 102, 68);
-	height: 8%;
-	top: 50%;
-	margin-top: 16px;
-    margin-bottom: 16px;
-	margin-left: 10px;
-	margin-right: 10px;
-	padding: 15px;
-
-}
-
-.title.noBckg, .title p{
-
-	text-align: center;
-	font-size: 1.5em;
-	color: white;
-	font-family: BlazingSun;
-	margin: 0px;
-	background-color: transparent;
-
-}
-
 .title.big{
 
 	font-size: 2.5em;

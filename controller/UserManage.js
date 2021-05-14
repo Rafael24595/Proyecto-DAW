@@ -93,11 +93,13 @@ async function getThemesFromList(req, res){
   let themeListName = req.body.themeListName;
   let profileName = req.body.profile;
 
-  if(req.existsUser){
+  if(req.existsUser){console.log('34')
     let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);});
     let themeList = profileData.themeLists.find(list=>{return(list.name == themeListName)});
     if(JSON.parse(themeList && (req.userToken == true && JSON.parse(themeList.userView) || req.userToken != true && JSON.parse(themeList.userView) && !JSON.parse(themeList.privateState)))){
+      console.log('cojones')
       themeList = await fillThemeList(themeList.list);
+      console.log(themeList)
       res.status(200).json({status:true, list:themeList});
     }
     else{
@@ -114,7 +116,9 @@ async function fillThemeList(themeList){
     var count = 0;
     var list = [];
     themeList.forEach(async theme => {
+      console.log(theme)
       await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
+        console.log('inx')
         if(artist && artist.themeList && artist.themeList.length > 0){
           await artist.themeList.find(themeListData=>{
             if(themeListData.id == theme.themeId){
@@ -122,6 +126,7 @@ async function fillThemeList(themeList){
               themeListData.artist.id = artist.id_artist;
               themeListData.artist.name = artist.name;
               themeListData.artist.surname = artist.surname;
+              console.log(themeListData)
               list.push(themeListData);
               
               return true;

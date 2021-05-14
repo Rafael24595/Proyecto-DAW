@@ -1,5 +1,5 @@
 <div (mousemove)='mouseDrag($event)' (mouseleave)='mouseUpAudio();mouseUpVolume();mouseDrag($event)' (mouseup)='mouseUpAudio();mouseUpVolume()'>
-    <div>
+    <div style="display: inline-block;">
         <p class="timeTag" style="margin-left: {{timePointerPosition}}px; display:{{overBar}}; ">{{timePointer}}</p>
         <div style="width: {{barAudioSize}}px;" id='audio-bar-padding' (mousedown)='toClick($event)'></div>
         <div style="width: {{barAudioSizeProgress}}px; background-color: {{barColor}};" id='audio-bar-progress'></div>

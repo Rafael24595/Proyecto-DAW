@@ -1,5 +1,6 @@
 <div id="homeContainer">
-    <h2>Iniciar sesión</h2>
+    <h1>Iniciar sesión</h1>
+    <br>
     <form (submit)="signIn()">
         <label for="email">Email:</label>
         <br>
@@ -7,14 +8,16 @@
         <br><br>
         <label for="password">Contraseña:</label>
         <br>
-        <input type="text" [ngClass]="formError.password == '' ? '' : 'input-error'" [(ngModel)]="user.password" name="password">
+        <input type="password" [ngClass]="formError.password == '' ? '' : 'input-error'" [(ngModel)]="user.password" name="password">
         <div id="formError">
             <p *ngIf='formError.email != ""'>{{formError.email}}</p>
             <p *ngIf='formError.password != ""'>{{formError.password}}</p>
-            <br *ngIf='formError.email == ""'>
+            <ng-container *ngIf='formError.email == ""'>
+                <br>
+            </ng-container>
         </div>
-        <input type="submit" name="Enviar" class="greenButton centerButton">
+        <input type="submit" name="Enviar" class="greenButton">
         <br><br>
-        <a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="tinyFont whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a>
+        <a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="tinyFont whiteLink" alt="Registrarse">¿No estas registrado?</a>
     </form>
 </div>

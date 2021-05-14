@@ -1,5 +1,5 @@
 <div id="homeContainer">
-    <h2>Registrarse</h2>
+    <h1>Registrarse</h1>
     <form (submit)="signUp()">
         <label for="name">Nombre:</label>
         <br>
@@ -11,19 +11,19 @@
         <br><br>
         <label for="password">Contraseña:</label>
         <br>
-        <input type="text" [ngClass]="formError.password == '' ? '' : 'input-error'" [(ngModel)]="user.password" name="password">
+        <input type="password" [ngClass]="formError.password == '' ? '' : 'input-error'" [(ngModel)]="user.password" name="password">
         <br><br>
         <label for="repassword">Repetir contraseña:</label>
         <br>
-        <input type="text" [ngClass]="formError.repassword == '' ? '' : 'input-error'" [(ngModel)]="user.repassword" name="repassword">
+        <input type="password" [ngClass]="formError.repassword == '' ? '' : 'input-error'" [(ngModel)]="user.repassword" name="repassword">
         <div id="formError">
             <p *ngIf='formError.email != ""'>{{formError.email}}</p>
             <p *ngIf='formError.password != ""'>{{formError.password}}</p>
             <p *ngIf='formError.repassword != ""'>{{formError.repassword}}</p>
             <br *ngIf='formError.email == "" && formError.password == "" && formError.repassword == ""'>
         </div>
-        <input type="submit" name="Enviar" class="greenButton centerButton">
+        <input type="submit" name="Enviar" class="greenButton">
         <br><br>
-        <a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" class="tinyFont whiteLink centreLink" alt="Registrarse">¿Ya tienes cuenta?</a>
+        <a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" class="tinyFont whiteLink" alt="Registrarse">¿Ya tienes cuenta?</a>
     </form>
 </div>

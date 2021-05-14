@@ -1,17 +1,17 @@
 <div id="center">
     <div id="left">
         <ng-container *ngIf='!authorization.checkForToken()'>
-            <div class="title"><p>Iniciar sesión</p></div>
+            <div class="title-backg"><p>Iniciar sesión</p></div>
             <div id="toFormMenu">
                 <p><a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">Ya tengo cuenta</a></p>
                 <p><a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a></p>
             </div>
         </ng-container>
         <ng-container *ngIf='authorization.checkForToken()'>
-            <div class="title"><p>Bienvenido</p></div>
+            <div class="title-backg"><p>Bienvenido</p></div>
             <app-user-data></app-user-data>
         </ng-container>
-        <div id="menuTitle" class="title"><p>Categorías</p></div>
+        <div id="menuTitle" class="title-backg"><p>Categorías</p></div>
         <div id="menuContainer">
             <ul id="menuContent">
                 <li><span class="old_world_blues_candy" (click)="expandOption($event.target)">Old World Blues</span>
@@ -37,7 +37,7 @@
                 </li>
             </ul>
         </div>
-        <div class="title"><p>Galería</p></div>
+        <div class="title-backg"><p>Galería</p></div>
         <div id="imageGalery" class="tinyFont centerText"><p>No hay contenido disponible</p></div>
     </div>
     <div id="right">
