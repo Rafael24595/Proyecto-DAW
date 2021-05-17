@@ -53,7 +53,8 @@ export class ThemeInformationComponent implements OnInit {
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
-        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views,);
+        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views);
+        this.lyrics = this.theme.lyrics.native;
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
         this.userThemeLists = sesionValues.activeUser.themeLists;
@@ -63,7 +64,7 @@ export class ThemeInformationComponent implements OnInit {
         if(this.isLike < 0 && theme.likes == 0 || this.isLike > 0 && theme.dislikes == 0) {
           let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
           this.modifyThemeData({attrName:likeValue, attrId:'', value:theme[likeValue] + 1});
-        }
+        }console.log(this.theme)
         this.calculateLikesPercentage();
       });
       }
@@ -104,7 +105,7 @@ export class ThemeInformationComponent implements OnInit {
 
   switchLyrics(){
     if (this.theme && this.lyrics == this.theme.lyrics.native){
-      this.flag = 'esp';
+      this.flag = 'spn';
       this.lyrics = this.theme.lyrics.esp;
     }
     else if(this.theme){

@@ -98,6 +98,7 @@ export class AudioBarComponent implements OnInit {
   barVolumeSizeProgress = this.barVolumeSize;
   pointVolumePosition = this.barVolumeSize;
   mouseDwnVolume = false;
+  volLogo = 'B';
   //vol = '100%';
 
   /*////////////
@@ -403,7 +404,33 @@ export class AudioBarComponent implements OnInit {
 
       //this.vol = `${Math.round(this.audio.volume * 100)}%`;
       this.setMuted();
+      this.setVolLogo();
       localStorage.setItem('volVal', JSON.stringify(this.audio.volume));
+    }
+  }
+
+  setVolLogo(){
+    if(this.audio){
+      let volActual = this.audio.volume;
+      let percentage = volActual * 100 / 25;console.log(percentage)
+      
+      if(!this.audio.muted){
+        if(percentage <= 0){
+          this.volLogo = Color_Vars.volume_logo.percentage_0;
+        }
+        if(percentage > 0 && percentage <= 1){
+          this.volLogo = Color_Vars.volume_logo.percentage_25;
+        }
+        if(percentage > 1 && percentage < 3){
+          this.volLogo = Color_Vars.volume_logo.percentage_50;
+        }
+        if(percentage >= 3){
+          this.volLogo = Color_Vars.volume_logo.percentage_75;
+        }
+      }
+      else{
+        this.volLogo = Color_Vars.volume_logo.percentage_0;
+      }
     }
   }
 

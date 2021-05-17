@@ -486,7 +486,9 @@ input{
 	border-radius: 50%;
 	background-color: black;
 }
-
+.flag-small{
+	width: 30px;
+}
 .display-block{
 	display: block;
 }

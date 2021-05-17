@@ -51,7 +51,7 @@ export class ArtistPanelComponent implements OnInit {
               this.candy.query['id'] = params['id'];
               this.artist = new Artist(sucess.artist.id_artist, sucess.artist?.name, sucess.artist?.surname, sucess.artist.description, sucess.artist.tags, sucess.artist.themeList);
               this.comunicationService.sendCandy(this.candy);
-              this.user = sesionValues.activeUser;console.log(this.user)
+              this.user = sesionValues.activeUser;
               this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
             }
             else{

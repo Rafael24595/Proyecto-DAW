@@ -50,5 +50,12 @@ export const Color_Vars = {
     button_reverse_color:{
         reverse: '#8c99a6',
         normal: 'transparent'
+    },
+    volume_logo:{
+      percentage_75:'B',
+      percentage_50:'C',
+      percentage_25:'D',
+      percentage_0:'E',
+
     }
 }

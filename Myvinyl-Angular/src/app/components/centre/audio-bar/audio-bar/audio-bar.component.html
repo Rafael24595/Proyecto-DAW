@@ -15,7 +15,7 @@
             <!--<button (click)='audio.pause()'style="background-color: transparent; margin-left: 2.5px; margin-right: 2.5px;">Pause</button>-->
             <button (click)='stopAudio()' class="my-vinyl-icons-font font-size-150 buttonStyle right-button cursor-pointer">#</button>
             <!--<button (click)='decrementVol()' style="background-color: transparent; margin-right: 2.5px;">V-</button>-->
-            <button (click)='muteVol()' class="left-button-button cursor-pointer" style="background-color: {{muteColor}};">Mute</button>
+            <button (click)='muteVol()' class="my-vinyl-icons-font font-size-150 left-button-button cursor-pointer" style="background-color: {{muteColor}};">{{volLogo}}</button>
             <div style="display: inline-block; transform: translateY(16%);">
                 <div style="width: {{barVolumeSize}}px;" id='vol-bar-padding' (mousedown)='toClick($event)'></div>
                 <div style="width: {{barVolumeSizeProgress}}px; background-color: {{barVolColor}};" id='vol-bar-progress'></div>
@@ -44,7 +44,7 @@
             <button (click)='randomReproduction()' class="my-vinyl-icons-font font-size-150 left-button-button cursor-pointer" style="background-color: {{randomColor}};">&</button>
             <button (click)='loopListReproduction()' class="my-vinyl-icons-font font-size-150 centre-button cursor-pointer" style="background-color: {{loopListColor}};">'</button>
             <button (click)='loopAudio()' class="my-vinyl-icons-font font-size-150 centre-button cursor-pointer" style="background-color: {{loopColor}};">(</button>
-            <button (click)='revertAudioImplement()' class="rigth-button-button cursor-pointer" style="background-color: {{reverseColor}};">Reverse-Rep</button>
+            <button (click)='revertAudioImplement()' class="my-vinyl-icons-font font-size-150 rigth-button-button cursor-pointer" style="background-color: {{reverseColor}};">F</button>
             <img style="height: 25px; vertical-align: bottom; visibility: {{loadGif}};" id="loadGif" src="{{mediaPath}}/images/load.gif">
         </div>
     </div>

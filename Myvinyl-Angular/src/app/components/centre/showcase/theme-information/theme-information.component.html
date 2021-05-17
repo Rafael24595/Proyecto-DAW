@@ -1,7 +1,7 @@
 <div id="homeContainer">
     <div *ngIf="theme">
-        <div style="width: 60%;" class="display-inline">
-            <div>
+        <div style="width: 60%; height: 450px;" class="display-inline">
+            <div style="padding: 15px;">
                 <div>
                     <div class="txt-horizontal-left">
                         <img src="{{mediaPath}}/images/vinyl.png">
@@ -22,10 +22,10 @@
                     </div>
                     <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
                     <div style="width: 33%;" class="display-inline">
-                        <p>Visitas: {{theme.views}}</p>
+                        <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
                     </div>
                     <div style="width: 33%;" class="display-inline">
-                        <p style="width: 50%;" class="display-inline">
+                        <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
                             <span>
                                 <ng-container *ngIf='isLike == 1'>
                                     <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
@@ -37,7 +37,7 @@
                                 <span>{{theme.likes}}</span>
                             </span> 
                         </p>
-                        <p style="width: 50%;" class="display-inline">
+                        <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
                             <span>
                                 <ng-container *ngIf='isLike == -1'>
                                     <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
@@ -53,12 +53,12 @@
                         <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
                     </div>
                     <div style="width: 33%;" class="display-inline">
-                        <p><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                        <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
                     </div>
                 </div>
             </div>
-            <div *ngIf='isAdmin'>
-                <h3>Etiquetas:</h3>
+            <div *ngIf='isAdmin' style="padding: 15px;">
+                <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
                 <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
                     <span>{{themeTag}} - </span>
                     <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
@@ -72,32 +72,39 @@
                 </div>
             </div>
         </div>
-        <div style="width: 40%;" class="display-inline vertical-top">
-            <img *ngIf='lyrics' src="{{mediaPath}}/images/flags/{{flag}}.png" (click)='switchLyrics()'>
-            <div *ngIf='lyrics' [innerHTML]="lyrics"></div>
-            <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
+        <div style="width: 40%; height: 450px;" class="display-inline vertical-top">
+            <div>
+                <h3 class="display-inline">Letra: </h3>
+                <img *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="position: absolute;transform: translate(-425%,100%);float: right;" (click)='switchLyrics()'>
+            </div>
+            <div style=" height: 80%; overflow: auto; padding: 15px;">
+                <div *ngIf='lyrics' [innerHTML]="lyrics"></div>
+                <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
+            </div>
         </div>
         <div style="width: 60%;" class="txt-horizontal-left display-inline">
-            <h3>Comentarios {{theme.comments.length}}: </h3>
-            <textarea style="width: 99%; height: 100px;" [(ngModel)]="comment"></textarea>
-            <br>
-            <div>
-                <input type="submit" value="Enviar" (click)='publicateComment()'>
-            </div>
-            <br>
-            <div>
-                <div *ngFor='let comment of theme.comments'>
-                    <p *ngIf='comment.activeUser' class="display-inline" style="width: 86%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
-                    <p *ngIf='!comment.activeUser' class="display-inline" style="width: 93%;" ><b><s>{{comment.userName}}</s></b>:</p>
-                    <span *ngIf='isAdmin' style="width: 7%; color: darkgoldenrod;" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
-                        <span class="trash-cap cursor-pointer display-inline">0</span>
-                        <span class="trash-body cursor-pointer display-inline">/</span>
-                    </span>
-                    <span *ngIf='comment.userName == user' style="width: 7%;" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
-                        <span class="trash-cap cursor-pointer display-inline">0</span>
-                        <span class="trash-body cursor-pointer display-inline">/</span>
-                    </span>
-                    <p>{{comment.comment}}</p>
+            <div style="padding: 15px;">
+                <h3>Comentarios {{theme.comments.length}}: </h3>
+                <textarea style="width: 99%; height: 100px;" [(ngModel)]="comment"></textarea>
+                <br>
+                <div>
+                    <input type="submit" value="Enviar" (click)='publicateComment()'>
+                </div>
+                <br>
+                <div>
+                    <div *ngFor='let comment of theme.comments'>
+                        <p *ngIf='comment.activeUser' class="display-inline" style="width: 90%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
+                        <p *ngIf='!comment.activeUser' class="display-inline" style="width: 90%;" ><b><s>{{comment.userName}}</s></b>:</p>
+                        <span *ngIf='isAdmin' style="width: 10%;" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                            <span class="trash-cap cursor-pointer display-inline">0</span>
+                            <span class="trash-body cursor-pointer display-inline">/</span>
+                        </span>
+                        <span *ngIf='!isAdmin && comment.userName == user' style="width: 10%;" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                            <span class="trash-cap cursor-pointer display-inline">0</span>
+                            <span class="trash-body cursor-pointer display-inline">/</span>
+                        </span>
+                        <p>{{comment.comment}}</p>
+                    </div>
                 </div>
             </div>
         </div>
