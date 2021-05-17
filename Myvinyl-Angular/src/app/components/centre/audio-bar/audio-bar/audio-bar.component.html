@@ -1,5 +1,5 @@
 <div (mousemove)='mouseDrag($event)' (mouseleave)='mouseUpAudio();mouseUpVolume();mouseDrag($event)' (mouseup)='mouseUpAudio();mouseUpVolume()'>
-    <div style="display: inline-block;">
+    <div id="bar-ajustable-width">
         <p class="timeTag" style="margin-left: {{timePointerPosition}}px; display:{{overBar}}; ">{{timePointer}}</p>
         <div style="width: {{barAudioSize}}px;" id='audio-bar-padding' (mousedown)='toClick($event)'></div>
         <div style="width: {{barAudioSizeProgress}}px; background-color: {{barColor}};" id='audio-bar-progress'></div>
@@ -28,7 +28,6 @@
             <!--<button (click)='decremenTime()' style="background-color: transparent; margin-left: 2.5px; margin-right: 2.5px;">-</button>-->
             <!--<button (click)='incrementTime()' style="background-color: transparent; margin-left: 2.5px; margin-right: 2.5px;">+</button>-->
             <span class="centre-button">{{time}}</span>
-            <button (click)='loopAudio()' class="my-vinyl-icons-font font-size-150 centre-button cursor-pointer" style="background-color: {{loopColor}};">(</button>
             <select [(ngModel)]="speed" (change)='updateSpeed()' class="right-button cursor-pointer">
                 <option value="0.25">x0.25</option>
                 <option value="0.5">x0.5</option>
@@ -39,11 +38,14 @@
                 <option value="1.75">x1.75</option>
                 <option value="2">x2</option>
             </select>
-            <br><br>
+            <ng-container *ngIf='!lineToolBar'>
+                <br><br>
+            </ng-container>
             <button (click)='randomReproduction()' class="my-vinyl-icons-font font-size-150 left-button-button cursor-pointer" style="background-color: {{randomColor}};">&</button>
             <button (click)='loopListReproduction()' class="my-vinyl-icons-font font-size-150 centre-button cursor-pointer" style="background-color: {{loopListColor}};">'</button>
+            <button (click)='loopAudio()' class="my-vinyl-icons-font font-size-150 centre-button cursor-pointer" style="background-color: {{loopColor}};">(</button>
             <button (click)='revertAudioImplement()' class="rigth-button-button cursor-pointer" style="background-color: {{reverseColor}};">Reverse-Rep</button>
-            <img style="height: 25px; vertical-align: bottom; visibility: {{loadGif}};" id="loadGif" src="../../../assets/load.gif">
+            <img style="height: 25px; vertical-align: bottom; visibility: {{loadGif}};" id="loadGif" src="{{mediaPath}}/images/load.gif">
         </div>
     </div>
 </div>

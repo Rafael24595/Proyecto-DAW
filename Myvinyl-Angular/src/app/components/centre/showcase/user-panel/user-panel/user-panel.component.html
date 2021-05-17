@@ -98,9 +98,9 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf='themeList'>
-                        <div style="height: 77%; border: 2px solid rgba(50, 50, 55, 0); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
+                        <div style="height: 77%; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
                             <ng-container *ngIf='themeList.list.length > 0'>
-                                <div *ngFor='let singleTheme of themeList.list'
+                                <div *ngFor='let singleTheme of themeList.list' (click)='setAudioBarListPosition(singleTheme.id)'
                                     id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container text-left">
                                     <ng-container *ngIf='singleTheme.name'>
                                         <div class="display-inline" style="width: 15%;" (click)='setAudioBarListPosition(singleTheme.id)'>

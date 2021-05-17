@@ -541,6 +541,20 @@ input{
 	transition: 0.25s;
 }
 
+.vinyl-spin-1{
+	z-index: 5;
+	transition: 0.25s;
+}
+
+.vinyl-spin-1:hover{
+	-webkit-animation: rotating 0.5s linear 1;
+	-moz-animation: rotating 0.5s linear 1;
+	-ms-animation: rotating 0.5s linear 1;
+	-o-animation: rotating 0.5s linear 1;
+	animation: rotating 0.5s linear 1;
+	transition: 0.25s;
+}
+
 .pencil-writting-bottom{
 	transition: 0.5s;
 }

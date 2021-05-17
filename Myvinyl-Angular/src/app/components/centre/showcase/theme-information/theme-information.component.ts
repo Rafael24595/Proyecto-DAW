@@ -20,6 +20,7 @@ import { ThemeList } from 'src/app/classes/ThemeList';
 export class ThemeInformationComponent implements OnInit {
 
   candy: CandyInterface = {id: 'theme', name:'Theme', family:'candy-theme',route:'Theme', query:{}, routeQuery:''};
+  mediaPath = '../../../../../assets/media';
   theme: Themes | undefined;
   flag: string = 'eng';
   lyrics: string | undefined;
@@ -27,6 +28,8 @@ export class ThemeInformationComponent implements OnInit {
   selectedThemeList: string = '';
   userThemeLists:ThemeList[] = [];
   user = sesionValues.activeUser.name;
+  likesBarPercent:number = 0;
+  dislikesBarColor:string = 'orange'; 
   isLike = 0;
   isSessionUser: boolean = false;
   isAdmin: boolean = false;
@@ -40,7 +43,7 @@ export class ThemeInformationComponent implements OnInit {
   inputAttr: string = '';
   formErr = {text:'', class:''};
   formErrFile = {text:'', class:''};
-  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", picture:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas", audio: "Audio"};
+  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", cover:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas", audio: "Audio"};
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 
@@ -61,9 +64,21 @@ export class ThemeInformationComponent implements OnInit {
           let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
           this.modifyThemeData({attrName:likeValue, attrId:'', value:theme[likeValue] + 1});
         }
+        this.calculateLikesPercentage();
       });
       }
     )
+  }
+
+  calculateLikesPercentage(){
+    if(this.theme){
+      let total = this.theme.likes + this.theme.dislikes;
+      let likesPercentage = this.theme.likes / total * 100;console.log(this.theme.likes , 100 , total);console.log(likesPercentage);
+      this.likesBarPercent = likesPercentage;
+      if(total == 0){
+        this.dislikesBarColor = 'gray';
+      }
+    }
   }
 
   themeObservable(message:{status:string, value:string | number}){
@@ -156,7 +171,8 @@ export class ThemeInformationComponent implements OnInit {
             sucess.userThemeLists.forEach(themeList=>{
               sesionValues.activeUser.replaceThemeList(themeList.name ,themeList.list);
             });
-            this.isLike = sesionValues.activeUser.isThemeLike(this.theme.id);           
+            this.isLike = sesionValues.activeUser.isThemeLike(this.theme.id);  
+            this.calculateLikesPercentage();         
           }
         },
         err=>{console.log(err);

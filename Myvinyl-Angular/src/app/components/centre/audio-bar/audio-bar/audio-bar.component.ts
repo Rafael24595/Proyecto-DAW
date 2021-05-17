@@ -19,16 +19,33 @@ export class AudioBarComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+    window.onresize = ()=>{
+      let element = document.getElementById('bar-ajustable-width');
+      if(element && this.ajustableWidth){
+        this.barAudioSize = element.offsetWidth;
+      }
+    }
+    if(this.ajustableWidth){
+      let element = document.getElementById('bar-ajustable-width');
+      if(element){
+        this.barAudioSize = element.offsetWidth;
+      }
+    }
+    else{
+      this.barAudioSize = 525;
+    }
     this.comunicationService.sendThemesObservable.subscribe((themes:{isThemeList:Boolean, themes:Themes[]})=>{
       this.isThemeList = themes.isThemeList;
       this.themesList = themes.themes;
       this.themesListActive = themes.themes;
-      console.log(this.themesList)
       this.prepareTheme(this.themesListActive[this.position]);
+
+      this.barAudioSizeProgress = 0
+      this.pointAudioPosition = 0;
     });
     this.comunicationService.sendListPositionObservable.subscribe((position:number)=>{
       if(position != -1){
-        this.calculeNextThemePosition(position);
+        this.calculeNextThemePosition(position, true);
       }
     });
     this.outputToparent.emit({status:'ready', value:''});
@@ -38,6 +55,9 @@ export class AudioBarComponent implements OnInit {
   | THEMES VARS |
   /////////////*/
 
+  mediaPath:string = '../../../../../assets/media';
+  ajustableWidth: boolean = true;
+  lineToolBar:boolean = true;
   isThemeList:Boolean = false;
   audio: HTMLAudioElement | undefined;
   themesList:BarThemesListInterface[] = [];/* = [
@@ -50,7 +70,7 @@ export class AudioBarComponent implements OnInit {
   position = 0;
   randomList = false;
   loopList = false;
-  launchPaused = false;
+  launchPaused = true;
   normalSrc = '';
   reverseSrc = '';
 
@@ -58,7 +78,7 @@ export class AudioBarComponent implements OnInit {
   | AUDIO VARS |
   ////////////*/
 
-  barAudioSize = 525;
+  barAudioSize;
   barAudioSizeProgress = 0
   pointAudioPosition = 0;
   speed = 1; 
@@ -105,7 +125,7 @@ export class AudioBarComponent implements OnInit {
       if(theme){
         this.isReverse =  false;
         this.reverseSrc = '';
-        this.normalSrc = `../../../assets/${theme.id}.mp3`;
+        this.normalSrc = `${this.mediaPath}/audio/themes/${theme.id}.mp3`;
         //this.outputToparent.emit(status:'finish', JSON.stringify(theme));
       }
       
@@ -129,7 +149,7 @@ export class AudioBarComponent implements OnInit {
           }
         }
       }
-      this.audio.onerror = ()=>{this.audio = undefined};
+      this.audio.onerror = ()=>{this.audio = undefined; console.log('in')};
   }
 
   //////////////////////////
@@ -257,9 +277,9 @@ export class AudioBarComponent implements OnInit {
   //TOOLS FUNCTIONS//
   ///////////////////
 
-  calculeNextThemePosition(event:Event | number){
+  calculeNextThemePosition(event:Event | number, isCalculed?: boolean){
     let action:HTMLInputElement | number = -1;
-    if(event){
+    if(event && !isCalculed){
       if(typeof event != 'number' && event.target){
         action = event.target as HTMLInputElement;
         action = parseInt(action.value);
@@ -273,6 +293,9 @@ export class AudioBarComponent implements OnInit {
       else{
         (this.position + action < 0) ? (action = 0, this.launchPaused = true) : (this.position + action > this.themesListActive.length -1) ? (action = this.themesListActive.length -1, this.launchPaused = true) : action = this.position + action;
       }
+    }
+    if(isCalculed){
+      action = event as number;
     }
     this.position = action;
     this.prepareTheme(this.themesListActive[this.position]);
