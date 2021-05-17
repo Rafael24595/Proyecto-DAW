@@ -12,6 +12,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
+import { Variables } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-user-panel',
@@ -28,6 +29,7 @@ export class UserPanelComponent implements OnInit {
   themeList:ThemeList | undefined;
   isSessionUser:boolean = false;
   privateValue = false;
+  range = Variables.range;
 
   defaultSelect: string = '-- Selecciona lista --';
   formTask = '';

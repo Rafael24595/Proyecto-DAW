@@ -56,7 +56,23 @@
                     <br>
                 </ng-container>
                 <ng-container *ngIf='!isSessionUser'>
-                    <p>{{ProfileData.name}}</p>
+                    <div>
+                        <div>
+                            <span>Nombre: </span>
+                            <span>{{ProfileData.name}}</span>
+                        </div>
+                        <br>
+                        <div>
+                            <span>Rango: </span>
+                            <span>{{range[ProfileData.admin]}}</span>
+                        </div>
+                        <br>
+                        <div>
+                            <span>Descripción: </span>
+                            <br>
+                            <span>{{ProfileData.name}}</span>
+                        </div>
+                    </div>
                     <p></p>
                 </ng-container>
             </div>

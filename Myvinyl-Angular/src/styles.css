@@ -11,6 +11,10 @@
 	--warn: orange;
 }
 
+textarea{
+	resize: none;
+}
+
 *:focus {
     outline: 0 !important;
 }
@@ -483,8 +487,16 @@ input{
 	background-color: black;
 }
 
+.display-block{
+	display: block;
+}
+
 .display-inline{
 	display: inline-block;
+}
+
+.txt-horizontal-center{
+	text-align: center;
 }
 
 .txt-horizontal-left{

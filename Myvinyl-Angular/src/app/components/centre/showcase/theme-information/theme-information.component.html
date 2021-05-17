@@ -3,20 +3,28 @@
         <div style="width: 60%;" class="display-inline">
             <div>
                 <div>
-                    <img src="{{mediaPath}}/images/vinyl.png">
-                    <img src="{{mediaPath}}/images/covers/{{theme.id}}.png">
-                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                        <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
-                    </span>
-                    <span *ngIf='isAdmin' id="vinyl-spin-animation-1" class="display-inline">
-                        <span (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
-                    </span>
-                    <p>{{theme.name}} <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})'>[[pencil]]</span><span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})'>[[mini-flag]]</span></p>
-                    <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
-                    <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
-                    <div style="width: 33%;">
+                    <div class="txt-horizontal-left">
+                        <img src="{{mediaPath}}/images/vinyl.png">
+                        <img src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                        <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+                            <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                        </span>
+                        <span *ngIf='isAdmin' id="vinyl-spin-animation-1" class="display-inline">
+                            <span (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
+                        </span>
+                        <p>{{theme.name}} 
+                            <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
+                            </span>
+                            <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})'>[[mini-flag]]</span>
+                        </p>
+                        <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
                     </div>
-                    <div style="width: 33%;">
+                    <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
+                    <div style="width: 33%;" class="display-inline">
+                        <p>Visitas: {{theme.views}}</p>
+                    </div>
+                    <div style="width: 33%;" class="display-inline">
                         <p style="width: 50%;" class="display-inline">
                             <span>
                                 <ng-container *ngIf='isLike == 1'>
@@ -44,18 +52,23 @@
                         <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
                         <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
                     </div>
-                    <div style="width: 33%;">
-                        <p><span (click)="showThemeListForm = true">[[+]]</span></p>
+                    <div style="width: 33%;" class="display-inline">
+                        <p><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
                     </div>
                 </div>
             </div>
             <div *ngIf='isAdmin'>
-                <h3>Etiquetas</h3>
-                <div *ngFor='let themeTag of theme.tags'>
-                    <p>{{themeTag}} <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})'>[[trash-can]]</span></p>
-                </div>
+                <h3>Etiquetas:</h3>
+                <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
+                    <span>{{themeTag}} - </span>
+                    <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                        <span class="trash-cap cursor-pointer display-inline">0</span>
+                        <span class="trash-body cursor-pointer display-inline">/</span>
+                    </span>
+                    <span *ngIf='i < theme.tags.length - 1'>,&nbsp;</span>
+                </p>
                 <div>
-                    <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})'> + Nueva etiqueta</p>
+                    <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
                 </div>
             </div>
         </div>
@@ -64,20 +77,35 @@
             <div *ngIf='lyrics' [innerHTML]="lyrics"></div>
             <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
         </div>
-        <div>
+        <div style="width: 60%;" class="txt-horizontal-left display-inline">
             <h3>Comentarios {{theme.comments.length}}: </h3>
-            <textarea [(ngModel)]="comment"></textarea>
+            <textarea style="width: 99%; height: 100px;" [(ngModel)]="comment"></textarea>
             <br>
-            <input type="submit" value="Enviar" (click)='publicateComment()'>
-            <div *ngFor='let comment of theme.comments'>
-                <p *ngIf='comment.activeUser' routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
-                <span *ngIf='comment.userName == user' (click)='removeComment(comment.commentId)'>[[trash-can]]</span>
-                <span *ngIf='isAdmin' (click)='deleteComment(comment.commentId)'>[[trash-can-admin]]</span>
-                <p *ngIf='!comment.activeUser'><b><s>{{comment.userName}}</s></b>:</p>
-                <p>{{comment.comment}}</p>
+            <div>
+                <input type="submit" value="Enviar" (click)='publicateComment()'>
+            </div>
+            <br>
+            <div>
+                <div *ngFor='let comment of theme.comments'>
+                    <p *ngIf='comment.activeUser' class="display-inline" style="width: 86%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
+                    <p *ngIf='!comment.activeUser' class="display-inline" style="width: 93%;" ><b><s>{{comment.userName}}</s></b>:</p>
+                    <span *ngIf='isAdmin' style="width: 7%; color: darkgoldenrod;" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                        <span class="trash-cap cursor-pointer display-inline">0</span>
+                        <span class="trash-body cursor-pointer display-inline">/</span>
+                    </span>
+                    <span *ngIf='comment.userName == user' style="width: 7%;" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                        <span class="trash-cap cursor-pointer display-inline">0</span>
+                        <span class="trash-body cursor-pointer display-inline">/</span>
+                    </span>
+                    <p>{{comment.comment}}</p>
+                </div>
             </div>
         </div>
+        <div style="width: 40%;" class="txt-horizontal-center display-inline vertical-top">
+            <h3>Relacionados: </h3>
+        </div>
         <div *ngIf='showThemeListForm'>
+            <h2>Añadir tema a:</h2>
             <select [(ngModel)]='selectedThemeList' (change)='checkInList()'>
                 <option selected="selected">-- Selecciona lista --</option>
                 <ng-container *ngFor='let list of userThemeLists'>
