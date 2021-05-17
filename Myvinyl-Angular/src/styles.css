@@ -1,4 +1,12 @@
+@font-face {
+	font-family: my-vinyl-icons;
+	src: url(./assets/fonts/my-vinyl-icons.ttf);
+	}
+
 :root{
+	--pencil_translate: -5px;
+	--black-button-back: dimgray;
+	--black-button-border: gray;
 	--containers: rgb(0, 102, 68);
 	--warn: orange;
 }
@@ -388,12 +396,44 @@ input{
 	height: 85px;
 }
 
+.box-sizing-border-box{
+	box-sizing: border-box;
+}
+
 .theme-container{
+	position: relative;
+	margin: 10px;
 	background-color: var(--containers);
+}
+
+.theme-container-title{
+	vertical-align: middle;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.theme-container-title p{
+	text-overflow: ellipsis;
+    overflow: hidden;
+	max-width: 95%;
 }
 
 .theme-container.selected{
 	border: 2px solid black;
+}
+
+.my-vinyl-icons-font{
+	font-family: my-vinyl-icons;
+}
+
+.black-button{
+	padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+	border: 2px solid var(--black-button-border);
+    background: var(--black-button-back);
+    color: aliceblue;
 }
 
 .input-error{
@@ -410,12 +450,24 @@ input{
 	text-align: left;
 }
 
+.text-right{
+	text-align: right;
+}
+
 .height-100{
 	height: 100%;
 }
 
 .width-50{
 	width: 50%;
+}
+
+.font-size-125{
+	font-size: 1.25em;
+}
+
+.font-size-150{
+	font-size: 1.5em;
 }
 
 .marg-bott-0{
@@ -443,12 +495,112 @@ input{
 	vertical-align: top;
 }
 
+.vertical-middle{
+	vertical-align: middle;
+}
+
 .overflow-auto{
 	overflow: auto;
 }
 
 .cursor-pointer{
 	cursor: pointer;
+}
+
+.trash-cap{
+	position: absolute;
+	transition: 0.25s;
+	z-index: 5;
+}
+.trash-cap:hover{
+	transform: translate(2px, -7px) rotate(20deg);
+	transition: 0.25s;
+}
+.trash-body{
+
+}
+.light-bulb-off{
+
+}
+.light-bulb-on{
+	position: absolute;
+	opacity: 0;
+	transition: 0.25s;
+	z-index: 5;
+}
+.light-bulb-on:hover{
+	opacity: 1;
+	transition: 0.25s;
+}
+.vinyl-spin{
+	z-index: 5;
+	transition: 0.25s;
+}
+.vinyl-spin:hover{
+	transform: rotate(180deg);
+	transition: 0.25s;
+}
+
+.pencil-writting-bottom{
+	transition: 0.5s;
+}
+
+.pencil-writting-bottom:hover{
+	-webkit-animation: writting-bottom  0.25s linear 2;
+	-moz-animation: writting-bottom  0.25s linear 2;
+	-ms-animation: writting-bottom  0.25s linear 2;
+	-o-animation: writting-bottom  0.25s linear 2;
+	animation: writting-bottom  0.25s linear 2;
+}
+
+.pencil-writting{
+	transform: translateY(var(--pencil_translate));
+	transition: 0.5s;
+}
+
+.pencil-writting:hover{
+	-webkit-animation: writting  0.25s linear 2;
+	-moz-animation: writting  0.25s linear 2;
+	-ms-animation: writting  0.25s linear 2;
+	-o-animation: writting  0.25s linear 2;
+	animation: writting  0.25s linear 2;
+}
+
+.rotating {
+	-webkit-animation: rotating 2s linear infinite;
+	-moz-animation: rotating 2s linear infinite;
+	-ms-animation: rotating 2s linear infinite;
+	-o-animation: rotating 2s linear infinite;
+	animation: rotating 2s linear infinite;
+}
+
+@keyframes rotating {
+	from {
+		-webkit-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes writting-bottom {
+	0%   {transform: rotate(-5deg);}
+	25%  {transform: rotate(0deg)}
+	50%  {transform: rotate(5deg)}
+	75%  {transform: rotate(0deg)}
+	100% {transform: rotate(-5deg)}
+}
+
+@keyframes writting {
+	0%   {transform: translateY(var(--pencil_translate)) rotate(-5deg);}
+	25%  {transform: translateY(var(--pencil_translate)) rotate(0deg)}
+	50%  {transform: translateY(var(--pencil_translate)) rotate(5deg)}
+	75%  {transform: translateY(var(--pencil_translate)) rotate(0deg)}
+	100% {transform: translateY(var(--pencil_translate)) rotate(-5deg)}
 }
 
 .centerContainer{

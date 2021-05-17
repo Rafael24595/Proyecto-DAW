@@ -68,6 +68,7 @@ export class User{
     }
 
     setNewThemeList(themeList:ThemeList){
+        console.log(themeList)
         this.themeLists.push(themeList);
     }
 

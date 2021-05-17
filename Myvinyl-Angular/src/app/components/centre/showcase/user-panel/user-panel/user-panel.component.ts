@@ -21,6 +21,7 @@ import { FormValidations } from 'src/utils/tools/FormValidations';
 export class UserPanelComponent implements OnInit {
 
   candy: CandyInterface = {id: 'Profile', name:'Profile', family:'candy-profile',route:'Profile', query:{}, routeQuery:''};
+  mediaPath: string = '../../../../../..//assets/media';
   ProfileData: UserInterface | User | undefined ;
   userName:string = (sesionValues.activeUser) ? sesionValues.activeUser.name : '';
   selectedThemeList:string = '';
@@ -28,6 +29,7 @@ export class UserPanelComponent implements OnInit {
   isSessionUser:boolean = false;
   privateValue = false;
 
+  defaultSelect: string = '-- Selecciona lista --';
   formTask = '';
 
   modifyValuesData = {
@@ -48,7 +50,7 @@ export class UserPanelComponent implements OnInit {
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-    this.selectedThemeList = '-- Selecciona lista --';
+    this.selectedThemeList = this.defaultSelect;
     this.manageComponent.setLastURL();
     this.route.params.subscribe(params =>{
       this.userName = params['username'];
@@ -118,7 +120,7 @@ export class UserPanelComponent implements OnInit {
     let themeList = sesionValues.activeUser.getThemeList(this.selectedThemeList);
     let themeId = (themeList) ? themeList.list.map(theme=>{return theme})[0].id : '';
     if(themeList){
-      this.comunicationService.sendThemes(false, themeList.list);
+      this.comunicationService.sendThemes(true, themeList.list);
       let correct = false;
       setTimeout(()=>{correct = this.addSelectedContainer(themeId);},100);
       let ready = setInterval(()=>{
@@ -149,7 +151,7 @@ export class UserPanelComponent implements OnInit {
       let newThemeList = data.themeList;
       this.newThemeList(newThemeList);
       this.formTask = '';
-      this.selectedThemeList = '-- Selecciona lista --';
+      this.selectedThemeList = this.defaultSelect;
     }
 
     if(data['task'] == 'close'){
@@ -217,8 +219,10 @@ export class UserPanelComponent implements OnInit {
     if(this.autorizationService.checkForToken() && this.ProfileData){
       this.DatabaseConexService.newThemeList(themeListData.themeListName, JSON.stringify(themeListData.privacy), this.ProfileData.name).subscribe(
         sucess=>{
-          sesionValues.activeUser.setNewThemeList(sucess.list.themeList);
+          console.log(sucess)
+          sesionValues.activeUser.setNewThemeList(sucess.list);
           this.ProfileData = sesionValues.activeUser;
+          console.log(this.ProfileData)
         },
         err=>{
           console.log(err)
@@ -240,6 +244,7 @@ export class UserPanelComponent implements OnInit {
             sesionValues.activeUser.removeThemeList(this.themeList.name);
             this.ProfileData = sesionValues.activeUser;
             this.themeList = undefined;
+            this.selectedThemeList = this.defaultSelect;
           }
         },
         err=>{console.log(err)
@@ -277,11 +282,11 @@ export class UserPanelComponent implements OnInit {
               if(sucess.status){
                 this.modifyPasswordData.passwordCounter++;
                 this.modifyValuesData.modifyPassword.value = '';
-                this.modifyPasswordData.passwordMessage="Introduce tu nueva contraseña";
+                this.modifyPasswordData.passwordMessage="Introduce tu nueva contraseña:";
               }
             },
             err=>{
-              this.modifyPasswordData.passwordMessage="Contraseña incorrecta";
+              this.modifyPasswordData.passwordMessage="Contraseña incorrecta.";
               console.log(`Error: ${err}`);
             }
           );
@@ -292,7 +297,7 @@ export class UserPanelComponent implements OnInit {
             this.modifyPasswordData.passwordRoundI = this.modifyValuesData.modifyPassword.value;
             this.modifyValuesData.modifyPassword.value = '';
             this.modifyPasswordData.passwordCounter++;
-            this.modifyPasswordData.passwordMessage="Introduce nuevamente la nueva contraseña";
+            this.modifyPasswordData.passwordMessage="Introduce nuevamente la nueva contraseña:";
         break;
 
         case 2:
@@ -396,7 +401,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   modifyThemeList(){
-    if(this.themeList){
+    if(this.themeList && this.themeList.name != this.modifyValuesData.themeListName.value){
       let newThemeList = DataManage.copyObject(this.themeList);
       newThemeList.name = this.modifyValuesData.themeListName.value;
       this.DatabaseConexService.modifyThemeList(newThemeList, this.themeList.name, sesionValues.activeUser.name).subscribe(
@@ -411,6 +416,9 @@ export class UserPanelComponent implements OnInit {
           this.autorizationService.updateToken(err);
         }
       );
+    }
+    else{
+      this.modifyValuesData.themeListName.status = false;
     }
   }
 
@@ -440,7 +448,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   changeList(){
-    if(this.ProfileData && this.selectedThemeList != '-- Selecciona lista --'){
+    if(this.ProfileData && this.selectedThemeList != this.defaultSelect){
       if(this.selectedThemeList == '-- Nueva lista --'){
         this.formTask = (this.formTask != "new") ?  "new" : "";
       }

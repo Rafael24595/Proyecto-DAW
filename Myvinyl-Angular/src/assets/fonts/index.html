@@ -1,0 +1,260 @@
+
+	<!DOCTYPE html>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF8">
+		<title>TestQuill</title>
+		<link href="quill-snow.css" rel="stylesheet">
+		<style>
+			@font-face {
+			font-family: test;
+			src: url(test.ttf);
+			}
+			p{
+				font-family: test;
+				font-size: 4em;
+			}
+
+
+
+			.trash-cap{
+				position: absolute;
+				transition: 0.25s;
+				z-index: 5;
+			}
+			.trash-cap:hover{
+				transform: translate(2px, -7px) rotate(20deg);
+				transition: 0.25s;
+			}
+			.trash-body{
+
+			}
+			.light-bulb-off{
+
+			}
+			.light-bulb-on{
+				position: absolute;
+				opacity: 0;
+				transition: 0.25s;
+				z-index: 5;
+			}
+			.light-bulb-on:hover{
+				opacity: 1;
+				transition: 0.25s;
+			}
+			.vinyl-spin{
+				z-index: 5;
+				transition: 0.25s;
+			}
+			.vinyl-spin:hover{
+				transform: rotate(180deg);
+				transition: 0.25s;
+			}
+
+			.pencil-writting{
+				transition: 0.5s;
+			}
+
+			.pencil-writting:hover{
+				-webkit-animation: writting  0.25s linear 2;
+				-moz-animation: writting  0.25s linear 2;
+				-ms-animation: writting  0.25s linear 2;
+				-o-animation: writting  0.25s linear 2;
+				animation: writting  0.25s linear 2;
+			}
+
+			.rotating {
+				-webkit-animation: rotating 2s linear infinite;
+				-moz-animation: rotating 2s linear infinite;
+				-ms-animation: rotating 2s linear infinite;
+				-o-animation: rotating 2s linear infinite;
+				animation: rotating 2s linear infinite;
+			}
+
+			@-webkit-keyframes rotating {
+				from {
+					-webkit-transform: rotate(0deg);
+					-o-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+				to {
+					-webkit-transform: rotate(360deg);
+					-o-transform: rotate(360deg);
+					transform: rotate(360deg);
+				}
+			}
+
+			@-webkit-keyframes writting {
+				0%   {transform: rotate(-5deg);}
+				25%  {transform: rotate(0deg)}
+				50%  {transform: rotate(5deg)}
+				75%  {transform: rotate(0deg)}
+				100% {transform: rotate(-5deg)}
+			}
+			
+
+
+
+			.pointer-cursor{
+				cursor: pointer;
+			}
+			.display-inline{
+				display: inline-block;
+			}
+			.textParraph{
+				margin: 0px;
+			}
+			.lineJumpParraph{
+				margin: 0px;
+				height: 16px;
+				width: 100%;
+			}
+			#fakeTextCursor{
+				display: inline-block;	
+				vertical-align: sub;
+				height: 16px;
+				width: 0.5px;
+				background-color: black;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="toolbar">
+		</div>
+
+		<div id="editorPrimero">
+		<p>Hello World!</p>
+		</div>
+
+		<div id="toolbar">
+		</div>
+
+		<div id="editorSegundo">
+		<p>Hello World!</p>
+		</div>
+
+		<div><span onmousedown="prevDef()" onmouseup="prevDef()" onclick="setBold()"><b>Negrita</b></span></div>
+		<div id='fakeTextArea-descripcion' contenteditable="true" onclick="">
+			<p>Texto</p>
+		</div>
+
+		<p>!"#$%&'()*+,-./0123456789?:>;<=@A</p>
+		<div id="trash-can-animation" class="display-inline">
+			<p class="trash-cap pointer-cursor display-inline">0</p>
+			<p class="trash-body pointer-cursor display-inline">/</p>
+		</div>
+
+		<div id="light-bulb-animation" class="display-inline">
+			<p class="light-bulb-on pointer-cursor display-inline">)</p>
+			<p class="light-bulb-off pointer-cursor display-inline">*</p>
+		</div>
+
+		<div id="pencil-writting-animation" class="display-inline">
+			<p class="pencil-writting writting pointer-cursor display-inline">+</p>
+		</div>
+
+		<div id="vinyl-spin-animation" class="display-inline">
+			<p class="vinyl-spin rotating pointer-cursor display-inline">=</p>
+		</div>
+
+		<!--
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dictum non tortor ac laoreet. Pellentesque pulvinar lacus nibh, eget congue sapien dignissim in. Ut porttitor nisl a ex posuere consectetur. Ut fermentum eget augue eget dapibus. Nulla turpis urna, imperdiet a malesuada et, scelerisque pulvinar massa. Praesent laoreet elit non velit gravida condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed ultricies mi sapien, sagittis placerat augue vehicula id.
+
+			Sed facilisis vehicula diam at maximus. Aliquam sapien odio, porttitor id felis eu, ornare tempus diam. Fusce condimentum enim eu ipsum suscipit, vel convallis dui viverra. Morbi feugiat sapien at mi lobortis venenatis. Sed sed gravida metus, eu malesuada ante. In euismod est eu ipsum egestas efficitur. Nunc et enim vitae massa mollis sagittis. Pellentesque vitae magna quis justo feugiat egestas quis vitae neque. Integer lorem ipsum, euismod non bibendum eget, feugiat et lacus. Morbi interdum tempus lorem sed pretium. Etiam nec enim fringilla leo auctor bibendum. Aliquam quis luctus tellus. Aliquam rhoncus sapien non orci dignissim vestibulum. In vestibulum arcu ac velit fringilla dignissim.</p>
+		-->
+		<script src="./quill.js"></script>
+
+		<script>
+
+			if (!window.x) {
+				x = {};
+			}
+			var mytext
+			x.Selector = {};
+			x.Selector.getSelected = function() {
+				var t = '';
+				
+				if (window.getSelection) {
+					t = window.getSelection();
+					console.log('inx')
+					console.log(t)
+				} else if (document.getSelection) {
+					t = document.getSelection();
+					console.log('iny')
+					console.log(t)
+				} else if (document.selection) {
+					t = document.selection.createRange().text;
+					console.log('inz')
+					console.log(t)
+				}
+				return t;
+			}
+
+			document.getElementById('fakeTextArea-descripcion').addEventListener('mouseup', ()=>{
+				//removeFakeTextCursor();
+				mytext = x.Selector.getSelected()
+				console.log(mytext)
+				//setTextAreaCursor(mytext.baseNode.parentNode.id, mytext.baseOffset, mytext.baseNode);
+        		//alert(mytext);
+			});
+
+			function prevDef(){
+				event.preventDefault()
+			}
+
+			function setBold(){
+				mytext = x.Selector.getSelected();
+				let container = mytext.baseNode.parentNode;
+				let textContent = container.textContent.split('');
+				let start = mytext.baseOffset
+				let end = mytext.extentOffset;
+				console.log(start, end)
+				console.log(textContent[start], textContent[end])
+				textContent[start] = textContent[start] + '<b>';
+			 	textContent[end] = textContent[end] + '</b>';
+				container.innerHTML = textContent.join('');
+				console.log(mytext.baseNode.parentNode)
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+			var toolbarOptions = [
+				['bold', 'italic', 'underline', 'strike'],  
+
+				[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+
+				[{ 'size': ['small', false, 'large', 'huge'] }],
+
+				[{ 'color': [] }, { 'background': [] }],
+				[{ 'align': [] }],
+
+				['clean']
+			];
+
+			var quill = new Quill('#editorPrimero', {
+			modules: {
+				toolbar: toolbarOptions
+			},
+			theme: 'snow'
+			});
+
+			var quill = new Quill('#editorSegundo', {
+			modules: {
+				toolbar: toolbarOptions
+			},
+			theme: 'snow'
+			});
+		</script>	
+	</body>
+	</html>

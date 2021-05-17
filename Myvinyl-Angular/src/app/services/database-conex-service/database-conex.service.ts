@@ -91,8 +91,8 @@ reassignArtistThemes(mainArtistId: string, targetArtistId:string, userName:strin
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});
  }
 
- newThemeList(themeListName:string, privacy:string, userName:string):Observable<{list:{themeList:ThemeList}}>{
-  return this.http.post<{list:{themeList:ThemeList}}>(`http://${Variables.host}:${Variables.port}/api/CreateNewThemeList`, {themeListName, privacy, userName});
+ newThemeList(themeListName:string, privacy:string, userName:string):Observable<{list:ThemeList}>{
+  return this.http.post<{list:ThemeList}>(`http://${Variables.host}:${Variables.port}/api/CreateNewThemeList`, {themeListName, privacy, userName});
  }
 
  removeThemeList(themeListName:string, userName:string):Observable<{status:boolean}>{

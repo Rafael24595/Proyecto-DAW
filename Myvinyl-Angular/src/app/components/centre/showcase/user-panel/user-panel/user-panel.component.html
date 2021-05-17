@@ -1,46 +1,59 @@
-<div id="homeContainer" style="height: 450px;">
+<div id="homeContainer" style="height: 500px;">
     <div *ngIf='ProfileData' class="height-100">
         <div style="height: 80%;">
             <div class="display-inline width-50 height-100 txt-horizontal-left">
                 <ng-container *ngIf='isSessionUser'>
-                    <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
-                        <p>{{ProfileData.name}}</p>
-                        <span
-                            (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>[[pencil]]</span>
-                        <br>
-                    </ng-container>
-                    <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
-                        <br>
-                        <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value'
-                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
-                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
-                    </ng-container>
-                    <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
-                        <p>{{ProfileData.email}}</p>
-                        <span
-                            (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>[[pencil]]</span>
-                        <br>
-                    </ng-container>
-                    <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
-                        <br>
-                        <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value'
-                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
-                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
-                        <br>
-                    </ng-container>
-                    <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
-                        <p>********</p>
-                        <span
-                            (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual"'>[[pencil]]</span>
-                        <br><br>
-                    </ng-container>
-                    <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
-                        <br>
-                        <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
-                        <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
-                            (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
-                        <br><br>
-                    </ng-container>
+                    <div>
+                        <span>Nombre: </span>
+                        <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
+                            <span>{{ProfileData.name}} 
+                                <span id="pencil-writting-animation" class="display-inline">
+                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
+                                </span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
+                            <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value'
+                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
+                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
+                        </ng-container>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Email: </span>
+                        <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                            <span>{{ProfileData.email}}
+                                <span id="pencil-writting-animation" class="display-inline">
+                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                                </span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
+                            <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value'
+                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
+                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
+                        </ng-container>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Contraseña: </span>
+                        <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
+                            <span style="letter-spacing: 2px;">⚫⚫⚫⚫⚫⚫⚫⚫
+                                <span id="pencil-writting-animation" class="display-inline">
+                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
+                                </span>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
+                            <br>
+                            <div style="margin: 10px;">
+                                <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
+                                <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
+                                (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <br>
                 </ng-container>
                 <ng-container *ngIf='!isSessionUser'>
                     <p>{{ProfileData.name}}</p>
@@ -48,48 +61,75 @@
                 </ng-container>
             </div>
             <div class="display-inline vertical-top width-50 height-100">
-                <select [(ngModel)]='selectedThemeList' (change)=changeList()>
-                    <option selected="selected">-- Selecciona lista --</option>
-                    <ng-container *ngFor='let list of ProfileData.themeLists'>
-                        <option
-                            *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>
-                            {{list.name}}</option>
-                    </ng-container>
-                    <option selected="selected">-- Nueva lista --</option>
-                </select>
-                <div class="height-100">
+                <div>
+                    <select [(ngModel)]='selectedThemeList' (change)=changeList()>
+                        <option selected="selected">{{defaultSelect}}</option>
+                        <ng-container *ngFor='let list of ProfileData.themeLists'>
+                            <option
+                                *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>
+                                {{list.name}}</option>
+                        </ng-container>
+                        <option selected="selected">-- Nueva lista --</option>
+                    </select>
+                </div>
+                <br>
+                <div style="height: 90%; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
                     <ng-container *ngIf='themeList'>
                         <div>
-                            <p *ngIf='isSessionUser'>
+                            <p *ngIf='isSessionUser' style="margin-top: 0px;">
                                 <span>Privada:</span><input type="checkbox" name="" id="" [(ngModel)]="privateValue" (click)=privatizeThemeList()>
                                 <span>&nbsp;&nbsp;</span>
-                                <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()'>[[trash-can]]</span> 
+                                <span id="pencil-writting-animation" class="display-inline">
+                                    <span *ngIf='isSessionUser && themeList.userManage' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                                </span>
+                                <span>&nbsp;&nbsp;</span>
+                                <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span class="trash-cap cursor-pointer display-inline">0</span>
+                                    <span class="trash-body cursor-pointer display-inline">/</span>
+                                </span>
                             </p>
                         </div>
-                        <p *ngIf='!modifyValuesData.themeListName.status'><span *ngIf='isSessionUser && themeList.userManage && !modifyValuesData.themeListName.status' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)'>[[pencil]]</span> {{modifyValuesData.themeListName.value}}:</p>
+                        <p *ngIf='!modifyValuesData.themeListName.status'>{{modifyValuesData.themeListName.value}}:</p>
                         <ng-container *ngIf='modifyValuesData.themeListName.status'>
-                            <br>
                             <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value'
                                 (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})
                                 (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
+                                <span>:</span>
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf='themeList'>
-                        <div style="height: 70%;" class="overflow-auto">
-                            <div *ngFor='let singleTheme of themeList.list'
-                                id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container">
-                                <ng-container *ngIf='singleTheme.name'>
-                                    <p><span (click)='setAudioBarListPosition(singleTheme.id)'>[[play-icon]]</span>
-                                        {{singleTheme.name}} - {{singleTheme.artist.name}} {{singleTheme.artist.surname}}</p>
-                                    <span *ngIf='isSessionUser && themeList.userManage'
-                                        (click)='removeThemeFromList(singleTheme.id)'>[[trash-can]]</span>
-                                </ng-container>
-                            </div>
+                        <div style="height: 77%; border: 2px solid rgba(50, 50, 55, 0); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
+                            <ng-container *ngIf='themeList.list.length > 0'>
+                                <div *ngFor='let singleTheme of themeList.list'
+                                    id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container text-left">
+                                    <ng-container *ngIf='singleTheme.name'>
+                                        <div class="display-inline" style="width: 15%;" (click)='setAudioBarListPosition(singleTheme.id)'>
+                                            <img src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png">
+                                            <img src="{{mediaPath}}/images/small-vinyl.png">
+                                        </div>
+                                        <div class="display-inline theme-container-title" style="width: 75%;">
+                                            <p class="display-inline">
+                                                <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="display-inline" style="width: 10%;">
+                                            <p *ngIf='isSessionUser && themeList.userManage' style="margin-top: 16px; margin-bottom: 16px;" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150 text-right">
+                                                <span class="trash-cap cursor-pointer display-inline">0</span>
+                                                <span class="trash-body cursor-pointer display-inline">/</span>
+                                            </p>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf='themeList.list.length <= 0'>
+                                <p>La lista está vacía</p>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>
             </div>
         </div>
+        <br>
         <div>
             <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
         </div>

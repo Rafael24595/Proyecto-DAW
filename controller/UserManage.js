@@ -97,8 +97,7 @@ async function getThemesFromList(req, res){
     let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);});
     let themeList = profileData.themeLists.find(list=>{return(list.name == themeListName)});
     if(JSON.parse(themeList && (req.userToken == true && JSON.parse(themeList.userView) || req.userToken != true && JSON.parse(themeList.userView) && !JSON.parse(themeList.privateState)))){
-      themeList = await fillThemeList(themeList.list);
-      console.log(themeList)
+      themeList = (themeList.list.length > 0) ? await fillThemeList(themeList.list) : [];
       res.status(200).json({status:true, list:themeList});
     }
     else{

@@ -170,24 +170,25 @@ async function privatizeThemeList(req, res){
     let newThemeList = req.body.themeList;
     let themeListName = req.body.themeListName;
     let userName = req.body.userName;
-    let index = 0;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
-      user.themeLists.find(async themeList=>{
-        if(themeList.name == themeListName){
-          if(JSON.parse(themeList.userManage)){
-            newThemeList = await simplifyThemeList(newThemeList.list)
-            user.themeLists[index] = newThemeList;
-          }
-          else{
-            res.headerSent = true;
-            res.status(401).json({status:'Invalid petition'});
-          }
-          return true;
+      let index = user.themeLists.map(theme=>{return theme.name}).indexOf(themeListName);
+      if(index != -1){
+        newThemeList.list = await simplifyThemeList(newThemeList.list);
+        user.themeLists[index] = newThemeList;
+        if(JSON.parse(user.themeLists[index].userManage)){
+          newThemeList.list = await simplifyThemeList(newThemeList.list);
+          user.themeLists[index] = newThemeList;
         }
-        index++;
-        return false;
-      });
+        else{
+          res.headerSent = true;
+          res.status(401).json({status:'Invalid petition'});
+        }
+      }
+      else{
+        res.headerSent = true;
+        res.status(404).json({status:'Invalid petition'});
+      }
       await User.findOneAndUpdate({name:userName},user);
       if(!res.headerSent) res.status(200).json({status:true});
     }
@@ -196,23 +197,14 @@ async function privatizeThemeList(req, res){
     }
   }
 
-  async function simplifyThemeList(themeListList){
-    let list = []
-    await new Promise(resolve=>{
-      themeListList.forEach(themeData => {
-        if(themeData.listId){
-          list.push(themeData)
-        }
-        else{
-          let themeId = themeData.id;
-          let listId = themeData.artist;
-          listId = listId.id;
-          if(listId && themeId){
-            list.push({listId:listId, themeId: themeId});
-          }
-        }
-      });
-      resolve(true)
+  async function simplifyThemeList(themeList){
+    let list = [];
+    themeList.forEach(themeData => {
+      let listId = (themeData.artist && themeData.artist.id) ? themeData.artist.id :themeData.listId;
+      let themeId = (themeData.id) ? themeData.id : themeData.themeId;
+      if(listId && listId){
+        list.push({listId, themeId});
+      }
     });
     return list;
   }
