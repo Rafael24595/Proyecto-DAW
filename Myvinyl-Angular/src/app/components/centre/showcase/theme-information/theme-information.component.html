@@ -1,78 +1,90 @@
 <div id="homeContainer">
     <div *ngIf="theme">
-        <div style="width: 60%; height: 450px;" class="display-inline">
+        <div style="width: 50%; height: 450px;" class="display-inline">
             <div style="padding: 15px;">
                 <div>
-                    <div class="txt-horizontal-left">
-                        <img src="{{mediaPath}}/images/vinyl.png">
-                        <img src="{{mediaPath}}/images/covers/{{theme.id}}.png">
-                        <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                            <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
-                        </span>
-                        <span *ngIf='isAdmin' id="vinyl-spin-animation-1" class="display-inline">
-                            <span (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
-                        </span>
-                        <p>{{theme.name}} 
-                            <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
-                            </span>
-                            <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})'>[[mini-flag]]</span>
-                        </p>
-                        <p (click)="routeArtist()">{{theme.artist.name}} {{theme.artist.surname}}</p>
+                    <div style="max-width: 550px;">
+                        <div class="txt-horizontal-left">
+                            <div>
+                                <div class="display-inline" style="position: relative; width: 100%;">
+                                    <img style="width: 100%; position: absolute;" src="{{mediaPath}}/images/m-vinyl.png">
+                                    <img style="position: relative; width: 100%; z-index: 2;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                                </div>
+                                <div class="display-inline" style="text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
+                                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
+                                        <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                                    </span>
+                                    <br>
+                                    <span *ngIf='isAdmin' id="vinyl-spin-animation-1" class="display-inline" style="margin: 5px;">
+                                        <span (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
+                                    </span>
+                                    <br>
+                                    <span *ngIf='isAdmin' (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})' style="margin: 5px;" class="my-vinyl-icons-font font-size-150 display-inline cursor-pointer">G</span>
+                                </div>
+                            </div>
+                            <p>
+                                <span (click)="routeArtist()" class="cursor-pointer">{{theme.artist.name}} {{theme.artist.surname}} -&nbsp;</span>
+                                <span>{{theme.name}} 
+                                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+                                        <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                        <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
+                        <div style="width: 33%;" class="display-inline">
+                            <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
+                        </div>
+                        <div style="width: 33%;" class="display-inline">
+                            <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                <span>
+                                    <ng-container *ngIf='isLike == 1'>
+                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
+                                    </ng-container>
+                                    <ng-container *ngIf='isLike != 1'>
+                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
+                                    </ng-container>
+                                    <span>&nbsp;</span>
+                                    <span>{{theme.likes}}</span>
+                                </span> 
+                            </p>
+                            <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                <span>
+                                    <ng-container *ngIf='isLike == -1'>
+                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
+                                    </ng-container>
+                                    <ng-container *ngIf='isLike != -1'>
+                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
+                                    </ng-container>
+                                    <span>&nbsp;</span>
+                                    <span>{{theme.dislikes}}</span>
+                                </span>
+                            </p>
+                            <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
+                            <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
+                        </div>
+                        <div style="width: 33%;" class="display-inline">
+                            <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                        </div>
+                        <div *ngIf='isAdmin' style="padding: 15px;">
+                            <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
+                            <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
+                                <span>{{themeTag}} - </span>
+                                <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span class="trash-cap cursor-pointer display-inline">0</span>
+                                    <span class="trash-body cursor-pointer display-inline">/</span>
+                                </span>
+                                <span *ngIf='i < theme.tags.length - 1'>,&nbsp;</span>
+                            </p>
+                            <div>
+                                <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
+                            </div>
+                        </div>
                     </div>
-                    <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
-                    <div style="width: 33%;" class="display-inline">
-                        <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
-                    </div>
-                    <div style="width: 33%;" class="display-inline">
-                        <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
-                            <span>
-                                <ng-container *ngIf='isLike == 1'>
-                                    <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
-                                </ng-container>
-                                <ng-container *ngIf='isLike != 1'>
-                                    <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
-                                </ng-container>
-                                <span>&nbsp;</span>
-                                <span>{{theme.likes}}</span>
-                            </span> 
-                        </p>
-                        <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
-                            <span>
-                                <ng-container *ngIf='isLike == -1'>
-                                    <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
-                                </ng-container>
-                                <ng-container *ngIf='isLike != -1'>
-                                    <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
-                                </ng-container>
-                                <span>&nbsp;</span>
-                                <span>{{theme.dislikes}}</span>
-                            </span>
-                        </p>
-                        <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
-                        <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
-                    </div>
-                    <div style="width: 33%;" class="display-inline">
-                        <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf='isAdmin' style="padding: 15px;">
-                <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
-                <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
-                    <span>{{themeTag}} - </span>
-                    <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
-                        <span class="trash-cap cursor-pointer display-inline">0</span>
-                        <span class="trash-body cursor-pointer display-inline">/</span>
-                    </span>
-                    <span *ngIf='i < theme.tags.length - 1'>,&nbsp;</span>
-                </p>
-                <div>
-                    <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
                 </div>
             </div>
         </div>
-        <div style="width: 40%; height: 450px;" class="display-inline vertical-top">
+        <div style="width: 50%; height: 450px;" class="display-inline vertical-top">
             <div>
                 <h3 class="display-inline">Letra: </h3>
                 <img *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="position: absolute;transform: translate(-425%,100%);float: right;" (click)='switchLyrics()'>
@@ -82,8 +94,8 @@
                 <div *ngIf='!lyrics'><p><b>Letra no disponible</b><p></p></div>
             </div>
         </div>
-        <div style="width: 60%;" class="txt-horizontal-left display-inline">
-            <div style="padding: 15px;">
+        <div style="width: 50%;" class="txt-horizontal-left display-inline">
+            <div style="max-width: 550px; padding: 15px;">
                 <h3>Comentarios {{theme.comments.length}}: </h3>
                 <textarea style="width: 99%; height: 100px;" [(ngModel)]="comment"></textarea>
                 <br>
@@ -108,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <div style="width: 40%;" class="txt-horizontal-center display-inline vertical-top">
+        <div style="width: 50%;" class="txt-horizontal-center display-inline vertical-top">
             <h3>Relacionados: </h3>
         </div>
         <div *ngIf='showThemeListForm'>

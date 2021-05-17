@@ -576,6 +576,7 @@ const usersData = [
         "password": "21232f297a57a5a743894a0e4a801fc3",
         "email": "Admin@example.com",
         "admin": "1",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin malesuada fermentum condimentum. Sed non odio mollis urna suscipit consectetur. Sed eget sem pulvinar, imperdiet mauris vitae, maximus odio. Donec et bibendum nibh. Proin feugiat, nulla id porttitor bibendum, est sapien iaculis ligula, sed commodo mauris massa sit amet sem. Donec vehicula eros nec mollis imperdiet. Vestibulum sit amet odio tempor, luctus eros a, consequat neque. Donec aliquam feugiat mi a posuere. Donec sagittis vel risus at dictum.In vitae mauris metus. Integer id leo sed nibh elementum lacinia a nec purus. Suspendisse at pretium ex. Mauris dapibus turpis quis volutpat cursus. Sed neque urna, rutrum quis lacinia non, condimentum hendrerit purus. Donec et tempor metus. Maecenas et nisl vel mauris rutrum scelerisque eget posuere eros.",
         "themeLists":[
             {
                 "name":'@likes-list',
@@ -704,6 +705,7 @@ const usersData = [
         "name": "User01",
         "password": "814f06ab7f40b2cff77f2c7bdffd3415",
         "email": "User01@example.com",
+        "description":"",
         "admin": "0",
         "themeLists":[
             {
@@ -730,6 +732,7 @@ const usersData = [
         "name": "User02",
         "password": "7e16036a55664f22e6511e460ee09d4f",
         "email": "User02@example.com",
+        "description":"",
         "admin": "0",
         "themeLists":[
             {
@@ -756,6 +759,7 @@ const usersData = [
         "name": "User03",
         "password": "087c8abfaee44ebbf0c2871976a2ab18",
         "email": "User03@example.com",
+        "description":"",
         "admin": "0",
         "themeLists":[
             {

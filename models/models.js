@@ -41,6 +41,10 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
+	description: {
+		type: String,
+		required: true
+	},
 	admin: {
 		type: Number,
 		required: true
