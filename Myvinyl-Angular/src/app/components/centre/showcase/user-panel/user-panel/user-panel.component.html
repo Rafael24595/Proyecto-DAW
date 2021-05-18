@@ -57,18 +57,20 @@
                     <div style="height: 100%;">
                         <span>Descripción: </span>
                         <span id="pencil-writting-animation" class="display-inline">
-                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
                         </span>
                         <br><br>
-                        <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                        <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
                             <div style="max-height: 63%; overflow: auto;">
                                 <span>{{ProfileData.description}}</span>
                             </div>
                         </ng-container>
                         <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
-                            <input id="userDescription" type="text" [(ngModel)]='modifyValuesData.modifyDescription.value'
-                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})>
+                            <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
+                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                            style="width: 100%; height: 200px;">
+                            </textarea>
                         </ng-container>
                     </div>
                     <br>
@@ -137,14 +139,15 @@
                         <div style="height: 73%; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
                             <ng-container *ngIf='themeList.list.length > 0'>
                                 <div *ngFor='let singleTheme of themeList.list' (click)='setAudioBarListPosition(singleTheme.id)'
-                                    id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container text-left">
+                                    id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container text-left"
+                                    style="white-space:nowrap">
                                     <ng-container *ngIf='singleTheme.name'>
-                                        <div class="display-inline" style="vertical-align: middle; margin: 10px; width: 15%;" (click)='setAudioBarListPosition(singleTheme.id)'>
+                                        <div class="display-inline" style="vertical-align: middle; margin: 10px; width: 15%; min-width: 50px;" (click)='setAudioBarListPosition(singleTheme.id)'>
                                             <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
                                             <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png">
                                         </div>
                                         <ng-container *ngIf='isSessionUser && themeList.userManage'>
-                                            <div class="display-inline theme-container-title" style="width: 65%;">
+                                            <div class="display-inline theme-container-title" style="width: 60%;">
                                                 <p class="display-inline">
                                                     <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
                                                 </p>

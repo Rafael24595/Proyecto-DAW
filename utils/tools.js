@@ -14,17 +14,6 @@ async function usersExist(theme){
         resolve(theme)
       }
     }
-    /*theme.comments.forEach(async comment=>{
-      let user = await User.findOne({"name":comment.userName});
-      console.log(user)
-      theme.comments[cont]['activeUser'] = (user) ? true : false;
-      console.log(theme.comments[cont].id)
-      console.log(theme.comments[cont]['activeUser'])
-      cont++;
-      if(cont == theme.comments.length){
-        resolve(theme)
-      }
-    });*/
   });
 }
 
@@ -49,7 +38,8 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
     case "admin":
     break;
     default:
-      if(user[attribute] && typeof newAttribute == typeof user[attribute]){
+      console.log('in')
+      if(user[attribute] && typeof newAttribute == typeof user[attribute]){ console.log('inx')
         isChanged = true;
         user[attribute] = newAttribute;
       }

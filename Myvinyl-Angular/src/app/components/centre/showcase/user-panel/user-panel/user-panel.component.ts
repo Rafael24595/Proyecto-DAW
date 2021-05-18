@@ -64,6 +64,7 @@ export class UserPanelComponent implements OnInit {
           this.setGlobalUser(profile);
           this.modifyValuesData.modifyUserName.value = profile.name;
           this.modifyValuesData.modifyEmail.value = profile.email;
+          this.modifyValuesData.modifyDescription.value = profile.description;
         }
         else{
           this.ProfileData = this.setProfileUser(profile)
@@ -431,6 +432,19 @@ export class UserPanelComponent implements OnInit {
             }
             else if(keyCode == 'Escape'){
               this.modifyValuesData.modifyEmail.status = false
+            }
+          break;
+          case "userDescription":
+            activeInput = this.modifyValuesData.modifyDescription.status;
+            if(activeInput && keyCode != 'Escape') {
+              userAttribute = 'description'; 
+              oldAttribute = this.ProfileData.description; 
+              newAttribute = this.modifyValuesData.modifyDescription.value; 
+              input = this.modifyValuesData.modifyDescription;
+              this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+            }
+            else if(keyCode == 'Escape'){
+              this.modifyValuesData.modifyDescription.status = false
             }
           break;
         }

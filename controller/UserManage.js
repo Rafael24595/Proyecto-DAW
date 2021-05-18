@@ -143,7 +143,7 @@ async function fillThemeList(themeList){
 }
 
 async function updateUserData(req, res){
-  let attribute = req.body.attribute;
+  let attribute = req.body.attribute;console.log(attribute)
   let oldAttribute = req.body.oldAttribute;
   let newAttribute = req.body.newAttribute;
   let userName = req.body.userName;

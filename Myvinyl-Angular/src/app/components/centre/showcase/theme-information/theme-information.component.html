@@ -93,7 +93,7 @@
                 <br>
                 <div>
                     <div *ngFor='let comment of theme.comments'>
-                        <p *ngIf='comment.activeUser' class="display-inline" style="width: 90%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
+                        <p *ngIf='comment.activeUser' class="display-inline cursor-pointer" style="width: 90%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
                         <p *ngIf='!comment.activeUser' class="display-inline" style="width: 90%;" ><b><s>{{comment.userName}}</s></b>:</p>
                         <span *ngIf='isAdmin' style="width: 10%;" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                             <span class="trash-cap cursor-pointer display-inline">0</span>
