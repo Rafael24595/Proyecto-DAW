@@ -1,37 +1,40 @@
 <div id="homeContainer">
     <div *ngIf='artist'>
         <div class="display-inline" style="width: 60%; padding: 15px; box-sizing: border-box;">
-            <div style="float: left; margin-right: 15px; margin-bottom: 15px;">
-                <img src="../../../../../assets/media/images/avatar/artist/{{artist.id_artist}}.png">
-                <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+            <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
+                <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png">
+                <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
                     <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
                 </span>
-                <p>
-                    <span *ngIf='isAdmin'> Nombre: </span>
+                <p style="margin-top: 10px; margin-bottom: 5px;">
+                    <span> Nombre: </span>
                     <span>&nbsp;</span>
                     <span>{{artist.name}} {{artist.surname}}</span>
                     <span>&nbsp;</span>
                     <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
                         <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>+</span>
                     </span>
-                    <span *ngIf='isAdmin'> - Id: {{artist.id_artist}}</span>
+                </p>
+                <p *ngIf='isAdmin' style="margin-top: 5px; margin-bottom: 0px;">
+                    <span >Id: {{artist.id_artist}}</span>
                     <span>&nbsp;</span>
-                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+                    <span id="pencil-writting-animation" class="display-inline">
                         <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>+</span>
                     </span>
                     <span>&nbsp;</span>
                     <span>-</span>
                     <span>&nbsp;</span>
-                    <span *ngIf='isAdmin' (click)='deleteArtist(artist.id_artist)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                    <span (click)='deleteArtist(artist.id_artist)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                         <span class="trash-cap cursor-pointer display-inline">0</span>
                         <span class="trash-body cursor-pointer display-inline">/</span>
                     </span>
+                </p>
             </div>
-            <div *ngIf='artist.description != ""' [innerHTML]="artist.description"></div>
-            <span *ngIf='artist.description == ""'>Descripción no disponible</span>
-            <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+            <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="float: right;">
                 <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>+</span>
             </span>
+            <div *ngIf='artist.description != ""' [innerHTML]="artist.description"></div>
+            <span *ngIf='artist.description == ""'>Descripción no disponible</span>
         </div>
         <div class="display-inline vertical-top" style="width: 40%; padding: 15px; box-sizing: border-box;">
             <div>
@@ -55,26 +58,32 @@
                     <h3 class="display-inline" style="width: 80%;">Temas: </h3>
                     <span *ngIf='isAdmin' style="position: absolute; transform: translateY(50%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span>
                 </div>
-                <div *ngFor='let theme of artist.themeList' style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px;" id="{{theme.id}}">
-                    <div style="width: 30%;" class="display-inline">
-                        <img style="width: 75px;" src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                    </div>
-                    <div style="width: 70%;" class="display-inline">
-                        <p><span>Nombre: </span> <span *ngIf='isAdmin' (click)=showItem(theme.id)>{{theme.name}}</span><span *ngIf='!isAdmin'>{{theme.name}}</span></p> 
-                        <p *ngIf='isAdmin'><span>Id: </span> <span (click)=showItem(theme.id)>{{theme.id}}</span></p>
-                        <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
-                            <span class="trash-cap cursor-pointer display-inline">0</span>
-                            <span class="trash-body cursor-pointer display-inline">/</span>
-                        </span>
-                        <span> - </span>
-                        <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                            <span class="my-vinyl-icons-font cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>9</span>
-                        </span>
+                <div style="max-height: 500px;">
+                    <div *ngFor='let theme of artist.themeList' style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                        <div style="vertical-align: bottom; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                            <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                        </div>
+                        <div style="width: 70%;" class="display-inline">
+                            <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span>Nombre: </span> <span *ngIf='isAdmin' (click)=showItem(theme.id)>{{theme.name}}</span><span *ngIf='!isAdmin'>{{theme.name}}</span></p> 
+                            <p *ngIf='isAdmin' style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span>Id: </span> <span (click)=showItem(theme.id)>{{theme.id}}</span></p>
+                            <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                <span class="trash-cap cursor-pointer display-inline">0</span>
+                                <span class="trash-body cursor-pointer display-inline">/</span>
+                            </span>
+                            <span> - </span>
+                            <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
+                                <span class="my-vinyl-icons-font cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>9</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div *ngIf='isAdmin' (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
-                    <img style="width: 75px;" src="../../../../../assets/media/images/covers/new_theme.png">
-                    <p>Nuevo tema</p>
+                <div class="cursor-pointer" style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
+                    <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                        <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/new_cover.png">
+                    </div>
+                    <div style="vertical-align: middle;" class="display-inline">
+                        <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">Nuevo tema</p> 
+                    </div>
                 </div>
                 <div *ngIf='showInput'>
                     <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>

@@ -9,7 +9,7 @@ async function usersExist(theme){
     let cont = 0;
     for (let index = 0; index < theme.comments.length; index++) {
       let user = await User.findOne({"name":theme.comments[index].userName});
-      theme.comments[index]['activeUser'] = (user) ? true : false;
+      theme.comments[index]['activeUser'] = (user != null) ? true : false;
       if(index == theme.comments.length - 1){
         resolve(theme)
       }

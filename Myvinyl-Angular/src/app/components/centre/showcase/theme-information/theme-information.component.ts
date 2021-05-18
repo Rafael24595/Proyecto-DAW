@@ -11,6 +11,7 @@ import { ComunicationServiceService } from 'src/app/services/comunication-servic
 import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
+import { Lyrics } from 'src/app/interfaces/LyricsInterface';
 
 @Component({
   selector: 'app-theme-information',
@@ -54,19 +55,21 @@ export class ThemeInformationComponent implements OnInit {
     this.route.queryParams.subscribe(params =>{
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
-      this.DatabaseConexService.getThemeData(params['id']).subscribe(theme =>{
-        this.theme = new Themes(theme.id,theme.name,theme.flag,theme.tags,theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views);
+      this.DatabaseConexService.getThemeData(params['id']).subscribe(themeData =>{
+        console.log(themeData)
+        this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
+        console.log(this.theme)
         this.lyrics = this.theme.lyrics.native;
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
         this.userThemeLists = sesionValues.activeUser.themeLists;
         this.isSessionUser = (sesionValues.activeUser.email) ? true :false;
-        this.isLike = sesionValues.activeUser.isThemeLike(theme.id);
+        this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
         this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
-        if(this.isLike < 0 && theme.likes == 0 || this.isLike > 0 && theme.dislikes == 0) {
+        if(this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
           let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
-          this.modifyThemeData({attrName:likeValue, attrId:'', value:theme[likeValue] + 1});
-        }console.log(this.theme)
+          //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
+        }
         this.calculateLikesPercentage();
       });
     });
@@ -146,7 +149,7 @@ export class ThemeInformationComponent implements OnInit {
           sucess=>{
             localStorage.removeItem('lastComment');
             if(this.theme && this.comment){
-              this.theme.setNewComment(sucess.commentId,sucess.userName,'true',sucess.comment);
+              this.theme.setNewComment(sucess.commentId,sucess.userName, true, sucess.comment);
               this.comment = '';
             }
           },
@@ -321,7 +324,7 @@ export class ThemeInformationComponent implements OnInit {
 
   }
 
-  async modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[]}){
+  async modifyThemeData(attribute:{attrName:string, attrId:string | string[], value?:string | string[] | ThemeComment[] | Lyrics}){
     
     let sendSucess = false;
 
@@ -412,13 +415,18 @@ export class ThemeInformationComponent implements OnInit {
       default:
 
         attribute.value = (attribute.attrName == 'tags') ? this.modifyThemeTag(attribute.value as string) : attribute.value ;
+        attribute.value = (attribute.attrName == 'lyrics') ? {native: this.inputValue, esp:this.inputSecondValue} as Lyrics : attribute.value ;
 
         await DataManage.toAsync((resolve: (value: unknown) => void)=>{
           if(this.theme){
             this.DatabaseConexService.setThemeAttribute(this.theme.artist.id, this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
               sucess=>{
                 if(this.theme && sucess.message){
+                  let lyricsType = (this.lyrics == this.theme.lyrics.native) ? 'native' : 'esp';
                   this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
+                  if(attribute.attrName == 'lyrics'){
+                    this.lyrics = this.theme.lyrics[lyricsType];
+                  }
                   sendSucess = true;
                   resolve(sendSucess);
                 }

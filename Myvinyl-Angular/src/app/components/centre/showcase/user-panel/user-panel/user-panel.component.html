@@ -148,12 +148,12 @@
                                         </div>
                                         <ng-container *ngIf='isSessionUser && themeList.userManage'>
                                             <div class="display-inline theme-container-title" style="width: 60%;">
-                                                <p class="display-inline">
+                                                <p class="display-inline" style="vertical-align: bottom;">
                                                     <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
                                                 </p>
                                             </div>
-                                            <div class="display-inline" style="width: 10%;">
-                                                <p *ngIf='isSessionUser && themeList.userManage' style="margin-top: 16px; margin-bottom: 16px;" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150 text-right">
+                                            <div class="display-inline" style="width: 10%; float: right; margin-right: 3px;">
+                                                <p *ngIf='isSessionUser && themeList.userManage' style="margin-top: 0px; margin-bottom: 0px; transform: translateY(50%);" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150 text-right">
                                                     <span class="trash-cap cursor-pointer display-inline">0</span>
                                                     <span class="trash-body cursor-pointer display-inline">/</span>
                                                 </p>

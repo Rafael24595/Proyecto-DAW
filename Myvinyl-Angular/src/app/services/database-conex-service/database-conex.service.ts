@@ -10,6 +10,7 @@ import { UserInterface } from '../../interfaces/UserInterface';
 import { Themes } from '../../classes/Themes';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
+import { Lyrics } from 'src/app/interfaces/LyricsInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +64,7 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/setArtistAttribute`, {artistId, attribute, value, userName});
  }
 
- setThemeAttribute(artistId:string, themeId: string, attribute: string, value: string | string[] | ThemeComment[], userName: string):Observable<{status:boolean,message:Themes}>{
+ setThemeAttribute(artistId:string, themeId: string, attribute: string, value: string | string[] | ThemeComment[] |Lyrics, userName: string):Observable<{status:boolean,message:Themes}>{
   return this.http.post<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/setThemesAttribute`, {artistId, themeId, attribute, value, userName});
  }
 

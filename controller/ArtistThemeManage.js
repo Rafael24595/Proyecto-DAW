@@ -23,19 +23,14 @@ const FilesManage = require('../controller/FilesManage');
         let query = [];
         queryData.forEach(async data=>{
           let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).lean();
-          //console.log(artistByName);
           query = query.concat(artistByName);
           let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
-          //console.log(artistBySurname);
           query = query.concat(artistBySurname);
           let artistByTags = await Artist.find({"tags":{ "$regex": data, "$options": "i" }}).lean();
-          //console.log(artistByTags);
           query = query.concat(artistByTags);
           let themeByName = await Artist.find({"themeList.name":{ "$regex": data, "$options": "i" }}).lean();
-          //console.log(themeByName);
           query = query.concat(themeByName);
           let themeByTags = await Artist.find({"themeList.tags":{ "$regex": data, "$options": "i" }}).lean();
-          //console.log(artistByTags);
           query = query.concat(themeByTags);
           resolve(query);
         });
@@ -91,10 +86,10 @@ const FilesManage = require('../controller/FilesManage');
         if(theme.comments.length > 0){
           theme = await tools.usersExist(theme);
         }
-        return res.send(theme);
+        res.send(theme);
       });
     }catch (error) {
-      return res.status(400).send({
+      res.status(400).send({
         status: 'failure'
       })
     }

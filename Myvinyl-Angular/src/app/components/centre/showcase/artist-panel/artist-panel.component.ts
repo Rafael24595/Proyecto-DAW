@@ -19,6 +19,7 @@ import { DataManage } from 'src/utils/tools/DataManage';
 export class ArtistPanelComponent implements OnInit {
 
   candy: CandyInterface = {id: 'artist', name:'Artist', family:'candy-theme',route:'Artist', query:{}, routeQuery:''};
+  mediaPath:string = '../../../../../assets/media';
   artist: Artist | undefined;
   user: User | undefined;
   isAdmin: boolean = false;

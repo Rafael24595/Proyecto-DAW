@@ -212,7 +212,7 @@ export class AudioBarComponent implements OnInit {
     this.setReverse();
     this.setPlay();
 
-    (this.audio && !this.launchPaused) ? this.audio.play() : this.launchPaused = !this.launchPaused;
+    (this.audio && !this.launchPaused) ? this.audio.play() : '';
 
   }
 
@@ -331,7 +331,7 @@ export class AudioBarComponent implements OnInit {
         action = (this.position + action < 0) ? this.themesListActive.length -1 : (this.position + action > this.themesList.length -1) ? 0 : this.position + action;
       }
       else{
-        (this.position + action < 0) ? (action = 0, this.launchPaused = true) : (this.position + action > this.themesListActive.length -1) ? (action = this.themesListActive.length -1, this.launchPaused = true) : action = this.position + action;
+        (this.position + action < 0) ? (action = 0, this.launchPaused = true) : (this.position + action > this.themesListActive.length -1) ? (action = this.themesListActive.length -1, this.launchPaused = true) : (action = this.position + action, this.launchPaused = false);
       }
     }
     if(isCalculed){

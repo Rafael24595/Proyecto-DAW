@@ -30,7 +30,7 @@ export class Themes{
 
     }
 
-    setNewComment(commentId:string,userName:string, activeUser:string,comment:string,){
+    setNewComment(commentId:string,userName:string, activeUser:boolean,comment:string,){
         this.comments.push({commentId,userName:userName,activeUser:activeUser,comment:comment});
     }
 
