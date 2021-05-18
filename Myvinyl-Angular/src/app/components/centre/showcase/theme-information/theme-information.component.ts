@@ -34,6 +34,8 @@ export class ThemeInformationComponent implements OnInit {
   isSessionUser: boolean = false;
   isAdmin: boolean = false;
 
+  vinylState = '';
+
   showThemeListForm: boolean = false;
   buttonThemeList = 'Añadir';
 
@@ -67,8 +69,51 @@ export class ThemeInformationComponent implements OnInit {
         }console.log(this.theme)
         this.calculateLikesPercentage();
       });
+    });
+    this.comunicationService.sendReproductorViewDataObservable.subscribe((data:{type:string, value: any})=>{
+
+      let type = data.type;
+      let value  = data.value;
+
+      switch (type){
+
+        case 'ready':
+
+          if(this.theme){
+
+            this.sentToReproductor('themes', {isThemeList:false, themes:[this.theme]});
+  
+          }
+        
+
+        break;
+
+        case 'ended':
+
+          this.vinylState = '';
+
+        break;
+
+        case 'play':
+
+          this.vinylState = 'show';
+
+        break;
+
+        case 'stop':
+
+          this.vinylState = '';
+
+        break;
+
       }
-    )
+
+    });
+  }
+
+  sentToReproductor(type:string, value?:any){
+    value = (value != undefined) ? value : '';
+    this.comunicationService.sendReproductorData({type, value});
   }
 
   calculateLikesPercentage(){
@@ -80,27 +125,6 @@ export class ThemeInformationComponent implements OnInit {
         this.dislikesBarColor = 'gray';
       }
     }
-  }
-
-  themeObservable(message:{status:string, value:string | number}){
-    
-    let status = message.status;
-    let value = message.value;
-    
-    switch (status){
-
-      case 'ready':
-
-        if(this.theme){
-
-          this.comunicationService.sendThemes(false, [this.theme]);
-
-        }
-
-      break;
-
-    }
-    
   }
 
   switchLyrics(){

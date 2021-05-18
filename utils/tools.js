@@ -5,16 +5,26 @@ const User = mongoose.model('User');
 const Artist = mongoose.model('Artist');
 
 async function usersExist(theme){
-  return new Promise(resolve=>{
+  return new Promise(async resolve=>{
     let cont = 0;
-    theme.comments.forEach(async comment=>{
+    for (let index = 0; index < theme.comments.length; index++) {
+      let user = await User.findOne({"name":theme.comments[index].userName});
+      theme.comments[index]['activeUser'] = (user) ? true : false;
+      if(index == theme.comments.length - 1){
+        resolve(theme)
+      }
+    }
+    /*theme.comments.forEach(async comment=>{
       let user = await User.findOne({"name":comment.userName});
+      console.log(user)
       theme.comments[cont]['activeUser'] = (user) ? true : false;
+      console.log(theme.comments[cont].id)
+      console.log(theme.comments[cont]['activeUser'])
       cont++;
       if(cont == theme.comments.length){
         resolve(theme)
       }
-    });
+    });*/
   });
 }
 

@@ -38,7 +38,7 @@ export class AuthorizationService {
 
     destroyUser(){
 
-      User.setUser('@Usuario', 'user@example.com', '0', [ThemeList.emptyThemeList()]);
+      User.setUser('@Usuario', 'user@example.com', '', '0', [ThemeList.emptyThemeList()]);
 
       sesionValues.activeUser = User.activeUser;
 

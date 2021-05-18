@@ -18,7 +18,7 @@ export class ManageUser{
     getUserDataFromDataBase(): Promise<boolean> {
         return new Promise(resolve=>{
             this.DatabaseConexService.getUserData().subscribe(user =>{
-                User.setUser(user.name, user.email, user.admin, user.themeLists);
+                User.setUser(user.name, user.email, user.admin, user.description, user.themeLists);
                 sesionValues.activeUser = User.getUser();                
                 resolve(true);             
             },
@@ -36,7 +36,7 @@ export class ManageUser{
     getProfileDataFromDataBase(profile:string): Promise<UserInterface> {
 
         return new Promise(resolve=>{
-            this.DatabaseConexService.getProfileData(profile).subscribe(user =>{
+            this.DatabaseConexService.getProfileData(profile).subscribe(user =>{console.log(user)
                 resolve(user.data);
                 if(!user.validToken){
                     this.autorizationService.destroySession();

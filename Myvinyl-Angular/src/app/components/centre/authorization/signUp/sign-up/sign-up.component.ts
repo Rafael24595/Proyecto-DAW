@@ -53,7 +53,7 @@ export class SignUpComponent implements OnInit {
       this.authorization.signUp(name, email, password).subscribe(
         res =>{
           localStorage.setItem('sessionToken', res.token);
-          sesionValues.activeUser = User.setUser(res.user.name, res.user.email, res.user.admin, res.user.themeLists);
+          sesionValues.activeUser = User.setUser(res.user.name, res.user.email, res.user.description, res.user.admin, res.user.themeLists);
           this.manageComponent.refreshComponent(this.manageComponent.getLastURL());
         },
         err=>{console.log(err)}

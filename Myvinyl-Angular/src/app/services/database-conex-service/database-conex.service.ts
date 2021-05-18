@@ -67,13 +67,13 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/setThemesAttribute`, {artistId, themeId, attribute, value, userName});
  }
 
-reassignArtistTheme(mainArtistId: string, targetArtistId:string, themeId:string, userName:string):Observable<{status:boolean,message:Artist}>{
+ reassignArtistTheme(mainArtistId: string, targetArtistId:string, themeId:string, userName:string):Observable<{status:boolean,message:Artist}>{
   return this.http.post<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/reassignArtistTheme`, {mainArtistId, targetArtistId, themeId, userName});
-}
+ }
 
-reassignArtistThemes(mainArtistId: string, targetArtistId:string, userName:string):Observable<{status:boolean}>{
+ reassignArtistThemes(mainArtistId: string, targetArtistId:string, userName:string):Observable<{status:boolean}>{
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/reassignArtistThemes`, {mainArtistId, targetArtistId, userName});
-}
+ }
 
  setThemeComment(themeId:string,userName:string,comment:string):Observable<{commentId:string,userName:string,comment:string}>{
    return this.http.post<{commentId:string,userName:string,comment:string}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});

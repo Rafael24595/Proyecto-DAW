@@ -34,21 +34,57 @@ export class AudioBarComponent implements OnInit {
     else{
       this.barAudioSize = 525;
     }
-    this.comunicationService.sendThemesObservable.subscribe((themes:{isThemeList:Boolean, themes:Themes[]})=>{
-      this.isThemeList = themes.isThemeList;
-      this.themesList = themes.themes;
-      this.themesListActive = themes.themes;
-      this.prepareTheme(this.themesListActive[this.position]);
+    this.comunicationService.sendReproductorDataObservable.subscribe((data:{type:string, value: any})=>{
 
-      this.barAudioSizeProgress = 0
-      this.pointAudioPosition = 0;
-    });
-    this.comunicationService.sendListPositionObservable.subscribe((position:number)=>{
-      if(position != -1){
-        this.calculeNextThemePosition(position, true);
+      let type = data.type;
+      let value  = data.value;
+
+      switch (type){
+
+        case 'themes':
+
+          let themes = value as {isThemeList:Boolean, themes:Themes[]};
+
+          if(typeof themes.isThemeList == 'boolean' && themes.themes){
+            this.isThemeList = themes.isThemeList;
+            this.themesList = themes.themes;
+            this.themesListActive = themes.themes;
+            this.prepareTheme(this.themesListActive[this.position]);
+
+            this.barAudioSizeProgress = 0;
+            this.pointAudioPosition = 0;
+          }
+
+        break;
+
+        case 'position':
+
+          if(typeof value == 'number' && value != -1){
+            this.calculeNextThemePosition(value, true);
+          }
+
+        break;
+
+        case 'play':
+
+          if (this.audio){
+            this.setPlayPause('play');
+          }
+
+        break;
+
+        case 'stop':
+
+          if (this.audio){
+            this.setPlayPause('stop');
+          }
+
+        break
+
       }
+
     });
-    this.outputToparent.emit({status:'ready', value:''});
+    this.comunicationService.sendReproductorViewData({type:'ready', value:''});
   }
 
   /*/////////////
@@ -60,11 +96,7 @@ export class AudioBarComponent implements OnInit {
   lineToolBar:boolean = true;
   isThemeList:Boolean = false;
   audio: HTMLAudioElement | undefined;
-  themesList:BarThemesListInterface[] = [];/* = [
-    {id: 'test-001', name:'The Last Bible III - Forest:'}, 
-    {id: 'test-002', name:'Sim City 2000 - Subway Song:'}, 
-    {id: 'test-003', name:'Age of Empires The Rise of Rome - Mean Ain\'t No Hip Hop In Tha House Mix:'}, 
-    {id: 'test-004', name:'Doom - E1M2 - The Imps Song:'}];*/
+  themesList:BarThemesListInterface[] = [];
   themesListRandom:BarThemesListInterface[] = [];
   themesListActive:BarThemesListInterface[] = this.themesList;
   position = 0;
@@ -133,7 +165,7 @@ export class AudioBarComponent implements OnInit {
       if(this.audio) {this.audio.pause();}
       this.audio = new Audio();
       this.audio.src = (this.isReverse) ? this.reverseSrc : this.normalSrc;
-      this.audio.load();console.log(this.audio)
+      this.audio.load();
       this.audio.onloadedmetadata = ()=>{
         if(this.audio){
           this.audio.onloadeddata = ()=>{
@@ -150,16 +182,23 @@ export class AudioBarComponent implements OnInit {
           }
         }
       }
-      this.audio.onerror = ()=>{this.audio = undefined; console.log('in')};
+      this.audio.onerror = ()=>{this.audio = undefined;};
   }
 
   //////////////////////////
   //REPRODUCTION FUNCTIONS//
   //////////////////////////
 
-  setPlayPause(){
+  setPlayPause(mode?:string){
     if(this.audio){
-      (this.audio.paused) ? this.audio.play() : this.audio.pause()
+      if(this.audio.paused || mode == 'play'){
+        this.audio.play();
+        this.comunicationService.sendReproductorViewData({type:'play', value:this.themesList[this.position].id});
+      }
+      else if(!this.audio.paused || mode == 'stop'){
+        this.audio.pause();
+        this.comunicationService.sendReproductorViewData({type:'stop', value:this.themesList[this.position].id});
+      }
     }
   }
 
@@ -300,7 +339,7 @@ export class AudioBarComponent implements OnInit {
     }
     this.position = action;
     this.prepareTheme(this.themesListActive[this.position]);
-    this.outputToparent.emit({status:'ended', value:this.themesListActive[this.position].id});
+    this.comunicationService.sendReproductorViewData({type:'ended', value:this.themesListActive[this.position].id});
   }
 
   calculeTimeByPixel(position:number){
@@ -412,7 +451,7 @@ export class AudioBarComponent implements OnInit {
   setVolLogo(){
     if(this.audio){
       let volActual = this.audio.volume;
-      let percentage = volActual * 100 / 25;console.log(percentage)
+      let percentage = volActual * 100 / 25;
       
       if(!this.audio.muted){
         if(percentage <= 0){
@@ -549,6 +588,7 @@ export class AudioBarComponent implements OnInit {
     if(this.audio){
       this.audio.pause();
       this.audio.currentTime = 0;
+      this.comunicationService.sendReproductorViewData({type:'stop', value:this.themesList[this.position].id});
     }
 }
 

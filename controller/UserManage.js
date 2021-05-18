@@ -80,7 +80,7 @@ async function getProfileData(req, res){
       res.status(200).send({validToken:req.validToken, data:profileData});
     }
     else{
-      res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, themeLists: profileData.themeLists}});
+      res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, description:profileData.description, themeLists: profileData.themeLists}});
     }
   }
   else{

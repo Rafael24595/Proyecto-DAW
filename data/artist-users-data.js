@@ -93,11 +93,52 @@ const artistData = [
                 "tags": ['_OWB', 'blues'],
                 "lyrics": {
                     "native":
-                            "", 
+                          `<p class="title">Al Bowlly</p>
+                           <p class="title1">You're My Everything</p>
+                           <br>
+                           <p>You're my everything underneath the sun</p>
+                           <p>You're my everything rolled up into one</p>
+                           <p>You're my only dream, my only real reality</p>
+                           <p>You're my idea of a perfect personality</p>
+                           <p>You're my everything, everything I need</p>
+                           <p>You're the song I sing and the book I read</p>
+                           <p>You're a way beyond belief and just to make it brief</p>
+                           <p>You're my winter, summer, spring, my everything</p>
+                           <p>You're my everything (everything I need)</p>
+                           <p>You're the song I sing and the book I read</p>
+                           <p>You're a way beyond belief and just to make it brief</p>
+                           <p>You're my winter, summer, spring, my everything</p>
+                           <p class="title">-</p>`, 
                     "esp":
-                            ""
+                          `<p class="title">Al Bowlly</p>
+                           <p class="title1">You're My Everything</p>
+                           <br>
+                           <p>Eres mi todo debajo del sol</p>
+                           <p>Eres mi todo enrollado en uno</p>
+                           <p>Eres mi único sueño, mi única realidad real</p>
+                           <p>Eres mi idea de una personalidad perfecta</p>
+                           <p>Eres mi todo, todo lo que necesito</p>
+                           <p>Eres la canción que canto y el libro que leo</p>
+                           <p>Eres un camino más allá de la creencia y solo para hacerlo breve</p>
+                           <p>Eres mi invierno, verano, primavera, mi todo</p>
+                           <p>Eres mi todo (todo lo que necesito)</p>
+                           <p>Eres la canción que canto y el libro que leo</p>
+                           <p>Eres un camino más allá de la creencia y solo para hacerlo breve</p>
+                           <p>Eres mi invierno, verano, primavera, mi todo</p>
+                           <p class="title">-</p>`
                 },
-                "comments": [],
+                "comments": [
+                    {"commentId": "aa623e6d2f065dd20966c46b3ab59da872914f77d6d1be18e21fcdc055803beb",
+                     "userName":"admin",
+                     "comment":"Comentario primero en tema Al Bowly",
+                     "date":"0"
+                    },
+                     {"commentId": "ba333b6d2f0653320966c46e3ab59da872914f77d6d1be18e21fcdc055803beb",
+                     "userName":"UnknownUser",
+                     "comment":"Comentario Segundo en tema Al Bowly",
+                     "date":"0"
+                    },
+                ],
                 "likes": 0,
                 "dislikes": 0,
                 "views": 0

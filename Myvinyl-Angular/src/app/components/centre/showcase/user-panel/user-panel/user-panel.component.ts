@@ -13,6 +13,7 @@ import { AuthorizationService } from 'src/app/services/autorization-service/auth
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { Variables } from 'src/utils/variables/variables';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-user-panel',
@@ -35,10 +36,11 @@ export class UserPanelComponent implements OnInit {
   formTask = '';
 
   modifyValuesData = {
-    themeListName:{id:'themeName', status:false,value:''},
-    modifyUserName:{id:'userName', status:false,value:''},
-    modifyEmail:{id:'userEmail', status:false,value:''},
-    modifyPassword:{id:'userPassword', status:false,value:''}
+    themeListName:{id:'themeName', status:false, value:''},
+    modifyUserName:{id:'userName', status:false, value:''},
+    modifyEmail:{id:'userEmail', status:false, value:''},
+    modifyPassword:{id:'userPassword', status:false, value:''},
+    modifyDescription:{id:'userDescription', status:false, value:''}
   };
 
   modifyPasswordData = {
@@ -68,8 +70,67 @@ export class UserPanelComponent implements OnInit {
         }
         this.setCandy();
       })
-    })
+    });
+    this.comunicationService.sendReproductorViewDataObservable.subscribe((data:{type:string, value: any})=>{
 
+      let type = data.type;
+      let value  = data.value;console.log(data)
+
+      switch (type){
+
+        case 'ready':
+
+        this.setAudioBarThemeList();
+        
+
+        break;
+
+        case 'ended':
+
+          this.addSelectedContainer(value as string);
+
+        break;
+
+        case 'play':
+
+          let elementPlay = document.getElementById(`vinyl-${value}`);
+          this.hideAllVinyls(value);
+          if(elementPlay){
+            elementPlay.classList.add('show');
+          }
+
+        break;
+
+        case 'stop':
+
+          let elementStop = document.getElementById(`vinyl-${value}`);
+          if(elementStop){
+            elementStop.classList.remove('show');
+          }
+
+        break;
+
+      }
+
+    });
+
+  }
+
+  hideAllVinyls(exception?:string){console.log()
+    let elements = document.getElementsByClassName('vinyl-xs');
+    for (let index = 0; index < elements.length; index++) {
+      if(elements[index].id != `vinyl-${exception}`){
+        elements[index].classList.remove('show');
+      }
+      else{
+        console.log(elements[index])
+      }
+    }
+  }
+
+  sentToReproductor(type:string, value?:any){
+    value = (value != undefined) ? value : '';
+    this.comunicationService.sendReproductorData({type, value});
   }
 
   themeObservable(message:{status:string, value:string | number}){
@@ -122,8 +183,9 @@ export class UserPanelComponent implements OnInit {
     let themeList = sesionValues.activeUser.getThemeList(this.selectedThemeList);
     let themeId = (themeList) ? themeList.list.map(theme=>{return theme})[0].id : '';
     if(themeList){
-      this.comunicationService.sendThemes(true, themeList.list);
-      let correct = false;
+      this.sentToReproductor('themes', {isThemeList:true, themes:themeList.list});
+      setTimeout(()=>{this.addSelectedContainer(themeId);},100);
+      /*let correct = false;
       setTimeout(()=>{correct = this.addSelectedContainer(themeId);},100);
       let ready = setInterval(()=>{
         if(correct){
@@ -132,7 +194,7 @@ export class UserPanelComponent implements OnInit {
         else{
           correct = this.addSelectedContainer(themeId);
         }
-      }, 100);
+      }, 100);*/
     }
   }
 
@@ -140,8 +202,9 @@ export class UserPanelComponent implements OnInit {
     let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
     if(list){
       let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
-      if(position != -1){
-        this.comunicationService.sendListPosition(position);
+      if(position != -1){console.log(position)
+        this.sentToReproductor('position', position);
+        this.hideAllVinyls();
       }
     }
   }
@@ -163,7 +226,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   setGlobalUser(profile:UserInterface){
-    sesionValues.activeUser = User.setUser(profile.name,profile.email,profile.admin,profile.themeLists);
+    sesionValues.activeUser = User.setUser(profile.name,profile.email,profile.admin, profile.description, profile.themeLists);
     this.ProfileData = sesionValues.activeUser;
   }
 

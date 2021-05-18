@@ -489,6 +489,9 @@ input{
 .flag-small{
 	width: 30px;
 }
+.cover-xs{
+	height: 50px;
+}
 .display-block{
 	display: block;
 }

@@ -194,7 +194,7 @@ const FilesManage = require('../controller/FilesManage');
       if(mainArtistExists != null && targetArtistExists != null){
         let count = targetArtistExists.themeList.length + 1;
         let newThemeId = `${targetArtistExists.id_artist}-${count}`;
-        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id == oldThemeId)});console.log(themeToReassign)
+        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id == oldThemeId)});
         let themeIndex = mainArtistExists.themeList.map(theme=>{return theme.id}).indexOf(oldThemeId); 
         themeToReassign.id = newThemeId;
         targetArtistExists.themeList.push(themeToReassign);
@@ -241,7 +241,7 @@ const FilesManage = require('../controller/FilesManage');
           res.headerSent = true;
         }
       }
-      else{console.log('inx')
+      else{
         if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
         res.headerSent = true;
       }
@@ -252,12 +252,12 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function setTheme(req, res){
-    let artistId = req.body.artistId;console.log(artistId)
-    let name = req.body.name;console.log(name)
-    let flag = req.body.flag;console.log(flag)
-    let tags = req.body.tags;console.log(tags)
-    let lyrics = req.body.lyrics;console.log(lyrics)
-    let userName = req.body.userName;console.log(userName)
+    let artistId = req.body.artistId;
+    let name = req.body.name;
+    let flag = req.body.flag;
+    let tags = req.body.tags;
+    let lyrics = req.body.lyrics;
+    let userName = req.body.userName;
 
     if(artistId && userName == req.userNameToken && req.isAdmin){
       let artistExists = await Artist.findOne({id_artist:artistId}).lean();
@@ -313,11 +313,11 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function setThemesAttribute(req, res){
-    let artistId = req.body.artistId;console.log(artistId)
-    let themeId = req.body.themeId;console.log(themeId)
-    let attribute = req.body.attribute;console.log(attribute)
-    let value = req.body.value;console.log(value)
-    let userName = req.body.userName;console.log(userName)
+    let artistId = req.body.artistId;
+    let themeId = req.body.themeId;
+    let attribute = req.body.attribute;
+    let value = req.body.value;
+    let userName = req.body.userName;
     
     if(userName == req.userNameToken && req.isAdmin){
       let artist = await Artist.findOne({id_artist:artistId}).lean();

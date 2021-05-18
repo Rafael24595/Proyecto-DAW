@@ -1,7 +1,7 @@
 <div id="homeContainer" style="height: 500px;">
     <div *ngIf='ProfileData' class="height-100">
-        <div style="height: 80%;">
-            <div class="display-inline width-50 height-100 txt-horizontal-left">
+        <div style="height: 85%;">
+            <div class="display-inline width-50 height-100 txt-horizontal-left" style="padding: 10px; box-sizing: border-box; overflow: hidden;">
                 <ng-container *ngIf='isSessionUser'>
                     <div>
                         <span>Nombre: </span>
@@ -54,9 +54,27 @@
                         </ng-container>
                     </div>
                     <br>
+                    <div style="height: 100%;">
+                        <span>Descripción: </span>
+                        <span id="pencil-writting-animation" class="display-inline">
+                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                        </span>
+                        <br><br>
+                        <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                            <div style="max-height: 63%; overflow: auto;">
+                                <span>{{ProfileData.description}}</span>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
+                            <input id="userDescription" type="text" [(ngModel)]='modifyValuesData.modifyDescription.value'
+                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})>
+                        </ng-container>
+                    </div>
+                    <br>
                 </ng-container>
                 <ng-container *ngIf='!isSessionUser'>
-                    <div>
+                    <div style="height: 100%;">
                         <div>
                             <span>Nombre: </span>
                             <span>{{ProfileData.name}}</span>
@@ -67,16 +85,18 @@
                             <span>{{range[ProfileData.admin]}}</span>
                         </div>
                         <br>
-                        <div>
+                        <div style="height: 100%;">
                             <span>Descripción: </span>
-                            <br>
-                            <span>{{ProfileData.name}}</span>
+                            <br><br>
+                            <div style="max-height: 72%; overflow: auto;">
+                                <span>{{ProfileData.description}}</span>
+                            </div>
                         </div>
                     </div>
                     <p></p>
                 </ng-container>
             </div>
-            <div class="display-inline vertical-top width-50 height-100">
+            <div class="display-inline vertical-top width-50 height-100" style="padding: 10px; box-sizing: border-box; overflow: hidden;">
                 <div>
                     <select [(ngModel)]='selectedThemeList' (change)=changeList()>
                         <option selected="selected">{{defaultSelect}}</option>
@@ -85,11 +105,11 @@
                                 *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>
                                 {{list.name}}</option>
                         </ng-container>
-                        <option selected="selected">-- Nueva lista --</option>
+                        <option *ngIf='isSessionUser' selected="selected">-- Nueva lista --</option>
                     </select>
                 </div>
                 <br>
-                <div style="height: 90%; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
+                <div style="height: 100%; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
                     <ng-container *ngIf='themeList'>
                         <div>
                             <p *ngIf='isSessionUser' style="margin-top: 0px;">
@@ -114,26 +134,35 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf='themeList'>
-                        <div style="height: 77%; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
+                        <div style="height: 73%; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
                             <ng-container *ngIf='themeList.list.length > 0'>
                                 <div *ngFor='let singleTheme of themeList.list' (click)='setAudioBarListPosition(singleTheme.id)'
                                     id="theme-container-{{selectedThemeList}}-{{singleTheme.id}}" class="theme-container text-left">
                                     <ng-container *ngIf='singleTheme.name'>
-                                        <div class="display-inline" style="width: 15%;" (click)='setAudioBarListPosition(singleTheme.id)'>
-                                            <img src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png">
-                                            <img src="{{mediaPath}}/images/small-vinyl.png">
+                                        <div class="display-inline" style="vertical-align: middle; margin: 10px; width: 15%;" (click)='setAudioBarListPosition(singleTheme.id)'>
+                                            <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
+                                            <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png">
                                         </div>
-                                        <div class="display-inline theme-container-title" style="width: 75%;">
-                                            <p class="display-inline">
-                                                <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
-                                            </p>
-                                        </div>
-                                        <div class="display-inline" style="width: 10%;">
-                                            <p *ngIf='isSessionUser && themeList.userManage' style="margin-top: 16px; margin-bottom: 16px;" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150 text-right">
-                                                <span class="trash-cap cursor-pointer display-inline">0</span>
-                                                <span class="trash-body cursor-pointer display-inline">/</span>
-                                            </p>
-                                        </div>
+                                        <ng-container *ngIf='isSessionUser && themeList.userManage'>
+                                            <div class="display-inline theme-container-title" style="width: 65%;">
+                                                <p class="display-inline">
+                                                    <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                </p>
+                                            </div>
+                                            <div class="display-inline" style="width: 10%;">
+                                                <p *ngIf='isSessionUser && themeList.userManage' style="margin-top: 16px; margin-bottom: 16px;" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150 text-right">
+                                                    <span class="trash-cap cursor-pointer display-inline">0</span>
+                                                    <span class="trash-body cursor-pointer display-inline">/</span>
+                                                </p>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf='!isSessionUser || !themeList.userManage'>
+                                            <div class="display-inline theme-container-title" style="width: 75%;">
+                                                <p class="display-inline">
+                                                    <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer">{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                </p>
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
                                 </div>
                             </ng-container>
@@ -145,8 +174,8 @@
                 </div>
             </div>
         </div>
-        <br>
-        <div>
+        <br><br>
+        <div style="display: inline-block; width: 90%;">
             <app-audio-bar (outputToparent)='themeObservable($event)'></app-audio-bar>
         </div>
     </div>

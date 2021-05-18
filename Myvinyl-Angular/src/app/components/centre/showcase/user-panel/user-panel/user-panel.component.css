@@ -2,3 +2,10 @@
     width: 100%;
     text-align: center;
 }
+.vinyl-xs{
+    transition: 0.5s ease;
+}
+.vinyl-xs.show{
+    transition: 1s ease;
+	transform: translate(15%) rotate(180deg);
+}

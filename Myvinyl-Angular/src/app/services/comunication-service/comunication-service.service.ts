@@ -47,4 +47,22 @@ export class ComunicationServiceService {
     this.sendListPositionSubject.next(listPosition);
   }
 
+  reproductorViewData: {type:string, value: any} | undefined;
+  private sendReproductorViewDataSubject = new Subject<{type:string, value: any}>();
+  sendReproductorViewDataObservable = this.sendReproductorViewDataSubject.asObservable();
+
+  sendReproductorViewData(reproductorViewData:{type:string, value: any}){
+    this.reproductorViewData = reproductorViewData
+    this.sendReproductorViewDataSubject.next(reproductorViewData);
+  }
+
+  reproductorData: {type:string, value: any} | undefined;
+  private sendReproductorDataSubject = new Subject<{type:string, value: any}>();
+  sendReproductorDataObservable = this.sendReproductorDataSubject.asObservable();
+
+  sendReproductorData(reproductorData:{type:string, value: any}){
+    this.reproductorData = reproductorData
+    this.sendReproductorDataSubject.next(reproductorData);
+  }
+
 }
