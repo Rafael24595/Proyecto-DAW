@@ -525,6 +525,13 @@ input{
 	cursor: pointer;
 }
 
+.position-guide{
+	position: relative;
+	height: 2px;
+	width: 1000px;
+	background-color: black;
+}
+
 .trash-cap{
 	position: absolute;
 	transition: 0.25s;

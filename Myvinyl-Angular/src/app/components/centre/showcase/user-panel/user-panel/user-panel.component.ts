@@ -145,14 +145,14 @@ export class UserPanelComponent implements OnInit {
   }
 
   getTopContainer(data:{element:HTMLElement, count?:number}): HTMLElement | null{
-    let elementParent = data.element.parentElement;
+    let element = data.element;
     let count = (data.count) ? data.count : 0;
     if(count < 5){
-      if(elementParent && elementParent.classList.contains('theme-container')){
-        return elementParent;
+      if(element && element.classList.contains('theme-container')){
+        return element;
       }
-      else if(elementParent){
-        return this.getTopContainer({element: elementParent, count: count + 1});
+      else if(element && element.parentElement){
+        return this.getTopContainer({element: element.parentElement, count: count + 1});
       }
       else{
         return null;
