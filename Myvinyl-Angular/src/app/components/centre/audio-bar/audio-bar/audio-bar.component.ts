@@ -35,56 +35,67 @@ export class AudioBarComponent implements OnInit {
       this.barAudioSize = 525;
     }
     this.comunicationService.sendReproductorDataObservable.subscribe((data:{type:string, value: any})=>{
+      
+      if(data && data.type){
 
-      let type = data.type;
-      let value  = data.value;
-
-      switch (type){
-
-        case 'themes':
-
-          let themes = value as {isThemeList:Boolean, themes:Themes[]};
-
-          if(typeof themes.isThemeList == 'boolean' && themes.themes){
-            this.isThemeList = themes.isThemeList;
-            this.themesList = themes.themes;
-            this.themesListActive = themes.themes;
-            this.prepareTheme(this.themesListActive[this.position]);
-
-            this.barAudioSizeProgress = 0;
-            this.pointAudioPosition = 0;
-          }
-
-        break;
-
-        case 'position':
-
-          if(typeof value == 'number' && value != -1){
-            this.calculeNextThemePosition(value, true);
-          }
-
-        break;
-
-        case 'play':
-
-          if (this.audio){
-            this.setPlayPause('play');
-          }
-
-        break;
-
-        case 'stop':
-
-          if (this.audio){
-            this.setPlayPause('stop');
-          }
-
-        break
-
+        let type = data.type;
+        let value  = data.value;
+  
+        switch (type){
+  
+          case 'themes':
+  
+            let themes = value as {isThemeList:Boolean, themes:Themes[]};
+  
+            if(typeof themes.isThemeList == 'boolean' && themes.themes){
+              this.isThemeList = themes.isThemeList;
+              this.themesList = themes.themes;
+              this.themesListActive = themes.themes;
+              this.prepareTheme(this.themesListActive[this.position]);
+  
+              this.barAudioSizeProgress = 0;
+              this.pointAudioPosition = 0;
+            }
+  
+          break;
+  
+          case 'position':
+  
+            if(typeof value == 'number' && value != -1){
+              this.calculeNextThemePosition(value, true);
+            }
+  
+          break;
+  
+          case 'play':
+  
+            if (this.audio){
+              this.setPlayPause('play');
+            }
+  
+          break;
+  
+          case 'stop':
+  
+            if (this.audio){
+              this.setPlayPause('stop');
+            }
+  
+          break
+  
+        }
       }
 
     });
     this.comunicationService.sendReproductorViewData({type:'ready', value:''});
+  }
+
+  ngOnDestroy() {
+    if(this.audio){
+      this.audio.pause();
+    }
+    this.comunicationService.sendReproductorDataUnsubscribe();
+    this.comunicationService.sendReproductorViewDataUnsubscribe();
   }
 
   /*/////////////
@@ -159,12 +170,12 @@ export class AudioBarComponent implements OnInit {
         this.isReverse =  false;
         this.reverseSrc = '';
         this.normalSrc = `${this.mediaPath}/audio/themes/${theme.id}.mp3`;
-        //this.outputToparent.emit(status:'finish', JSON.stringify(theme));
       }
       
       if(this.audio) {this.audio.pause();}
       this.audio = new Audio();
       this.audio.src = (this.isReverse) ? this.reverseSrc : this.normalSrc;
+      this.audio.classList.add('reproductor-audio');
       this.audio.load();
       this.audio.onloadedmetadata = ()=>{
         if(this.audio){
@@ -182,7 +193,7 @@ export class AudioBarComponent implements OnInit {
           }
         }
       }
-      this.audio.onerror = ()=>{this.audio = undefined;};
+      this.audio.onerror = (err)=>{this.audio = undefined;console.log(err)};
   }
 
   //////////////////////////
@@ -190,6 +201,9 @@ export class AudioBarComponent implements OnInit {
   //////////////////////////
 
   setPlayPause(mode?:string){
+    if(!this.audio && this.themesList){
+      this.prepareTheme(this.themesList[this.position])
+    }
     if(this.audio){
       if(this.audio.paused || mode == 'play'){
         this.audio.play();
@@ -329,9 +343,14 @@ export class AudioBarComponent implements OnInit {
       }
       if(this.loopList){
         action = (this.position + action < 0) ? this.themesListActive.length -1 : (this.position + action > this.themesList.length -1) ? 0 : this.position + action;
+        this.launchPaused = false;
       }
       else{
-        (this.position + action < 0) ? (action = 0, this.launchPaused = true) : (this.position + action > this.themesListActive.length -1) ? (action = this.themesListActive.length -1, this.launchPaused = true) : (action = this.position + action, this.launchPaused = false);
+        (this.position + action < 0) ? 
+          (action = 0, this.launchPaused = true) : 
+          (this.position + action > this.themesListActive.length -1) ? 
+            (action = this.themesListActive.length -1, this.launchPaused = true) : 
+            (action = this.position + action, this.launchPaused = false);
       }
     }
     if(isCalculed){

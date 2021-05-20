@@ -13,7 +13,6 @@ import { AuthorizationService } from 'src/app/services/autorization-service/auth
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { Variables } from 'src/utils/variables/variables';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-user-panel',
@@ -62,6 +61,7 @@ export class UserPanelComponent implements OnInit {
         this.isSessionUser = (profile.email) ? true :false;
         if(profile.email){
           this.setGlobalUser(profile);
+          this.setLastSessionList();
           this.modifyValuesData.modifyUserName.value = profile.name;
           this.modifyValuesData.modifyEmail.value = profile.email;
           this.modifyValuesData.modifyDescription.value = profile.description;
@@ -72,59 +72,67 @@ export class UserPanelComponent implements OnInit {
         this.setCandy();
       })
     });
-    this.comunicationService.sendReproductorViewDataObservable.subscribe((data:{type:string, value: any})=>{
+    this.comunicationService.sendReproductorViewDataObservable.subscribe(data =>{this.reproductorSubscribe(data)});
+  }
+
+  reproductorSubscribe(data:{type:string, value: any}){
+
+    if(data && data.type){
 
       let type = data.type;
-      let value  = data.value;console.log(data)
+      let value  = data.value;
 
       switch (type){
 
         case 'ready':
-
         this.setAudioBarThemeList();
-        
-
         break;
 
         case 'ended':
-
           this.addSelectedContainer(value as string);
-
+          let elementEnd = document.getElementById(`vinyl-${value}`);
+          this.hideAllVinyls(value);
+          if(elementEnd){
+            elementEnd.classList.add('show');
+          }
         break;
 
         case 'play':
-
           let elementPlay = document.getElementById(`vinyl-${value}`);
           this.hideAllVinyls(value);
           if(elementPlay){
             elementPlay.classList.add('show');
           }
-
         break;
 
         case 'stop':
-
           let elementStop = document.getElementById(`vinyl-${value}`);
           if(elementStop){
             elementStop.classList.remove('show');
           }
-
         break;
 
       }
-
-    });
+    }
 
   }
 
-  hideAllVinyls(exception?:string){console.log()
+  setLastSessionList(){
+    let lastList = localStorage.getItem('last-user-theme-list');
+    if(lastList && lastList != '' && this.ProfileData){
+      let listExist= this.ProfileData.themeLists.map(themeList=>{return themeList.name}).indexOf(lastList);
+      if(listExist != -1){
+        this.selectedThemeList = lastList;
+        this.changeList();
+      }
+    }
+  }
+
+  hideAllVinyls(exception?:string){
     let elements = document.getElementsByClassName('vinyl-xs');
     for (let index = 0; index < elements.length; index++) {
       if(elements[index].id != `vinyl-${exception}`){
         elements[index].classList.remove('show');
-      }
-      else{
-        console.log(elements[index])
       }
     }
   }
@@ -134,34 +142,10 @@ export class UserPanelComponent implements OnInit {
     this.comunicationService.sendReproductorData({type, value});
   }
 
-  themeObservable(message:{status:string, value:string | number}){
-    
-    let status = message.status;
-    let value = message.value;
-    
-    switch (status){
-
-      case 'ready':
-
-        this.setAudioBarThemeList();
-        
-
-      break;
-
-      case 'ended':
-
-        this.addSelectedContainer(value as string);
-
-      break;
-
-    }
-    
-  }
-
   addSelectedContainer(value:string){
 
-    let themeListName = this.selectedThemeList;console.log(`theme-container-${themeListName}-${value}`)
-    let element = document.getElementById(`theme-container-${themeListName}-${value}`);console.log(element)
+    let themeListName = this.selectedThemeList;
+    let element = document.getElementById(`theme-container-${themeListName}-${value}`);
 
     this.removeSelectedContainer();
 
@@ -206,6 +190,7 @@ export class UserPanelComponent implements OnInit {
       if(position != -1){console.log(position)
         this.sentToReproductor('position', position);
         this.hideAllVinyls();
+        this.sentToReproductor('play', '');
       }
     }
   }
@@ -539,6 +524,7 @@ export class UserPanelComponent implements OnInit {
             let count = 0;
             this.themeList = this.ProfileData?.themeLists.find(themeList=>{
               if(themeList.name == this.selectedThemeList){
+                localStorage.setItem('last-user-theme-list', this.selectedThemeList);
                 sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
                 return true;
               }
@@ -548,7 +534,6 @@ export class UserPanelComponent implements OnInit {
             if(this.themeList){
               this.themeList.list = sucess.list as any;
               this.privateValue = this.themeList.privateState;
-              console.log(this.themeList)
             }
             this.modifyValuesData.themeListName.value = this.themeList?.name as string;
             this.formTask = '';

@@ -56,9 +56,7 @@ export class ThemeInformationComponent implements OnInit {
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(themeData =>{
-        console.log(themeData)
         this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
-        console.log(this.theme)
         this.lyrics = this.theme.lyrics.native;
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
@@ -75,40 +73,42 @@ export class ThemeInformationComponent implements OnInit {
     });
     this.comunicationService.sendReproductorViewDataObservable.subscribe((data:{type:string, value: any})=>{
 
-      let type = data.type;
-      let value  = data.value;
+      if(data && data.type){
+        let type = data.type;
+        let value  = data.value;
 
-      switch (type){
+        switch (type){
 
-        case 'ready':
+          case 'ready':
 
-          if(this.theme){
+            if(this.theme){
 
-            this.sentToReproductor('themes', {isThemeList:false, themes:[this.theme]});
-  
-          }
-        
+              this.sentToReproductor('themes', {isThemeList:false, themes:[this.theme]});
+    
+            }
+          
 
-        break;
+          break;
 
-        case 'ended':
+          case 'ended':
 
-          this.vinylState = '';
+            this.vinylState = '';
 
-        break;
+          break;
 
-        case 'play':
+          case 'play':
 
-          this.vinylState = 'show';
+            this.vinylState = 'show';
 
-        break;
+          break;
 
-        case 'stop':
+          case 'stop':
 
-          this.vinylState = '';
+            this.vinylState = '';
 
-        break;
+          break;
 
+        }
       }
 
     });
@@ -122,7 +122,7 @@ export class ThemeInformationComponent implements OnInit {
   calculateLikesPercentage(){
     if(this.theme){
       let total = this.theme.likes + this.theme.dislikes;
-      let likesPercentage = this.theme.likes / total * 100;console.log(this.theme.likes , 100 , total);console.log(likesPercentage);
+      let likesPercentage = this.theme.likes / total * 100;
       this.likesBarPercent = likesPercentage;
       if(total == 0){
         this.dislikesBarColor = 'gray';

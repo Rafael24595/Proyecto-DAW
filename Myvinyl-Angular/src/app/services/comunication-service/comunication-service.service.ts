@@ -27,26 +27,6 @@ export class ComunicationServiceService {
     this.sendCandiesSubject.next(candies);
   }
 
-  isThemeList: boolean | undefined;
-  themesArray: Themes[] | undefined;
-  private sendThemesSubject = new Subject<{isThemeList:Boolean, themes:Themes[]}>();
-  sendThemesObservable = this.sendThemesSubject.asObservable();
-
-  sendThemes(isThemeList:boolean, themes:Themes[]){
-    this.isThemeList = isThemeList;
-    this.themesArray = themes;
-    this.sendThemesSubject.next({isThemeList, themes});
-  }
-
-  listPosition: number | undefined;
-  private sendListPositionSubject = new Subject<number>();
-  sendListPositionObservable = this.sendListPositionSubject.asObservable();
-
-  sendListPosition(listPosition:number){
-    this.listPosition = listPosition
-    this.sendListPositionSubject.next(listPosition);
-  }
-
   reproductorViewData: {type:string, value: any} | undefined;
   private sendReproductorViewDataSubject = new Subject<{type:string, value: any}>();
   sendReproductorViewDataObservable = this.sendReproductorViewDataSubject.asObservable();
@@ -56,9 +36,23 @@ export class ComunicationServiceService {
     this.sendReproductorViewDataSubject.next(reproductorViewData);
   }
 
+  sendReproductorViewDataUnsubscribe(){
+    this.sendReproductorViewDataSubject.next();
+    this.sendReproductorViewDataSubject = new Subject<{type:string, value: any}>();
+    this.sendReproductorViewDataObservable = this.sendReproductorViewDataSubject.asObservable();
+  }
+
+
+
   reproductorData: {type:string, value: any} | undefined;
   private sendReproductorDataSubject = new Subject<{type:string, value: any}>();
   sendReproductorDataObservable = this.sendReproductorDataSubject.asObservable();
+
+  sendReproductorDataUnsubscribe(){
+    this.sendReproductorDataSubject.next();
+    this.sendReproductorDataSubject = new Subject<{type:string, value: any}>();
+    this.sendReproductorDataObservable = this.sendReproductorDataSubject.asObservable();
+  }
 
   sendReproductorData(reproductorData:{type:string, value: any}){
     this.reproductorData = reproductorData
