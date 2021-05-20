@@ -29,6 +29,7 @@ export class ThemeInformationComponent implements OnInit {
   selectedThemeList: string = '';
   userThemeLists:ThemeList[] = [];
   user = sesionValues.activeUser.name;
+  coverCursorState = 'cursor-pointer';
   likesBarPercent:number = 0;
   dislikesBarColor:string = 'orange'; 
   isLike = 0;
@@ -56,7 +57,47 @@ export class ThemeInformationComponent implements OnInit {
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
       this.DatabaseConexService.getThemeData(params['id']).subscribe(themeData =>{
-        this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
+        this.setDefaultValues(themeData);
+      });
+    });
+    this.comunicationService.sendReproductorViewDataObservable.subscribe(data=>{this.reproductorSubscribe(data)});
+  }
+
+  reproductorSubscribe(data:{type:string, value: any}){
+
+    if(data && data.type){
+      let type = data.type;
+      let value  = data.value;
+
+      switch (type){
+
+        case 'ready':
+          if(this.theme){
+            this.sentToReproductor('themes', {isThemeList:false, themes:[this.theme]});
+          }
+        break;
+
+        case 'ended':
+          this.vinylState = '';
+          this.coverCursorState = 'cursor-pointer';
+        break;
+
+        case 'play':
+          this.vinylState = 'show';
+          this.coverCursorState = '';
+        break;
+
+        case 'stop':
+          this.vinylState = 'cursor-pointer';
+        break;
+
+      }
+    }
+
+  }
+
+  setDefaultValues(themeData){
+    this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
         this.lyrics = this.theme.lyrics.native;
         this.checkForLastComment();
         this.user = sesionValues.activeUser.name;
@@ -69,49 +110,6 @@ export class ThemeInformationComponent implements OnInit {
           //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
         }
         this.calculateLikesPercentage();
-      });
-    });
-    this.comunicationService.sendReproductorViewDataObservable.subscribe((data:{type:string, value: any})=>{
-
-      if(data && data.type){
-        let type = data.type;
-        let value  = data.value;
-
-        switch (type){
-
-          case 'ready':
-
-            if(this.theme){
-
-              this.sentToReproductor('themes', {isThemeList:false, themes:[this.theme]});
-    
-            }
-          
-
-          break;
-
-          case 'ended':
-
-            this.vinylState = '';
-
-          break;
-
-          case 'play':
-
-            this.vinylState = 'show';
-
-          break;
-
-          case 'stop':
-
-            this.vinylState = '';
-
-          break;
-
-        }
-      }
-
-    });
   }
 
   sentToReproductor(type:string, value?:any){

@@ -13,6 +13,7 @@ import { AuthorizationService } from 'src/app/services/autorization-service/auth
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { Variables } from 'src/utils/variables/variables';
+import { DragEvent } from 'src/app/classes/DragEvent';
 
 @Component({
   selector: 'app-user-panel',
@@ -116,6 +117,51 @@ export class UserPanelComponent implements OnInit {
     }
 
   }
+  
+  eventDrag(event: Event){
+    event.preventDefault()
+    let clickElement = event.target as HTMLElement;
+    let container = this.getTopContainer({element: clickElement});
+
+    if(container != null && container.parentElement){
+      let list = container.parentElement.childNodes;
+      let cleanList = this.containerListFilter(list)
+      console.log(cleanList)
+      console.log(container)
+      DragEvent.dragEventListener(container, cleanList);
+    }
+
+  }
+
+  containerListFilter(list:NodeListOf<ChildNode>){
+    let cleanList:HTMLElement[] = [];
+    for (let index = 0; index < list.length; index++) {
+      let element = list[index] as HTMLElement;
+      if(element.classList && element.classList.contains('theme-container')){
+        cleanList.push(element);
+      }
+    }
+    return cleanList;
+  }
+
+  getTopContainer(data:{element:HTMLElement, count?:number}): HTMLElement | null{
+    let elementParent = data.element.parentElement;
+    let count = (data.count) ? data.count : 0;
+    if(count < 5){
+      if(elementParent && elementParent.classList.contains('theme-container')){
+        return elementParent;
+      }
+      else if(elementParent){
+        return this.getTopContainer({element: elementParent, count: count + 1});
+      }
+      else{
+        return null;
+      }
+    }
+    else{
+      return null;
+    }
+  }
 
   setLastSessionList(){
     let lastList = localStorage.getItem('last-user-theme-list');
@@ -170,16 +216,6 @@ export class UserPanelComponent implements OnInit {
     if(themeList){
       this.sentToReproductor('themes', {isThemeList:true, themes:themeList.list});
       setTimeout(()=>{this.addSelectedContainer(themeId);},100);
-      /*let correct = false;
-      setTimeout(()=>{correct = this.addSelectedContainer(themeId);},100);
-      let ready = setInterval(()=>{
-        if(correct){
-          clearInterval(ready);
-        }
-        else{
-          correct = this.addSelectedContainer(themeId);
-        }
-      }, 100);*/
     }
   }
 

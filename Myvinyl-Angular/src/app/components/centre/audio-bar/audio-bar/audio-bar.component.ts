@@ -34,6 +34,7 @@ export class AudioBarComponent implements OnInit {
     else{
       this.barAudioSize = 525;
     }
+
     this.comunicationService.sendReproductorDataObservable.subscribe((data:{type:string, value: any})=>{
       
       if(data && data.type){
@@ -110,6 +111,7 @@ export class AudioBarComponent implements OnInit {
   themesList:BarThemesListInterface[] = [];
   themesListRandom:BarThemesListInterface[] = [];
   themesListActive:BarThemesListInterface[] = this.themesList;
+  secodsPlayed:number = 0;
   position = 0;
   randomList = false;
   loopList = false;
@@ -569,6 +571,11 @@ export class AudioBarComponent implements OnInit {
       this.pointAudioPosition = movement;
       this.barAudioSizeProgress = movement;
       this.time = BarUtils.getSeconds((!this.isReverse) ? Math.trunc(this.audio.currentTime) : Math.trunc(this.audio.duration - this.audio.currentTime));
+      this.secodsPlayed = this.secodsPlayed + 1
+      console.log(this.secodsPlayed)
+      if(this.secodsPlayed >= this.audio.duration / 2){
+        console.log('middle')
+      }
     }
   }
 

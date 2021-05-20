@@ -8,7 +8,7 @@
                             <div>
                                 <div class="display-inline" style="position: relative; width: 90%;">
                                     <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png">
-                                    <img style="position: relative; width: 100%; z-index: 2;" class="cursor-pointer" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                                    <img style="position: relative; width: 100%; z-index: 2;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
                                 </div>
                                 <div *ngIf='isAdmin' class="display-inline" style="text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
                                     <span id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
