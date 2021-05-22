@@ -14,6 +14,7 @@ export class Themes{
     artist:{id:string, name:string, surname:string};
     themeId?:string;
     listId?:string;
+    position?:number;
 
     constructor(id: string, name: string, flag: string, tags: string[], lyrics:Lyrics, artist:{id:string, name:string, surname:string}, comments?: ThemeComment[], likes?: number, dislikes?: number, views?: number){
 

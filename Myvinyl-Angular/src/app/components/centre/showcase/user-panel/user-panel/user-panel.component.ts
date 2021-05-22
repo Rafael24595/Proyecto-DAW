@@ -28,6 +28,7 @@ export class UserPanelComponent implements OnInit {
   userName:string = (sesionValues.activeUser) ? sesionValues.activeUser.name : '';
   selectedThemeList:string = '';
   themeList:ThemeList | undefined;
+  themePlaying: string = '';
   cursorTheme: string = 'grab';
   isSessionUser:boolean = false;
   privateValue = false;
@@ -95,6 +96,7 @@ export class UserPanelComponent implements OnInit {
           let elementEnd = document.getElementById(`vinyl-${value}`);
           this.hideAllVinyls(value);
           this.cursorTheme = (this.themeList && this.themeList.userManage) ? 'grab' : 'pointer';
+          this.themePlaying = '';
           if(elementEnd){
             elementEnd.classList.add('show');
           }
@@ -104,6 +106,7 @@ export class UserPanelComponent implements OnInit {
           let elementPlay = document.getElementById(`vinyl-${value}`);
           this.hideAllVinyls(value);
           this.cursorTheme = 'pointer';
+          this.themePlaying = value;
           if(elementPlay){
             elementPlay.classList.add('show');
           }
@@ -132,9 +135,31 @@ export class UserPanelComponent implements OnInit {
       let cleanList = this.containerListFilter(list)
       console.log(cleanList)
       console.log(container)
-      DragEvent.dragEventListener(container, cleanList);
+      DragEvent.dragEventListener(container, cleanList, (newList:{listId: string, themeId: string, position: number}[])=>{this.changeListOrder(newList)});
     }
 
+  }
+
+  changeListOrder(newList:{listId: string, themeId: string, position: number}[]){
+    console.log(newList);
+    console.log(this.themeList);
+    if(this.themeList){
+      let newThemeList = DataManage.copyObject(this.themeList);
+      newThemeList.privateState = `${newThemeList.privateState}`;
+      newThemeList.userView = `${newThemeList.userView}`;
+      newThemeList.userManage = `${newThemeList.userManage}`;
+      newThemeList.userView = `${newThemeList.userView}`;
+      newThemeList.list = newList;
+      console.log(newThemeList);
+      this.DatabaseConexService.modifyThemeList(newThemeList, this.themeList.name, sesionValues.activeUser.name).subscribe(
+        sucess=>{
+          this.changeList();
+        },
+        err=>{
+          console.log(err)
+        }
+      );
+    }
   }
 
   containerListFilter(list:NodeListOf<ChildNode>){
@@ -195,14 +220,20 @@ export class UserPanelComponent implements OnInit {
   addSelectedContainer(value:string){
 
     let themeListName = this.selectedThemeList;
-    let element = document.getElementById(`theme-container-${themeListName}-${value}`);
+    let theme = this.themeList?.list.find(theme=>{return (theme.id == value)});
+    if(theme){
+      let artistId= theme.artist.id;
+      let element = document.getElementById(`theme-container-${themeListName}-${artistId}-${value}`);
+      console.log(`theme-container-${themeListName}-${artistId}-${value}`)
+      console.log(element)
 
-    this.removeSelectedContainer();
+      this.removeSelectedContainer();
 
-    if(element){
-      element.classList.add('selected');
-      return true
-    }
+      if(element){
+        element.classList.add('selected');
+        return true
+      }
+    } 
     return false;
   }
 
@@ -223,9 +254,10 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
-  setAudioBarListPosition(themeId:string){
+  setAudioBarListPosition(event:Event, themeId:string){
     let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
-    if(list){
+    let element = event.target as HTMLElement;
+    if(list && this.themePlaying != themeId && element && !element.classList.contains('trash-can')){
       let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
       if(position != -1){console.log(position)
         this.sentToReproductor('position', position);
@@ -529,9 +561,10 @@ export class UserPanelComponent implements OnInit {
   removeThemeFromList(id:string){
     this.DatabaseConexService.removeFromThemeList(id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
       sucess=>{
-        if(sucess.status){
-          sesionValues.activeUser.removeFromThemeList(this.selectedThemeList, id);
-          this.ProfileData = sesionValues.activeUser;
+        if(this.themeList){
+          //this.themeList.list = sucess.message;
+          //console.log(this.themeList)
+          this.changeList();
         }
       },
       err=>{console.log(err)

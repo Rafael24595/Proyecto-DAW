@@ -97,7 +97,8 @@ async function getThemesFromList(req, res){
     let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);});
     let themeList = profileData.themeLists.find(list=>{return(list.name == themeListName)});
     if(JSON.parse(themeList && (req.userToken == true && JSON.parse(themeList.userView) || req.userToken != true && JSON.parse(themeList.userView) && !JSON.parse(themeList.privateState)))){
-      themeList = (themeList.list.length > 0) ? await fillThemeList(themeList.list) : [];
+      themeList = (themeList.list.length > 0) ? await Tools.fillThemeList(themeList.list) : [];
+      themeList = await Tools.orderThemeListThemes(themeList);
       res.status(200).json({status:true, list:themeList});
     }
     else{
@@ -107,39 +108,6 @@ async function getThemesFromList(req, res){
   else{
     res.status(404).json({status:false,list:'not-found'});
   }
-}
-
-async function fillThemeList(themeList){
-  return new Promise(resolve=>{
-    var count = 0;
-    var list = [];
-    themeList.forEach(async theme => {
-      console.log(theme)
-      await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
-        console.log('inx')
-        if(artist && artist.themeList && artist.themeList.length > 0){
-          await artist.themeList.find(themeListData=>{
-            if(themeListData.id == theme.themeId){
-              themeListData.artist = {};
-              themeListData.artist.id = artist.id_artist;
-              themeListData.artist.name = artist.name;
-              themeListData.artist.surname = artist.surname;
-              console.log(themeListData)
-              list.push(themeListData);
-              
-              return true;
-            }
-            return false;
-          });
-        }
-      });
-      count++;
-      if(count == themeList.length){
-        resolve(list);
-      }
-    });
-  });
-  
 }
 
 async function updateUserData(req, res){

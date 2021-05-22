@@ -39,17 +39,10 @@ export class User{
     }
 
     setThemeListList(themeListName:string, newThemeList:Themes[]){
-
-        console.log(newThemeList)
-
         let posicion = this.themeLists.map(theme=>{return theme.name}).indexOf(themeListName);
-        console.log(this.themeLists)
         if(posicion != -1){
-
             this.themeLists[posicion].list = newThemeList;
-
         }
-        console.log(this.themeLists)
     }
 
     setBasicThemeLists(){
@@ -122,15 +115,10 @@ export class User{
     }
 
     replaceThemeList(themeListName:string, newList){
-        let count = 0;
-        this.themeLists.find(themeList=>{
-            if(themeList.name == themeListName){
-                this.themeLists[count].list = newList;
-                return true;
-            } 
-            count++;
-            return false
-        });
+        let position = this.themeLists.map(themeList=>{return themeList.name}).indexOf(themeListName);
+        if(position != -1){
+            this.themeLists[position].list = newList;
+        }
     }
 
     isThemeLike(themeId:string){

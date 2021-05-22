@@ -57,4 +57,63 @@ async function getArtistById(artistId){
   }
 }
 
-module.exports = { usersExist, setUserAttribute, getArtistById }
+async function orderThemeListThemes(themeList){
+  return new Promise(resolve=>{
+    let index = 0;
+    themeList.sort((themeI, themeII)=>{
+      return themeI.position - themeII.position;
+    });
+    themeList.forEach(theme=>{
+      if(theme.position != index){
+        themeList[index].position = index;
+      }
+      index++;
+    });
+    resolve(themeList)
+  });
+}
+
+async function fillThemeList(themeList){
+  return new Promise(resolve=>{
+    var count = 0;
+    var list = [];
+    themeList.forEach(async theme => {
+      await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
+        if(artist && artist.themeList && artist.themeList.length > 0){
+          await artist.themeList.find(themeListData=>{
+            if(themeListData.id == theme.themeId){
+              themeListData.artist = {};
+              themeListData.artist.id = artist.id_artist;
+              themeListData.artist.name = artist.name;
+              themeListData.artist.surname = artist.surname;
+              themeListData.position = theme.position;
+              list.push(themeListData);
+              return true;
+            }
+            return false;
+          });
+        }
+      });
+      count++;
+      if(count == themeList.length){
+        resolve(list);
+      }
+    });
+  });
+  
+}
+
+async function simplifyThemeList(themeList){
+  let list = [];
+  themeList.forEach(themeData => {
+    let listId = (themeData.artist && themeData.artist.id) ? themeData.artist.id :themeData.listId;
+    let themeId = (themeData.id) ? themeData.id : themeData.themeId;
+    let position = (themeData.position) ? themeData.position : 0;
+    if(listId && listId){
+      list.push({listId, themeId, position});
+    }
+  });
+  return list;
+}
+
+module.exports = { usersExist, setUserAttribute, getArtistById, orderThemeListThemes, fillThemeList, simplifyThemeList }

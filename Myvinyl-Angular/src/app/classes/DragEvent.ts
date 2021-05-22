@@ -9,24 +9,27 @@ export class DragEvent{
     static mouseMoveEvent: boolean = false;
     static elementToDrag: HTMLElement;
     static elementsList: HTMLElement[];
+    static sendFunction: Function;
     static scrollTimeOut: any;
     static elementWidth: number = 100;
     static elementHeight: number = 50;
     static positionGuide: HTMLElement | undefined;
 
-    constructor(elementToDrag:HTMLElement, elementsList:HTMLElement[]){
+    constructor(elementToDrag:HTMLElement, elementsList:HTMLElement[], sendFunction:Function){
         DragEvent.elementToDrag = elementToDrag;
         DragEvent.elementsList = elementsList;
+        DragEvent.sendFunction = sendFunction;
     }
 
-    static dragEventListener(elementToDrag?:HTMLElement, elementsList?:HTMLElement[]){
-        if(elementToDrag && elementsList){
+    static dragEventListener(elementToDrag?:HTMLElement, elementsList?:HTMLElement[], sendFunction?:Function){
+        if(elementToDrag && elementsList && sendFunction){
             if(!this.instance){
-                this.instance = new DragEvent(elementToDrag, elementsList);
+                this.instance = new DragEvent(elementToDrag, elementsList, sendFunction);
             }
             else{
                 this.elementToDrag = elementToDrag;
                 this.elementsList = elementsList;
+                this.sendFunction = sendFunction;
             }
             DragEvent.createMouseMoveEventListener();
         }
@@ -44,12 +47,35 @@ export class DragEvent{
             DragEvent.removePositionGuide();
 
             DragEvent.dropAnimation();
+            DragEvent.reorderList();
         }
         DragEvent.mouseUp = true;
         DragEvent.mouseDown = false;
         DragEvent.positionGuide = undefined;
         window.removeEventListener('mousemove', this.elementDrag);
         window.removeEventListener('mouseup', this.mouseUpCancelDrag);
+    }
+
+    static reorderList(){
+        let parent = DragEvent.elementToDrag.parentElement;
+        let newList:{listId: string, themeId: string, position: number}[] | undefined = [];
+        if(parent){
+            let elements = parent.childNodes;
+            let cont = 0;
+            for (let index = 0; index < elements.length; index++) {
+                let element = elements[index] as HTMLElement;
+                if(element.id){
+                    let idSplitted = element.id.split('-');
+                    if(idSplitted[3] && idSplitted[4] && idSplitted[5]){
+                        let listId = idSplitted[3];
+                        let themeId = `${idSplitted[4]}-${idSplitted[5]}`;
+                        newList.push({listId, themeId, position: cont});
+                        cont ++;
+                    }
+                }
+            }
+            DragEvent.sendFunction(newList);
+        }
     }
 
     static dropAnimation(){
@@ -136,7 +162,7 @@ export class DragEvent{
                     
 
                 }
-                else if (previousElementPosition.offsetTop != actualElementPosition.offsetTop && actualValue >= previousElementPosition.offsetTop && position - DragEvent.elementHeight * 2 < actualElementPosition.offsetTop) {
+                else if (previousElementPosition.offsetTop != actualElementPosition.offsetTop && actualValue >= previousElementPosition.offsetTop && position - DragEvent.elementHeight * 1 < actualElementPosition.offsetTop) {
                    if( DragEvent.elementToDrag.parentElement)
                     DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, actualElementPosition.nextElementSibling)
 
