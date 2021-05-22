@@ -28,6 +28,7 @@ export class UserPanelComponent implements OnInit {
   userName:string = (sesionValues.activeUser) ? sesionValues.activeUser.name : '';
   selectedThemeList:string = '';
   themeList:ThemeList | undefined;
+  cursorTheme: string = 'grab';
   isSessionUser:boolean = false;
   privateValue = false;
   range = Variables.range;
@@ -93,6 +94,7 @@ export class UserPanelComponent implements OnInit {
           this.addSelectedContainer(value as string);
           let elementEnd = document.getElementById(`vinyl-${value}`);
           this.hideAllVinyls(value);
+          this.cursorTheme = (this.themeList && this.themeList.userManage) ? 'grab' : 'pointer';
           if(elementEnd){
             elementEnd.classList.add('show');
           }
@@ -101,6 +103,7 @@ export class UserPanelComponent implements OnInit {
         case 'play':
           let elementPlay = document.getElementById(`vinyl-${value}`);
           this.hideAllVinyls(value);
+          this.cursorTheme = 'pointer';
           if(elementPlay){
             elementPlay.classList.add('show');
           }
@@ -108,6 +111,7 @@ export class UserPanelComponent implements OnInit {
 
         case 'stop':
           let elementStop = document.getElementById(`vinyl-${value}`);
+          this.cursorTheme = (this.themeList && this.themeList.userManage) ? 'grab' : 'pointer';
           if(elementStop){
             elementStop.classList.remove('show');
           }
@@ -123,7 +127,7 @@ export class UserPanelComponent implements OnInit {
     let clickElement = event.target as HTMLElement;
     let container = this.getTopContainer({element: clickElement});
 
-    if(container != null && container.parentElement){
+    if(this.themeList && this.themeList.userManage && container != null && container.parentElement){
       let list = container.parentElement.childNodes;
       let cleanList = this.containerListFilter(list)
       console.log(cleanList)
@@ -557,19 +561,18 @@ export class UserPanelComponent implements OnInit {
         this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
           sucess=>{
             console.log(sucess)
-            let count = 0;
             this.themeList = this.ProfileData?.themeLists.find(themeList=>{
               if(themeList.name == this.selectedThemeList){
                 localStorage.setItem('last-user-theme-list', this.selectedThemeList);
                 sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
                 return true;
               }
-              count++;
               return false;
             });
             if(this.themeList){
               this.themeList.list = sucess.list as any;
               this.privateValue = this.themeList.privateState;
+              this.cursorTheme = (this.themeList.userManage) ? 'grab' : 'pointer';
             }
             this.modifyValuesData.themeListName.value = this.themeList?.name as string;
             this.formTask = '';

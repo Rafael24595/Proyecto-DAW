@@ -525,6 +525,17 @@ input{
 	cursor: pointer;
 }
 
+.in-drag{
+	border: 2px solid white !important;
+	opacity: 0.85;
+	cursor: grabbing !important;
+}
+
+.drop-fall{
+	transition: 0.5s;
+	filter: brightness(1.5);
+}
+
 .position-guide{
 	position: relative;
 	height: 2px;

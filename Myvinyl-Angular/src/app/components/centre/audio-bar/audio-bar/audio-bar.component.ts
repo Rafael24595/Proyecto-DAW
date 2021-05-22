@@ -5,6 +5,7 @@ import { BarUtils } from '../../../../../utils/audio-bar/Bar-Utils';
 import { Color_Vars } from '../../../../../utils/audio-bar/variables/Bar-Variables';
 import { Themes } from 'src/app/classes/Themes';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
+import { sesionValues } from 'src/utils/variables/sessionVariables';
 
 @Component({
   selector: 'app-audio-bar',
@@ -263,10 +264,12 @@ export class AudioBarComponent implements OnInit {
       if(this.audio.paused){
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
         this.playButtonColor = Color_Vars.button_play_color.pause;
+        sesionValues.reproductionState = false;
       }
       else{
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
         this.playButtonColor = Color_Vars.button_play_color.play;
+        sesionValues.reproductionState = true;
       }
     }
   }
