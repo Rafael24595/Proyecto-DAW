@@ -3,7 +3,6 @@ import { DatabaseConexService } from '../../app/services/database-conex-service/
 import { sesionValues } from '../variables/sessionVariables';
 
 import { Injectable } from '@angular/core';
-import { Themes } from 'src/app/classes/Themes';
 
 @Injectable({
   providedIn: 'root'

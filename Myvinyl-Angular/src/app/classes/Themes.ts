@@ -31,8 +31,8 @@ export class Themes{
 
     }
 
-    setNewComment(commentId:string,userName:string, activeUser:boolean,comment:string,){
-        this.comments.push({commentId,userName:userName,activeUser:activeUser,comment:comment});
+    setNewComment(commentId:string,userName:string, activeUser:boolean,comment:string,date:string){
+        this.comments.push({commentId,userName:userName,activeUser:activeUser,comment:comment,date:date});
     }
 
     removeComment(commentId:string){

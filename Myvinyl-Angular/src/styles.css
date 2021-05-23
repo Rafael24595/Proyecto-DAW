@@ -426,6 +426,10 @@ input{
 	border: 2px solid black;
 }
 
+.admin-color{
+	color: #D99F0D;
+}
+
 .my-vinyl-icons-font{
 	font-family: my-vinyl-icons;
 }

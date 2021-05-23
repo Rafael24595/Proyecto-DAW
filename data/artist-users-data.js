@@ -77,7 +77,8 @@ const artistData = [
                 "comments": [
                     {"commentId": "aa623e6d2f065dd20966c46b3ab59da872914f77d6d1be18e21fcdc055803beb",
                      "userName":"admin",
-                     "comment":"Comentario primero en tema Al Bowly"},
+                     "comment":"Comentario primero en tema Al Bowly",
+                     "date":"01/01/2001"},
                      {"commentId": "ba333b6d2f0653320966c46e3ab59da872914f77d6d1be18e21fcdc055803beb",
                      "userName":"UnknownUser",
                      "comment":"Comentario Segundo en tema Al Bowly"},

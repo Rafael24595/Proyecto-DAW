@@ -93,8 +93,8 @@
                 <br>
                 <div>
                     <div *ngFor='let comment of theme.comments'>
-                        <p *ngIf='comment.activeUser' class="display-inline cursor-pointer" style="width: 90%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b>:</p>
-                        <p *ngIf='!comment.activeUser' class="display-inline" style="width: 90%;" ><b><s>{{comment.userName}}</s></b>:</p>
+                        <p *ngIf='comment.activeUser' class="display-inline cursor-pointer" style="width: 90%;" routerLink='/Profile/{{comment.userName}}'><b>{{comment.userName}}</b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:</p>
+                        <p *ngIf='!comment.activeUser' class="display-inline" style="width: 90%;"><b><s>{{comment.userName}}</s></b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:</p>
                         <span *ngIf='isAdmin' style="width: 10%;" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                             <span class="trash-cap cursor-pointer display-inline">0</span>
                             <span class="trash-body cursor-pointer display-inline">/</span>
@@ -125,6 +125,19 @@
             <br>
             <div>
                 <h3 class="display-inline">Relacionados: </h3>
+                <div style="max-height: 500px;">
+                    <div *ngFor='let theme of suggestThemes' style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                        <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                            <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                        </div>
+                        <div style="text-align: left; width: 70%; vertical-align: middle;" class="display-inline">
+                            <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                                <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
+                                <span> - </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>
+                            </p> 
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div *ngIf='showThemeListForm'>

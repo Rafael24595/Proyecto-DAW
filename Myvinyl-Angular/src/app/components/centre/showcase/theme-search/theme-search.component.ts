@@ -5,7 +5,7 @@ import { ComunicationServiceService } from 'src/app/services/comunication-servic
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
-import { CandyBomb, SearchQuery } from 'src/utils/variables/variables';
+import { CandyBomb, SearchQuery, Variables } from 'src/utils/variables/variables';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
@@ -21,6 +21,7 @@ export class ThemeSearchComponent implements OnInit {
   candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}, routeQuery:''};
   query:string[] = [];
   queryResult = SearchQuery;
+  range = Variables.range;
 
   constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
@@ -45,10 +46,10 @@ export class ThemeSearchComponent implements OnInit {
 
   searchResut(){
 
+    this.queryResult.users = [];
     this.queryResult.artists = [];
     this.queryResult.themes = [];
-    console.log('inx')
-console.log(this.query)
+
     this.query.forEach(single=>{
 
       this.DatabaseConexService.getArtistDataByQuery(this.query).subscribe(
@@ -62,23 +63,10 @@ console.log(this.query)
               sesionValues.artistList.setArtist(artistData);
             });
 
-            sesionValues.artistList.list.forEach(artist=>{
+            let cleanData = await DataManage.clearRepeatData(sesionValues.artistList.list, single);
 
-              if (artist.name.toLowerCase().includes(single) || artist.surname.toLowerCase().includes(single) || artist.tags.lastIndexOf(single.toUpperCase()) != -1){
-                let alredyIn = this.queryResult.artists.find(artistIn=>{return (artistIn.id_artist == artist.id_artist)});
-                if (!alredyIn) this.queryResult.artists.push(artist);
-              }
-        
-              artist.themeList.forEach(theme => {
-                
-                if (theme.name.toLowerCase().includes(single) || (theme.tags.lastIndexOf(single.toUpperCase()) != -1 || theme.tags.lastIndexOf(single.toLowerCase()) != -1)){
-                  let alredyIn = this.queryResult.themes.find(themeIn=>{return (themeIn.id == theme.id)});
-                  if (!alredyIn) this.queryResult.themes.push(theme);
-                }
-        
-              });
-        
-            });
+            this.queryResult.artists = cleanData.artistList;
+            this.queryResult.themes = cleanData.themesList;
 
           }
         },
@@ -88,6 +76,16 @@ console.log(this.query)
       );
 
     });
+
+    this.DatabaseConexService.getUsersData(this.query, 3).subscribe(
+      sucess=>{
+        console.log(sucess)
+        this.queryResult.users = sucess.message;
+      },
+      err=>{
+        console.log(`Error: ${err}`);
+      }
+    );
 
   }
 

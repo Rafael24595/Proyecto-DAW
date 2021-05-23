@@ -116,4 +116,24 @@ async function simplifyThemeList(themeList){
   return list;
 }
 
-module.exports = { usersExist, setUserAttribute, getArtistById, orderThemeListThemes, fillThemeList, simplifyThemeList }
+async function simplifyUsers(users){
+  let list = [];
+  users.forEach(user=>{
+    let name = user.name;
+    let admin = user. admin;
+    let description = user.description;
+    list.push({name, admin, description});
+  });
+  return list;
+}
+
+async function getActualDate(){
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+
+  return mm + '/' + dd + '/' + yyyy;
+}
+
+module.exports = { usersExist, setUserAttribute, getArtistById, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate }

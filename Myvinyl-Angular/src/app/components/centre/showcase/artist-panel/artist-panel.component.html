@@ -44,7 +44,7 @@
                     <h3 style="margin-top: 0px; margin-bottom: 10px;" class="txt-horizontal-left">Etiquetas:</h3>
                     <p *ngFor='let artistTag of artist.tags; let i = index' class="display-inline">
                         <span>{{artistTag}} - </span>
-                        <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                        <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})' id="trash-can-animation" class="my-vinyl-icons-font display-inline font-size-150">
                             <span class="trash-cap cursor-pointer display-inline">0</span>
                             <span class="trash-body cursor-pointer display-inline">/</span>
                         </span>

@@ -18,4 +18,5 @@ export interface ThemeComment{
     userName:string,
     activeUser:boolean,
     comment:string,
+    date:string,
 }

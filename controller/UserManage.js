@@ -20,7 +20,6 @@ async function singUp(req, res){
   }
   
   async function setBasicThemeLists(user){
-    console.log(user)
     user.themeLists.push({
       "name":'@likes-list',
       "userView":"true",
@@ -60,7 +59,7 @@ async function singUp(req, res){
 async function searchUserDataByName(name){
     let userData = await User.findOne({name:name}).lean().catch(err=>{console.log(err);})
     return userData 
-  }
+}
   
 async function searchUserDataById(userId){
     let userData = await User.findOne({_id:userId}).catch(err=>{console.log(err);})
@@ -70,8 +69,33 @@ async function searchUserDataById(userId){
 async function getUserData(req, res){
     let userData = await searchUserDataById(req.userId);
     res.status(200).send(userData);
+}
+
+async function searchUsersDataByName(req, res){
+  let nameQuery = req.body.nameQuery;
+  let limitQuery = req.body.limitQuery;
+  if(Array.isArray(nameQuery)){
+    let userData = await new Promise(resolve=>{
+      let data = [];
+      let index = 0;
+      nameQuery.forEach(async query => {
+        let queryResult = await User.find({name:{ "$regex": query, "$options": "i" }}).limit(limitQuery).lean();
+        data = data.concat(queryResult)
+        index ++;
+        if(index == nameQuery.length){
+          resolve(data);
+        }
+      });
+    });
+    userData = await Tools.simplifyUsers(userData);
+    console.log(userData)
+    res.status(200).send({status: true, message:userData});
   }
-  
+  else{
+    res.status(400).send({status: "Bad query"});
+  }
+}
+
 async function getProfileData(req, res){
   let profileName = req.query.profile;
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
@@ -111,7 +135,7 @@ async function getThemesFromList(req, res){
 }
 
 async function updateUserData(req, res){
-  let attribute = req.body.attribute;console.log(attribute)
+  let attribute = req.body.attribute;
   let oldAttribute = req.body.oldAttribute;
   let newAttribute = req.body.newAttribute;
   let userName = req.body.userName;
@@ -147,4 +171,4 @@ async function checkPassword(req, res){
   }
 }
 
-module.exports = { singUp, signIn, getUserData, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword, getThemesFromList };
+module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword, getThemesFromList };

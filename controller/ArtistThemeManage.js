@@ -19,25 +19,42 @@ const FilesManage = require('../controller/FilesManage');
   async function getArtistDataQuery(req, res){
     try {
       let queryData = req.body.queryData;console.log(queryData)
-      let artistsQuery = await new Promise(resolve=>{
-        let query = [];
-        queryData.forEach(async data=>{
-          let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).lean();
-          query = query.concat(artistByName);
-          let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
-          query = query.concat(artistBySurname);
-          let artistByTags = await Artist.find({"tags":{ "$regex": data, "$options": "i" }}).lean();
-          query = query.concat(artistByTags);
-          let themeByName = await Artist.find({"themeList.name":{ "$regex": data, "$options": "i" }}).lean();
-          query = query.concat(themeByName);
-          let themeByTags = await Artist.find({"themeList.tags":{ "$regex": data, "$options": "i" }}).lean();
-          query = query.concat(themeByTags);
-          resolve(query);
+      let limitQuery = req.body.limitQuery;console.log(queryData)
+      let fieldsQuery = req.body.fieldsQuery;console.log(fieldsQuery)
+      if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
+        let artistsQuery = await new Promise(resolve=>{
+          let query = [];
+          queryData.forEach(async data=>{
+            if(fieldsQuery.indexOf('name') != -1 || fieldsQuery.indexOf('all') != -1){
+              let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).limit(limitQuery).lean();
+              query = query.concat(artistByName);
+            }
+            if(fieldsQuery.indexOf('surname') != -1 || fieldsQuery.indexOf('all') != -1){
+              let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
+              query = query.concat(artistBySurname);
+            }
+            if(fieldsQuery.indexOf('tags') != -1 || fieldsQuery.indexOf('all') != -1){
+              let artistByTags = await Artist.find({"tags":{ "$regex": data, "$options": "i" }}).lean();
+              query = query.concat(artistByTags);
+            }
+            if(fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
+              let themeByName = await Artist.find({"themeList.name":{ "$regex": data, "$options": "i" }}).lean();
+              query = query.concat(themeByName);
+            }
+            if(fieldsQuery.indexOf('themeListTags') != -1 || fieldsQuery.indexOf('all') != -1){
+              let themeByTags = await Artist.find({"themeList.tags":{ "$regex": data, "$options": "i" }}).lean();
+              query = query.concat(themeByTags);
+            }
+            resolve(query);
+          });
         });
-      });
-      res.send({status:true, message:artistsQuery});
+        res.send({status:true, message:artistsQuery});
+      }
+      else{
+        res.status(404).send({status: 'Bad petition'});
+      }
     } catch (error) {
-      res.status(400).send({status: 'failure'});
+      res.status(400).send({status: 'Failure'});
     }
   
   }

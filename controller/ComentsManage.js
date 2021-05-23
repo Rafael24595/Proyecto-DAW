@@ -1,5 +1,6 @@
 require('../models/models');
 const sha256 = require('js-sha256');
+const Tools = require('../utils/tools');
 const mongoose = require('mongoose');
 const artist = mongoose.model('Artist');
 const User = mongoose.model('User');
@@ -12,17 +13,18 @@ async function publishComment(req, res){
     if(userName == req.userNameToken){
       let commentId = await sha256(`${themeId}-${userName}-${comment}-${Date.now()}`);
       let artistData = await artist.findOne({"themeList.id":themeId}).lean();
-      let index = 0;
+      let date = await Tools.getActualDate();
+      console.log(date)
+      let index = artistData.themeList.map(theme=>{return theme.id}).indexOf(themeId);
 
-      artistData.themeList.find(theme=>{
-        if(theme.id == themeId){
-          artistData.themeList[index].comments.push({comment:comment,userName:userName,commentId:commentId});
-          return true;
-        }
-        index++;
-      });
-      await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
-      res.status(200).json({commentId:commentId,userName:userName,comment:comment});
+      if(index != -1){
+        artistData.themeList[index].comments.push({comment:comment,userName:userName,commentId:commentId, date});
+        await artist.findOneAndUpdate({"themeList.id":themeId}, artistData);
+        res.status(200).json({status: true, commentData:{commentId:commentId,userName:userName,comment:comment, date}});
+      }
+      else{
+        res.status(404).json({status:'Not Found'});
+      }
     }
     else{
       res.status(401).json({status:'Invalid petition'});

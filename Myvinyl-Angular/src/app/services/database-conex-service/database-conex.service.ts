@@ -36,8 +36,10 @@ export class DatabaseConexService {
   return this.http.get<{status:boolean, artist: Artist | null}>(`http://${Variables.host}:${Variables.port}/api/getArtistData?artist=${artistId}`);
  }
 
- getArtistDataByQuery(queryData:string[]):Observable<{status:boolean, message: Artist[] | undefined}>{
-  return this.http.post<{status:boolean, message: Artist[] | undefined}>(`http://${Variables.host}:${Variables.port}/api/getArtistDataQuery`, {queryData});
+ getArtistDataByQuery(queryData:string[], limitQuery?:number, fieldsQuery?:string[]):Observable<{status:boolean, message: Artist[] | undefined}>{
+  limitQuery = (limitQuery) ? limitQuery : 0 ;
+  fieldsQuery = (fieldsQuery) ? fieldsQuery : ['all'];
+  return this.http.post<{status:boolean, message: Artist[] | undefined}>(`http://${Variables.host}:${Variables.port}/api/getArtistDataQuery`, {queryData, limitQuery, fieldsQuery});
 }
 
  getProfileData(profile:string): Observable<{validToken:boolean,data:UserInterface}>{
@@ -47,6 +49,11 @@ export class DatabaseConexService {
  getUserData(): Observable<User>{
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }
+
+ getUsersData(nameQuery: string[], limitQuery?:number): Observable<{sucess:boolean, message: User[]}>{
+   limitQuery = (limitQuery) ? limitQuery : 0;
+  return this.http.post<{sucess:boolean, message: User[]}>(`http://${Variables.host}:${Variables.port}/api/searchUsersDataByName?nameQuery=${nameQuery}&limitQuery=${limitQuery}`, {nameQuery, limitQuery});
+}
 
  setNewTheme(artistId: string, name: string, flag: string, tags: string[], lyrics: {native:string, esp:string}, userName: string):Observable<{status:boolean, message:Themes[]}>{
   return this.http.post<{status:boolean, message:Themes[]}>(`http://${Variables.host}:${Variables.port}/api/setTheme`, {artistId, name, flag, tags, lyrics, userName});
@@ -76,8 +83,8 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/reassignArtistThemes`, {mainArtistId, targetArtistId, userName});
  }
 
- setThemeComment(themeId:string,userName:string,comment:string):Observable<{commentId:string,userName:string,comment:string}>{
-   return this.http.post<{commentId:string,userName:string,comment:string}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
+ setThemeComment(themeId:string,userName:string,comment:string):Observable<{status: boolean, commentData:ThemeComment}>{
+   return this.http.post<{status: boolean, commentData:ThemeComment}>(`http://${Variables.host}:${Variables.port}/api/publishComment`, {themeId, userName, comment});
  }
 
  thumbValueTheme(themeId:string, thumbValue:number, userName:string):Observable<{status:string, userThemeLists:ThemeList[], likes:number, dislikes:number}>{

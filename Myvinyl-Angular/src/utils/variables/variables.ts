@@ -1,6 +1,7 @@
 
 import { Artist } from "src/app/classes/Artist";
 import { Themes } from "src/app/classes/Themes";
+import { User } from "src/app/classes/User";
 import { CandyInterface } from "src/app/interfaces/CandyInterface";
 
 export const Categories:CategoriesInterface = {
@@ -10,6 +11,7 @@ export const Categories:CategoriesInterface = {
 }
 
 export const SearchQuery:SearchQueryInterface = {
+        users:[],
         artists:[],
         themes:[]
 }
@@ -33,6 +35,7 @@ interface CategoriesInterface{
 }
 
 interface SearchQueryInterface{
+        users:User[];
         artists:Artist[];
         themes:Themes[];
     }

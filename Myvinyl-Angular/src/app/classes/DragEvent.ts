@@ -118,25 +118,18 @@ export class DragEvent{
                 parentElement.scrollBy(0, -3);
             }
             else if (positionInContainer > 0.9 && positionInContainer < 1) {
-
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";
                 DragEvent.scrollTimeOut = setTimeout(function(){DragEvent.elementDrag(event)}, 1);
                 parentElement.scrollBy(0, 2);
-
             }
             else{
-
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";
-
             }
 
             if(positionInContainer > 0.0 && positionInContainer < 1){
-
                 DragEvent.elementToDrag.style.top = `${position - DragEvent.elementHeight * 0.25}px`;
-                
             }
 
-            var actualValue = (DragEvent.elementToDrag.parentElement) ? position + DragEvent.elementToDrag.parentElement?.scrollTop - DragEvent.elementToDrag.offsetHeight + DragEvent.elementHeight * 0.5: 0;
             var i = 0;
 
             DragEvent.removePositionGuide();
@@ -144,37 +137,23 @@ export class DragEvent{
             DragEvent.positionGuide = document.createElement('div');
             DragEvent.positionGuide.className = 'position-guide';
 
-            while(i < DragEvent.elementsList.length){
+            let downElement;
+            let diference: number | undefined;
 
-                var previousElementPosition = (!DragEvent.elementsList[i-1]) ? DragEvent.elementsList[i] : (DragEvent.elementsList[i-1].id != DragEvent.elementToDrag.id) ? DragEvent.elementsList[i-1] : (!DragEvent.elementsList[i-2]) ? DragEvent.elementsList[i] : DragEvent.elementsList[i-2];
-                var actualElementPosition = DragEvent.elementsList[i];
-                var nextElementPosition = (!DragEvent.elementsList[i+1]) ? DragEvent.elementsList[i] : (DragEvent.elementsList[i+1].id != DragEvent.elementToDrag.id) ? DragEvent.elementsList[i+1] : (!DragEvent.elementsList[i+2]) ? DragEvent.elementsList[i] : DragEvent.elementsList[i+2];
-
-                if (previousElementPosition.offsetTop == actualElementPosition.offsetTop && actualValue <= actualElementPosition.offsetTop) {
-                    if((!actualElementPosition.previousElementSibling || actualElementPosition.previousElementSibling.id == DragEvent.elementToDrag.id) && actualValue < previousElementPosition.offsetTop * 0.75){
-                        if( DragEvent.elementToDrag.parentElement)
-                    DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, actualElementPosition)
+            while(i<DragEvent.elementsList.length){
+                let element = DragEvent.elementsList[i]
+                if(element.id != DragEvent.elementToDrag.id){
+                    let diferenceBetween = element.getBoundingClientRect().top - DragEvent.elementToDrag.getBoundingClientRect().top;
+                    if(diferenceBetween >= 0 && (diference == undefined || diferenceBetween < diference)){
+                        downElement = element
+                        diference = diferenceBetween;
                     }
-                    else{
-                        if( DragEvent.elementToDrag.parentElement)
-                    DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, actualElementPosition.nextElementSibling)
-                    }
-                    
-
                 }
-                else if (previousElementPosition.offsetTop != actualElementPosition.offsetTop && actualValue >= previousElementPosition.offsetTop && position - DragEvent.elementHeight * 1 < actualElementPosition.offsetTop) {
-                   if( DragEvent.elementToDrag.parentElement)
-                    DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, actualElementPosition.nextElementSibling)
-
-                }
-                else if (actualElementPosition.offsetTop == nextElementPosition.offsetTop && actualValue >= actualElementPosition.offsetTop) {
-                   if( DragEvent.elementToDrag.parentElement)
-                    DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, actualElementPosition)
-
-                }
-                
                 i++;
+            }
 
+            if( DragEvent.elementToDrag.parentElement){
+                DragEvent.elementToDrag.parentElement.insertBefore(DragEvent.positionGuide, downElement);
             }
             
         }

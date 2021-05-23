@@ -12,6 +12,8 @@ import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { Lyrics } from 'src/app/interfaces/LyricsInterface';
+import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
+import { Artist } from 'src/app/classes/Artist';
 
 @Component({
   selector: 'app-theme-information',
@@ -35,6 +37,7 @@ export class ThemeInformationComponent implements OnInit {
   isLike = 0;
   isSessionUser: boolean = false;
   isAdmin: boolean = false;
+  suggestThemes: Themes[] = [];
 
   vinylState = '';
 
@@ -56,9 +59,14 @@ export class ThemeInformationComponent implements OnInit {
     this.route.queryParams.subscribe(params =>{
       this.candy.query['id'] = params['id'];
       this.comunicationService.sendCandy(this.candy);
-      this.DatabaseConexService.getThemeData(params['id']).subscribe(themeData =>{
-        this.setDefaultValues(themeData);
-      });
+      this.DatabaseConexService.getThemeData(params['id']).subscribe(
+        sucess=>{
+          this.setDefaultValues(sucess);
+        },
+        err=>{
+          this.router.navigate(['/Home']);
+        }
+      );
     });
     this.comunicationService.sendReproductorViewDataObservable.subscribe(data=>{this.reproductorSubscribe(data)});
   }
@@ -98,18 +106,51 @@ export class ThemeInformationComponent implements OnInit {
 
   setDefaultValues(themeData){
     this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
-        this.lyrics = this.theme.lyrics.native;
-        this.checkForLastComment();
-        this.user = sesionValues.activeUser.name;
-        this.userThemeLists = sesionValues.activeUser.themeLists;
-        this.isSessionUser = (sesionValues.activeUser.email) ? true :false;
-        this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
-        this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
-        if(this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
-          let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
-          //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
+    this.lyrics = this.theme.lyrics.native;
+    this.user = sesionValues.activeUser.name;
+    this.userThemeLists = sesionValues.activeUser.themeLists;
+    this.isSessionUser = (sesionValues.activeUser.email) ? true :false;
+    this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
+    this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
+
+    this.checkForLastComment();
+    this.calculateLikesPercentage();
+    if(this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
+      let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
+      //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
+    }
+
+    let query = [this.theme.artist.name];
+    query = query.concat(this.theme.tags);
+
+    console.log(query);
+    this.DatabaseConexService.getArtistDataByQuery(query, 2, ['name', 'tags']).subscribe(
+      async sucess=>{
+        
+        if(sucess.message){
+
+          sesionValues.artistList.list = [];
+
+          await DataManage.syncForEach(sucess.message, (artist: Artist)=>{
+            let artistData = artist as ArtistInterface;
+            sesionValues.artistList.setArtist(artistData);
+          });
+          
+          let cleanData: {artistList: Artist[], themesList: Themes[]} | undefined;
+
+          query.forEach(async single=>{
+            cleanData = await DataManage.clearRepeatData(sesionValues.artistList.list, single);
+            this.suggestThemes = cleanData.themesList;
+            console.log(this.suggestThemes)
+          });
+
         }
-        this.calculateLikesPercentage();
+
+      },
+      err=>{
+        console.log(`Error: ${err}`);
+      }
+    );
   }
 
   sentToReproductor(type:string, value?:any){
@@ -147,7 +188,7 @@ export class ThemeInformationComponent implements OnInit {
           sucess=>{
             localStorage.removeItem('lastComment');
             if(this.theme && this.comment){
-              this.theme.setNewComment(sucess.commentId,sucess.userName, true, sucess.comment);
+              this.theme.setNewComment(sucess.commentData.commentId,sucess.commentData.userName, true, sucess.commentData.comment, sucess.commentData.date);
               this.comment = '';
             }
           },
