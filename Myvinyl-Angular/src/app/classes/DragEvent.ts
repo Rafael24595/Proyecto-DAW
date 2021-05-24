@@ -13,6 +13,7 @@ export class DragEvent{
     static scrollTimeOut: any;
     static elementWidth: number = 100;
     static elementHeight: number = 50;
+    static elementScrollHeight: number = 50;
     static positionGuide: HTMLElement | undefined;
 
     constructor(elementToDrag:HTMLElement, elementsList:HTMLElement[], sendFunction:Function){
@@ -84,22 +85,22 @@ export class DragEvent{
     }
 
     static createMouseMoveEventListener(){
-        if(!DragEvent.mouseMoveEvent){
-            window.addEventListener('mousemove', this.elementDrag);
-            window.addEventListener('mouseup', this.mouseUpCancelDrag);
-        }
-        DragEvent.elementWidth = this.elementToDrag.getBoundingClientRect().width;
-        DragEvent.elementHeight = this.elementToDrag.getBoundingClientRect().height;
         if(DragEvent.elementToDrag.parentElement){
-        DragEvent.elementToDrag.parentElement.style.maxHeight = `${DragEvent.elementToDrag.parentElement?.scrollHeight}px !important`;
-        console.log(DragEvent.elementToDrag.parentElement.style.maxHeight)}
-        DragEvent.mouseMoveEvent = true;
-        DragEvent.mouseUp = false;
-        setTimeout(()=>{
-            if(!DragEvent.mouseUp){
-                DragEvent.mouseDown = true;
+            if(!DragEvent.mouseMoveEvent){
+                window.addEventListener('mousemove', this.elementDrag);
+                window.addEventListener('mouseup', this.mouseUpCancelDrag);
             }
-        }, 500);
+            DragEvent.elementWidth = this.elementToDrag.getBoundingClientRect().width;
+            DragEvent.elementHeight = this.elementToDrag.getBoundingClientRect().height;
+            DragEvent.elementScrollHeight = DragEvent.elementToDrag.parentElement.scrollHeight;
+            DragEvent.mouseMoveEvent = true;
+            DragEvent.mouseUp = false;
+            setTimeout(()=>{
+                if(!DragEvent.mouseUp){
+                    DragEvent.mouseDown = true;
+                }
+            }, 500);
+        }
     }
 
     static elementDrag(event: MouseEvent){
@@ -107,6 +108,9 @@ export class DragEvent{
             let parentElement = DragEvent.elementToDrag.parentElement as HTMLElement;
             let position = event.clientY - parentElement.getBoundingClientRect().top + parentElement.scrollTop;
             let positionInContainer = DragEvent.getElementPositionPercentage(event, parentElement);
+
+            //var minHeight = elementEvent.offsetHeight / 3.25;
+			//var maxHeight = parentContainer.scrollHeight - elementEvent.offsetHeight / 4.25;
 
             event.stopPropagation();
 		    event.preventDefault();
@@ -123,17 +127,22 @@ export class DragEvent{
             else if (positionInContainer > 0.9 && positionInContainer < 1) {
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";
                 DragEvent.scrollTimeOut = setTimeout(function(){DragEvent.elementDrag(event)}, 1);
+                console.log('----')
+                console.log( parentElement.scrollHeight)
                 parentElement.scrollBy(0, 2);
+                console.log( parentElement.scrollHeight)
+                console.log('----')
             }
             else{
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";
             }
 
             if(positionInContainer > 0.0 && positionInContainer < 1){
-                position = position - DragEvent.elementHeight * 0.75
-                console.log(position, parentElement.scrollHeight);
-                //if(position < parentElement.getBoundingClientRect().height)
-                DragEvent.elementToDrag.style.top = `${position}px`;
+                if(position < DragEvent.elementScrollHeight - DragEvent.elementHeight * 1.25){
+                    position = position - DragEvent.elementHeight * 0.75
+                    DragEvent.elementToDrag.style.top = `${position}px`;
+                }
+                
             }
 
             var i = 0;
