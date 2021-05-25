@@ -1,16 +1,25 @@
 <div id="homeContainer">
     <div *ngIf='isAdmin'>
         <h2>Nuevo artista</h2>
-        <p (click)=showHomeForm()>Nuevo</p>
+        <div style="margin-left: 25px;">
+            <div class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
+                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" style="width: 75px; border: 2px solid; box-sizing: border-box;" (click)=showHomeForm() src="{{mediaPath}}/images/covers/new_cover.png">
+                </div>
+                <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;" (click)=showHomeForm() class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
+                </div>
+            </div>
+        </div>
     </div>
     <div *ngFor='let category of categories | keyvalue'>
         <h2>{{category.value.name}}</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let item of category.value.items' class="display-inline" style="width: 300px; margin: 10px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
-                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+            <div *ngFor='let item of category.value.items' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
+                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
                     <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png">
                 </div>
-                <div style="text-align: left; width: 70%; vertical-align: middle;" class="display-inline">
+                <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
                         <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}'>{{item.name}}</span>
                     </p> 

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
-import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { CandyBomb, SearchQuery, Variables } from 'src/utils/variables/variables';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
@@ -19,28 +18,25 @@ import { Artist } from 'src/app/classes/Artist';
 export class ThemeSearchComponent implements OnInit {
 
   candy: CandyInterface = {id: 'search', name:'Search', family:'candy-theme',route:'Search', query:{}, routeQuery:''};
+  mediaPath = '../../../../../assets/media';
   query:string[] = [];
   queryResult = SearchQuery;
   range = Variables.range;
 
-  constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
+  constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
 
     this.manageComponent.setLastURL();
-    this.updateArtistList.getFromDataBase.then(()=> {
-
-      this.route.queryParams.subscribe(params =>{
-        this.query = params['query'].toLowerCase().split('+');
-        this.candy.query['query'] = params['query'];
-        this.searchResut();
-        }
-      )
-    
-      this.comunicationService.sendCandy(CandyBomb);
-      this.comunicationService.sendCandy(this.candy);
-
-    });
+    this.route.queryParams.subscribe(params =>{
+      this.query = params['query'].toLowerCase().split('+');
+      this.candy.query['query'] = params['query'];
+      this.searchResut();
+      }
+    )
+  
+    this.comunicationService.sendCandy(CandyBomb);
+    this.comunicationService.sendCandy(this.candy);
 
   }
 

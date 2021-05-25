@@ -2,7 +2,6 @@
 require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const Artist = mongoose.model('Artist');
 const Tools = require('../utils/tools');
 const jwt = require('jsonwebtoken');
 

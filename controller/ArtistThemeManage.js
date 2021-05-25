@@ -1,49 +1,59 @@
 require('../models/models');
-const tools = require('../utils/tools');
+const Tools = require('../utils/tools');
 const mongoose = require('mongoose');
 const Artist = mongoose.model('Artist');
+const Theme = mongoose.model('Theme');
 const FilesManage = require('../controller/FilesManage');
 
-  async function getArtistDataCount(req, res){
+  async function getArtistData(req, res){
     try {
-      const artists = (parseInt(req.query.count) == -1) ? await Artist.find({}) : await Artist.find({}).limit(parseInt(req.query.count));
-      return res.send(artists && artists.length ? artists : ["Not Found"]);
-    } catch (error) {
-      return res.status(400).send({
-        status: 'failure'
-      });
+      const artistId = req.query.artist;
+      let artist = await Artist.findOne({"id_artist":artistId}).lean();
+      artist = await Tools.setArtistThemes(artist);
+      if(artist){
+        res.status(200).send({status:true, artist});
+      }
+      else{
+        res.status(404).send({status: false, artist:null})
+      }
+    }catch (error) {
+      console.log(error)
+      res.status(400).send({status: 'failure'});
     }
-  
   }
-  
+
   async function getArtistDataQuery(req, res){
     try {
-      let queryData = req.body.queryData;console.log(queryData)
-      let limitQuery = req.body.limitQuery;console.log(queryData)
-      let fieldsQuery = req.body.fieldsQuery;console.log(fieldsQuery)
+      let queryData = req.body.queryData;
+      let limitQuery = req.body.limitQuery;
+      let pageQuery = req.body.pageQuery;
+      let fieldsQuery = req.body.fieldsQuery;
       if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
         let artistsQuery = await new Promise(resolve=>{
-          let query = [];
+          let query = {};
           queryData.forEach(async data=>{
             if(fieldsQuery.indexOf('name') != -1 || fieldsQuery.indexOf('all') != -1){
-              let artistByName = await Artist.find({"name":{ "$regex": data, "$options": "i" }}).limit(limitQuery).lean();
-              query = query.concat(artistByName);
+              let artistByName = await Artist.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              query['name'] = artistByName;
             }
             if(fieldsQuery.indexOf('surname') != -1 || fieldsQuery.indexOf('all') != -1){
-              let artistBySurname = await Artist.find({"surname":{ "$regex": data, "$options": "i" }}).lean();
-              query = query.concat(artistBySurname);
+              let artistBySurname = await Artist.paginate({"surname":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              query['surname'] = artistBySurname;
             }
             if(fieldsQuery.indexOf('tags') != -1 || fieldsQuery.indexOf('all') != -1){
-              let artistByTags = await Artist.find({"tags":{ "$regex": data, "$options": "i" }}).lean();
-              query = query.concat(artistByTags);
+              let artistByTags = await Artist.paginate({"tags":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              query['tags'] = artistByTags;
             }
             if(fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
-              let themeByName = await Artist.find({"themeList.name":{ "$regex": data, "$options": "i" }}).lean();
-              query = query.concat(themeByName);
+              let themeByName = await Theme.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              themeByName.docs = await Tools.setThemeArtist(themeByName.docs);
+              query['themeListName'] = themeByName;
             }
             if(fieldsQuery.indexOf('themeListTags') != -1 || fieldsQuery.indexOf('all') != -1){
-              let themeByTags = await Artist.find({"themeList.tags":{ "$regex": data, "$options": "i" }}).lean();
-              query = query.concat(themeByTags);
+              let themeByTags = await Theme.paginate({"tags":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              console.log(themeByTags)
+              themeByTags.docs = await Tools.setThemeArtist(themeByTags.docs);
+              query['themeListTags'] = themeByTags;
             }
             resolve(query);
           });
@@ -59,7 +69,7 @@ const FilesManage = require('../controller/FilesManage');
   
   }
 
-  async function getArtistsAttributes(req, res){
+  async function getArtistsId(req, res){
     try {
       let attribute = req.query.attribute;
       let artists = await Artist.find({}).lean();
@@ -79,32 +89,15 @@ const FilesManage = require('../controller/FilesManage');
     }
   }
 
-  async function getArtistData(req, res){
-    try {
-      const artistId = req.query.artist;
-      let artist = await tools.getArtistById(artistId);
-      if(artist){
-        res.status(200).send({status:true, artist:artist});
-      }
-      else{
-        res.status(404).send({status: false, artist:null})
-      }
-    }catch (error) {
-      res.status(400).send({status: 'failure'});
-    }
-  }
-
   async function getThemeData(req, res){
     try {
       const themeId = req.query.theme;
-      await Artist.findOne({"themeList.id":themeId}).lean().then(async artist=>{
-        let theme = artist.themeList.find(theme=>{return (theme.id == themeId)});
-        theme['artist'] = {id:artist.id_artist,name:artist.name,surname:artist.surname};
-        if(theme.comments.length > 0){
-          theme = await tools.usersExist(theme);
-        }
-        res.send(theme);
-      });
+      let theme = await Theme.findOne({"id":themeId}).lean();
+      theme = await Tools.setThemeArtist(theme);
+      if(theme.comments.length > 0){
+        theme = await Tools.usersExist(theme);
+      }
+      res.send(theme);
     }catch (error) {
       res.status(400).send({
         status: 'failure'
@@ -123,7 +116,7 @@ const FilesManage = require('../controller/FilesManage');
     if(artistId && userName == req.userNameToken && req.isAdmin){
       let artistExists = await Artist.findOne({id_artist:artistId}).lean();
       if(artistExists == null){
-        let newArtist = new Artist({id_artist: artistId, name: name, surname: surname, description: description, tags: tags, themeList:[]});
+        let newArtist = new Artist({id_artist: artistId, name: name, surname: surname, description: description, tags: tags});
         await newArtist.save();
         res.headerSent = true;
         res.status(200).json({status:true});
@@ -374,4 +367,4 @@ const FilesManage = require('../controller/FilesManage');
     return artist;
   }
 
-  module.exports = { getArtistDataCount, getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsAttributes };
+  module.exports = { getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsId };

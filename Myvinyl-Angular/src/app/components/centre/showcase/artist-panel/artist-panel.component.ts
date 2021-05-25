@@ -5,7 +5,6 @@ import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
-import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { User } from 'src/app/classes/User';
 import { FormValidations } from 'src/utils/tools/FormValidations';
@@ -39,31 +38,28 @@ export class ArtistPanelComponent implements OnInit {
   flagFileErr = {text:'', class:''};
   themeErr = {text:'', class:''};
 
-  constructor(private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
+  constructor(private comunicationService :ComunicationServiceService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
   ngOnInit(): void {
     this.manageComponent.setLastURL();
-    this.updateArtistList.getFromDataBase.then(()=> {
-
-      this.route.queryParams.subscribe(params =>{
-        this.DatabaseConexService.getArtistData(params['id']).subscribe(
-          sucess=>{
-            if(sucess.artist){
-              this.candy.query['id'] = params['id'];
-              this.artist = new Artist(sucess.artist.id_artist, sucess.artist?.name, sucess.artist?.surname, sucess.artist.description, sucess.artist.tags, sucess.artist.themeList);
-              this.comunicationService.sendCandy(this.candy);
-              this.user = sesionValues.activeUser;
-              this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
-            }
-            else{
-              this.router.navigate(['/Home']);
-            }
-          },
-          err=>{
+    this.route.queryParams.subscribe(params =>{
+      this.DatabaseConexService.getArtistData(params['id']).subscribe(
+        sucess=>{
+          if(sucess.artist){
+            this.candy.query['id'] = params['id'];
+            this.artist = new Artist(sucess.artist.id_artist, sucess.artist?.name, sucess.artist?.surname, sucess.artist.description, sucess.artist.tags, sucess.artist.themeList);
+            this.comunicationService.sendCandy(this.candy);
+            this.user = sesionValues.activeUser;
+            this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
+          }
+          else{
             this.router.navigate(['/Home']);
           }
-        );
-      });
+        },
+        err=>{
+          this.router.navigate(['/Home']);
+        }
+      );
     });
   }
 

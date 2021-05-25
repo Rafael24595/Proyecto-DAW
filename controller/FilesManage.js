@@ -64,7 +64,7 @@ async function uploadFile(req, res){
   }
 
   async function setThemeCoverName(name){
-    let artist = await tools.getArtistById(name);
+    let artist = await Artist.findOne({"id_artist":artistId}).lean();
     if(artist){
         return `${name}-${artist.themeList.length}`;
     }

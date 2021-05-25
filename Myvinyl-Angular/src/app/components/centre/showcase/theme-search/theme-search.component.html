@@ -2,28 +2,54 @@
     <div *ngIf='queryResult.users.length > 0'>
         <h2>Usuarios:</h2>
         <div>
-            <div *ngFor='let user of queryResult.users' id="{{user.name}}" routerLink='/Profile/{{user.name}}'>
-                <img src="../../../../../assets/media/images/users/{{user.name}}.png">
-                <p>Nombre: {{user.name}}</p>
-                <p>Rango: {{range[user.admin]}} <span *ngIf='user.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></p>
+            <div style="margin-left: 25px;">
+                <div *ngFor='let user of queryResult.users' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
+                    <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px; background-color: black; border-radius: 50%;" class="display-inline">
+                        <img class="cursor-pointer" [routerLink]='["/Profile/" + user.name]' style="width: 75px; box-sizing: border-box;" src="{{mediaPath}}/images/users/{{user.name}}.png">
+                    </div>
+                    <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
+                        <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                            <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Profile/" + user.name]'>{{user.name}}</span>
+                        </p> 
+                        <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                            <span>Rango: </span> <span>{{range[user.admin]}} <span *ngIf='user.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></span>
+                        </p> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div *ngIf='queryResult.artists.length > 0'>
         <h2>Artistas:</h2>
-        <div>
-            <div *ngFor='let artist of queryResult.artists' id="{{artist.id_artist}}" (click)=showArtist($event.target)>
-                <img src="../../../../../assets/media/images/artists/{{artist.id_artist}}.png">
-                <p>Nombre: {{artist.name}} {{artist.surname}}</p>
+        <div style="margin-left: 25px;">
+            <div *ngFor='let artist of queryResult.artists' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
+                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}' style="width: 75px; border: 2px solid rgba(25, 25, 25, 0.5); border-radius: 50%; box-sizing: border-box;" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png">
+                </div>
+                <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}'>{{artist.name}} {{artist.surname}}</span>
+                    </p> 
+                    
+                </div>
             </div>
         </div>
     </div>
     <div *ngIf='queryResult.themes.length > 0'>
         <h2>Temas:</h2>
-        <div>
-            <div *ngFor='let theme of queryResult.themes' id="{{theme.id}}" (click)=showItem($event.target)>
-                <img src="../../../../../assets/media/images/covers/{{theme.id}}.png">
-                <p>{{theme.name}}</p>
+        <div style="margin-left: 25px;">
+            <div *ngFor='let theme of queryResult.themes' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                </div>
+                <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
+                    </p> 
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                        <span>Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>
+                    </p> 
+                </div>
             </div>
         </div>
     </div>

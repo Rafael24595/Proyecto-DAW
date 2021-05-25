@@ -17,10 +17,9 @@ const multipartMiddleware = multipart({
 
 router.get("/generateDatabase", DevManageTools.generateDatabase);
 
-router.get("/getData", ArtistThemeManage.getArtistDataCount);
 router.get("/getThemeData", ArtistThemeManage.getThemeData);
 router.get("/getArtistData", ArtistThemeManage.getArtistData);
-router.get("/getArtistsAttributes", ArtistThemeManage.getArtistsAttributes);
+router.get("/getArtistsId", ArtistThemeManage.getArtistsId);
 router.post("/searchUsersDataByName", UserManage.searchUsersDataByName);
 router.post("/getArtistDataQuery", ArtistThemeManage.getArtistDataQuery);
 router.post("/setArtistAttribute", SecurityManage.verifyToken , ArtistThemeManage.setArtistAttribute);

@@ -132,7 +132,7 @@ export class DatabaseConexService {
  }
 
  getArtistsIds(attribute:string):Observable<{status:boolean, message:string[]}>{
-  return this.http.get<{status:boolean, message:string[]}>(`http://${Variables.host}:${Variables.port}/api/getArtistsAttributes?attribute=${attribute}`);
+  return this.http.get<{status:boolean, message:string[]}>(`http://${Variables.host}:${Variables.port}/api/getArtistsId?attribute=${attribute}`);
  }
 
  getFlagsNames():Observable<{status:boolean, message:string[]}>{

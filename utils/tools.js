@@ -3,6 +3,7 @@ require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Artist = mongoose.model('Artist');
+const Theme = mongoose.model('Theme');
 
 async function usersExist(theme){
   return new Promise(async resolve=>{
@@ -48,15 +49,6 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
   return {status:isChanged, user:user, inUse:inUse};
 }
 
-async function getArtistById(artistId){
-  try {
-    let artist = await Artist.findOne({"id_artist":artistId}).lean();
-    return (artist != null) ? artist : undefined;
-  }catch (error) {
-    return undefined;
-  }
-}
-
 async function orderThemeListThemes(themeList){
   return new Promise(resolve=>{
     let index = 0;
@@ -71,6 +63,37 @@ async function orderThemeListThemes(themeList){
     });
     resolve(themeList)
   });
+}
+
+async function setThemeArtist(themeList){
+  let isSingle = false;
+  if(themeList.id){
+    themeList = [themeList];
+    isSingle = true
+  }
+  for (let index = 0; index < themeList.length; index++) {
+    let id_artist = themeList[index].artist.id;
+    let artist = await Artist.findOne({id_artist:id_artist}).lean();
+    themeList[index].artist.name = artist.name;
+    themeList[index].artist.surname = artist.surname;
+  }
+  return (isSingle == false) ? themeList : themeList[0];
+}
+
+async function setArtistThemes(artistList){
+  let isSingle = false;
+  if(artistList.id_artist){
+    artistList = [artistList];
+    isSingle = true
+  }
+  artistList = (artistList.id_artist) ? [artistList] : artistList;
+  for (let index = 0; index < artistList.length; index++) {
+    let themes = await Theme.find({"artist.id":artistList[index].id_artist}).lean();
+    console.log(themes)
+    artistList[index]['themeList'] = themes;
+  }
+  console.log(artistList)
+  return (isSingle == false) ? artistList : artistList[0];
 }
 
 async function fillThemeList(themeList){
@@ -136,4 +159,4 @@ async function getActualDate(){
   return mm + '/' + dd + '/' + yyyy;
 }
 
-module.exports = { usersExist, setUserAttribute, getArtistById, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate }
+module.exports = { usersExist, setUserAttribute, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate, setThemeArtist, setArtistThemes }

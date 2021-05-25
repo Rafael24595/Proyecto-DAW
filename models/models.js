@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const ArtistSchema = new Schema({
 	id_artist: {
@@ -20,13 +21,54 @@ const ArtistSchema = new Schema({
 		type: Array,
 		items: { type: String},
 		required: true
-	},
-	themeList: {
-		type: Array,
-		items: { type: Object},
-		required: true
 	}
 });
+
+const ThemesSchema = new Schema({
+	id: {
+		type: String,
+		required: true
+	},
+	name: {
+		type: String,
+		required: true
+	},
+	flag: {
+		type: String
+	},		
+	tags: {
+		type: Array,
+		items: { type: String},
+		required: true
+	},
+	lyrics: {
+		type: Object,
+		required: true
+	},
+	comments: {
+		type: Array,
+		items: { type: String},
+		required: true
+	},
+	likes: {
+		type: Number,
+		required: true
+	},
+	dislikes: {
+		type: Number,
+		required: true
+	},
+	views: {
+		type: Number,
+		required: true
+	},
+	artist: {
+		type: Object,
+		required: true
+	},
+});
+
+ThemesSchema.plugin(mongoosePaginate);
 
 const UserSchema = new Schema({
 	name: {
@@ -58,7 +100,10 @@ const UserSchema = new Schema({
 	}
 });
 
+UserSchema.plugin(mongoosePaginate);
+
 mongoose.model('Artist', ArtistSchema);
+mongoose.model('Theme', ThemesSchema);
 mongoose.model('User', UserSchema);
 
 

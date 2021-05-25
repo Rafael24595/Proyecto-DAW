@@ -4,7 +4,6 @@ import { sesionValues } from '../../../../../utils/variables/sessionVariables';
 import { Categories } from '../../../../../utils/variables/variables';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
-import { UpdateArtistList } from 'src/utils/tools/updateArtistList';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { DataManage } from 'src/utils/tools/DataManage';
@@ -29,13 +28,13 @@ export class HomeComponent implements OnInit {
   nameErr = {text:'', class:''};
   avatarErr = {text:'', class:''};
 
-  constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private updateArtistList:UpdateArtistList, private router: Router, private manageComponent:ManageComponent) { }
+  constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private router: Router, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
 
     this.manageComponent.setLastURL();
     this.comunicationService.sendCandy(this.candy);
-    this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
+    //this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
 
   }
 
