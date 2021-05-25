@@ -18,6 +18,7 @@ import { FormValidations } from 'src/utils/tools/FormValidations';
 export class HomeComponent implements OnInit {
 
   candy: CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};
+  mediaPath = '../../../../../assets/media';
   categories = Categories;
   isAdmin: boolean = false;
   showForm: boolean = false;
@@ -44,6 +45,10 @@ export class HomeComponent implements OnInit {
       artist.themeList.forEach(theme=>{
         for (const category in this.categories) {
           if (theme.tags.indexOf(`_${this.categories[category].code}`) != -1 && this.categories[category].items.length < 4){
+            theme.artist = {id:'', name: '', surname:''};
+            theme.artist.id = artist.id_artist;
+            theme.artist.name = artist.name;
+            theme.artist.surname = artist.surname;
             this.categories[category].items.push(theme);
           }
         }

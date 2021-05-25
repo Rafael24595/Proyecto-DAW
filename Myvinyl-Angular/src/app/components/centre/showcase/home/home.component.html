@@ -5,10 +5,19 @@
     </div>
     <div *ngFor='let category of categories | keyvalue'>
         <h2>{{category.value.name}}</h2>
-        <div id={{category.value.code}}>
-            <div *ngFor='let item of category.value.items' id="{{item.id}}" (click)=showItem($event.target)>
-                <img src="../../../../../assets/media/images/covers/{{item.id}}.png">
-                <p>{{item.name}}</p>
+        <div style="margin-left: 25px;">
+            <div *ngFor='let item of category.value.items' class="display-inline" style="width: 300px; margin: 10px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
+                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png">
+                </div>
+                <div style="text-align: left; width: 70%; vertical-align: middle;" class="display-inline">
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}'>{{item.name}}</span>
+                    </p> 
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
+                        <span>Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:item.artist.id}'>{{item.artist.name}} {{item.artist.surname}}</span>
+                    </p> 
+                </div>
             </div>
         </div>
     </div>
