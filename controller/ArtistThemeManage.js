@@ -306,24 +306,21 @@ const FilesManage = require('../controller/FilesManage');
 
   async function setThemesAttribute(req, res){
     let artistId = req.body.artistId;
-    let themeId = req.body.themeId;
-    let attribute = req.body.attribute;
-    let value = req.body.value;
-    let userName = req.body.userName;
+    let themeId = req.body.themeId;console.log(themeId)
+    let attribute = req.body.attribute;console.log(attribute)
+    let value = req.body.value;console.log(value)
+    let userName = req.body.userName;console.log(userName)
     
     if(userName == req.userNameToken && req.isAdmin){
-      let artist = await Artist.findOne({id_artist:artistId}).lean();
-      let themeIndex = artist.themeList.map(theme=>{return theme.id}).indexOf(themeId);
-      if(themeIndex != -1){
-        console.log(artist.themeList[themeIndex][attribute], typeof artist.themeList[themeIndex][attribute] == typeof value)
-        if(artist.themeList[themeIndex][attribute] && typeof artist.themeList[themeIndex][attribute] == typeof value){
+      let theme = await Theme.findOne({'id':themeId});
+      if(theme != null){
+        if(theme[attribute] && typeof theme[attribute] == typeof value){
           if(attribute != 'id'){
-            console.log( artist.themeList[themeIndex])
-            artist.themeList[themeIndex][attribute] = value;
-            console.log( artist.themeList[themeIndex])
-            await Artist.findOneAndUpdate({id_artist:artistId}, artist);
+            theme[attribute] = value;
+            theme.markModified(attribute);
+            theme.save();
             res.headerSent = true;
-            res.status(200).json({status:true, message:artist.themeList[themeIndex]});
+            res.status(200).json({status:true, message:theme});
           }
           else{
             if(!res.headerSent) res.status(403).json({status:'cannot-modify-attribute'});
@@ -344,7 +341,5 @@ const FilesManage = require('../controller/FilesManage');
       if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
     }
   }
-
-  
 
   module.exports = { getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsId };
