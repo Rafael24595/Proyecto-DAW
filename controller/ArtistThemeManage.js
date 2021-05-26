@@ -138,8 +138,7 @@ const FilesManage = require('../controller/FilesManage');
     if(userName == req.userNameToken && req.isAdmin){
       let artistExists = await Artist.findOne({id_artist:artistId}).lean();
       if(artistExists != null){
-        await Artist.deleteOne({id_artist:artistId});
-        FilesManage.removeFileAction('artist_avatar', `${artistId}.png`);
+        let status = await Tools.dropArtist(artistId, true);
         res.headerSent = true;
         res.status(200).json({status:true});
       }
@@ -154,37 +153,30 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function reassignArtistThemes(req, res){
-    let mainArtistId = req.body.mainArtistId;
-    let targetArtistId = req.body.targetArtistId;
-    let userName = req.body.userName;
-    if(userName == req.userNameToken && req.isAdmin){
-      let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
-      let targetArtistExists = await Artist.findOne({id_artist:targetArtistId}).lean();
-      if(mainArtistExists != null && targetArtistExists != null){
-        let count = targetArtistExists.themeList.length + 1;
-        mainArtistExists.themeList.forEach(theme=>{
-          let oldThemeId = theme.id;
-          let newThemeId = `${targetArtistExists.id_artist}-${count}`;
-          theme.id = newThemeId;
-          targetArtistExists.themeList.push(theme);console.log(oldThemeId)
-          FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${newThemeId}.png`);
-          FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${newThemeId}.mp3`);
-          count++;
-
-        });
-        mainArtistExists.themeList = [];
-        await Artist.findOneAndUpdate({id_artist:mainArtistId}, mainArtistExists);
-        await Artist.findOneAndUpdate({id_artist:targetArtistId}, targetArtistExists);
-        res.headerSent = true;
-        res.status(200).json({status:true});
+    try {
+      let mainArtistId = req.body.mainArtistId;
+      let targetArtistId = req.body.targetArtistId;
+      let userName = req.body.userName;
+      if(userName == req.userNameToken && req.isAdmin){
+        let themes = await Theme.find({"artist.id":mainArtistId}).lean();
+        if(themes != null){
+          for (let index = 0; index < themes.length; index++) {
+            let status = await updateThemeAuthor(mainArtistId, targetArtistId, themes[index].id);
+          }
+          res.headerSent = true;
+          res.status(200).json({status:true});
+        }
+        else{
+          if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+          res.headerSent = true;
+        }
       }
       else{
-        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
-        res.headerSent = true;
+        if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
       }
-    }
-    else{
-      if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    } catch (error) {
+      console.log(`Error: ${error}`)
+      res.status(401).json({status:'Fatal error'})
     }
   }
 
@@ -193,22 +185,9 @@ const FilesManage = require('../controller/FilesManage');
     let targetArtistId = req.body.targetArtistId;console.log(targetArtistId)
     let oldThemeId = req.body.themeId;console.log(oldThemeId)
     let userName = req.body.userName;
-    if(userName == req.userNameToken && req.isAdmin){
-      let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
-      let targetArtistExists = await Artist.findOne({id_artist:targetArtistId}).lean();
-      if(mainArtistExists != null && targetArtistExists != null){
-        let count = targetArtistExists.themeList.length + 1;
-        let newThemeId = `${targetArtistExists.id_artist}-${count}`;
-        let themeToReassign = mainArtistExists.themeList.find(theme=>{return (theme.id == oldThemeId)});
-        let themeIndex = mainArtistExists.themeList.map(theme=>{return theme.id}).indexOf(oldThemeId); 
-        themeToReassign.id = newThemeId;
-        targetArtistExists.themeList.push(themeToReassign);
-        FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${newThemeId}.png`);
-        FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${newThemeId}.mp3`);
-        mainArtistExists.themeList.splice(themeIndex, 1);
-        mainArtistExists = await updateThemesId(mainArtistExists);
-        await Artist.findOneAndUpdate({id_artist:mainArtistId}, mainArtistExists);
-        await Artist.findOneAndUpdate({id_artist:targetArtistId}, targetArtistExists);
+    if(userName == req.userNameToken && req.isAdmin && mainArtistExists != targetArtistExists){
+      let status = await updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId);
+      if(status){
         res.headerSent = true;
         res.status(200).json({status:true});
       }
@@ -233,11 +212,13 @@ const FilesManage = require('../controller/FilesManage');
       if(artist[attribute] != undefined && typeof artist[attribute] == typeof value){
         if(attribute != 'id_artist' || attribute == 'id_artist' && await Artist.findOne({id_artist:value}) == null){
           artist[attribute] = value;
-          if(attribute == 'id_artist'){
-            artist = await updateThemesId(artist);
-          }
-          console.log(artist)
           await Artist.findOneAndUpdate({id_artist:artistId}, artist);
+          if(attribute == 'id_artist'){
+            let themes = await tools.updateThemesId(artistId, value);
+            if(themes){
+              artist.themeList = themes;
+            }
+          }
           res.headerSent = true;
           res.status(200).json({status:true, message: artist});
         }
@@ -267,10 +248,26 @@ const FilesManage = require('../controller/FilesManage');
     if(artistId && userName == req.userNameToken && req.isAdmin){
       let artistExists = await Artist.findOne({id_artist:artistId}).lean();
       if(artistExists != null){
-        let themeId = `${artistExists.id_artist}-${artistExists.themeList.length + 1}`
-        artistExists.themeList.push({id: themeId, name: name, flag: flag, tags: tags, lyrics: lyrics, comments: [], likes: 0, dislikes: 0, views: 0});
-        await Artist.findOneAndUpdate({id_artist:artistId}, artistExists);
-        console.log(artistExists)
+        let position = await Theme.find({'artist.id':artistId}).lean();
+        position = await Tools.checkEmptyThemePositions(position);
+
+        let newTheme = new Theme({
+          "id": `${artistId}-${position}`,
+          "name": name,
+          "flag": flag,
+          "tags": tags,
+          "lyrics": lyrics,
+          "comments": [],
+          "likes": 0,
+          "dislikes": 0,
+          "views": 0,
+          "artist":{
+            "id":artistId
+          }
+        });
+
+        await newTheme.save();
+        
         res.headerSent = true;
         res.status(200).json({status:true, message:artistExists.themeList});
       }
@@ -285,27 +282,17 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function removeTheme(req, res){
+    
     let artistId = req.body.artistId;
     let themeId = req.body.themeId;
     let userName = req.body.userName;
 
     if(userName == req.userNameToken && req.isAdmin){
-      let artistExists = await Artist.findOne({id_artist:artistId}).lean();
-      if(artistExists != null){
-        let themeExists = artistExists.themeList.map(theme=>{return theme.id}).indexOf(themeId);
-        if(themeExists != -1){
-          artistExists.themeList.splice(themeExists, 1);
-          FilesManage.removeFileAction('theme_cover', `${themeId}.png`);
-          FilesManage.removeFileAction('theme_audio', `${themeId}.mp3`);
-          await Artist.findOneAndUpdate({id_artist:artistId}, artistExists);
-          console.log(artistExists.themeList)
-          res.headerSent = true;
-          res.status(200).json({status:true});
-        }
-        else{
-          if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
-          res.headerSent = true;
-        }
+      let themeExists = await Theme.findOne({"id":themeId}).lean();
+      if(themeExists){
+        let status = await Tools.dropTheme(themeId);
+        res.headerSent = true;
+        res.status(200).json({status:true});
       }
       else{
         if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
@@ -358,13 +345,6 @@ const FilesManage = require('../controller/FilesManage');
     }
   }
 
-  async function updateThemesId(artist){
-    var cont = 0;
-    artist.themeList.forEach(theme => {
-      artist.themeList[cont].id = artist.id_artist + "-" + (cont + 1);
-      cont++;
-    });
-    return artist;
-  }
+  
 
   module.exports = { getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsId };

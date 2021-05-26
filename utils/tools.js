@@ -159,4 +159,127 @@ async function getActualDate(){
   return mm + '/' + dd + '/' + yyyy;
 }
 
-module.exports = { usersExist, setUserAttribute, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate, setThemeArtist, setArtistThemes }
+async function dropArtist(artistId, removeThemes){
+  try {
+
+    await Artist.deleteOne({id_artist:artistId});
+    FilesManage.removeFileAction('artist_avatar', `${artistId}.png`);
+
+    let themes = await Theme.find({'artist.id':artistId}).lean();
+    if(removeThemes && themes){
+      themes.forEach(async theme=>{
+        let themeId = theme.id;
+        await dropTheme(themeId);
+      });
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    return false;
+  }
+}
+
+async function dropTheme(themeId){
+  try {
+    await Theme.deleteOne({"id":themeId}).lean();
+    FilesManage.removeFileAction('theme_cover', `${themeId}.png`);
+    FilesManage.removeFileAction('theme_audio', `${themeId}.mp3`);
+    return true;
+  } catch (error) {
+    console.error(`Error: ${error}`)
+    return false;
+  }
+}
+
+async function updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId){
+  try {
+    let mainArtistExists = await Artist.findOne({id_artist:mainArtistId}).lean();
+    let targetArtistExists = await Artist.findOne({id_artist:targetArtistId}).lean();
+    let themeData = await Theme.findOne({"id":oldThemeId});
+    if(mainArtistExists != null && targetArtistExists != null){
+      let count = await Theme.find({'artist.id':targetArtistId}).lean();
+      count = await checkEmptyThemePositions(count);
+
+      themeData.id = `${targetArtistExists.id_artist}-${count}`
+      themeData.artist.id = targetArtistExists.id_artist;
+      themeData.markModified("artist");
+
+      await themeData.save();
+
+      FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${themeData.id}.png`);
+      FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${themeData.id}.mp3`);
+    }
+    return true;
+  } catch (error) {
+    console.error(`Error: ${error}`)
+    return false;
+  }
+}
+
+async function updateThemesId(oldId, newId){
+  try {
+    let themes = await Theme.find({'artist.id':oldId});
+    themes.forEach(theme=>{
+      let idData = theme.id.split('-');
+      if(idData.length > 1){
+        theme.id = `${newId}-${idData[1]}`;
+        theme.artist.id = newId
+        theme.markModified("artist");
+        theme.save();
+      }
+    });
+    return themes;
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    return false;
+  }
+}
+
+async function checkEmptyThemePositions(themeList){
+  let position = 1;
+  themeList = await themeListOrderByPosition(themeList);
+  if(themeList){
+    let count = 0
+    while(count < themeList.length){
+      let actualPosition = getThemePosition(themeList[count]);
+      if(actualPosition != -1){
+        if(actualPosition == position){
+          position ++;
+        }
+        else{
+          return position;
+        }
+      }
+      else{
+        return -1;
+      }
+      count ++;
+    }
+  }
+  else{
+    position = themeList.length + 1;
+  }
+  return position;
+}
+
+async function themeListOrderByPosition(themeList){
+  let structure = true;
+  themeList = themeList.sort((themeA, themeB)=>{
+    let positionA = getThemePosition(themeA);
+    let positionB = getThemePosition(themeB);
+    if(positionA != -1 && positionB != -1){
+      return positionA - positionB;
+    }
+    else{
+      structure = false;
+    }
+  });
+  return (structure) ? themeList : undefined;
+}
+
+function getThemePosition(theme){
+  let position = theme.id.split('-');
+  return (position[1] && parseInt(position[1]) != NaN) ? parseInt(position[1]) : -1;
+}
+
+module.exports = { usersExist, setUserAttribute, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate, setThemeArtist, setArtistThemes, dropArtist, dropTheme, updateThemeAuthor, updateThemesId, checkEmptyThemePositions }
