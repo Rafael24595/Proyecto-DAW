@@ -34,25 +34,29 @@ export class HomeComponent implements OnInit {
 
     this.manageComponent.setLastURL();
     this.comunicationService.sendCandy(this.candy);
-    //this.updateArtistList.getFromDataBase.then(()=> this.generateShowcaseItems());
+    let query = ['OWB', 'MR', 'CW'];
+    this.DatabaseConexService.getArtistDataByQuery(query, 4, 1, ['themeListTags']).subscribe(
+      async sucess=>{
+        if(sucess.message){
+          console.log(sucess)
+          this.generateShowcaseItems(sucess.message)
+        }
+      },
+      err=>{
+        console.log(err);
+      }
+    );
 
   }
 
-  generateShowcaseItems(){
 
-    sesionValues.artistList.list.forEach(artist => {
-      artist.themeList.forEach(theme=>{
-        for (const category in this.categories) {
-          if (theme.tags.indexOf(`_${this.categories[category].code}`) != -1 && this.categories[category].items.length < 4){
-            theme.artist = {id:'', name: '', surname:''};
-            theme.artist.id = artist.id_artist;
-            theme.artist.name = artist.name;
-            theme.artist.surname = artist.surname;
-            this.categories[category].items.push(theme);
-          }
-        }
-      });
-    });
+
+  generateShowcaseItems(paginateList){
+
+    for (const category in this.categories) {
+      let items = paginateList[category]['themeListTags']['docs'];
+      this.categories[category].items = items;
+    }
 
     this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
 

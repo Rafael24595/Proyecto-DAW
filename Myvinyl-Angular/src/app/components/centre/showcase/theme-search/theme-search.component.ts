@@ -9,6 +9,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { Artist } from 'src/app/classes/Artist';
+import { Themes } from 'src/app/classes/Themes';
 
 @Component({
   selector: 'app-theme-search',
@@ -22,6 +23,10 @@ export class ThemeSearchComponent implements OnInit {
   query:string[] = [];
   queryResult = SearchQuery;
   range = Variables.range;
+
+  queryPageUsers: number = 1;
+  queryPageArtist: number = 1;
+  queryPageThemes: number = 1;
 
   constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent) { }
 
@@ -40,38 +45,63 @@ export class ThemeSearchComponent implements OnInit {
 
   }
 
-  searchResut(){
+  searchResut(queryPage?: number | string, fields?:string[] | string){
 
-    this.queryResult.users = [];
-    this.queryResult.artists = [];
-    this.queryResult.themes = [];
+    let artistFields = ['name', 'surname', 'tags'];
+    let themeFields = ['themeListName', 'themeListTags'];
 
-    this.query.forEach(single=>{
+    if(queryPage && queryPage == 'next'){
 
-      this.DatabaseConexService.getArtistDataByQuery(this.query).subscribe(
-        async sucess=>{
-          if(sucess.message){
+      if(fields && fields == 'theme'){
+        this.queryPageThemes ++;
+        queryPage = this.queryPageThemes;
+        fields = ['theme'];
+      }
+  
+      if(fields && fields == 'artist'){
+        this.queryPageArtist ++;
+        queryPage = this.queryPageArtist;
+        fields = ['artist'];
+      }
+      
+    }
+    else{
+      this.queryResult.users = [];
+      this.queryResult.artists = [];
+      this.queryResult.themes = [];
+    }
 
-            sesionValues.artistList.list = [];
+    queryPage = (queryPage) ? queryPage : 1;
+    fields = (fields) ? fields : ['all'];
 
-            await DataManage.syncForEach(sucess.message, (artist: Artist)=>{
-              let artistData = artist as ArtistInterface;
-              sesionValues.artistList.setArtist(artistData);
+    queryPage = queryPage as number;
+    fields = fields as string[];
+
+    this.DatabaseConexService.getArtistDataByQuery(this.query, 4, queryPage, fields).subscribe(
+      async sucess=>{
+        if(sucess.message){
+
+          let paginateObject = sucess.message;
+
+          this.query.forEach(async queryValue=>{
+            artistFields.forEach(async field=>{
+              if(field != 'theme') this.queryResult.artists = this.queryResult.artists.concat(paginateObject[queryValue][field]['docs']);
             });
+            themeFields.forEach(async field=>{
+              if(field != 'artist') this.queryResult.themes = this.queryResult.themes.concat(paginateObject[queryValue][field]['docs']);
+            });
+            
+          });
 
-            let cleanData = await DataManage.clearRepeatData(sesionValues.artistList.list, single);
+          this.queryResult.artists = await DataManage.clearRepeatData(this.queryResult.artists, 'artist') as Artist[];
+          this.queryResult.themes = await DataManage.clearRepeatData(this.queryResult.themes, 'theme') as Themes[];
 
-            this.queryResult.artists = cleanData.artistList;
-            this.queryResult.themes = cleanData.themesList;
-
-          }
-        },
-        err=>{
-          console.log(err);
         }
-      );
-
-    });
+      },
+      err=>{
+        console.log(err);
+      }
+    );
 
     this.DatabaseConexService.getUsersData(this.query, 3).subscribe(
       sucess=>{

@@ -26,34 +26,42 @@ export class DataManage{
         })
     }
 
-    public static async clearRepeatData(list: Artist[], single: string){
+    public static async clearRepeatData(list: Artist[] | Themes[], type:string){
+    
+        let cleanList: Artist[] | Themes[] = [];
 
-        let artistList: Artist[] = [];
-        let themesList: Themes[] = [];
-    
-        await DataManage.syncForEach(list, (artist: Artist)=>{
+        if(type == 'artist'){
           
-          if (artist.name.toLowerCase().includes(single) || artist.surname.toLowerCase().includes(single) || artist.tags.lastIndexOf(single.toUpperCase()) != -1){
-            let alredyIn = artistList.find(artistIn=>{return (artistIn.id_artist == artist.id_artist)});
-            if (!alredyIn) artistList.push(artist);
-          }
-    
-          artist.themeList.forEach(theme => {
-            if (theme.name.toLowerCase().includes(single) || (theme.tags.lastIndexOf(single.toUpperCase()) != -1 || theme.tags.lastIndexOf(single.toLowerCase()) != -1)){
-              let alredyIn = themesList.find(themeIn=>{return (themeIn.id == theme.id)});
-              let newTheme = theme;
-              newTheme.artist = {id:'', name: '', surname:''};
-              newTheme.artist.id = artist.id_artist;
-              newTheme.artist.name = artist.name;
-              newTheme.artist.surname = artist.surname;
-              if (!alredyIn) themesList.push(theme);
+          cleanList = cleanList as Artist[];
+          list = list as Artist[];
+
+          await DataManage.syncForEach(list, (artist: Artist)=>{
+            cleanList = cleanList as Artist[];
+            let inList = cleanList.map((artist: Artist)=>{return artist.id_artist}).indexOf(artist.id_artist);
+            if(inList == -1){
+              cleanList.push(artist);
             }
           });
+
+        }
+    
+        if(type == 'theme'){
           
-        });
+          cleanList = cleanList as Themes[];
+          list = list as Themes[];
+
+          await DataManage.syncForEach(list, (theme: Themes)=>{
+            cleanList = cleanList as Themes[];
+            let inList = cleanList.map((theme: Themes)=>{return theme.id}).indexOf(theme.id);
+            if(inList == -1){
+              cleanList.push(theme);
+            }
+          });
+
+        }
+
+        return cleanList;
     
-        return {artistList, themesList};
-    
-      }
+    }
 
 }

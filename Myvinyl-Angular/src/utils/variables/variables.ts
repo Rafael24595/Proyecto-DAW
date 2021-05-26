@@ -28,7 +28,7 @@ export const Variables = {
 
 export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};
 
-interface CategoriesInterface{
+interface CategoriesInterface {
         OWB:{code: string, name:string, items:Themes[] | never}, 
         MR:{code: string, name:string, items:Themes[] | never}, 
         CW:{code: string, name:string, items:Themes[] | never}

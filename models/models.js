@@ -24,6 +24,8 @@ const ArtistSchema = new Schema({
 	}
 });
 
+ArtistSchema.plugin(mongoosePaginate);
+
 const ThemesSchema = new Schema({
 	id: {
 		type: String,

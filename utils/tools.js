@@ -100,8 +100,21 @@ async function fillThemeList(themeList){
   return new Promise(resolve=>{
     var count = 0;
     var list = [];
-    themeList.forEach(async theme => {
-      await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
+    themeList.forEach(async themeData => {
+      await Theme.findOne({"id":themeData.themeId}).lean().then(async theme=>{
+        if(theme){
+          console.log(themeData)
+          let artist = await Artist.findOne({"id_artist":theme.artist.id}).lean();
+          console.log(artist)
+          if(artist){
+            theme.artist.name = artist.name;
+            theme.artist.surname = artist.surname;
+            theme.position = themeData.position;
+            list.push(theme);
+          }
+        }
+      });
+      /*await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
         if(artist && artist.themeList && artist.themeList.length > 0){
           await artist.themeList.find(themeListData=>{
             if(themeListData.id == theme.themeId){
@@ -116,7 +129,7 @@ async function fillThemeList(themeList){
             return false;
           });
         }
-      });
+      });*/
       count++;
       if(count == themeList.length){
         resolve(list);

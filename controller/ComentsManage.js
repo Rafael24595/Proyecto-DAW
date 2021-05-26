@@ -145,7 +145,7 @@ async function publishComment(req, res){
     }
   }
 
-  async function thumbValueTheme_X(req, res){
+  /*async function thumbValueTheme_X(req, res){
     let themeId = req.body.themeId;console.log(themeId)
     let thumbValue = req.body.thumbValue;console.log(thumbValue)
     let userName = req.body.userName;console.log(userName)
@@ -199,7 +199,7 @@ async function publishComment(req, res){
     else{
       res.status(404).send('{"destroyToken":"true","message":"Sesión no válida"}');
     }
-  }
+  }*/
 
   async function resetThumbList(user, indexActive, indexUnused, themeInList){
 

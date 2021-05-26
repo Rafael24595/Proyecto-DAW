@@ -36,10 +36,11 @@ export class DatabaseConexService {
   return this.http.get<{status:boolean, artist: Artist | null}>(`http://${Variables.host}:${Variables.port}/api/getArtistData?artist=${artistId}`);
  }
 
- getArtistDataByQuery(queryData:string[], limitQuery?:number, fieldsQuery?:string[]):Observable<{status:boolean, message: Artist[] | undefined}>{
+ getArtistDataByQuery(queryData:string[], limitQuery?:number, pageQuery?:number, fieldsQuery?:string[]):Observable<{status:boolean, message: Artist[] | undefined}>{
   limitQuery = (limitQuery) ? limitQuery : 0 ;
+  pageQuery = (pageQuery) ? pageQuery : 0 ;
   fieldsQuery = (fieldsQuery) ? fieldsQuery : ['all'];
-  return this.http.post<{status:boolean, message: Artist[] | undefined}>(`http://${Variables.host}:${Variables.port}/api/getArtistDataQuery`, {queryData, limitQuery, fieldsQuery});
+  return this.http.post<{status:boolean, message: Artist[] | undefined}>(`http://${Variables.host}:${Variables.port}/api/getArtistDataQuery`, {queryData, limitQuery, pageQuery, fieldsQuery});
 }
 
  getProfileData(profile:string): Observable<{validToken:boolean,data:UserInterface}>{

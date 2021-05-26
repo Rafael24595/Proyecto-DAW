@@ -33,12 +33,13 @@
                     
                 </div>
             </div>
+            <p (click)='searchResut("next", "artist")'>Ver más</p>
         </div>
     </div>
     <div *ngIf='queryResult.themes.length > 0'>
         <h2>Temas:</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let theme of queryResult.themes' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+            <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                 <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
                     <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
                 </div>
@@ -52,5 +53,6 @@
                 </div>
             </div>
         </div>
+        <p (click)='searchResut("next", "theme")'>Ver más</p>
     </div>
 </div>

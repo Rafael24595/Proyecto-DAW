@@ -31,31 +31,62 @@ const FilesManage = require('../controller/FilesManage');
       if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
         let artistsQuery = await new Promise(resolve=>{
           let query = {};
+          let cont = 0;
           queryData.forEach(async data=>{
+            query[data] = {};
             if(fieldsQuery.indexOf('name') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['name']) query[data]['name'] = [];
               let artistByName = await Artist.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              query['name'] = artistByName;
+              query[data].name = artistByName;
             }
             if(fieldsQuery.indexOf('surname') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['surname']) query[data]['surname'] = [];
               let artistBySurname = await Artist.paginate({"surname":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              query['surname'] = artistBySurname;
+              query[data].surname = artistBySurname;
             }
             if(fieldsQuery.indexOf('tags') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['tags']) query[data]['tags'] = [];
               let artistByTags = await Artist.paginate({"tags":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              query['tags'] = artistByTags;
+              query[data].tags = artistByTags;
             }
             if(fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['themeListName']) query[data]['themeListName'] = [];
               let themeByName = await Theme.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
               themeByName.docs = await Tools.setThemeArtist(themeByName.docs);
-              query['themeListName'] = themeByName;
+              query[data].themeListName = themeByName;
             }
             if(fieldsQuery.indexOf('themeListTags') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['themeListTags']) query[data]['themeListTags'] = [];
               let themeByTags = await Theme.paginate({"tags":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              console.log(themeByTags)
               themeByTags.docs = await Tools.setThemeArtist(themeByTags.docs);
-              query['themeListTags'] = themeByTags;
+              query[data].themeListTags = themeByTags;
             }
-            resolve(query);
+            if(fieldsQuery.indexOf('artist') != -1){
+              if(!query[data]['artist']) query[data]['artist'] = [];
+              let artistByTags = await Artist.paginate(
+                {"$or":[
+                  {"name":{ "$regex": data, "$options": "i" }},
+                  {"surname":{ "$regex": data, "$options": "i" }},
+                  {"tags":{ "$regex": data, "$options": "i" }}
+                ]},
+                {limit: limitQuery, page: pageQuery});
+              query[data]['artist'] = artistByTags;
+            }
+            if(fieldsQuery.indexOf('theme') != -1){
+              if(!query[data]['theme']) query[data]['theme'] = [];
+              let themeByTags = await Theme.paginate(
+                {"$or":[
+                  {"name":{ "$regex": data, "$options": "i" }},
+                  {"tags":{ "$regex": data, "$options": "i" }}
+                ]},
+                {limit: limitQuery, page: pageQuery});
+              themeByTags.docs = await Tools.setThemeArtist(themeByTags.docs);
+              query[data]['theme'] = themeByTags;
+            }
+            cont ++;
+            if(cont == queryData.length){
+              resolve(query);
+            }
           });
         });
         res.send({status:true, message:artistsQuery});
@@ -68,6 +99,73 @@ const FilesManage = require('../controller/FilesManage');
     }
   
   }
+
+ /*async function getArtistDataQuery(req, res){
+    try {
+      let queryData = req.body.queryData;
+      let limitQuery = req.body.limitQuery;
+      let pageQuery = req.body.pageQuery;console.log(pageQuery)
+      let fieldsQuery = req.body.fieldsQuery;
+      if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
+        let artistsQuery = await new Promise(resolve=>{
+          let query = {};
+          let cont = 0;
+          queryData.forEach(async data=>{
+            query[data] = {};
+            if(fieldsQuery.indexOf('name') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['name']) query[data]['name'] = [];
+              let artistByName = await Artist.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              query[data].name = artistByName;
+            }
+            if(fieldsQuery.indexOf('surname') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['surname']) query[data]['surname'] = [];
+              let artistBySurname = await Artist.paginate({"surname":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              query[data].surname = artistBySurname;
+            }
+            if(fieldsQuery.indexOf('tags') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['tags']) query[data]['tags'] = [];
+              let artistByTags = await Artist.paginate(
+                {"$or":[
+                  {"name":{ "$regex": data, "$options": "i" }},
+                  {"surname":{ "$regex": data, "$options": "i" }},
+                  {"tags":{ "$regex": data, "$options": "i" }}
+                ]},
+                {limit: limitQuery, page: pageQuery});
+              query[data].tags = artistByTags;
+            }
+            /*if(fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['themeListName']) query[data]['themeListName'] = [];
+              let themeByName = await Theme.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
+              themeByName.docs = await Tools.setThemeArtist(themeByName.docs);
+              query[data].themeListName = themeByName;
+            }*/
+            /*if(fieldsQuery.indexOf('themeListTags') != -1 || fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
+              if(!query[data]['themeListTags']) query[data]['themeListTags'] = [];
+              let themeByTags = await Theme.paginate(
+                {"$or":[
+                  {"name":{ "$regex": data, "$options": "i" }},
+                  {"tags":{ "$regex": data, "$options": "i" }}
+                ]},
+                {limit: limitQuery, page: pageQuery});
+              themeByTags.docs = await Tools.setThemeArtist(themeByTags.docs);
+              query[data].themeListTags = themeByTags;
+            }
+            cont ++;
+            if(cont == queryData.length){
+              resolve(query);
+            }
+          });
+        });
+        res.send({status:true, message:artistsQuery});
+      }
+      else{
+        res.status(404).send({status: 'Bad petition'});
+      }
+    } catch (error) {
+      res.status(400).send({status: 'Failure'});
+    }
+  
+  }*/
 
   async function getArtistsId(req, res){
     try {

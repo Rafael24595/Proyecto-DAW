@@ -12,8 +12,6 @@ import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { Lyrics } from 'src/app/interfaces/LyricsInterface';
-import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
-import { Artist } from 'src/app/classes/Artist';
 
 @Component({
   selector: 'app-theme-information',
@@ -38,6 +36,7 @@ export class ThemeInformationComponent implements OnInit {
   isSessionUser: boolean = false;
   isAdmin: boolean = false;
   suggestThemes: Themes[] = [];
+  queryPage:number = 1;
 
   vinylState = '';
 
@@ -120,37 +119,51 @@ export class ThemeInformationComponent implements OnInit {
       //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
     }
 
-    let query = [this.theme.artist.name];
-    query = query.concat(this.theme.tags);
+    this.searchResut();
 
-    console.log(query);
-    this.DatabaseConexService.getArtistDataByQuery(query, 2, ['name', 'tags']).subscribe(
-      async sucess=>{
-        
-        if(sucess.message){
+  }
 
-          sesionValues.artistList.list = [];
+  searchResut(queryPage?: number | string){
 
-          await DataManage.syncForEach(sucess.message, (artist: Artist)=>{
-            let artistData = artist as ArtistInterface;
-            sesionValues.artistList.setArtist(artistData);
-          });
-          
-          let cleanData: {artistList: Artist[], themesList: Themes[]} | undefined;
+    if(this.theme){
 
-          query.forEach(async single=>{
-            cleanData = await DataManage.clearRepeatData(sesionValues.artistList.list, single);
-            this.suggestThemes = cleanData.themesList;
-            console.log(this.suggestThemes)
-          });
+      let query = [this.theme.artist.name];
+      query = query.concat(this.theme.tags);
 
-        }
-
-      },
-      err=>{
-        console.log(`Error: ${err}`);
+      if(queryPage && queryPage == 'next'){
+        this.queryPage ++;
+        queryPage = this.queryPage;
       }
-    );
+      else{
+        this.suggestThemes = [];
+      }
+
+      queryPage = (queryPage) ? queryPage : 1;
+
+      queryPage = queryPage as number;
+
+      this.DatabaseConexService.getArtistDataByQuery(query, 2, queryPage, ['theme']).subscribe(
+        async sucess=>{
+          
+          if(sucess.message){console.log(sucess.message);
+
+            let paginateObject = sucess.message;
+
+            query.forEach(async queryValue=>{
+              this.suggestThemes = this.suggestThemes.concat(paginateObject[queryValue]['theme']['docs']);
+            });
+
+            this.suggestThemes = await DataManage.clearRepeatData(this.suggestThemes, 'theme') as Themes[];
+
+          }
+
+        },
+        err=>{
+          console.log(`Error: ${err}`);
+        }
+      );
+    }
+
   }
 
   sentToReproductor(type:string, value?:any){
