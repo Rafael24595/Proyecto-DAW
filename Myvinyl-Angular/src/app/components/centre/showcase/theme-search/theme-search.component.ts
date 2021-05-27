@@ -10,6 +10,7 @@ import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
+import { User } from 'src/app/classes/User';
 
 @Component({
   selector: 'app-theme-search',
@@ -23,6 +24,9 @@ export class ThemeSearchComponent implements OnInit {
   query:string[] = [];
   queryResult = SearchQuery;
   range = Variables.range;
+
+  limitArtistTheme:number = 4;
+  limitUser: number = 3;
 
   queryPageUsers: number = 1;
   queryPageArtist: number = 1;
@@ -52,6 +56,12 @@ export class ThemeSearchComponent implements OnInit {
 
     if(queryPage && queryPage == 'next'){
 
+      if(fields && fields == 'user'){
+        this.queryPageUsers ++;
+        queryPage = this.queryPageUsers;
+        fields = ['user'];
+      }
+
       if(fields && fields == 'theme'){
         this.queryPageThemes ++;
         queryPage = this.queryPageThemes;
@@ -76,26 +86,25 @@ export class ThemeSearchComponent implements OnInit {
 
     queryPage = queryPage as number;
     fields = fields as string[];
-
-    this.DatabaseConexService.getArtistDataByQuery(this.query, 4, queryPage, fields).subscribe(
+    console.log(this.query)
+    this.DatabaseConexService.getArtistDataByQuery(this.query, this.limitArtistTheme, queryPage, fields).subscribe(
       async sucess=>{
         if(sucess.message){
-
           let paginateObject = sucess.message;
-
           this.query.forEach(async queryValue=>{
-            artistFields.forEach(async field=>{
-              if(field != 'theme') this.queryResult.artists = this.queryResult.artists.concat(paginateObject[queryValue][field]['docs']);
-            });
-            themeFields.forEach(async field=>{
-              if(field != 'artist') this.queryResult.themes = this.queryResult.themes.concat(paginateObject[queryValue][field]['docs']);
-            });
-            
+            if(fields && typeof fields == 'object'){
+              let artistFieldsQuery = (fields[0] == 'all') ? artistFields : fields;
+              artistFieldsQuery.forEach(async field=>{
+                if(field != 'theme' && field != 'user') this.queryResult.artists = this.queryResult.artists.concat(paginateObject[queryValue][field]['docs']);
+              });
+              let themeFieldsQuery = (fields[0] == 'all') ? themeFields : fields;
+              themeFieldsQuery.forEach(async field=>{
+                if(field != 'artist' && field != 'user') this.queryResult.themes = this.queryResult.themes.concat(paginateObject[queryValue][field]['docs']);
+              });
+            }
           });
-
           this.queryResult.artists = await DataManage.clearRepeatData(this.queryResult.artists, 'artist') as Artist[];
           this.queryResult.themes = await DataManage.clearRepeatData(this.queryResult.themes, 'theme') as Themes[];
-
         }
       },
       err=>{
@@ -103,16 +112,60 @@ export class ThemeSearchComponent implements OnInit {
       }
     );
 
-    this.DatabaseConexService.getUsersData(this.query, 3).subscribe(
-      sucess=>{
-        console.log(sucess)
-        this.queryResult.users = sucess.message;
-      },
-      err=>{
-        console.log(`Error: ${err}`);
-      }
-    );
+    if(fields[0] != 'theme' && fields[0] != 'artist'){
+      this.DatabaseConexService.getUsersData(this.query, this.limitUser, queryPage).subscribe(
+        async sucess=>{
+          console.log(sucess)
+          let paginateObject = sucess.message;
+          this.query.forEach(queryData=>{
+            console.log(paginateObject[queryData], paginateObject[queryData]['docs'])
+            this.queryResult.users = this.queryResult.users.concat(paginateObject[queryData]['docs']);
+            console.log(this.queryResult.users)
+          });
+          this.queryResult.users = await DataManage.clearRepeatData(this.queryResult.users, 'user') as User[];
+        },
+        err=>{
+          console.log(`Error: ${err}`);
+        }
+      );
+    }
 
+  }
+
+  showLess(type:string){
+    switch (type){
+
+      case 'user':
+        if(this.queryResult.users.length > this.limitUser){
+          let remove = (this.queryResult.users.length - this.limitUser) / this.limitUser;
+          remove = (remove > 1) ? 1 : remove;
+          remove = this.limitUser * remove;
+          this.queryResult.users.splice(-1 * remove, remove);
+          this.queryPageUsers = (this.queryPageUsers == 1) ? 1 : this.queryPageUsers = this.queryPageUsers - 1;
+        }
+      break;
+
+      case 'artist':
+        if(this.queryResult.artists.length > this.limitArtistTheme){
+          let remove = (this.queryResult.artists.length - this.limitArtistTheme) / this.limitArtistTheme;
+          remove = (remove > 1) ? 1 : remove;
+          remove = this.limitArtistTheme * remove;
+          this.queryResult.artists.splice(-1 * remove, remove);
+          this.queryPageArtist = (this.queryPageArtist == 1) ? 1 : this.queryPageArtist = this.queryPageArtist - 1;
+        }
+      break;
+
+      case 'theme':
+        if(this.queryResult.themes.length > this.limitArtistTheme){
+          let remove = (this.queryResult.themes.length - this.limitArtistTheme) / this.limitArtistTheme;
+          remove = (remove > 1) ? 1 : remove;
+          remove = this.limitArtistTheme * remove;
+          this.queryResult.themes.splice(-1 * remove, remove);
+          this.queryPageThemes = (this.queryPageThemes == 1) ? 1 : this.queryPageThemes = this.queryPageThemes - 1;
+        }
+      break;
+
+    }
   }
 
   showItem(element:EventTarget | null){

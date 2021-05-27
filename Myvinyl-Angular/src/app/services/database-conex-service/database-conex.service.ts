@@ -51,9 +51,10 @@ export class DatabaseConexService {
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }
 
- getUsersData(nameQuery: string[], limitQuery?:number): Observable<{sucess:boolean, message: User[]}>{
+ getUsersData(nameQuery: string[], limitQuery?:number, pageQuery?:number): Observable<{sucess:boolean, message: User[]}>{
    limitQuery = (limitQuery) ? limitQuery : 0;
-  return this.http.post<{sucess:boolean, message: User[]}>(`http://${Variables.host}:${Variables.port}/api/searchUsersDataByName?nameQuery=${nameQuery}&limitQuery=${limitQuery}`, {nameQuery, limitQuery});
+   pageQuery = (pageQuery) ? pageQuery : 1;
+  return this.http.post<{sucess:boolean, message: User[]}>(`http://${Variables.host}:${Variables.port}/api/searchUsersDataByName?nameQuery=${nameQuery}&limitQuery=${limitQuery}`, {nameQuery, limitQuery, pageQuery});
 }
 
  setNewTheme(artistId: string, name: string, flag: string, tags: string[], lyrics: {native:string, esp:string}, userName: string):Observable<{status:boolean, message:Themes[]}>{

@@ -1,5 +1,6 @@
 import { Artist } from "src/app/classes/Artist";
 import { Themes } from "src/app/classes/Themes";
+import { User } from "src/app/classes/User";
 import { sesionValues } from "../variables/sessionVariables";
 
 export class DataManage{
@@ -26,9 +27,9 @@ export class DataManage{
         })
     }
 
-    public static async clearRepeatData(list: Artist[] | Themes[], type:string){
+    public static async clearRepeatData(list: Artist[] | Themes[] | User[], type:string){
     
-        let cleanList: Artist[] | Themes[] = [];
+        let cleanList: Artist[] | Themes[] | User[] = [];
 
         if(type == 'artist'){
           
@@ -55,6 +56,21 @@ export class DataManage{
             let inList = cleanList.map((theme: Themes)=>{return theme.id}).indexOf(theme.id);
             if(inList == -1){
               cleanList.push(theme);
+            }
+          });
+
+        }
+
+        if(type == 'user'){
+          
+          cleanList = cleanList as User[];
+          list = list as User[];
+
+          await DataManage.syncForEach(list, (user: User)=>{
+            cleanList = cleanList as User[];
+            let inList = cleanList.map((user: User)=>{return user.name}).indexOf(user.name);
+            if(inList == -1){
+              cleanList.push(user);
             }
           });
 

@@ -73,6 +73,34 @@ async function getUserData(req, res){
 async function searchUsersDataByName(req, res){
   let nameQuery = req.body.nameQuery;
   let limitQuery = req.body.limitQuery;
+  let pageQuery = req.body.pageQuery;
+  if(Array.isArray(nameQuery)){
+    let userData = await new Promise(resolve=>{
+      let data = {};
+      let index = 0;
+      nameQuery.forEach(async query => {
+        data[query] = [];
+        let queryResult = await User.paginate({name:{ "$regex": query, "$options": "i" }},{limit: limitQuery, page: pageQuery});
+        //data = data.concat(queryResult)
+        queryResult.docs = await Tools.simplifyUsers(queryResult.docs);
+        data[query] = queryResult;
+        index ++;
+        if(index == nameQuery.length){
+          resolve(data);
+        }
+      });
+    });
+    console.log(userData)
+    res.status(200).send({status: true, message:userData});
+  }
+  else{
+    res.status(400).send({status: "Bad query"});
+  }
+}
+
+async function _searchUsersDataByName(req, res){
+  let nameQuery = req.body.nameQuery;
+  let limitQuery = req.body.limitQuery;
   if(Array.isArray(nameQuery)){
     let userData = await new Promise(resolve=>{
       let data = [];

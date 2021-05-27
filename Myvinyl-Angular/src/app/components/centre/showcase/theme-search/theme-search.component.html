@@ -16,6 +16,7 @@
                         </p> 
                     </div>
                 </div>
+                <p> <span (click)='searchResut("next", "user")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("user")' class="cursor-pointer">Ver menos</span></p>
             </div>
         </div>
     </div>
@@ -33,7 +34,7 @@
                     
                 </div>
             </div>
-            <p (click)='searchResut("next", "artist")'>Ver más</p>
+            <p><span (click)='searchResut("next", "artist")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("artist")' class="cursor-pointer">Ver menos</span></p>
         </div>
     </div>
     <div *ngIf='queryResult.themes.length > 0'>
@@ -53,6 +54,6 @@
                 </div>
             </div>
         </div>
-        <p (click)='searchResut("next", "theme")'>Ver más</p>
+        <p><span (click)='searchResut("next", "theme")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("theme")' class="cursor-pointer">Ver menos</span></p>
     </div>
 </div>
