@@ -1,6 +1,6 @@
 <div id="homeContainer">
     <div *ngIf='queryResult.users.length > 0'>
-        <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">Usuarios:</h2>
+        <h2 class="title-back">Usuarios:</h2>
         <div>
             <div style="margin-left: 25px;">
                 <div *ngFor='let user of queryResult.users' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div *ngIf='queryResult.artists.length > 0'>
-        <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">Artistas:</h2>
+        <h2 class="title-back">Artistas:</h2>
         <div style="margin-left: 25px;">
             <div *ngFor='let artist of queryResult.artists' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div *ngIf='queryResult.themes.length > 0'>
-        <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">Temas:</h2>
+        <h2 class="title-back">Temas:</h2>
         <div style="margin-left: 25px;">
             <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">

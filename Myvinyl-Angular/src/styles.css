@@ -433,7 +433,10 @@ input{
 .my-vinyl-icons-font{
 	font-family: my-vinyl-icons;
 }
-
+.title-back{
+	background-color: rgba(0,0,10,0.2);
+	padding: 10px;
+}
 .black-button{
 	padding-left: 12px;
     padding-right: 12px;

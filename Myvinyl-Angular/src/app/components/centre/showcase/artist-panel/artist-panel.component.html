@@ -1,6 +1,6 @@
 <div id="homeContainer">
     <div *ngIf='artist'>
-        <div class="display-inline" style="width: 60%; padding: 15px; box-sizing: border-box;">
+        <div class="display-inline" style="width: 60%; background-color: rgba(255,255,255, 0.1); padding: 25px; box-sizing: border-box;">
             <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
                 <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
@@ -41,7 +41,7 @@
 
 
                 <div *ngIf='isAdmin' class="txt-horizontal-center">
-                    <h3 style="margin-top: 0px; margin-bottom: 10px;" class="txt-horizontal-left">Etiquetas:</h3>
+                    <h3 style="margin-top: 0px; margin-bottom: 10px;" class="txt-horizontal-left title-back">Etiquetas:</h3>
                     <p *ngFor='let artistTag of artist.tags; let i = index' class="display-inline">
                         <span>{{artistTag}} - </span>
                         <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})' id="trash-can-animation" class="my-vinyl-icons-font display-inline font-size-150">
@@ -55,8 +55,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="display-inline" style="width: 80%;">Temas: </h3>
-                    <span *ngIf='isAdmin' style="position: absolute; transform: translateY(50%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span>
+                    <h3 class="title-back" style="">Temas: <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
                 </div>
                 <div style="max-height: 500px; overflow: auto; padding: 15px;">
                     <div class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
