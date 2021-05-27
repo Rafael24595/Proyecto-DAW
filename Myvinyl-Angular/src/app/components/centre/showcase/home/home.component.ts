@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { sesionValues } from '../../../../../utils/variables/sessionVariables';
-import { Categories } from '../../../../../utils/variables/variables';
+import { Categories, GlobalVariables } from '../../../../../utils/variables/variables';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   idErr = {text:'', class:''};
   nameErr = {text:'', class:''};
   avatarErr = {text:'', class:''};
+  blackScreenStatus = GlobalVariables;
 
   constructor(private DatabaseConexService: DatabaseConexService, private comunicationService :ComunicationServiceService, private router: Router, private manageComponent:ManageComponent) { }
 
@@ -82,6 +83,7 @@ export class HomeComponent implements OnInit {
             this.artistIdsLoad = true;
           }
         });
+        this.blackScreenStatus.blackScreenStatus = 'show';
       },
       err=>{
         console.log(err);

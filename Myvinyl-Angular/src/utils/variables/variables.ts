@@ -22,8 +22,11 @@ export const Variables = {
         candyDeadEnd:['theme'],
         host:'localhost',
         port:'2525',
-        range:{0:'Estandard', 1:'Administrador'},
-        filesPath:'../../../../public/assets/media'
+        range:{0:'Estandard', 1:'Administrador'}
+}
+
+export let GlobalVariables: {blackScreenStatus: string} = {
+        blackScreenStatus: '',
 }
 
 export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};

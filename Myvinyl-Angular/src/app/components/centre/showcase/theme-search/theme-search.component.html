@@ -3,9 +3,10 @@
         <h2>Usuarios:</h2>
         <div>
             <div style="margin-left: 25px;">
-                <div *ngFor='let user of queryResult.users' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
-                    <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px; background-color: black; border-radius: 50%;" class="display-inline">
-                        <img class="cursor-pointer" [routerLink]='["/Profile/" + user.name]' style="width: 75px; box-sizing: border-box;" src="{{mediaPath}}/images/users/{{user.name}}.png">
+                <div *ngFor='let user of queryResult.users' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
+                    <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px; background-color: black; border-radius: 50%;" class="display-inline">
+                        <img class="cursor-pointer" [routerLink]='["/Profile/" + user.name]' style="width: 70px; box-sizing: border-box;" src="{{mediaPath}}/images/users/{{user.name}}.png"
+                        onerror="setImageErr(this, 'user')" >
                     </div>
                     <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                         <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
@@ -23,9 +24,9 @@
     <div *ngIf='queryResult.artists.length > 0'>
         <h2>Artistas:</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let artist of queryResult.artists' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
-                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
-                    <img class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}' style="width: 75px; border: 2px solid rgba(25, 25, 25, 0.5); border-radius: 50%; box-sizing: border-box;" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png">
+            <div *ngFor='let artist of queryResult.artists' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
+                <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}' style="width: 70px; border: 2px solid rgba(25, 25, 25, 0.5); border-radius: 50%; box-sizing: border-box;" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
@@ -40,9 +41,9 @@
     <div *ngIf='queryResult.themes.length > 0'>
         <h2>Temas:</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
-                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
-                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+            <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">

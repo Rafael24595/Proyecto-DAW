@@ -100,73 +100,6 @@ const FilesManage = require('../controller/FilesManage');
   
   }
 
- /*async function getArtistDataQuery(req, res){
-    try {
-      let queryData = req.body.queryData;
-      let limitQuery = req.body.limitQuery;
-      let pageQuery = req.body.pageQuery;console.log(pageQuery)
-      let fieldsQuery = req.body.fieldsQuery;
-      if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
-        let artistsQuery = await new Promise(resolve=>{
-          let query = {};
-          let cont = 0;
-          queryData.forEach(async data=>{
-            query[data] = {};
-            if(fieldsQuery.indexOf('name') != -1 || fieldsQuery.indexOf('all') != -1){
-              if(!query[data]['name']) query[data]['name'] = [];
-              let artistByName = await Artist.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              query[data].name = artistByName;
-            }
-            if(fieldsQuery.indexOf('surname') != -1 || fieldsQuery.indexOf('all') != -1){
-              if(!query[data]['surname']) query[data]['surname'] = [];
-              let artistBySurname = await Artist.paginate({"surname":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              query[data].surname = artistBySurname;
-            }
-            if(fieldsQuery.indexOf('tags') != -1 || fieldsQuery.indexOf('all') != -1){
-              if(!query[data]['tags']) query[data]['tags'] = [];
-              let artistByTags = await Artist.paginate(
-                {"$or":[
-                  {"name":{ "$regex": data, "$options": "i" }},
-                  {"surname":{ "$regex": data, "$options": "i" }},
-                  {"tags":{ "$regex": data, "$options": "i" }}
-                ]},
-                {limit: limitQuery, page: pageQuery});
-              query[data].tags = artistByTags;
-            }
-            /*if(fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
-              if(!query[data]['themeListName']) query[data]['themeListName'] = [];
-              let themeByName = await Theme.paginate({"name":{ "$regex": data, "$options": "i" }}, {limit: limitQuery, page: pageQuery});
-              themeByName.docs = await Tools.setThemeArtist(themeByName.docs);
-              query[data].themeListName = themeByName;
-            }*/
-            /*if(fieldsQuery.indexOf('themeListTags') != -1 || fieldsQuery.indexOf('themeListName') != -1 || fieldsQuery.indexOf('all') != -1){
-              if(!query[data]['themeListTags']) query[data]['themeListTags'] = [];
-              let themeByTags = await Theme.paginate(
-                {"$or":[
-                  {"name":{ "$regex": data, "$options": "i" }},
-                  {"tags":{ "$regex": data, "$options": "i" }}
-                ]},
-                {limit: limitQuery, page: pageQuery});
-              themeByTags.docs = await Tools.setThemeArtist(themeByTags.docs);
-              query[data].themeListTags = themeByTags;
-            }
-            cont ++;
-            if(cont == queryData.length){
-              resolve(query);
-            }
-          });
-        });
-        res.send({status:true, message:artistsQuery});
-      }
-      else{
-        res.status(404).send({status: 'Bad petition'});
-      }
-    } catch (error) {
-      res.status(400).send({status: 'Failure'});
-    }
-  
-  }*/
-
   async function getArtistsId(req, res){
     try {
       let attribute = req.query.attribute;
@@ -403,7 +336,6 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function setThemesAttribute(req, res){
-    let artistId = req.body.artistId;
     let themeId = req.body.themeId;console.log(themeId)
     let attribute = req.body.attribute;console.log(attribute)
     let value = req.body.value;console.log(value)
@@ -412,7 +344,8 @@ const FilesManage = require('../controller/FilesManage');
     if(userName == req.userNameToken && req.isAdmin){
       let theme = await Theme.findOne({'id':themeId});
       if(theme != null){
-        if(theme[attribute] && typeof theme[attribute] == typeof value){
+        console.log(theme[attribute] , typeof theme[attribute] , typeof value)
+        if(theme[attribute] != undefined && typeof theme[attribute] == typeof value){
           if(attribute != 'id'){
             theme[attribute] = value;
             theme.markModified(attribute);

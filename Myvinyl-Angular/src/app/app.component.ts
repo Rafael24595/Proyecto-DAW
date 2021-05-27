@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ArtistList } from './classes/ArtistList';
+import { GlobalVariables } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'Myvinyl';
+  blackScreenStatus = GlobalVariables;
 }

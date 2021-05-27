@@ -1,4 +1,5 @@
 export interface BarThemesListInterface{
     id:string,
-    name:string
+    name:string,
+    views:number
 }

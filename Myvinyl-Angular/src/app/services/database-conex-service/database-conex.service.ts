@@ -73,8 +73,8 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/setArtistAttribute`, {artistId, attribute, value, userName});
  }
 
- setThemeAttribute(artistId:string, themeId: string, attribute: string, value: string | string[] | ThemeComment[] |Lyrics, userName: string):Observable<{status:boolean,message:Themes}>{
-  return this.http.post<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/setThemesAttribute`, {artistId, themeId, attribute, value, userName});
+ setThemeAttribute(themeId: string, attribute: string, value: string | string[] | number | ThemeComment[] |Lyrics, userName: string):Observable<{status:boolean,message:Themes}>{
+  return this.http.post<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/setThemesAttribute`, {themeId, attribute, value, userName});
  }
 
  reassignArtistTheme(mainArtistId: string, targetArtistId:string, themeId:string, userName:string):Observable<{status:boolean,message:Artist}>{

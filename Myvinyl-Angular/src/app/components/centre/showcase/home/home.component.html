@@ -2,9 +2,9 @@
     <div *ngIf='isAdmin'>
         <h2>Nuevo artista</h2>
         <div style="margin-left: 25px;">
-            <div class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
-                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
-                    <img class="cursor-pointer" style="width: 75px; border: 2px solid; box-sizing: border-box;" (click)=showHomeForm() src="{{mediaPath}}/images/covers/new_cover.png">
+            <div class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
+                <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" style="width: 70px; border: 2px solid; box-sizing: border-box;" (click)=showHomeForm() src="{{mediaPath}}/images/covers/new_cover.png">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;" (click)=showHomeForm() class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
@@ -16,8 +16,8 @@
         <h2>{{category.value.name}}</h2>
         <div style="margin-left: 25px;">
             <div *ngFor='let item of category.value.items' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
-                <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-right: 12px;" class="display-inline">
-                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png">
+                <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
+                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
@@ -30,32 +30,54 @@
             </div>
         </div>
     </div>
-    <div *ngIf='showForm'>
-        <h2>Nuevo artista:</h2>
-        <label for="avatar"><p>Avatar: </p>
-            <input id="avatarFile" type="file" class="{{avatarErr.class}}" [(ngModel)]="newArtist.avatarFile" (change)='setImagePreview("avatar")'>
-            <img id="avatarPreview" src="ghostAvatar.png">
-            <p *ngIf='avatarErr.text != ""'>{{avatarErr.text}}</p>
-        </label>
-        <label for="id"><p>Id: </p>
-            <input  type="text" class="{{idErr.class}}" [(ngModel)]="newArtist.id">
-            <p *ngIf='idErr.text != ""'>{{idErr.text}}</p>
-        </label>
-        <label for="name"><p>Nombre: </p>
-            <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newArtist.name">
-            <p *ngIf='nameErr.text != ""'>{{idErr.text}}</p>
-        </label>
-        <label for="surname"><p>Apellidos: </p>
-            <input  type="text" [(ngModel)]="newArtist.surname">
-        </label>
-        <label for="description"><p>Descripción: </p>
-            <textarea name="description" id="" cols="30" rows="10" [(ngModel)]="newArtist.description"></textarea>
-        </label>
-        <label for="tags"><p>Etiquetas: </p>
-            <input id="tags" type="text" [(ngModel)]="newArtist.tags" placeholder="tag, tag, tag">
-        </label>
-        <br><br>
-        <button (click)='confirmFrom()' >Modificar</button>
-        <button (click)='showForm = false' >Cancelar</button>
+    <div *ngIf='showForm && blackScreenStatus.blackScreenStatus != ""' class="form-style">
+        <div class="txt-horizontal-center">
+            <h2>Nuevo artista:</h2>
+            <div class="txt-horizontal-left" style="padding-left: 15px; padding-right: 15px;">
+                <div>
+                    <label for="avatar">
+                        <div>
+                            <div class="display-inline">
+                                <p>Avatar:</p>
+                                <input id="avatarFile" type="file" class="{{avatarErr.class}}" [(ngModel)]="newArtist.avatarFile" (change)='setImagePreview("avatar")'>
+                            </div>
+                            <div class="display-inline avatar-back" style="height: 100px; width: 100px; margin-left: 15px; float: right; transform: translateY(15%);">
+                                <img id="avatarPreview" style="height: 100px;" src="{{mediaPath}}/images/users/default-profile.png">
+                            </div>
+                            <p *ngIf='avatarErr.text != ""'>{{avatarErr.text}}</p>
+                        </div>
+                    </label>
+                </div>
+                <br><br>
+                <div style="white-space: nowrap;">
+                    <div class="display-inline" style="width: 50%;">
+                        <label for="id"><p>Id: </p>
+                            <input  type="text" class="{{idErr.class}}" [(ngModel)]="newArtist.id">
+                            <p *ngIf='idErr.text != ""'>{{idErr.text}}</p>
+                        </label>
+                        <label for="name"><p>Nombre: </p>
+                            <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newArtist.name">
+                            <p *ngIf='nameErr.text != ""'>{{idErr.text}}</p>
+                        </label>
+                        <label for="surname"><p>Apellidos: </p>
+                            <input  type="text" [(ngModel)]="newArtist.surname">
+                        </label>
+                    </div>
+                    <div class="display-inline" style="width: 50%; vertical-align: top;">
+                        <label for="description"><p>Descripción: </p>
+                            <textarea name="description" id="" cols="30" rows="10" [(ngModel)]="newArtist.description"></textarea>
+                        </label>
+                        <label for="tags"><p>Etiquetas: </p>
+                            <input id="tags" type="text" [(ngModel)]="newArtist.tags" placeholder="tag, tag, tag">
+                        </label>
+                    </div>
+                </div>
+                <br><br>
+                <div class="txt-horizontal-center">
+                    <button (click)='confirmFrom()' style="margin-right: 10px;" >Modificar</button>
+                    <button (click)='showForm = false; blackScreenStatus.blackScreenStatus = ""' style="margin-left: 10px;">Cancelar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

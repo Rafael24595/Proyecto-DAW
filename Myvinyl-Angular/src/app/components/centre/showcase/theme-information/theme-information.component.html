@@ -126,11 +126,11 @@
             <div>
                 <h3 class="display-inline">Relacionados: </h3>
                 <div style="max-height: 650px; overflow: auto; padding: 10px;">
-                    <div *ngFor='let theme of suggestThemes' style="background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
-                        <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                            <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                    <div *ngFor='let theme of suggestThemes' style="text-align: left; background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                        <div style="vertical-align: middle; height: 60px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                            <img style="width: 60px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
                         </div>
-                        <div style="text-align: left; width: 70%; vertical-align: middle;" class="display-inline">
+                        <div style="text-align: left; width: 55%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
                                 <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
                                 <span> - </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>

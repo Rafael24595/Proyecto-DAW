@@ -12,9 +12,9 @@ export class BarUtils{
     return cuersorPosition + overflow;
   }
 
-    public static randomizeList(themesList:{id:string, name:string}[],position:number){
-        let randomList:{id:string, name:string}[] = [];
-        let themeListTransition:{id:string, name:string}[] = this.copyArray(themesList) as {id:string, name:string}[];
+    public static randomizeList(themesList:BarThemesListInterface[],position:number){
+        let randomList:BarThemesListInterface[] = [];
+        let themeListTransition:BarThemesListInterface[] = this.copyArray(themesList) as BarThemesListInterface[];
         randomList.push(themeListTransition[position]);
         themeListTransition.splice(position, 1);
         while(themeListTransition.length > 0){

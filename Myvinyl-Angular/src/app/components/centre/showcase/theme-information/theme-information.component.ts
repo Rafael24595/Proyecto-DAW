@@ -98,6 +98,12 @@ export class ThemeInformationComponent implements OnInit {
           this.vinylState = 'cursor-pointer';
         break;
 
+        case 'views':
+          if(this.theme){
+            this.theme.views = value
+          }
+        break;
+
       }
     }
 
@@ -438,7 +444,7 @@ export class ThemeInformationComponent implements OnInit {
           if(attribute.attrName == 'flag'){
             await DataManage.toAsync((resolve: (value: unknown) => void)=>{
               if(this.theme){
-                this.DatabaseConexService.setThemeAttribute(this.theme.artist.id, this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
+                this.DatabaseConexService.setThemeAttribute(this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
                   sucess=>{
                     if(this.theme && sucess.message){
                       this.theme = new Themes(sucess.message.id, sucess.message.name, sucess.message.flag, sucess.message.tags, sucess.message.lyrics, this.theme.artist, sucess.message.comments, sucess.message.likes, sucess.message.dislikes, sucess.message.views);
@@ -471,7 +477,7 @@ export class ThemeInformationComponent implements OnInit {
 
         await DataManage.toAsync((resolve: (value: unknown) => void)=>{
           if(this.theme){
-            this.DatabaseConexService.setThemeAttribute(this.theme.artist.id, this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
+            this.DatabaseConexService.setThemeAttribute(this.theme.id, attribute.attrName, (attribute.value) ? attribute.value : '', sesionValues.activeUser.name).subscribe(
               sucess=>{
                 if(this.theme && sucess.message){
                   let lyricsType = (this.lyrics == this.theme.lyrics.native) ? 'native' : 'esp';

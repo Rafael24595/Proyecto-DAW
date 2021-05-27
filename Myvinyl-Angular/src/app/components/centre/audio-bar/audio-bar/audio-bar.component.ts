@@ -5,6 +5,7 @@ import { BarUtils } from '../../../../../utils/audio-bar/Bar-Utils';
 import { Color_Vars } from '../../../../../utils/audio-bar/variables/Bar-Variables';
 import { Themes } from 'src/app/classes/Themes';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 
 @Component({
@@ -16,7 +17,7 @@ export class AudioBarComponent implements OnInit {
 
   @Output() outputToparent = new EventEmitter<{status:string, value:string | number}>();
 
-  constructor(private comunicationService :ComunicationServiceService) {
+  constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService) {
   }
 
   ngOnInit(): void { 
@@ -112,6 +113,8 @@ export class AudioBarComponent implements OnInit {
   themesList:BarThemesListInterface[] = [];
   themesListRandom:BarThemesListInterface[] = [];
   themesListActive:BarThemesListInterface[] = this.themesList;
+  isView = false;
+  lastTime:number = 0;
   secodsPlayed:number = 0;
   position = 0;
   randomList = false;
@@ -574,12 +577,36 @@ export class AudioBarComponent implements OnInit {
       this.pointAudioPosition = movement;
       this.barAudioSizeProgress = movement;
       this.time = BarUtils.getSeconds((!this.isReverse) ? Math.trunc(this.audio.currentTime) : Math.trunc(this.audio.duration - this.audio.currentTime));
-      this.secodsPlayed = this.secodsPlayed + 1
-      console.log(this.secodsPlayed)
-      if(this.secodsPlayed >= this.audio.duration / 2){
-        console.log('middle')
+      let timePast = this.audio.currentTime - this.lastTime;
+      this.lastTime = this.audio.currentTime
+      this.secodsPlayed = this.secodsPlayed + timePast;
+      if(!this.isView && this.secodsPlayed >= this.audio.duration / 2){
+        this.updateViews();
+        this.isView = true;
       }
     }
+  }
+
+  updateViews(){
+
+    let theme = this.themesList[this.position];
+    this.DatabaseConexService.getThemeData(theme.id).subscribe(
+      sucess=>{
+        let viewsNew = sucess.views + 1;
+        this.DatabaseConexService.setThemeAttribute(theme.id, 'views', viewsNew, sesionValues.activeUser.name).subscribe(
+          sucess=>{
+            console.log(sucess.message.views)
+            this.comunicationService.sendReproductorViewData({type:'views', value:sucess.message.views});
+          },
+          err=>{
+            console.log(err);
+          }
+        );
+      },
+      err=>{
+
+      }
+    );
   }
 
   showTimePointer(event:MouseEvent){
