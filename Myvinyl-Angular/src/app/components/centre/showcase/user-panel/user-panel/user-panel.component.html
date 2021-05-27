@@ -144,7 +144,7 @@
                                     <ng-container *ngIf='singleTheme.name'>
                                         <div class="display-inline" style="vertical-align: middle; margin: 10px; margin-right: 15px; min-width: 50px;">
                                             <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
-                                            <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png">
+                                            <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png" (error)="updateUrl($event, 'theme')">
                                         </div>
                                         <ng-container *ngIf='isSessionUser && themeList.userManage'>
                                             <div class="display-inline theme-container-title" style="width: 58%;">

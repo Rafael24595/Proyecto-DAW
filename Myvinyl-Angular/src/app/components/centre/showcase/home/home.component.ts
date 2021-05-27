@@ -91,6 +91,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  updateUrl(event: Event, type: string){console.log('inx')
+    let element = event.target as HTMLImageElement;
+    DataManage.repairBrokenImages(element, this.mediaPath, type);
+  }
+
   async confirmFrom(){
     let sendForm = await this.modifyThemeData();
     console.log(sendForm)

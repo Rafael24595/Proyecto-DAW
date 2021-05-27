@@ -11,6 +11,7 @@ import { DataManage } from 'src/utils/tools/DataManage';
 import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
 import { User } from 'src/app/classes/User';
+import { param } from 'jquery';
 
 @Component({
   selector: 'app-theme-search',
@@ -24,6 +25,7 @@ export class ThemeSearchComponent implements OnInit {
   query:string[] = [];
   queryResult = SearchQuery;
   range = Variables.range;
+  showUser: boolean = true;
 
   limitArtistTheme:number = 4;
   limitUser: number = 3;
@@ -39,6 +41,7 @@ export class ThemeSearchComponent implements OnInit {
     this.manageComponent.setLastURL();
     this.route.queryParams.subscribe(params =>{
       this.query = params['query'].toLowerCase().split('+');
+      this.showUser = (!params['user']);
       this.candy.query['query'] = params['query'];
       this.searchResut();
       }
@@ -112,7 +115,7 @@ export class ThemeSearchComponent implements OnInit {
       }
     );
 
-    if(fields[0] != 'theme' && fields[0] != 'artist'){
+    if(this.showUser && fields[0] != 'theme' && fields[0] != 'artist'){
       this.DatabaseConexService.getUsersData(this.query, this.limitUser, queryPage).subscribe(
         async sucess=>{
           console.log(sucess)
@@ -130,6 +133,11 @@ export class ThemeSearchComponent implements OnInit {
       );
     }
 
+  }
+
+  updateUrl(event: Event, type: string){
+    let element = event.target as HTMLImageElement;
+    DataManage.repairBrokenImages(element, this.mediaPath, type);
   }
 
   showLess(type:string){

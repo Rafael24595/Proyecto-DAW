@@ -1,6 +1,6 @@
 <div id="homeContainer">
     <div *ngIf='isAdmin'>
-        <h2>Nuevo artista</h2>
+        <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">Nuevo artista</h2>
         <div style="margin-left: 25px;">
             <div class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
@@ -13,11 +13,11 @@
         </div>
     </div>
     <div *ngFor='let category of categories | keyvalue'>
-        <h2>{{category.value.name}}</h2>
+        <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">{{category.value.name}}</h2>
         <div style="margin-left: 25px;">
             <div *ngFor='let item of category.value.items' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
-                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png">
+                    <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png" (error)="updateUrl($event, 'theme')">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
@@ -32,7 +32,7 @@
     </div>
     <div *ngIf='showForm && blackScreenStatus.blackScreenStatus != ""' class="form-style">
         <div class="txt-horizontal-center">
-            <h2>Nuevo artista:</h2>
+            <h2 style="background-color: rgba(0,0,10,0.2); padding: 10px;">Nuevo artista:</h2>
             <div class="txt-horizontal-left" style="padding-left: 15px; padding-right: 15px;">
                 <div>
                     <label for="avatar">

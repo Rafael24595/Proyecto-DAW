@@ -2,7 +2,7 @@
     <div *ngIf='artist'>
         <div class="display-inline" style="width: 60%; padding: 15px; box-sizing: border-box;">
             <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
-                <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png">
+                <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
                     <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
                 </span>
@@ -58,16 +58,24 @@
                     <h3 class="display-inline" style="width: 80%;">Temas: </h3>
                     <span *ngIf='isAdmin' style="position: absolute; transform: translateY(50%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span>
                 </div>
-                <div style="max-height: 500px;">
-                    <div *ngFor='let theme of artist.themeList' style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
-                        <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                            <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                <div style="max-height: 500px; overflow: auto; padding: 15px;">
+                    <div class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
+                        <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                            <img style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/new_cover.png">
+                        </div>
+                        <div style="vertical-align: middle;" class="display-inline">
+                            <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">Nuevo tema</p> 
+                        </div>
+                    </div>
+                    <div *ngFor='let theme of artist.themeList' style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                        <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-left: 10px; margin-right: 10px;" class="display-inline">
+                            <img style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         </div>
                         <div style="width: 58%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span>Nombre: </span> <span class="cursor-pointer" (click)=showItem(theme.id)>{{theme.name}}</span></p> 
                             <ng-container>
                                 <p *ngIf='isAdmin' style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span>Id: </span> <span>{{theme.id}}</span></p>
-                                <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150" style="position: relative;">
                                     <span class="trash-cap cursor-pointer display-inline">0</span>
                                     <span class="trash-body cursor-pointer display-inline">/</span>
                                 </span>
@@ -77,14 +85,6 @@
                                 </span>
                             </ng-container>
                         </div>
-                    </div>
-                </div>
-                <div class="cursor-pointer" style="background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
-                    <div style="vertical-align: middle; height: 75px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                        <img style="width: 75px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/new_cover.png">
-                    </div>
-                    <div style="vertical-align: middle;" class="display-inline">
-                        <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">Nuevo tema</p> 
                     </div>
                 </div>
                 <div *ngIf='showInput'>

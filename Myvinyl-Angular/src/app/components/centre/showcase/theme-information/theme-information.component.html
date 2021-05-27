@@ -7,8 +7,8 @@
                         <div class="txt-horizontal-left">
                             <div>
                                 <div class="display-inline" style="position: relative; width: 90%;">
-                                    <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png">
-                                    <img style="position: relative; width: 100%; z-index: 2;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                                    <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png" (error)="updateUrl($event, 'vinyl-xl')">
+                                    <img style="position: relative; width: 100%; z-index: 2;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                                 </div>
                                 <div *ngIf='isAdmin' class="display-inline" style="text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
                                     <span id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
@@ -128,7 +128,7 @@
                 <div style="max-height: 650px; overflow: auto; padding: 10px;">
                     <div *ngFor='let theme of suggestThemes' style="text-align: left; background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                         <div style="vertical-align: middle; height: 60px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                            <img style="width: 60px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png">
+                            <img style="width: 60px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         </div>
                         <div style="text-align: left; width: 55%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">

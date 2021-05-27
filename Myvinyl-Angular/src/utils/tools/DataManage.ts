@@ -80,4 +80,26 @@ export class DataManage{
     
     }
 
+    static repairBrokenImages(element: HTMLImageElement, path:string, type:string){
+      if(element){
+
+        switch (type){
+
+          case 'user':
+            element.src = `${path}/images/users/default-profile.png`
+          break;
+
+          case 'artist':
+            element.src = `${path}/images/artists/not_found.png`
+          break;
+
+          case 'theme':
+            element.src = `${path}/images/covers/not_found.png`
+          break;
+
+        }
+
+      }
+    }
+
 }

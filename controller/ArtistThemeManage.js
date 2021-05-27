@@ -250,6 +250,10 @@ const FilesManage = require('../controller/FilesManage');
               artist.themeList = themes;
             }
           }
+          else{
+            let themes = await Theme.find({'artist.id':artist.id_artist}).lean();
+            artist.themeList = themes;
+          }
           res.headerSent = true;
           res.status(200).json({status:true, message: artist});
         }

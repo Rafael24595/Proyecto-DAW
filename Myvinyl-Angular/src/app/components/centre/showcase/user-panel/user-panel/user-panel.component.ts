@@ -125,6 +125,11 @@ export class UserPanelComponent implements OnInit {
 
   }
   
+  updateUrl(event: Event, type: string){console.log('inx')
+    let element = event.target as HTMLImageElement;
+    DataManage.repairBrokenImages(element, this.mediaPath, type);
+  }
+
   eventDrag(event: Event){
     event.preventDefault()
     let clickElement = event.target as HTMLElement;

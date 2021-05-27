@@ -70,6 +70,11 @@ export class ThemeInformationComponent implements OnInit {
     this.comunicationService.sendReproductorViewDataObservable.subscribe(data=>{this.reproductorSubscribe(data)});
   }
 
+  updateUrl(event: Event, type: string){console.log('inx')
+    let element = event.target as HTMLImageElement;
+    DataManage.repairBrokenImages(element, this.mediaPath, type);
+  }
+
   reproductorSubscribe(data:{type:string, value: any}){
 
     if(data && data.type){

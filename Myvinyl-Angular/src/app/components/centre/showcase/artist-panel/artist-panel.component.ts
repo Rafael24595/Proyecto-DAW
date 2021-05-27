@@ -63,6 +63,11 @@ export class ArtistPanelComponent implements OnInit {
     });
   }
 
+  updateUrl(event: Event, type: string){console.log('inx')
+    let element = event.target as HTMLImageElement;
+    DataManage.repairBrokenImages(element, this.mediaPath, type);
+  }
+
   showArtistForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
     this.showInput = true;
     this.inputAttr = attribute.attrName;

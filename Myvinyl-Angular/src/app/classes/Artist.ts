@@ -18,9 +18,11 @@ export class Artist {
 		this.tags = tags;
 		this.themeList = [];
 
-		themeList.forEach(theme=>{
-			this.themeList.push(new Themes(theme.id, theme.name, theme.flag, theme.tags, theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views))
-		})
+		if(themeList){
+			themeList.forEach(theme=>{
+				this.themeList.push(new Themes(theme.id, theme.name, theme.flag, theme.tags, theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views))
+			});
+		}
 
 	}
 
