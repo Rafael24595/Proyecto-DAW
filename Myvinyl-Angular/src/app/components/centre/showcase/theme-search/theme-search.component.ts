@@ -5,13 +5,10 @@ import { ComunicationServiceService } from 'src/app/services/comunication-servic
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { CandyBomb, SearchQuery, Variables } from 'src/utils/variables/variables';
-import { sesionValues } from 'src/utils/variables/sessionVariables';
-import { ArtistInterface } from 'src/app/interfaces/ArtistsInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { Artist } from 'src/app/classes/Artist';
 import { Themes } from 'src/app/classes/Themes';
 import { User } from 'src/app/classes/User';
-import { param } from 'jquery';
 
 @Component({
   selector: 'app-theme-search',

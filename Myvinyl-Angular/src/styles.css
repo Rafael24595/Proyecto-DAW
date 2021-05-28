@@ -1,3 +1,7 @@
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
 @font-face {
 	font-family: my-vinyl-icons;
 	src: url(./assets/fonts/my-vinyl-icons.ttf);
@@ -551,7 +555,7 @@ input{
 	background-color: black;
 }
 .form-style{
-	width: 550px;
+	width: 625px;
 	position: fixed;
 	padding: 25px;
 	top: 50%;

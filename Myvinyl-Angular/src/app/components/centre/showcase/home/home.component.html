@@ -65,7 +65,47 @@
                     </div>
                     <div class="display-inline" style="width: 50%; vertical-align: top;">
                         <label for="description"><p>Descripción: </p>
-                            <textarea name="description" id="" cols="30" rows="10" [(ngModel)]="newArtist.description"></textarea>
+                            <quill-editor [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="newArtist.description">
+                                <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-header" value="1"></button>
+                                        <button type="button" class="ql-header" value="2"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-indent" value="-1"></button>
+                                        <button type="button" class="ql-indent" value="+1"></button>
+                                    </span>                                      
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-align">
+                                          <option selected></option>
+                                          <option value="center"></option>
+                                          <option value="right"></option>
+                                          <option value="justify"></option>
+                                        </select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-clean">
+                                        </button>
+                                    </span>
+                                </div>
+                              </quill-editor>
                         </label>
                         <label for="tags"><p>Etiquetas: </p>
                             <input id="tags" type="text" [(ngModel)]="newArtist.tags" placeholder="tag, tag, tag">
