@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
+import { SafeHtmlPipe } from './services/pipes/DomSanitized'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,7 +40,8 @@ import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio
     UserDataComponent,
     UserPanelComponent,
     ThemeListFormComponent,
-    AudioBarComponent
+    AudioBarComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

@@ -33,13 +33,11 @@
             <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="float: right;">
                 <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>+</span>
             </span>
-            <div *ngIf='artist.description != ""' [innerHTML]="artist.description"></div>
+            <div *ngIf='artist.description != ""' [innerHTML]="artist.description | safeHtml"></div>
             <span *ngIf='artist.description == ""'>Descripción no disponible</span>
         </div>
         <div class="display-inline vertical-top" style="width: 40%; padding: 15px; box-sizing: border-box;">
             <div>
-
-
                 <div *ngIf='isAdmin' class="txt-horizontal-center">
                     <h3 style="margin-top: 0px; margin-bottom: 10px;" class="txt-horizontal-left title-back">Etiquetas:</h3>
                     <p *ngFor='let artistTag of artist.tags; let i = index' class="display-inline">
@@ -55,7 +53,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="title-back" style="">Temas: <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
+                    <h3 class="title-back">Temas: <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
                 </div>
                 <div style="max-height: 500px; overflow: auto; padding: 15px;">
                     <div class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
@@ -89,13 +87,52 @@
                 <div *ngIf='showInput'>
                     <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>
                         <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
-                        <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}</p>
-                            <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "avatar"' type="text" [(ngModel)]="inputValue">
-                            <input id="{{inputAttr}}" class="{{formErr.class}}"  *ngIf='inputAttr == "avatar"' type="file" (change)='setImagePreview({input:"avatar", preview:"formPreview", errObj:formErr})'>
-                            <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
-                            <img *ngIf='inputAttr == "avatar"' id="formPreview" src="ghostCover.png">
-                            <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
-                        </label>
+                        <p>{{attrTranslation[inputAttr]}}</p>
+                        <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "avatar"' type="text" [(ngModel)]="inputValue">
+                        <input id="{{inputAttr}}" class="{{formErr.class}}"  *ngIf='inputAttr == "avatar"' type="file" (change)='setImagePreview({input:"avatar", preview:"formPreview", errObj:formErr})'>
+                        <quill-editor id="{{inputAttr}}" *ngIf='inputAttr == "description"' [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputValue">
+                            <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-header" value="1"></button>
+                                    <button type="button" class="ql-header" value="2"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-indent" value="-1"></button>
+                                    <button type="button" class="ql-indent" value="+1"></button>
+                                </span>                                      
+                                <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                </span>
+                                <span class="ql-formats">
+                                    <select class="ql-align">
+                                      <option selected></option>
+                                      <option value="center"></option>
+                                      <option value="right"></option>
+                                      <option value="justify"></option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-clean">
+                                    </button>
+                                </span>
+                            </div>
+                        </quill-editor>
+                        <img *ngIf='inputAttr == "avatar"' id="formPreview" src="ghostCover.png">
+                        <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "name"'>
                         <br>
