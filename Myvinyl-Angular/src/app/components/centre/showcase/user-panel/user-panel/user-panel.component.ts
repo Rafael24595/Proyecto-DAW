@@ -14,6 +14,7 @@ import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { Variables } from 'src/utils/variables/variables';
 import { DragEvent } from 'src/app/classes/DragEvent';
+import { Blur } from 'ngx-quill';
 
 @Component({
   selector: 'app-user-panel',
@@ -447,7 +448,7 @@ export class UserPanelComponent implements OnInit {
 
   }
 
-  modifyData(data:{event:KeyboardEvent | FocusEvent, attribute:string}){
+  modifyData(data:{event:KeyboardEvent | FocusEvent | Blur, attribute:string}){
     let attribute = data.attribute;
     let keyCode:KeyboardEvent | string | undefined = data.event as KeyboardEvent;
     keyCode = (keyCode.code) ? keyCode.code : undefined;
@@ -578,8 +579,13 @@ export class UserPanelComponent implements OnInit {
     );
   }
 
-  setFocus(id:string){
-    DataManage.setFocus(id);
+  setFocus(id:string | HTMLElement){
+    if(typeof id == 'string'){
+      DataManage.setFocus(id);
+    }
+    else{
+      id.focus()
+    }
   }
 
   resetPasswordInput(){

@@ -1,104 +1,157 @@
-<div id="homeContainer" style="height: 500px;">
+<div id="homeContainer" style="height: 660px;">
     <div *ngIf='ProfileData' class="height-100">
-        <div style="height: 85%;">
-            <div class="display-inline width-50 height-100 txt-horizontal-left" style="padding: 10px; box-sizing: border-box; overflow: hidden;">
-                <ng-container *ngIf='isSessionUser'>
-                    <div>
-                        <span>Nombre: </span>
-                        <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
-                            <span>{{ProfileData.name}} 
-                                <span id="pencil-writting-animation" class="display-inline">
-                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
-                                </span>
-                            </span>
-                        </ng-container>
-                        <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
-                            <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value'
-                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
-                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
-                        </ng-container>
-                    </div>
-                    <br>
-                    <div>
-                        <span>Email: </span>
-                        <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
-                            <span>{{ProfileData.email}}
-                                <span id="pencil-writting-animation" class="display-inline">
-                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
-                                </span>
-                            </span>
-                        </ng-container>
-                        <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
-                            <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value'
-                                (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
-                                (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
-                        </ng-container>
-                    </div>
-                    <br>
-                    <div>
-                        <span>Contraseña: </span>
-                        <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
-                            <span style="letter-spacing: 2px;"><span class="my-vinyl-icons-font">HHHHHHHH</span>
-                                <span id="pencil-writting-animation" class="display-inline">
-                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
-                                </span>
-                            </span>
-                        </ng-container>
-                        <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
+        <div style="display: inline-block; max-width: 1300px; height: 100%; padding-left: 20px; padding-right: 20px; background-color: rgba(255,255,255, 0.1);">
+            <div class="display-inline width-50 txt-horizontal-left" style="max-height: 530px; max-width: 550px; float: left; padding: 10px; box-sizing: border-box;">
+                <h2 class="title-back">Usuario:</h2>
+                <div style="padding-left: 10px; padding-right: 10px;">
+                    <div style="padding-left: 10px; background-color: rgba(255,255,255, 0.1); padding: 15px;">
+                        <ng-container *ngIf='isSessionUser'>
+                            <div>
+                                <span>Nombre: </span>
+                                <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
+                                    <span>{{ProfileData.name}} 
+                                        <span id="pencil-writting-animation" class="display-inline">
+                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
+                                        </span>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
+                                    <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value'
+                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
+                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
+                                </ng-container>
+                            </div>
                             <br>
-                            <div style="margin: 10px;">
-                                <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
-                                <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
-                                (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
+                            <div>
+                                <span>Email: </span>
+                                <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                                    <span>{{ProfileData.email}}
+                                        <span id="pencil-writting-animation" class="display-inline">
+                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                                        </span>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
+                                    <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value'
+                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
+                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
+                                </ng-container>
                             </div>
+                            <br>
+                            <div>
+                                <span>Contraseña: </span>
+                                <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
+                                    <span style="letter-spacing: 2px;"><span class="my-vinyl-icons-font">HHHHHHHH</span>
+                                        <span id="pencil-writting-animation" class="display-inline">
+                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
+                                        </span>
+                                    </span>
+                                </ng-container>
+                                <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
+                                    <br>
+                                    <div style="margin: 10px;">
+                                        <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
+                                        <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
+                                        (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <br>
+                            <div style="border-bottom: solid 2px black;"></div>
+                            <br>
+                            <div style="height: 100%;">
+                                <span>Descripción: </span>
+                                <span id="pencil-writting-animation" class="display-inline">
+                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
+                                </span>
+                                <br>
+                                <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
+                                    <div style="max-height: 213px; overflow: auto;">
+                                        <span [innerHtml]='ProfileData.description | safeHtml'></span>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
+                                    <br>
+                                    <quill-editor (onEditorCreated)="setFocus($event)" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="modifyValuesData.modifyDescription.value">
+                                        <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                            <span class="ql-formats">
+                                                <button class="ql-bold"></button>
+                                                <button class="ql-italic"></button>
+                                                <button class="ql-underline"></button>
+                                                <button class="ql-strike"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button type="button" class="ql-header" value="1"></button>
+                                                <button type="button" class="ql-header" value="2"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-list" value="ordered"></button>
+                                                <button class="ql-list" value="bullet"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button type="button" class="ql-indent" value="-1"></button>
+                                                <button type="button" class="ql-indent" value="+1"></button>
+                                            </span>                                      
+                                            <span class="ql-formats">
+                                                <select class="ql-color" style="z-index: 9;"></select>
+                                                <select class="ql-background" style="z-index: 9;"></select>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <select class="ql-align">
+                                                  <option selected></option>
+                                                  <option value="center"></option>
+                                                  <option value="right"></option>
+                                                  <option value="justify"></option>
+                                                </select>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button class="ql-link"></button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button type="button" class="ql-clean">
+                                                </button>
+                                            </span>
+                                            <span class="ql-formats">
+                                                <button type="button" class="my-vinyl-icons-font fake-quill-button-snow" (click)='modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})'>I</button>
+                                            </span>
+                                        </div>
+                                    </quill-editor>
+                                   <!-- <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
+                                    (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                                    (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                                    style="width: 100%; height: 200px;">
+                                    </textarea> -->
+                                </ng-container>
+                            </div>
+                            <br>
+                        </ng-container>
+                        <ng-container *ngIf='!isSessionUser'>
+                            <div style="height: 100%;">
+                                <div>
+                                    <span>Nombre: </span>
+                                    <span>{{ProfileData.name}}</span>
+                                </div>
+                                <br>
+                                <div>
+                                    <span>Rango: </span>
+                                    <span>{{range[ProfileData.admin]}}</span>
+                                </div>
+                                <br>
+                                <div style="height: 100%;">
+                                    <span>Descripción: </span>
+                                    <br><br>
+                                    <div style="max-height: 72%; overflow: auto;">
+                                        <span>{{ProfileData.description}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
                         </ng-container>
                     </div>
-                    <br>
-                    <div style="height: 100%;">
-                        <span>Descripción: </span>
-                        <span id="pencil-writting-animation" class="display-inline">
-                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
-                        </span>
-                        <br><br>
-                        <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
-                            <div style="max-height: 63%; overflow: auto;">
-                                <span>{{ProfileData.description}}</span>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
-                            <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
-                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                            style="width: 100%; height: 200px;">
-                            </textarea>
-                        </ng-container>
-                    </div>
-                    <br>
-                </ng-container>
-                <ng-container *ngIf='!isSessionUser'>
-                    <div style="height: 100%;">
-                        <div>
-                            <span>Nombre: </span>
-                            <span>{{ProfileData.name}}</span>
-                        </div>
-                        <br>
-                        <div>
-                            <span>Rango: </span>
-                            <span>{{range[ProfileData.admin]}}</span>
-                        </div>
-                        <br>
-                        <div style="height: 100%;">
-                            <span>Descripción: </span>
-                            <br><br>
-                            <div style="max-height: 72%; overflow: auto;">
-                                <span>{{ProfileData.description}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p></p>
-                </ng-container>
+                </div>
             </div>
-            <div class="display-inline vertical-top width-50 height-100" style="padding: 10px; box-sizing: border-box; overflow: hidden;">
+            <div class="display-inline vertical-top width-50" style="height: 520.5px; max-width: 550px; float: right; padding: 10px; box-sizing: border-box; overflow: hidden;">
+                <br>
                 <div>
                     <select [(ngModel)]='selectedThemeList' (change)=changeList()>
                         <option selected="selected">{{defaultSelect}}</option>
@@ -136,7 +189,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf='themeList'>
-                        <div style="position: relative; height: 73%; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
+                        <div style="position: relative; height: 355px; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
                             <ng-container *ngIf='themeList.list && themeList.list.length > 0'>
                                 <div *ngFor='let singleTheme of themeList.list;' (click)='setAudioBarListPosition($event, singleTheme.id)' (mousedown)='eventDrag($event)'
                                     id="theme-container-{{selectedThemeList}}-{{singleTheme.artist.id}}-{{singleTheme.id}}" class="theme-container text-left"
@@ -176,10 +229,9 @@
                     </ng-container>
                 </div>
             </div>
-        </div>
-        <br><br>
-        <div style="display: inline-block; width: 90%;">
-            <app-audio-bar></app-audio-bar>
+            <div style="display: inline-block; width: 90%; max-width: 1000px; padding-left: 20px; padding-right: 20px; margin-top: 50px;">
+                <app-audio-bar></app-audio-bar>
+            </div>
         </div>
     </div>
     <app-theme-list-form *ngIf='formTask != ""' (outputToparent)='dataObservable($event)' [task]='formTask'></app-theme-list-form>
