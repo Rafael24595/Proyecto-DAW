@@ -2,8 +2,8 @@ var fs = require("fs");
 const tools = require('../utils/tools');
 
 async function uploadFile(req, res){
-    let userName = req.body.userName;console.log(userName)
-    let files = req.files;console.log(files)
+    let userName = req.body.userName;
+    let files = req.files;
     let correctFiles = {total:Object.keys(files).length, count:0, messages:[]};
     if(userName == req.userNameToken){
         for (const file in files) {
@@ -35,7 +35,7 @@ async function uploadFile(req, res){
             else{
                 let fileData = files[file].fieldName.split('&');
                 let fileType = fileData[0];
-                let name = fileData[1];console.log(name)
+                let name = fileData[1];
                 let isNameComplete = (name.split('-').length > 1);
                 if(!isNameComplete && (fileType == 'theme_audio' || fileType == 'theme_cover')){
                     name = await setThemeCoverName(name);
@@ -43,9 +43,8 @@ async function uploadFile(req, res){
                         res.headerSent = true;
                         res.status(404).json({status:false});
                     }
-                }console.log(name)
+                }
                 if(fileType == 'user_avatar' || (userName == req.userNameToken && fileType == 'artist_avatar' || fileType == 'theme_audio' || fileType == 'theme_cover' || fileType == 'theme_flag' && req.isAdmin)){
-                    console.log(name)
                     correctFiles = await acceptFile(files[file], fileType, name, correctFiles);
                 }
                 else{

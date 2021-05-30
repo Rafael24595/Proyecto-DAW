@@ -70,7 +70,7 @@ export class ThemeInformationComponent implements OnInit {
     this.comunicationService.sendReproductorViewDataObservable.subscribe(data=>{this.reproductorSubscribe(data)});
   }
 
-  updateUrl(event: Event, type: string){console.log('inx')
+  updateUrl(event: Event, type: string){
     let element = event.target as HTMLImageElement;
     DataManage.repairBrokenImages(element, this.mediaPath, type);
   }
@@ -156,7 +156,7 @@ export class ThemeInformationComponent implements OnInit {
       this.DatabaseConexService.getArtistDataByQuery(query, 2, queryPage, ['theme']).subscribe(
         async sucess=>{
           
-          if(sucess.message){console.log(sucess.message);
+          if(sucess.message){
 
             let paginateObject = sucess.message;
 
@@ -170,7 +170,7 @@ export class ThemeInformationComponent implements OnInit {
 
         },
         err=>{
-          console.log(`Error: ${err}`);
+          console.error(`Error: ${err}`);
         }
       );
     }
@@ -185,7 +185,7 @@ export class ThemeInformationComponent implements OnInit {
   calculateLikesPercentage(){
     if(this.theme){
       let total = this.theme.likes + this.theme.dislikes;
-      let likesPercentage = this.theme.likes / total * 100;console.log(this.theme.likes , total, this.likesBarPercent)
+      let likesPercentage = this.theme.likes / total * 100;
       this.likesBarPercent = (isNaN(likesPercentage)) ? 0 : likesPercentage;
       if(total == 0){
         this.dislikesBarColor = 'gray';
@@ -269,7 +269,8 @@ export class ThemeInformationComponent implements OnInit {
             this.calculateLikesPercentage();         
           }
         },
-        err=>{console.log(err);
+        err=>{
+          console.error(`Error: ${err}`);
           if(err.destroyToken){
             this.autorizationService.destroySession();
             this.router.navigate(['/Sign-In']);
@@ -288,7 +289,7 @@ export class ThemeInformationComponent implements OnInit {
           this.selectedThemeList = '';
         },
         err=>{
-          console.log(`Error: ${err}`);
+          console.error(`Error: ${err}`);
         }
       );
     }
@@ -465,7 +466,7 @@ export class ThemeInformationComponent implements OnInit {
                     }
                   },
                   err=>{
-                    console.log(err);
+                    console.error(`Error: ${err}`);
                     sendSucess = false;
                     resolve(sendSucess);
                   }
@@ -501,7 +502,7 @@ export class ThemeInformationComponent implements OnInit {
                 }
               },
               err=>{
-                console.log(err);
+                console.error(`Error: ${err}`);
                 resolve(sendSucess);
               }
             );

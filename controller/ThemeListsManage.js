@@ -35,9 +35,17 @@ async function privatizeThemeList(req, res){
   async function createNewThemeList(req, res){
     let themeListName = req.body.themeListName;
     let privacy = req.body.privacy;
+    let list;
     let userName = req.body.userName;
+
+    if(req.body.list && typeof req.body.list == 'object'){
+      list = await Tools.simplifyThemeList(req.body.list);
+    }
+    else{
+      list = [];
+    }
     if(userName == req.userNameToken){
-      let newThemeList = {name:themeListName,userView:'true',userManage:'true',privateState:privacy,list:[]};
+      let newThemeList = {name:themeListName,userView:'true',userManage:'true',privateState:privacy, list:list};
       let user = await User.findOne({name:userName}).lean();
       let existList = user.themeLists.find(themeList=>{return (themeList.name == themeListName)});
       if(!existList){

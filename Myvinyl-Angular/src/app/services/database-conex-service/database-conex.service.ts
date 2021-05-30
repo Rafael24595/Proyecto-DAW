@@ -5,7 +5,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { Artist } from '../../classes/Artist';
 import { Variables } from 'src/utils/variables/variables';
 import { User } from '../../classes/User';
-import { ProfileData } from '../../interfaces/ProfileDataInterface';
 import { UserInterface } from '../../interfaces/UserInterface';
 import { Themes } from '../../classes/Themes';
 import { ThemeList } from 'src/app/classes/ThemeList';
@@ -101,8 +100,9 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/PrivatizeThemeList`, {themeListName, state, userName});
  }
 
- newThemeList(themeListName:string, privacy:string, userName:string):Observable<{list:ThemeList}>{
-  return this.http.post<{list:ThemeList}>(`http://${Variables.host}:${Variables.port}/api/CreateNewThemeList`, {themeListName, privacy, userName});
+ newThemeList(themeListName:string, privacy:string, userName:string, list?: Themes[]):Observable<{list:ThemeList}>{
+  list = (list) ? list : [];
+  return this.http.post<{list:ThemeList}>(`http://${Variables.host}:${Variables.port}/api/CreateNewThemeList`, {themeListName, privacy, list, userName});
  }
 
  removeThemeList(themeListName:string, userName:string):Observable<{status:boolean}>{

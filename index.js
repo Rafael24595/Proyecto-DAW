@@ -31,7 +31,7 @@ connectWithRetry();
 
 db.on('error', () => {
 	setTimeout(() => {
-		console.log('Fallo en la conexión a la BBD. Se reintenta.');
+		console.error('Fallo en la conexión a la BBD. Se reintenta.');
 		connectWithRetry();
       }, dbRetryTime);
 });

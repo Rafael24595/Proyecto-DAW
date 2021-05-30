@@ -127,11 +127,7 @@ export class DragEvent{
             else if (positionInContainer > 0.9 && positionInContainer < 1) {
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";
                 DragEvent.scrollTimeOut = setTimeout(function(){DragEvent.elementDrag(event)}, 1);
-                console.log('----')
-                console.log( parentElement.scrollHeight)
                 parentElement.scrollBy(0, 2);
-                console.log( parentElement.scrollHeight)
-                console.log('----')
             }
             else{
                 (DragEvent.scrollTimeOut) ? clearTimeout(DragEvent.scrollTimeOut) : "";

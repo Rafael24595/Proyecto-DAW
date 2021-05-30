@@ -361,13 +361,11 @@ input{
 }
 
 #formError, #formErrorExpand{
-
 	font-family: BlazingSun;
 	text-align: center;
 	color: var(--warn);
 	font-size: 0.8em;
 	text-decoration: underline;
-
 }
 
 .title-backg{
@@ -451,10 +449,13 @@ input{
     color: aliceblue;
 }
 
+.text-error{
+	font-weight: bold;
+	color: var(--warn);
+}
+
 .input-error{
-
 	box-shadow: 0px 0px 2px 3px var(--warn);
-
 }
 
 .text-centre{

@@ -61,9 +61,9 @@ async function publishComment(req, res){
   }
 
   async function thumbValueTheme(req, res){
-    let themeId = req.body.themeId;console.log(themeId)
-    let thumbValue = req.body.thumbValue;console.log(thumbValue)
-    let userName = req.body.userName;console.log(userName)
+    let themeId = req.body.themeId;
+    let thumbValue = req.body.thumbValue;
+    let userName = req.body.userName;
 
     let user = await User.findOne({name:userName}).lean();
     let theme = await Theme.findOne({"id":themeId});
@@ -72,10 +72,6 @@ async function publishComment(req, res){
 
       let themeInLikes = user.themeLists.find(list=>{return list.name == `@likes-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
       let themeInDisikes = user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
-
-      console.log(themeInLikes, themeInDisikes)
-
-      console.log(theme.likes, theme.dislikes, user.themeLists.find(list=>{return list.name == `@likes-list`}),  user.themeLists.find(list=>{return list.name == `@dislikes-list`}))
 
       if(thumbValue == 1 && !themeInLikes){
 
@@ -114,8 +110,6 @@ async function publishComment(req, res){
           theme.dislikes = (theme.dislikes -1 < 0) ? 0 : theme.dislikes -1;
         }
       }
-
-      console.log(theme.likes, theme.dislikes, user.themeLists.find(list=>{return list.name == `@likes-list`}),  user.themeLists.find(list=>{return list.name == `@dislikes-list`}))
 
       theme.markModified('likes');
       theme.markModified('dislikes');
@@ -282,9 +276,6 @@ async function publishComment(req, res){
       if(dislikesList != -1) user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.splice(dislikesList, 1);console.log(dislikesList)
 
       await User.findOneAndUpdate({name:user.name}, user);
-
-      //console.log(user.themeLists.find(list=>{return list.name == `@likes-list`}).list)
-      //console.log(user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list)
 
     }
 

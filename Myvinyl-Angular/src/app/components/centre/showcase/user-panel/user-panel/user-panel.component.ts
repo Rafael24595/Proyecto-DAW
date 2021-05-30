@@ -12,7 +12,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
-import { Variables } from 'src/utils/variables/variables';
+import { GlobalVariables, Variables } from 'src/utils/variables/variables';
 import { DragEvent } from 'src/app/classes/DragEvent';
 import { Blur } from 'ngx-quill';
 
@@ -52,7 +52,12 @@ export class UserPanelComponent implements OnInit {
     passwordMessage : '' 
   }
   
-  
+  blackScreenStatus = GlobalVariables;
+  showInput:boolean = false;
+  inputAttr: string = '';
+  inputValue: string | string[] | ThemeList | undefined = '';
+  inputCheckValue:boolean = false;
+  inputErrMessage: string = '';
 
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
@@ -129,7 +134,50 @@ export class UserPanelComponent implements OnInit {
 
   }
   
-  updateUrl(event: Event, type: string){console.log('inx')
+  showProfileForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string | string[] | ThemeList | undefined}){
+    this.showInput = true;
+    this.inputAttr = attribute.attrName;
+    this.inputValue = attribute.value;
+    this.blackScreenStatus.blackScreenStatus = 'show';
+  }
+
+  confirmFrom(type:string){
+    switch (type){
+      case 'copy':
+        if(this.themeList){
+          let name = this.inputValue as string;
+          let privacy = JSON.stringify(this.inputCheckValue);
+          let list = this.themeList?.list;
+          
+          let nameUsed = sesionValues.activeUser.getThemeList(name);console.log(name, privacy, list, nameUsed)
+          if(!nameUsed){
+            this.DatabaseConexService.newThemeList(name, privacy, sesionValues.activeUser.name,list).subscribe(
+              sucess=>{
+                this.cleanForm();
+              },
+              err=>{
+                console.error(`Error: ${err}`)
+              }
+            );
+          }
+          else{
+            this.inputErrMessage = 'Nombre en uso';
+          }
+        }
+      break;
+    }
+  }
+
+  cleanForm(){
+    this.showInput = false;
+    this.inputAttr = '';
+    this.inputValue = '';
+    this.inputErrMessage = '';
+    this.inputCheckValue = false;
+    this.blackScreenStatus.blackScreenStatus = '';
+  }
+
+  updateUrl(event: Event, type: string){
     let element = event.target as HTMLImageElement;
     DataManage.repairBrokenImages(element, this.mediaPath, type);
   }
@@ -142,16 +190,12 @@ export class UserPanelComponent implements OnInit {
     if(this.themeList && this.themeList.userManage && container != null && container.parentElement){
       let list = container.parentElement.childNodes;
       let cleanList = this.containerListFilter(list)
-      console.log(cleanList)
-      console.log(container)
       DragEvent.dragEventListener(container, cleanList, (newList:{listId: string, themeId: string, position: number}[])=>{this.changeListOrder(newList)});
     }
 
   }
 
   changeListOrder(newList:{listId: string, themeId: string, position: number}[]){
-    console.log(newList);
-    console.log(this.themeList);
     if(this.themeList){
       let newThemeList = DataManage.copyObject(this.themeList);
       newThemeList.privateState = `${newThemeList.privateState}`;
@@ -159,13 +203,12 @@ export class UserPanelComponent implements OnInit {
       newThemeList.userManage = `${newThemeList.userManage}`;
       newThemeList.userView = `${newThemeList.userView}`;
       newThemeList.list = newList;
-      console.log(newThemeList);
       this.DatabaseConexService.modifyThemeList(newThemeList, this.themeList.name, sesionValues.activeUser.name).subscribe(
         sucess=>{
           this.changeList();
         },
         err=>{
-          console.log(err)
+          console.error(`Error: ${err}`);
         }
       );
     }
@@ -201,9 +244,9 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
-  setLastSessionList(){console.log(this.ProfileData)
+  setLastSessionList(){
     if(this.ProfileData){
-      let lastList = localStorage.getItem(`last-${this.ProfileData.name}-theme-list`);console.log(lastList)
+      let lastList = localStorage.getItem(`last-${this.ProfileData.name}-theme-list`);
       if(lastList && lastList != '' && this.ProfileData){
         let listExist= this.ProfileData.themeLists.map(themeList=>{return themeList.name}).indexOf(lastList);
         if(listExist != -1){
@@ -235,8 +278,6 @@ export class UserPanelComponent implements OnInit {
     if(theme){
       let artistId= theme.artist.id;
       let element = document.getElementById(`theme-container-${themeListName}-${artistId}-${value}`);
-      console.log(`theme-container-${themeListName}-${artistId}-${value}`)
-      console.log(element)
 
       this.removeSelectedContainer();
 
@@ -270,10 +311,9 @@ export class UserPanelComponent implements OnInit {
   setAudioBarListPosition(event:Event, themeId:string){
     if(this.ProfileData){
       let list = this.ProfileData.themeLists.find(themeList=>{return themeList.name == this.selectedThemeList});
-      let element = event.target as HTMLElement;console.log(list , this.themePlaying , element)
+      let element = event.target as HTMLElement;
       if(list && this.themePlaying != themeId && element && !element.classList.contains('trash-can')){
         let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
-        console.log(position)
         if(position != -1){
           this.sentToReproductor('position', position);
           this.hideAllVinyls();
@@ -343,7 +383,8 @@ export class UserPanelComponent implements OnInit {
             this.privateValue = status;
           }
         },
-        err=>{console.log(err)
+        err=>{
+          console.error(`Error: ${err}`);
           this.autorizationService.updateToken(err);
         }
       );
@@ -358,13 +399,11 @@ export class UserPanelComponent implements OnInit {
     if(this.autorizationService.checkForToken() && this.ProfileData){
       this.DatabaseConexService.newThemeList(themeListData.themeListName, JSON.stringify(themeListData.privacy), this.ProfileData.name).subscribe(
         sucess=>{
-          console.log(sucess)
           sesionValues.activeUser.setNewThemeList(sucess.list);
           this.ProfileData = sesionValues.activeUser;
-          console.log(this.ProfileData)
         },
         err=>{
-          console.log(err)
+          console.error(`Error: ${err}`);
         }
       )
     }
@@ -386,7 +425,8 @@ export class UserPanelComponent implements OnInit {
             this.selectedThemeList = this.defaultSelect;
           }
         },
-        err=>{console.log(err)
+        err=>{
+          console.error(`Error: ${err}`);
           this.autorizationService.updateToken(err);
         }
       );
@@ -426,7 +466,7 @@ export class UserPanelComponent implements OnInit {
             },
             err=>{
               this.modifyPasswordData.passwordMessage="Contraseña incorrecta.";
-              console.log(`Error: ${err}`);
+              console.error(`Error: ${err}`);
             }
           );
 
@@ -539,7 +579,8 @@ export class UserPanelComponent implements OnInit {
             this.manageComponent.refreshComponent(this.router.url);
             resolve(true);
           },
-          err=>{console.log(err)
+          err=>{
+            console.error(`Error: ${err}`);
             FormValidations.setErrorClass(input.id);
             this.autorizationService.updateToken(err);
             resolve(false);
@@ -563,7 +604,8 @@ export class UserPanelComponent implements OnInit {
             this.modifyValuesData.themeListName.status = false;
           }
         },
-        err=>{console.log(err)
+        err=>{
+          console.error(`Error: ${err}`);
           this.modifyValuesData.themeListName.value = this.themeList?.name as string;
           this.autorizationService.updateToken(err);
         }
@@ -579,12 +621,11 @@ export class UserPanelComponent implements OnInit {
       sucess=>{
         if(this.themeList){
           //this.themeList.list = sucess.message;
-          //console.log(this.themeList)
           this.changeList();
         }
       },
-      err=>{console.log(err)
-
+      err=>{
+        console.error(`Error: ${err}`);
       }
     );
   }
@@ -614,7 +655,6 @@ export class UserPanelComponent implements OnInit {
         this.formTask = "";
         this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
           sucess=>{
-            console.log(sucess)
             this.themeList = this.ProfileData?.themeLists.find(themeList=>{
               if(this.ProfileData && themeList.name == this.selectedThemeList){
                 localStorage.setItem(`last-${this.ProfileData.name}-theme-list`, this.selectedThemeList);
@@ -633,7 +673,7 @@ export class UserPanelComponent implements OnInit {
             this.setAudioBarThemeList();
           },
           err=>{
-            console.log(`Error: ${err}`)
+            console.error(`Error: ${err}`);
           }
         );
       }

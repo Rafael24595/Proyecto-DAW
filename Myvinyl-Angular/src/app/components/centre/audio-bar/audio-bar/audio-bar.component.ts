@@ -23,13 +23,13 @@ export class AudioBarComponent implements OnInit {
   ngOnInit(): void { 
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-      if(element && this.ajustableWidth){console.log(element.offsetWidth)
+      if(element && this.ajustableWidth){
         this.barAudioSize = element.offsetWidth;
       }
     }
     window.onload = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-        if(element && this.ajustableWidth){console.log(element.offsetWidth)
+        if(element && this.ajustableWidth){
           this.barAudioSize = element.offsetWidth;
         }
         else{
@@ -201,7 +201,7 @@ export class AudioBarComponent implements OnInit {
           }
         }
       }
-      this.audio.onerror = (err)=>{this.audio = undefined;console.log(err)};
+      this.audio.onerror = (err)=>{this.audio = undefined; console.error(`Error: ${err}`)};
   }
 
   //////////////////////////
@@ -233,7 +233,7 @@ export class AudioBarComponent implements OnInit {
     this.setRandomList();
     this.setReverse();
     this.setPlay();
-console.log(this.launchPaused);
+    console.log(this.launchPaused);
     (this.audio && !this.launchPaused) ? this.audio.play() : '';
 
   }
@@ -365,7 +365,7 @@ console.log(this.launchPaused);
     }
     if(isCalculed){
       action = event as number;
-    }console.log(this.themesListActive)
+    }
     this.position = action;
     this.prepareTheme(this.themesListActive[this.position]);
     this.comunicationService.sendReproductorViewData({type:'ended', value: this.themesListActive[this.position].id});
@@ -597,11 +597,10 @@ console.log(this.launchPaused);
         let viewsNew = sucess.views + 1;
         this.DatabaseConexService.setThemeAttribute(theme.id, 'views', viewsNew, sesionValues.activeUser.name).subscribe(
           sucess=>{
-            console.log(sucess.message.views)
             this.comunicationService.sendReproductorViewData({type:'views', value:sucess.message.views});
           },
           err=>{
-            console.log(err);
+            console.error(`Error: ${err}`);
           }
         );
       },

@@ -76,7 +76,7 @@ export class ArtistPanelComponent implements OnInit {
     if(attribute.attrName == 'reassign' || attribute.attrName == 'reassignMulti'){
       this.arstistIds = [];
       this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
-        sucess=>{console.log(sucess)
+        sucess=>{
           sucess.message.forEach(artistData=>{
             let artistDataSplited = artistData.split('&');
             if(artistDataSplited.length == 2){
@@ -85,7 +85,7 @@ export class ArtistPanelComponent implements OnInit {
           });
         },
         err=>{
-          console.log(err)
+          console.error(`Error: ${err}`);
         }
       );
     }
@@ -93,10 +93,9 @@ export class ArtistPanelComponent implements OnInit {
       this.DatabaseConexService.getFlagsNames().subscribe(
         sucess=>{
           this.availableFlags = sucess.message;
-          console.log(this.availableFlags)
         },
         err=>{
-          console.log(err);
+          console.error(`Error: ${err}`);
         }
       );
 
@@ -120,8 +119,6 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   async modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
-    console.log(attribute)
-
     let sendSucess = false;
     let hasFiles = false;
     let correctForm = false;
@@ -140,7 +137,7 @@ export class ArtistPanelComponent implements OnInit {
 
         formData.append(`userName`, sesionValues.activeUser.name);
 
-        correctForm = this.checkForm([{id:'avatar', value:''}]);console.log(correctForm)
+        correctForm = this.checkForm([{id:'avatar', value:''}]);
 
         if(correctForm){
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
@@ -216,7 +213,7 @@ export class ArtistPanelComponent implements OnInit {
                   }
                 },
                 err=>{
-                  console.log(err);
+                  console.error(`Error: ${err}`);
                   resolve(sendSucess);
                 }
               );
@@ -232,8 +229,8 @@ export class ArtistPanelComponent implements OnInit {
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
             if(this.artist){
               this.DatabaseConexService.reassignArtistThemes(this.artist.id_artist, this.reassignArtist, sesionValues.activeUser.name).subscribe(
-                sucess=>{console.log('inxa')
-                  if(this.artist){console.log('inx')
+                sucess=>{
+                  if(this.artist){
                     this.artist.removeAllThemes();
                     sendSucess = true;
                     resolve(sendSucess);
@@ -243,7 +240,7 @@ export class ArtistPanelComponent implements OnInit {
                   }
                 },
                 err=>{
-                  console.log(err);
+                  console.error(`Error: ${err}`);
                   resolve(sendSucess);
                 }
               );
@@ -270,7 +267,7 @@ export class ArtistPanelComponent implements OnInit {
                   }
                 },
                 err=>{
-                  console.log(err);
+                  console.error(`Error: ${err}`);
                   resolve(sendSucess);
                 }
               );
@@ -301,7 +298,7 @@ export class ArtistPanelComponent implements OnInit {
                 }
               },
               err=>{
-                console.log(err);
+                console.error(`Error: ${err}`);
                 resolve(sendSucess);
               }
             );
@@ -317,7 +314,7 @@ export class ArtistPanelComponent implements OnInit {
 
     let correctFiles = 0;
 
-    data.forEach(singleData=>{console.log(singleData.id)
+    data.forEach(singleData=>{
       
       switch (singleData.id){
 
@@ -402,7 +399,7 @@ export class ArtistPanelComponent implements OnInit {
           this.router.navigate(['/Home']);
         },
         err=>{
-          console.log(err);
+          console.error(`Error: ${err}`);
         }
       );
     }
@@ -418,7 +415,7 @@ export class ArtistPanelComponent implements OnInit {
           this.artist?.themeList.map
         },
         err=>{
-          console.log(err);
+          console.error(`Error: ${err}`);
         }
       );
     }

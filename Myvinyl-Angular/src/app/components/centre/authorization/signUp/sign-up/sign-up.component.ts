@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
           sesionValues.activeUser = User.setUser(res.user.name, res.user.email, res.user.description, res.user.admin, res.user.themeLists);
           this.manageComponent.refreshComponent(this.manageComponent.getLastURL());
         },
-        err=>{console.log(err)}
+        err=>{console.error(`Error: ${err}`);}
       );
 
     }

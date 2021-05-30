@@ -36,13 +36,14 @@ export class ManageUser{
     getProfileDataFromDataBase(profile:string): Promise<UserInterface> {
 
         return new Promise(resolve=>{
-            this.DatabaseConexService.getProfileData(profile).subscribe(user =>{console.log(user)
+            this.DatabaseConexService.getProfileData(profile).subscribe(user =>{
                 resolve(user.data);
                 if(!user.validToken){
                     this.autorizationService.destroySession();
                 }
             },
             err=>{
+                console.error(`Error: ${err}`);
                 let serverError = err.error as ServerErrorToken;
                 if(serverError.destroyToken){
                     this.autorizationService.destroySession();

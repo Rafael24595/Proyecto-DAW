@@ -143,7 +143,7 @@ export class CentreComponent implements OnInit {
 
     }
 
-    if (selectedCandy.routeQuery != ''){console.log(`/${selectedCandy.route}/${selectedCandy.routeQuery}`)
+    if (selectedCandy.routeQuery != ''){
 
       this.router.navigate([`/${selectedCandy.route}/${selectedCandy.routeQuery}`]);
 
@@ -152,8 +152,6 @@ export class CentreComponent implements OnInit {
     }
 
     this.router.navigate([selectedCandy.route]);
-
-    console.log(this.candyRow[parseInt(position)]);
 
   }
 

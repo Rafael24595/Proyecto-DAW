@@ -23,14 +23,14 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
   let inUse = false;
   switch (attribute){
     case "name":
-      let nameExist = await User.find({name:newAttribute}).lean().catch(err=>{console.log(err);});
+      let nameExist = await User.find({name:newAttribute}).lean().catch(err=>{console.error(`Error: ${err}`);});
       if(user[attribute] == oldAttribute && typeof newAttribute == 'string' &&  (oldAttribute == newAttribute && nameExist.length == 1 || nameExist.length == 0)){
         isChanged = true;
         user.name = newAttribute;
       }else{inUse = true}
     break;
     case "email":
-      let emailExist = await User.find({email:newAttribute}).lean().catch(err=>{console.log(err);});
+      let emailExist = await User.find({email:newAttribute}).lean().catch(err=>{console.error(`Error: ${err}`);});
       if(user[attribute] == oldAttribute && typeof newAttribute == 'string' &&  (oldAttribute == newAttribute && emailExist.length == 1 || emailExist.length == 0)){
         isChanged = true;
         user.email = newAttribute;
@@ -39,8 +39,7 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
     case "admin":
     break;
     default:
-      console.log('in')
-      if(user[attribute] && typeof newAttribute == typeof user[attribute]){ console.log('inx')
+      if(user[attribute] && typeof newAttribute == typeof user[attribute]){
         isChanged = true;
         user[attribute] = newAttribute;
       }
@@ -89,10 +88,8 @@ async function setArtistThemes(artistList){
   artistList = (artistList.id_artist) ? [artistList] : artistList;
   for (let index = 0; index < artistList.length; index++) {
     let themes = await Theme.find({"artist.id":artistList[index].id_artist}).lean();
-    console.log(themes)
     artistList[index]['themeList'] = themes;
   }
-  console.log(artistList)
   return (isSingle == false) ? artistList : artistList[0];
 }
 
@@ -103,9 +100,7 @@ async function fillThemeList(themeList){
     themeList.forEach(async themeData => {
       await Theme.findOne({"id":themeData.themeId}).lean().then(async theme=>{
         if(theme){
-          console.log(themeData)
           let artist = await Artist.findOne({"id_artist":theme.artist.id}).lean();
-          console.log(artist)
           if(artist){
             theme.artist.name = artist.name;
             theme.artist.surname = artist.surname;

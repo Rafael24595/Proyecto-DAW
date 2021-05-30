@@ -56,12 +56,12 @@ async function singUp(req, res){
   }
 
 async function searchUserDataByName(name){
-    let userData = await User.findOne({name:name}).lean().catch(err=>{console.log(err);})
+    let userData = await User.findOne({name:name}).lean().catch(err=>{console.error(err);})
     return userData 
 }
   
 async function searchUserDataById(userId){
-    let userData = await User.findOne({_id:userId}).catch(err=>{console.log(err);})
+    let userData = await User.findOne({_id:userId}).catch(err=>{console.error(err);})
     return userData 
 }
 
@@ -90,7 +90,6 @@ async function searchUsersDataByName(req, res){
         }
       });
     });
-    console.log(userData)
     res.status(200).send({status: true, message:userData});
   }
   else{
@@ -115,7 +114,6 @@ async function _searchUsersDataByName(req, res){
       });
     });
     userData = await Tools.simplifyUsers(userData);
-    console.log(userData)
     res.status(200).send({status: true, message:userData});
   }
   else{
@@ -125,7 +123,7 @@ async function _searchUsersDataByName(req, res){
 
 async function getProfileData(req, res){
   let profileName = req.query.profile;
-  let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);})
+  let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);})
   if(profileData){
     if(req.userToken == true){
       res.status(200).send({validToken:req.validToken, data:profileData});
@@ -145,7 +143,7 @@ async function getThemesFromList(req, res){
   let profileName = req.body.profile;
 
   if(req.existsUser){
-    let profileData = await User.findOne({name:profileName}).catch(err=>{console.log(err);});
+    let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);});
     let themeList = profileData.themeLists.find(list=>{return(list.name == themeListName)});
     if(JSON.parse(themeList && (req.userToken == true && JSON.parse(themeList.userView) || req.userToken != true && JSON.parse(themeList.userView) && !JSON.parse(themeList.privateState)))){
       themeList = (themeList.list.length > 0) ? await Tools.fillThemeList(themeList.list) : [];

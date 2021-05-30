@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
     //this.userName = sesionValues.activeUser.name;
     window.onresize = ()=>{
       let width = window.innerWidth;
-      console.log(width)
       if(width > 999){
         this.expandStatus = false;
       }

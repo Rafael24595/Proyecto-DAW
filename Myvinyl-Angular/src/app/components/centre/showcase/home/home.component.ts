@@ -39,12 +39,11 @@ export class HomeComponent implements OnInit {
     this.DatabaseConexService.getArtistDataByQuery(query, 4, 1, ['themeListTags']).subscribe(
       async sucess=>{
         if(sucess.message){
-          console.log(sucess)
           this.generateShowcaseItems(sucess.message)
         }
       },
       err=>{
-        console.log(err);
+        console.error(`Error: ${err}`);
       }
     );
 
@@ -86,19 +85,18 @@ export class HomeComponent implements OnInit {
         this.blackScreenStatus.blackScreenStatus = 'show';
       },
       err=>{
-        console.log(err);
+        console.error(`Error: ${err}`);
       }
     );
   }
 
-  updateUrl(event: Event, type: string){console.log('inx')
+  updateUrl(event: Event, type: string){
     let element = event.target as HTMLImageElement;
     DataManage.repairBrokenImages(element, this.mediaPath, type);
   }
 
   async confirmFrom(){
     let sendForm = await this.modifyThemeData();
-    console.log(sendForm)
     if(sendForm){
       this.setImagePreview('default')
       this.newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
@@ -107,7 +105,6 @@ export class HomeComponent implements OnInit {
   }
 
   async modifyThemeData(){
-    console.log(this.newArtist)
     let sendSucess = false;
     let hasFiles = false;
     let id = this.newArtist.id.toLowerCase();
@@ -144,7 +141,7 @@ export class HomeComponent implements OnInit {
             }
           },
           err=>{
-            console.log(err);
+            console.error(`Error: ${err}`);
             resolve(sendSucess);
           }
         );

@@ -86,7 +86,6 @@ export class ThemeSearchComponent implements OnInit {
 
     queryPage = queryPage as number;
     fields = fields as string[];
-    console.log(this.query)
     this.DatabaseConexService.getArtistDataByQuery(this.query, this.limitArtistTheme, queryPage, fields).subscribe(
       async sucess=>{
         if(sucess.message){
@@ -108,24 +107,21 @@ export class ThemeSearchComponent implements OnInit {
         }
       },
       err=>{
-        console.log(err);
+        console.error(`Error: ${err}`);
       }
     );
 
     if(this.showUser && fields[0] != 'theme' && fields[0] != 'artist'){
       this.DatabaseConexService.getUsersData(this.query, this.limitUser, queryPage).subscribe(
         async sucess=>{
-          console.log(sucess)
           let paginateObject = sucess.message;
           this.query.forEach(queryData=>{
-            console.log(paginateObject[queryData], paginateObject[queryData]['docs'])
             this.queryResult.users = this.queryResult.users.concat(paginateObject[queryData]['docs']);
-            console.log(this.queryResult.users)
           });
           this.queryResult.users = await DataManage.clearRepeatData(this.queryResult.users, 'user') as User[];
         },
         err=>{
-          console.log(`Error: ${err}`);
+          console.error(`Error: ${err}`);
         }
       );
     }
