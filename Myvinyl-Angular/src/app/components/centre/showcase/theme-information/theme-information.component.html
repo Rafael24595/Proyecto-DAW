@@ -1,9 +1,9 @@
-<div id="homeContainer">
+<div id="homeContainer" style="background-color: rgba(255,255,255, 0.1); padding: 15px;">
     <div *ngIf="theme">
         <div style="width: 60%;" class="display-inline">
             <div style="padding: 20px;">
                 <div>
-                    <div style="max-width: 700px; padding-left: 50px;">
+                    <div style="max-width: 675px;">
                         <div>
                             <br>
                             <div>
@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="txt-horizontal-left" style="padding: 20px; padding-top: 5px;">
-                <div style="max-width: 700px; padding-left: 50px;">
+                <div style="max-width: 675px;">
                     <h3 style="margin-top: 0px;" class="title-back">Comentarios {{theme.comments.length}}: </h3>
                     <br>
                     <div style="padding: 15px;">
@@ -100,24 +100,24 @@
                         <br>
                         <div>
                             <div *ngFor='let comment of theme.comments'>
-                                <p *ngIf='comment.activeUser' class="title-back cursor-pointer" style="" routerLink='/Profile/{{comment.userName}}'>
+                                <p *ngIf='comment.activeUser' class="comment-name-back cursor-pointer" routerLink='/Profile/{{comment.userName}}'>
                                     <b>{{comment.userName}}</b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:
-                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
-                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
                                 </p>
-                                <p *ngIf='!comment.activeUser' class="title-back" style="">
+                                <p *ngIf='!comment.activeUser' class="comment-name-back">
                                     <b><s>{{comment.userName}}</s></b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:
-                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
-                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>

@@ -34,7 +34,7 @@
                 <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>+</span>
             </span>
             <div *ngIf='artist.description != ""' [innerHTML]="artist.description | safeHtml"></div>
-            <span *ngIf='artist.description == ""'>Descripción no disponible</span>
+            <div *ngIf='artist.description == ""'><p>Descripción no disponible</p></div>
         </div>
         <div class="display-inline vertical-top" style="width: 40%; padding: 15px; box-sizing: border-box;">
             <div>

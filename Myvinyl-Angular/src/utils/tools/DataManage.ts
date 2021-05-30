@@ -27,7 +27,7 @@ export class DataManage{
         })
     }
 
-    public static async clearRepeatData(list: Artist[] | Themes[] | User[], type:string){
+    public static async clearRepeatData(list: Artist[] | Themes[] | User[], type:string, actualId?:string){
     
         let cleanList: Artist[] | Themes[] | User[] = [];
 
@@ -39,7 +39,7 @@ export class DataManage{
           await DataManage.syncForEach(list, (artist: Artist)=>{
             cleanList = cleanList as Artist[];
             let inList = cleanList.map((artist: Artist)=>{return artist.id_artist}).indexOf(artist.id_artist);
-            if(inList == -1){
+            if(inList == -1 && actualId && actualId != artist.id_artist){
               cleanList.push(artist);
             }
           });
@@ -54,7 +54,7 @@ export class DataManage{
           await DataManage.syncForEach(list, (theme: Themes)=>{
             cleanList = cleanList as Themes[];
             let inList = cleanList.map((theme: Themes)=>{return theme.id}).indexOf(theme.id);
-            if(inList == -1){
+            if(inList == -1 && actualId && actualId != theme.id){
               cleanList.push(theme);
             }
           });

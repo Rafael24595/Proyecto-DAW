@@ -57,15 +57,17 @@ export class UserPanelComponent implements OnInit {
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-    this.selectedThemeList = this.defaultSelect;
-    this.manageComponent.setLastURL();
     this.route.params.subscribe(params =>{
+      this.sentToReproductor('stop', '');
+      this.themePlaying = '';
+      this.manageComponent.setLastURL();
+      this.themeList = undefined;
+      this.selectedThemeList = this.defaultSelect;
       this.userName = params['username'];
       this.manageUser.getProfileDataFromDataBase(this.userName).then((profile:UserInterface)=>{
-        this.isSessionUser = (profile.email) ? true :false;
+      this.isSessionUser = (profile.email) ? true :false;
         if(profile.email){
           this.setGlobalUser(profile);
-          this.setLastSessionList();
           this.modifyValuesData.modifyUserName.value = profile.name;
           this.modifyValuesData.modifyEmail.value = profile.email;
           this.modifyValuesData.modifyDescription.value = profile.description;
@@ -73,6 +75,7 @@ export class UserPanelComponent implements OnInit {
         else{
           this.ProfileData = this.setProfileUser(profile)
         }
+        this.setLastSessionList();
         this.setCandy();
       })
     });
@@ -198,13 +201,15 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
-  setLastSessionList(){
-    let lastList = localStorage.getItem('last-user-theme-list');
-    if(lastList && lastList != '' && this.ProfileData){
-      let listExist= this.ProfileData.themeLists.map(themeList=>{return themeList.name}).indexOf(lastList);
-      if(listExist != -1){
-        this.selectedThemeList = lastList;
-        this.changeList();
+  setLastSessionList(){console.log(this.ProfileData)
+    if(this.ProfileData){
+      let lastList = localStorage.getItem(`last-${this.ProfileData.name}-theme-list`);console.log(lastList)
+      if(lastList && lastList != '' && this.ProfileData){
+        let listExist= this.ProfileData.themeLists.map(themeList=>{return themeList.name}).indexOf(lastList);
+        if(listExist != -1){
+          this.selectedThemeList = lastList;
+          this.changeList();
+        }
       }
     }
   }
@@ -252,23 +257,28 @@ export class UserPanelComponent implements OnInit {
   }
 
   setAudioBarThemeList(){
-    let themeList = sesionValues.activeUser.getThemeList(this.selectedThemeList);
-    let themeId = (themeList) ? themeList.list.map(theme=>{return theme})[0].id : '';
-    if(themeList){
-      this.sentToReproductor('themes', {isThemeList:true, themes:themeList.list});
-      setTimeout(()=>{this.addSelectedContainer(themeId);},100);
+    if(this.ProfileData){
+      let themeList = this.ProfileData.themeLists.find(themeList=>{return themeList.name == this.selectedThemeList});
+      let themeId = (themeList) ? themeList.list.map(theme=>{return theme})[0].id : '';
+      if(themeList){
+        this.sentToReproductor('themes', {isThemeList:true, themes:themeList.list});
+        setTimeout(()=>{this.addSelectedContainer(themeId);},100);
+      }
     }
   }
 
   setAudioBarListPosition(event:Event, themeId:string){
-    let list = sesionValues.activeUser.getThemeList(this.selectedThemeList);
-    let element = event.target as HTMLElement;
-    if(list && this.themePlaying != themeId && element && !element.classList.contains('trash-can')){
-      let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
-      if(position != -1){console.log(position)
-        this.sentToReproductor('position', position);
-        this.hideAllVinyls();
-        this.sentToReproductor('play', '');
+    if(this.ProfileData){
+      let list = this.ProfileData.themeLists.find(themeList=>{return themeList.name == this.selectedThemeList});
+      let element = event.target as HTMLElement;console.log(list , this.themePlaying , element)
+      if(list && this.themePlaying != themeId && element && !element.classList.contains('trash-can')){
+        let position = list.list.map(theme=>{return theme.id}).indexOf(themeId);
+        console.log(position)
+        if(position != -1){
+          this.sentToReproductor('position', position);
+          this.hideAllVinyls();
+          this.sentToReproductor('play', '');
+        }
       }
     }
   }
@@ -606,9 +616,9 @@ export class UserPanelComponent implements OnInit {
           sucess=>{
             console.log(sucess)
             this.themeList = this.ProfileData?.themeLists.find(themeList=>{
-              if(themeList.name == this.selectedThemeList){
-                localStorage.setItem('last-user-theme-list', this.selectedThemeList);
-                sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
+              if(this.ProfileData && themeList.name == this.selectedThemeList){
+                localStorage.setItem(`last-${this.ProfileData.name}-theme-list`, this.selectedThemeList);
+                //sesionValues.activeUser.replaceThemeList(this.selectedThemeList, sucess.list);
                 return true;
               }
               return false;

@@ -164,7 +164,7 @@ export class ThemeInformationComponent implements OnInit {
               this.suggestThemes = this.suggestThemes.concat(paginateObject[queryValue]['theme']['docs']);
             });
 
-            this.suggestThemes = await DataManage.clearRepeatData(this.suggestThemes, 'theme') as Themes[];
+            this.suggestThemes = await DataManage.clearRepeatData(this.suggestThemes, 'theme', this.theme?.id) as Themes[];
 
           }
 
@@ -185,10 +185,13 @@ export class ThemeInformationComponent implements OnInit {
   calculateLikesPercentage(){
     if(this.theme){
       let total = this.theme.likes + this.theme.dislikes;
-      let likesPercentage = this.theme.likes / total * 100;
-      this.likesBarPercent = likesPercentage;
+      let likesPercentage = this.theme.likes / total * 100;console.log(this.theme.likes , total, this.likesBarPercent)
+      this.likesBarPercent = (isNaN(likesPercentage)) ? 0 : likesPercentage;
       if(total == 0){
         this.dislikesBarColor = 'gray';
+      }
+      else{
+        this.dislikesBarColor = 'orange';
       }
     }
   }

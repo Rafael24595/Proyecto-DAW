@@ -498,6 +498,10 @@ input{
 	border-radius: 50%;
 	background-color: black;
 }
+.comment-name-back{
+	background-color: rgba(0, 0, 75, 0.2);
+	padding: 5px;
+}
 .flag-small{
 	width: 30px;
 }

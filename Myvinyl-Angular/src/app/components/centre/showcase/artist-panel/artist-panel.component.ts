@@ -63,7 +63,7 @@ export class ArtistPanelComponent implements OnInit {
     });
   }
 
-  updateUrl(event: Event, type: string){console.log('inx')
+  updateUrl(event: Event, type: string){
     let element = event.target as HTMLImageElement;
     DataManage.repairBrokenImages(element, this.mediaPath, type);
   }

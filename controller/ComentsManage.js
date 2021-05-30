@@ -65,6 +65,76 @@ async function publishComment(req, res){
     let thumbValue = req.body.thumbValue;console.log(thumbValue)
     let userName = req.body.userName;console.log(userName)
 
+    let user = await User.findOne({name:userName}).lean();
+    let theme = await Theme.findOne({"id":themeId});
+
+    if(userName == req.userNameToken){
+
+      let themeInLikes = user.themeLists.find(list=>{return list.name == `@likes-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
+      let themeInDisikes = user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
+
+      console.log(themeInLikes, themeInDisikes)
+
+      console.log(theme.likes, theme.dislikes, user.themeLists.find(list=>{return list.name == `@likes-list`}),  user.themeLists.find(list=>{return list.name == `@dislikes-list`}))
+
+      if(thumbValue == 1 && !themeInLikes){
+
+        resetThumbList(user, {listId:theme.artist.id, themeId:themeId});
+
+        let position = user.themeLists.find(list=>{return list.name == `@likes-list`}).list.length + 1;
+        user.themeLists.find(list=>{return list.name == `@likes-list`}).list.push({listId:theme.artist.id, themeId:themeId, position});
+        theme.likes = theme.likes + Math.abs(thumbValue);
+
+        if(themeInDisikes){
+          theme.dislikes = (theme.dislikes -1 < 0) ? 0 : theme.dislikes -1;
+        }
+      }
+
+      if(thumbValue == -1 && !themeInDisikes){
+
+        resetThumbList(user, {listId:theme.artist.id, themeId:themeId});
+
+        let position = user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.length + 1;
+        user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.push({listId:theme.artist.id, themeId:themeId, position});
+        theme.dislikes = theme.dislikes + Math.abs(thumbValue);
+
+        if(themeInLikes){
+          theme.likes = (theme.likes -1 < 0) ? 0 : theme.likes -1;
+        }
+      }
+
+      if(thumbValue == 0){
+
+        resetThumbList(user, {listId:theme.artist.id, themeId:themeId});
+
+        if(themeInLikes){
+          theme.likes = (theme.likes -1 < 0) ? 0 : theme.likes -1;
+        }
+        if(themeInDisikes){
+          theme.dislikes = (theme.dislikes -1 < 0) ? 0 : theme.dislikes -1;
+        }
+      }
+
+      console.log(theme.likes, theme.dislikes, user.themeLists.find(list=>{return list.name == `@likes-list`}),  user.themeLists.find(list=>{return list.name == `@dislikes-list`}))
+
+      theme.markModified('likes');
+      theme.markModified('dislikes');
+      theme.save();
+      await User.findOneAndUpdate({name:userName}, user);
+      res.status(200).json({status:true, userThemeLists:user.themeLists, likes: theme.likes, dislikes: theme.dislikes});
+
+    }
+    else{
+      res.status(404).send('{"destroyToken":"true","message":"Sesión no válida"}');
+    }
+
+  }
+
+  /*async function thumbValueTheme_(req, res){
+    let themeId = req.body.themeId;console.log(themeId)
+    let thumbValue = req.body.thumbValue;console.log(thumbValue)
+    let userName = req.body.userName;console.log(userName)
+
     /*let template = {true:'likes', false:'dislikes'};
     let activeMode = template[(thumbValue > 0)];*/
 
@@ -73,7 +143,7 @@ async function publishComment(req, res){
     let activeThemeListName = (thumbValue > 0) ? "@likes-list" : "@dislikes-list";
     let unusedThemeListName = (thumbValue > 0) ? "@dislikes-list" : "@likes-list";*/
 
-    let user = await User.findOne({name:userName}).lean();
+   /* let user = await User.findOne({name:userName}).lean();
     let theme = await Theme.findOne({"id":themeId});
 
     console.log(req.userNameToken, userName == req.userNameToken)
@@ -87,7 +157,7 @@ async function publishComment(req, res){
       /*let indexActive = user.themeLists.map(themeList=>{return themeList.name}).indexOf(activeThemeListName);
       let indexUnused = user.themeLists.map(themeList=>{return themeList.name}).indexOf(unusedThemeListName);*/
 
-      let themeInActiveList = user.themeLists.find(list=>{return list.name == `@${activeList}-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
+      /*let themeInActiveList = user.themeLists.find(list=>{return list.name == `@${activeList}-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
       let themeInUnusedList = user.themeLists.find(list=>{return list.name == `@${inactiveList}-list`}).list.find(themeData =>{return (themeData.themeId == themeId)});
 
       console.log(user.themeLists.find(list=>{return list.name == `@${activeList}-list`}).list)
@@ -115,14 +185,14 @@ async function publishComment(req, res){
         theme[activeList] = theme[activeList] + Math.abs(thumbValue);
         if(themeInUnusedList) theme[inactiveList] = (theme[inactiveList] - 1 > -1) ? theme[inactiveList] - 1 : 0;
 
-        //await User.findOneAndUpdate({name:userName}, user);
+        await User.findOneAndUpdate({name:userName}, user);
         
         console.log(theme)
 
         theme.markModified(inactiveList);
         theme.markModified(inactiveList);
-        //theme.save();
-        //await artist.findOneAndUpdate({"themeList.id":themeId}, artistData).catch(err=>{console.log(err);});
+        theme.save();
+        await artist.findOneAndUpdate({"themeList.id":themeId}, artistData).catch(err=>{console.log(err);});
 
         res.status(200).json({status:true, userThemeLists:user.themeLists, likes: theme.likes, dislikes: theme.dislikes});
 
@@ -131,19 +201,19 @@ async function publishComment(req, res){
           //let index = artistData.themeList.map(theme=>{return theme.id}).indexOf(themeId);
           if(themeInActiveList) theme[activeList] = (theme[activeList] -1 > -1) ? theme[activeList] - 1 : 0;
           if(themeInUnusedList) theme[inactiveList] = (theme[inactiveList] - 1 > -1) ? theme[inactiveList] - 1 : 0;
-          resetThumbList(user, [`@${activeList}-list`], [`@${inactiveList}-list`], {listId:theme.artist.id, themeId:themeId});
-          //await User.findOneAndUpdate({name:userName}, user);
+          resetThumbList(user, {listId:theme.artist.id, themeId:themeId});
+          await User.findOneAndUpdate({name:userName}, user);
           //await artist.findOneAndUpdate({"themeList.id":themeId}, artistData).catch(err=>{console.log(err);});
           theme.markModified(inactiveList);
           theme.markModified(inactiveList);
-          //theme.save();
+          theme.save();
           (thumbValue == 0) ? res.status(200).json({status:true, userThemeLists:user.themeLists, likes: theme.likes, dislikes: theme.dislikes}) : res.status(404).send('{"destroyToken":"false","message":"Theme not found"}'); 
       }
     }
     else{
       res.status(404).send('{"destroyToken":"true","message":"Sesión no válida"}');
     }
-  }
+  }*/
 
   /*async function thumbValueTheme_X(req, res){
     let themeId = req.body.themeId;console.log(themeId)
@@ -201,21 +271,20 @@ async function publishComment(req, res){
     }
   }*/
 
-  async function resetThumbList(user, indexActive, indexUnused, themeInList){
+  async function resetThumbList(user, themeInList){
 
     if(user){
 
-      console.log(`${indexActive}`, `${indexUnused}`)
-      let indexActiveTheme = user.themeLists.find(list=>{return list.name == `${indexActive}`}).list.map(themeData=>{return themeData.themeId}).indexOf(themeInList.themeId);
-      user.themeLists.find(list=>{return list.name == `${indexActive}`}).list.splice(indexActiveTheme, 1);
+      let likesList = user.themeLists.find(list=>{return list.name == `@likes-list`}).list.map(themeData=>{return themeData.themeId}).indexOf(themeInList.themeId);
+      if(likesList != -1) user.themeLists.find(list=>{return list.name == `@likes-list`}).list.splice(likesList, 1);
 
-      let indexUnusedTheme = user.themeLists.find(list=>{return list.name == `${indexUnused}`}).list.map(themeData=>{return themeData.themeId}).indexOf(themeInList.themeId);
-      user.themeLists.find(list=>{return list.name == `${indexUnused}`}).list.splice(indexUnusedTheme, 1);
+      let dislikesList = user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.map(themeData=>{return themeData.themeId}).indexOf(themeInList.themeId);
+      if(dislikesList != -1) user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.splice(dislikesList, 1);console.log(dislikesList)
 
-      //await User.findOneAndUpdate({name:user.name}, user);
+      await User.findOneAndUpdate({name:user.name}, user);
 
-      console.log(user.themeLists.find(list=>{return list.name == `${indexActive}`}).list)
-      console.log(user.themeLists.find(list=>{return list.name == `${indexUnused}`}).list)
+      //console.log(user.themeLists.find(list=>{return list.name == `@likes-list`}).list)
+      //console.log(user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list)
 
     }
 

@@ -901,6 +901,29 @@ const usersData = [
                 "list":[
 
                 ]
+            },
+            {
+                "name":'Favs',
+                "userView":"true",
+                "userManage":"true",
+                "privateState":"false",
+                "list":[
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-1",
+                        "position":9
+                    },
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-2",
+                        "position":3
+                    },
+                    {
+                        "listId": "ab",
+                        "themeId": "ab-3",
+                        "position":2
+                    }
+                ]
             }
         ]
     },

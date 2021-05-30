@@ -23,19 +23,21 @@ export class AudioBarComponent implements OnInit {
   ngOnInit(): void { 
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-      if(element && this.ajustableWidth){
+      if(element && this.ajustableWidth){console.log(element.offsetWidth)
         this.barAudioSize = element.offsetWidth;
       }
     }
-    if(this.ajustableWidth){
+    window.onload = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-      if(element){
-        this.barAudioSize = element.offsetWidth;
-      }
+        if(element && this.ajustableWidth){console.log(element.offsetWidth)
+          this.barAudioSize = element.offsetWidth;
+        }
+        else{
+          this.barAudioSize = 525;
+        }
+      
     }
-    else{
-      this.barAudioSize = 525;
-    }
+
 
     this.comunicationService.sendReproductorDataObservable.subscribe((data:{type:string, value: any})=>{
       
@@ -231,7 +233,7 @@ export class AudioBarComponent implements OnInit {
     this.setRandomList();
     this.setReverse();
     this.setPlay();
-
+console.log(this.launchPaused);
     (this.audio && !this.launchPaused) ? this.audio.play() : '';
 
   }
@@ -363,10 +365,10 @@ export class AudioBarComponent implements OnInit {
     }
     if(isCalculed){
       action = event as number;
-    }
+    }console.log(this.themesListActive)
     this.position = action;
     this.prepareTheme(this.themesListActive[this.position]);
-    this.comunicationService.sendReproductorViewData({type:'ended', value:this.themesListActive[this.position].id});
+    this.comunicationService.sendReproductorViewData({type:'ended', value: this.themesListActive[this.position].id});
   }
 
   calculeTimeByPixel(position:number){
