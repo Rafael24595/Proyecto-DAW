@@ -101,7 +101,7 @@
                         <div>
                             <div *ngFor='let comment of theme.comments'>
                                 <p *ngIf='comment.activeUser' class="comment-name-back cursor-pointer" routerLink='/Profile/{{comment.userName}}'>
-                                    <b>{{comment.userName}}</b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:
+                                    <b>{{comment.userName}}</b><span *ngIf='comment.date != "0"'> - {{comment.date | DateFormat}}</span>:
                                     <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
@@ -112,7 +112,7 @@
                                     </span>
                                 </p>
                                 <p *ngIf='!comment.activeUser' class="comment-name-back">
-                                    <b><s>{{comment.userName}}</s></b><span *ngIf='comment.date != "0"'> - {{comment.date}}</span>:
+                                    <b><s>{{comment.userName}}</s></b><span *ngIf='comment.date != "0"'> - {{comment.date | DateFormat}}</span>:
                                     <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>

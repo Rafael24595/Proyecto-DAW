@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
-import { SafeHtmlPipe } from './services/pipes/DomSanitized'
+import { SafeHtmlPipe } from './services/pipes/DomSanitized';
+import { DateFormat } from './services/pipes/DateFormat';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,8 +21,7 @@ import { TokenInterceptorService} from './services/token-interceptor/token-inter
 import { SignInComponent } from './components/centre/authorization/signIn/sign-in/sign-in.component';
 import { SignUpComponent } from './components/centre/authorization/signUp/sign-up/sign-up.component';
 import { UserDataComponent } from './components/centre/user-data/user-data.component';
-import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel/user-panel.component';
-import { ThemeListFormComponent } from './components/centre/showcase/user-panel/themeListForm/theme-list-form/theme-list-form.component';
+import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel.component';
 import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio-bar.component';
 
 @NgModule({
@@ -39,9 +39,9 @@ import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio
     SignUpComponent,
     UserDataComponent,
     UserPanelComponent,
-    ThemeListFormComponent,
     AudioBarComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    DateFormat
   ],
   imports: [
     BrowserModule,

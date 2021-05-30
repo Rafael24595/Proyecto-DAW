@@ -590,7 +590,7 @@ input{
 	z-index: 5;
 }
 .trash-cap:hover{
-	transform: translate(2px, -7px) rotate(20deg);
+	transform: translate(2px, -4px) rotate(20deg);
 	transition: 0.25s;
 }
 .trash-body{

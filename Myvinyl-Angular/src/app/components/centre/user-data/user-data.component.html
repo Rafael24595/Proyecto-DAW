@@ -3,9 +3,10 @@
         <div style="margin-right: 7px;" class="display-inline height-100 avatar-back cursor-pointer" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>
             <img class="avatar-small height-100" src="../../../../assets/media/images/users/{{sessionValues.activeUser.name}}.png">
         </div>
-        <div style="margin-left:7px;" class="display-inline vertical-top text-left">
-            <p class="cursor-pointer" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>{{sessionValues.activeUser.name}}</p>
-            <p>Rango: {{range[sessionValues.activeUser.admin]}} <span *ngIf='sessionValues.activeUser.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></p>
+        <div style="margin-left:7px; vertical-align: middle; transform: translateY(-50%);" class="display-inline vertical-top text-left">
+            <p class="cursor-pointer" style="margin-top: 5px; margin-bottom: 5px;" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>Nombre: {{sessionValues.activeUser.name}}</p>
+            <p style="margin-top: 5px; margin-bottom: 5px;">Rango:</p>
+            <p style="margin-left: 5px; margin-top: 5px; margin-bottom: 5px;">-{{range[sessionValues.activeUser.admin]}} <span *ngIf='sessionValues.activeUser.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></p>
         </div>
     </div>
     <p class="whiteLink centreLink marg-bott-0 cursor-pointer" (click)='closeSession()'>Cerrar sesión</p>

@@ -16,7 +16,7 @@
                                     </span>
                                 </ng-container>
                                 <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
-                                    <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value'
+                                    <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value' style="margin: 0px;"
                                         (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
                                         (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
                                 </ng-container>
@@ -32,7 +32,7 @@
                                     </span>
                                 </ng-container>
                                 <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
-                                    <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value'
+                                    <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value' style="margin: 0px;"
                                         (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
                                         (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
                                 </ng-container>
@@ -184,7 +184,7 @@
                             </div>
                             <p *ngIf='!modifyValuesData.themeListName.status'>{{modifyValuesData.themeListName.value}}:</p>
                             <ng-container *ngIf='modifyValuesData.themeListName.status'>
-                                <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value'
+                                <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' style="margin-bottom: 8px;"
                                     (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})
                                     (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
                                     <span>:</span>
@@ -289,13 +289,29 @@
                     </div>
                 </div>
             </div>
-            <p *ngIf='inputErrMessage != ""' class="text-error" style="text-align: center;">{{inputErrMessage}}</p>
-            <ng-container *ngIf='inputErrMessage == ""'>
-                <br><br><br>
-            </ng-container>
-            <button (click)='confirmFrom(inputAttr)' style="margin-right: 10px;" >Copiar</button>
-            <button (click)='cleanForm()' style="margin-left: 10px;">Cancelar</button>
         </ng-container>
+        <ng-container *ngIf='inputAttr == "new" && ProfileData'>
+            <h2>Nueva lista de reproducción:</h2>
+            <div style="display: inline-block; text-align: center;">
+                <div style="text-align: left;">
+                    <div style="text-align: center;">
+                        <div style="display: inline-block; text-align: left;">
+                            <span>Nombre: </span>
+                            <span>&nbsp;</span><span>&nbsp;</span>
+                            <input type="text" [(ngModel)]="inputValue">
+                            <br>
+                            <span>Privada: </span>
+                            <input type="checkbox" [(ngModel)]="inputCheckValue">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <p *ngIf='inputErrMessage != ""' class="text-error" style="text-align: center;">{{inputErrMessage}}</p>
+        <ng-container *ngIf='inputErrMessage == ""'>
+            <br><br><br>
+        </ng-container>
+        <button (click)='confirmFrom(inputAttr)' style="margin-right: 10px;" >Continuar</button>
+        <button (click)='cleanForm()' style="margin-left: 10px;">Cancelar</button>
     </div>
-    <app-theme-list-form *ngIf='formTask != ""' (outputToparent)='dataObservable($event)' [task]='formTask'></app-theme-list-form>
 </div>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { User } from 'src/app/classes/User';
 import { CandyInterface } from 'src/app/interfaces/CandyInterface';
-import { DatabaseConexService } from '../../../../../services/database-conex-service/database-conex.service'
+import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service'
 import { UserInterface } from 'src/app/interfaces/UserInterface';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
@@ -36,7 +36,6 @@ export class UserPanelComponent implements OnInit {
   range = Variables.range;
 
   defaultSelect: string = '-- Selecciona lista --';
-  formTask = '';
 
   modifyValuesData = {
     themeListName:{id:'themeName', status:false, value:''},
@@ -135,21 +134,29 @@ export class UserPanelComponent implements OnInit {
   }
   
   showProfileForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string | string[] | ThemeList | undefined}){
-    this.showInput = true;
-    this.inputAttr = attribute.attrName;
-    this.inputValue = attribute.value;
-    this.blackScreenStatus.blackScreenStatus = 'show';
+    this.cleanForm();
+    if(this.autorizationService.checkForToken() && this.ProfileData){
+      this.showInput = true;
+      this.inputAttr = attribute.attrName;
+      this.inputValue = attribute.value;
+      this.blackScreenStatus.blackScreenStatus = 'show';
+    }
+    else{
+      this.router.navigate(['/Sign-In']);
+    }
   }
 
   confirmFrom(type:string){
     switch (type){
+
       case 'copy':
         if(this.themeList){
+
           let name = this.inputValue as string;
           let privacy = JSON.stringify(this.inputCheckValue);
           let list = this.themeList?.list;
           
-          let nameUsed = sesionValues.activeUser.getThemeList(name);console.log(name, privacy, list, nameUsed)
+          let nameUsed = sesionValues.activeUser.getThemeList(name);
           if(!nameUsed){
             this.DatabaseConexService.newThemeList(name, privacy, sesionValues.activeUser.name,list).subscribe(
               sucess=>{
@@ -165,7 +172,32 @@ export class UserPanelComponent implements OnInit {
           }
         }
       break;
+
+      case 'new':
+
+        let name = this.inputValue as string;
+        let privacy = JSON.stringify(this.inputCheckValue);
+
+        let nameUsed = sesionValues.activeUser.getThemeList(name);
+        if(!nameUsed){
+          this.DatabaseConexService.newThemeList(name, privacy, sesionValues.activeUser.name).subscribe(
+            sucess=>{
+              sesionValues.activeUser.setNewThemeList(sucess.list);
+              this.ProfileData = sesionValues.activeUser;
+              this.cleanForm();
+            },
+            err=>{
+              console.error(`Error: ${err}`);
+            }
+          );
+        }
+        else{
+          this.inputErrMessage = 'Nombre en uso';
+        }
+
+      break;
     }
+
   }
 
   cleanForm(){
@@ -321,22 +353,6 @@ export class UserPanelComponent implements OnInit {
         }
       }
     }
-  }
-
-  dataObservable(dataToString:string){
-    let data = JSON.parse(dataToString);
-
-    if(data['task'] == 'new'){
-      let newThemeList = data.themeList;
-      this.newThemeList(newThemeList);
-      this.formTask = '';
-      this.selectedThemeList = this.defaultSelect;
-    }
-
-    if(data['task'] == 'close'){
-      this.formTask = '';
-    }
-
   }
 
   setGlobalUser(profile:UserInterface){
@@ -649,10 +665,10 @@ export class UserPanelComponent implements OnInit {
   changeList(){
     if(this.ProfileData && this.selectedThemeList != this.defaultSelect){
       if(this.selectedThemeList == '-- Nueva lista --'){
-        this.formTask = (this.formTask != "new") ?  "new" : "";
+        this.showProfileForm({attrName:"new", attrId:"", value:'', secondValue:''});
+        this.themeList = undefined;
       }
       else{
-        this.formTask = "";
         this.DatabaseConexService.getThemesFromList(this.ProfileData.name, this.selectedThemeList).subscribe(
           sucess=>{
             this.themeList = this.ProfileData?.themeLists.find(themeList=>{
@@ -669,7 +685,6 @@ export class UserPanelComponent implements OnInit {
               this.cursorTheme = (this.themeList.userManage) ? 'grab' : 'pointer';
             }
             this.modifyValuesData.themeListName.value = this.themeList?.name as string;
-            this.formTask = '';
             this.setAudioBarThemeList();
           },
           err=>{

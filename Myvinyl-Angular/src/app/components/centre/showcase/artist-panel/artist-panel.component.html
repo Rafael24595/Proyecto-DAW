@@ -1,6 +1,6 @@
 <div id="homeContainer">
     <div *ngIf='artist'>
-        <div class="display-inline" style="width: 60%; background-color: rgba(255,255,255, 0.1); padding: 25px; box-sizing: border-box;">
+        <div class="display-inline" style="width: 60%; min-height: 500px; background-color: rgba(255,255,255, 0.1); padding: 25px; box-sizing: border-box;">
             <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
                 <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
