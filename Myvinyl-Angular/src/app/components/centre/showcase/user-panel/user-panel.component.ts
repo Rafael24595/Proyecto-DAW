@@ -356,7 +356,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   setGlobalUser(profile:UserInterface){
-    sesionValues.activeUser = User.setUser(profile.name,profile.email,profile.admin, profile.description, profile.themeLists);
+    sesionValues.activeUser = User.setUser(profile.name, profile.admin, profile.description, profile.themeLists, profile.email);
     this.ProfileData = sesionValues.activeUser;
   }
 
@@ -554,7 +554,7 @@ export class UserPanelComponent implements OnInit {
             activeInput = this.modifyValuesData.modifyEmail.status;
             if(activeInput && keyCode != 'Escape') {
               userAttribute = 'email'; 
-              oldAttribute = this.ProfileData.email; 
+              oldAttribute = this.ProfileData.email as string; 
               newAttribute = this.modifyValuesData.modifyEmail.value; 
               input = this.modifyValuesData.modifyEmail;
               this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);

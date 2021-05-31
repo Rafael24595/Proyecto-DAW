@@ -65,8 +65,8 @@
                             <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
                             <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
                         </div>
-                        <div style="width: 33%;" class="display-inline">
-                            <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                        <div *ngIf='isSessionUser' style="width: 33%;" class="display-inline">
+                            <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true; blackScreenStatus.blackScreenStatus = 'show'" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
                         </div>
                         <div *ngIf='isAdmin' style="padding: 15px; padding-bottom: 5px;">
                             <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
@@ -166,21 +166,23 @@
                 </div>
             </div>
         </div>
-        <div *ngIf='showThemeListForm'>
-            <h2>Añadir tema a:</h2>
+        <div *ngIf='showThemeListForm && blackScreenStatus.blackScreenStatus != ""' class="form-style">
+            <h2>Añadir tema:</h2>
+            <br>
             <select [(ngModel)]='selectedThemeList' (change)='checkInList()'>
                 <option selected="selected">-- Selecciona lista --</option>
                 <ng-container *ngFor='let list of userThemeLists'>
                     <option *ngIf='isSessionUser && list.userManage'>{{list.name}}</option>
                 </ng-container> 
             </select>
-            <br><br>
-            <ng-container *ngIf='selectedThemeList != ""'>
-                <button (click)='addToThmemeList()' >{{buttonThemeList}}</button>
-                <button (click)='showThemeListForm = false' >Cancelar</button>
+            <br><br><br>
+            <ng-container *ngIf='selectedThemeList != defaultThemeList'>
+                <button style="margin-right: 10px;" (click)='addToThmemeList()' >{{buttonThemeList}}</button>
+                <button style="margin-left: 10px;" (click)='clearForm()' >Cancelar</button>
             </ng-container>
+            <br>
         </div>
-        <div *ngIf='showInput'>
+        <div *ngIf='showInput && blackScreenStatus.blackScreenStatus != ""' class="form-style">
             <h2>Nuevo elemento:</h2>
             <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}:</p>
                 <ng-container *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover" && inputAttr != "lyrics"'>
@@ -278,14 +280,20 @@
                 </ng-container>
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
-                <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag")'>
-                <img id="imagePreview" src="ghostFlag.png" *ngIf='inputAttr == "cover" || inputAttr == "flag"'>
+                <input id="{{inputAttr}}-file" class="{{formErrFile.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag-file")'>
+                <br><br>
+                <div>
+                    <div style="display: inline-block;" class="{{inputAttr}}-back-preview">
+                        <img *ngIf='inputAttr == "cover"' id="imagePreview" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
+                        <img *ngIf='inputAttr == "flag"' id="imagePreview" src="{{mediaPath}}/images/flags/{{theme.flag}}.png" (error)="updateUrl($event, 'flag')">
+                    </div>
+                </div>
                 <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
                 <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
             </label>
             <br><br>
             <button (click)='confirmFrom()' >Modificar</button>
-            <button (click)='showInput = false' >Cancelar</button>
+            <button (click)='clearForm()' >Cancelar</button>
         </div>
     </div>
 </div>

@@ -48,7 +48,7 @@ async function extendSession(req, res){
     let existsUser = await userManage.searchUserDataById(payload._id);
 
     if(existsUser && existsUser.name == userName){
-      const token = jwt.sign({_id: payload._id}, secretWord, { expiresIn: 240 });
+      const token = jwt.sign({_id: payload._id}, secretWord, { expiresIn: 900 });
       res.status(200).send({status: true, message: {token}});
     }
     else{

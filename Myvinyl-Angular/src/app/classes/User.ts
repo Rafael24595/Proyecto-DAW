@@ -8,18 +8,18 @@ export class User{
     public static activeUser: any;
 
     name: string;
-    email: string;
+    email: string | undefined;
     description:string;
     admin: string;
     themeLists: ThemeList[];
 
-    private constructor(name: string, email: string, admin: string, description?:string, themeLists?: ThemeList[]){
+    private constructor(name: string, admin: string, description?:string, themeLists?: ThemeList[], email?: string,){
         
         this.name = name;
-        this.email = email;
         this.admin = admin;
         this.themeLists = [];
         this.description = (description) ? description : "";
+        this.email = (email) ? email : undefined;
 
         if(themeLists){
             themeLists.forEach(themeList=>{
@@ -136,9 +136,9 @@ export class User{
         return isLike;
     }
 
-    public static setUser(name: string, email: string, admin: string, description:string, themeLists: ThemeList[]){
+    public static setUser(name: string, admin: string, description:string, themeLists: ThemeList[], email?: string,){
 
-        User.activeUser = new User(name, email, admin, description, themeLists);
+        User.activeUser = new User(name, admin, description, themeLists, email);
 
         return User.activeUser;
 
@@ -147,14 +147,10 @@ export class User{
     public static getUser(){
 
         if (User.activeUser){
-
             return User.activeUser;
-
         }
         else{
-
-            return User.setUser('@Usuario', 'user@example.com', '', '0', [ThemeList.emptyThemeList()]);
-
+            return User.setUser('@Usuario', '', '0', [ThemeList.emptyThemeList()]);
         }
 
     }

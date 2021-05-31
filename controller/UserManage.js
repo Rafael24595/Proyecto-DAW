@@ -11,7 +11,7 @@ async function singUp(req, res){
     const {name, email, password} = req.body;
     let newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
     newUser = await setBasicThemeLists(newUser);
-    const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 240 });
+    const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 900 });
   
     await newUser.save();
     
@@ -39,8 +39,8 @@ async function singUp(req, res){
 
   async function signIn(req, res){
   
-    const { email, password } = req.body;
-    const user = await User.findOne({email});
+    let { email, password } = req.body;
+    const user = await User.findOne({email: { $regex: new RegExp("^" + email.toLowerCase(), "i") } });
   
     if (!user){
       return res.status(401).send('{"attribute":"email","message":"La cuenta no existe"}')
@@ -50,7 +50,7 @@ async function singUp(req, res){
       return res.status(401).send('{"attribute":"password","message":"Contraseña incorrecta"}');
     }
     
-    const token = jwt.sign({_id: user._id}, secretWord, { expiresIn: 240 });
+    const token = jwt.sign({_id: user._id}, secretWord, { expiresIn: 900 });
   
     return res.status(200).json({status:true, token:token, user: user});
   

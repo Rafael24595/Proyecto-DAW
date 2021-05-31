@@ -23,14 +23,16 @@ export class ManageUser{
     checkToken(){
 
         if(!this.checkTokenInterval){
-            this.checkTokenInterval = setInterval(()=>{NotificationManage.showMessage(`La sesión va a caducar en ${0} minutos. ¿Quieres extender la sesión?`, 'answer', this.refreshToken);
+            this.checkTokenInterval = setInterval(()=>{
+                console.log(this.autorizationService.checkForToken())
                 if(this.autorizationService.checkForToken()){
                     this.DatabaseConexService.checkToken(sesionValues.activeUser.name).subscribe(
                         sucess=>{
-                            let staus = sucess.status;
+                            let status = sucess.status;
                             let code = sucess.message.code;
                             let time = sucess.message.time;
-                            if(!staus){
+                            console.log(sucess)
+                            if(!status){
                                 switch (code){
     
                                     case 'correct':
@@ -39,11 +41,11 @@ export class ManageUser{
     
                                     case 'warn':
                                         let expireDate = new Date(Date.now() + time);
-                                        var minutes = Math.floor(time / 60000);
+                                        var minutes: number | string = Math.floor(time / 60000);
                                         if(!this.alerted){
                                             this.alerted = true;
-                                            NotificationManage.showMessage(`La sesión va a caducar en ${minutes} minutos. ¿Quieres extender la sesión?`, 'answer', ()=>{let auth = this.autorizationService; let dat = this.DatabaseConexService; this.refreshToken(auth, dat)});
-                                            console.log(minutes, expireDate);
+                                            minutes = (minutes == 0) ? `menos de ${minutes + 1} minuto` : (minutes == 1) ? `${minutes} minuto` : `${minutes} minutos` ;
+                                            NotificationManage.showMessage(`La sesión va a caducar en ${minutes}. ¿Quieres extender la sesión?`, 'answer', this.refreshToken.bind(this));
                                         }
                                     break;
     
@@ -61,17 +63,18 @@ export class ManageUser{
                         }
                     );
                 }
-            },5000);
+            },30000);
         }
 
     }
 
-    refreshToken(autorizationService: AuthorizationService, DatabaseConexService: DatabaseConexService){
-        if(autorizationService.checkForToken()){
-            DatabaseConexService.extendSession(sesionValues.activeUser.name).subscribe(
+    refreshToken(){
+        if(this.autorizationService.checkForToken()){
+            this.DatabaseConexService.extendSession(sesionValues.activeUser.name).subscribe(
                 sucess=>{console.log(sucess);
                     let token = sucess.message.token;
-                    autorizationService.setToken(token);
+                    this.autorizationService.setToken(token);
+                    this.alerted = false;
                 },
                 err=>{
                     console.error(`Error: ${err}`);
@@ -83,7 +86,7 @@ export class ManageUser{
     getUserDataFromDataBase(): Promise<boolean> {
         return new Promise(resolve=>{
             this.DatabaseConexService.getUserData().subscribe(user =>{
-                User.setUser(user.name, user.email, user.admin, user.description, user.themeLists);
+                User.setUser(user.name, user.admin, user.description, user.themeLists, user.email);
                 sesionValues.activeUser = User.getUser();                
                 resolve(true);             
             },

@@ -12,6 +12,7 @@ import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { Lyrics } from 'src/app/interfaces/LyricsInterface';
+import { GlobalVariables } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-theme-information',
@@ -26,7 +27,8 @@ export class ThemeInformationComponent implements OnInit {
   flag: string = 'eng';
   lyrics: string | undefined;
   comment:string | undefined;
-  selectedThemeList: string = '';
+  defaultThemeList = '-- Selecciona lista --';
+  selectedThemeList: string = this.defaultThemeList;
   userThemeLists:ThemeList[] = [];
   user = sesionValues.activeUser.name;
   coverCursorState = 'cursor-pointer';
@@ -37,6 +39,7 @@ export class ThemeInformationComponent implements OnInit {
   isAdmin: boolean = false;
   suggestThemes: Themes[] = [];
   queryPage:number = 1;
+  blackScreenStatus = GlobalVariables;
 
   vinylState = '';
 
@@ -119,7 +122,7 @@ export class ThemeInformationComponent implements OnInit {
     this.lyrics = this.theme.lyrics.native;
     this.user = sesionValues.activeUser.name;
     this.userThemeLists = sesionValues.activeUser.themeLists;
-    this.isSessionUser = (sesionValues.activeUser.email) ? true :false;
+    this.isSessionUser = (sesionValues.activeUser.email != undefined);
     this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
     this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
 
@@ -314,8 +317,8 @@ export class ThemeInformationComponent implements OnInit {
     let errMessage: undefined | string;
     let errClass: undefined | string;
 
-    files = document.getElementById(mode) as HTMLInputElement;
-    imagePreview = document.getElementById('imagePreview') as HTMLImageElement;
+    files = document.getElementById(mode) as HTMLInputElement;console.log(files)
+    imagePreview = document.getElementById('imagePreview') as HTMLImageElement;console.log(imagePreview)
 
     errMessage = await new Promise(resolve=>{
       reader.onload = function(){
@@ -356,26 +359,35 @@ export class ThemeInformationComponent implements OnInit {
   }
 
   showThemeForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
+    this.clearForm();
     this.showInput = true;
     this.inputAttr = attribute.attrName;
     this.inputValue = attribute.value;
     this.inputSecondValue = (attribute.secondValue) ? attribute.secondValue : this.inputSecondValue;
+    this.blackScreenStatus.blackScreenStatus = 'show';
   }
 
   async confirmFrom(){
     let sendForm = await this.modifyThemeData({attrName:this.inputAttr, attrId:'', value: this.inputValue});
     if(sendForm){
-      let imagePreview =  document.getElementById('imagePreview') as HTMLImageElement;
-      this.showInput = false;
-      this.inputAttr = '';
-      this.inputValue = '';
-      this.inputSecondValue = '';
-      this.formErrFile.class = '';
-      this.formErrFile.text = '';
-      this.formErr.class = '';
-      this.formErr.text = '';
-      if(imagePreview) imagePreview.src = '';
+      this.clearForm();
     }
+  }
+
+  clearForm(){
+    let imagePreview =  document.getElementById('imagePreview') as HTMLImageElement;
+    this.showInput = false;
+    this.inputAttr = '';
+    this.inputValue = '';
+    this.inputSecondValue = '';
+    this.formErrFile.class = '';
+    this.formErrFile.text = '';
+    this.formErr.class = '';
+    this.formErr.text = '';
+    this.blackScreenStatus.blackScreenStatus = '';
+    this.showThemeListForm = false;
+    this.selectedThemeList = this.defaultThemeList;
+    if(imagePreview) imagePreview.src = '';
   }
 
   deleteComment(commentId:string){
@@ -524,7 +536,7 @@ export class ThemeInformationComponent implements OnInit {
       switch (singleData.id){
 
         case 'flag':
-          if(singleData.value != '' || this.formErrFile.class != ''){
+          if(singleData.value == '' || this.formErrFile.class == ''){
             this.formErr.class = '';
             this.formErr.text = '';
             correctFiles++;
@@ -539,7 +551,7 @@ export class ThemeInformationComponent implements OnInit {
         case 'cover':
         case 'audio':
 
-          if(this.formErr.text != '' && this.formErrFile.class != ''){
+          if(this.formErr.text == '' && this.formErrFile.class == ''){
             this.formErrFile.class = '';
             this.formErr.text = '';
             correctFiles++;

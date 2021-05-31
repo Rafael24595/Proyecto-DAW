@@ -499,6 +499,24 @@ input{
 	border-radius: 50%;
 	background-color: black;
 }
+.cover-back-preview{
+	height: 100px;
+	width: 100px;
+	overflow: hidden;
+	border: 1px solid;
+}
+.cover-back-preview img{
+	height: 100px;
+	text-align: center;
+}
+.flag-back-preview{
+	height: 45px;
+	overflow: hidden;
+	border: 1px solid;
+}
+.flag-back-preview img{
+	height: 45px;
+}
 .comment-name-back{
 	background-color: rgba(0, 0, 75, 0.2);
 	padding: 5px;
