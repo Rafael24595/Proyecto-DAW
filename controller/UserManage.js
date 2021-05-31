@@ -72,9 +72,9 @@ async function getUserData(req, res){
 }
 
 async function searchUsersDataByName(req, res){
-  let nameQuery = req.body.nameQuery;
-  let limitQuery = req.body.limitQuery;
-  let pageQuery = req.body.pageQuery;
+  let nameQuery = (req.query.nameQuery) ? JSON.parse(req.query.nameQuery) : [''];
+  let limitQuery = parseInt(req.params.limit);
+  let pageQuery = parseInt(req.params.page);
   if(Array.isArray(nameQuery)){
     let userData = await new Promise(resolve=>{
       let data = {};
@@ -123,7 +123,7 @@ async function _searchUsersDataByName(req, res){
 }
 
 async function getProfileData(req, res){
-  let profileName = req.query.profile;
+  let profileName = req.params.user;
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);})
   if(profileData){
     if(req.userToken == true){
@@ -140,8 +140,8 @@ async function getProfileData(req, res){
 }
 
 async function getThemesFromList(req, res){
-  let themeListName = req.body.themeListName;
-  let profileName = req.body.profile;
+  let themeListName = req.params.id;
+  let profileName = req.params.user;
 
   if(req.existsUser){
     let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);});
@@ -161,10 +161,10 @@ async function getThemesFromList(req, res){
 }
 
 async function updateUserData(req, res){
-  let attribute = req.body.attribute;
-  let oldAttribute = req.body.oldAttribute;
-  let newAttribute = req.body.newAttribute;
-  let userName = req.body.userName;
+  let attribute = req.params.attribute;console.log(attribute)
+  let oldAttribute = req.body.oldAttribute;console.log(oldAttribute)
+  let newAttribute = req.body.newAttribute;console.log(newAttribute)
+  let userName = req.params.user;console.log(userName)
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     let userModify = await Tools.setUserAttribute(user, attribute, oldAttribute, newAttribute);
@@ -184,9 +184,23 @@ async function updateUserData(req, res){
   }
 }
 
+async function getUserAttribute(req, res){
+  let attributte = req.params.attributte;
+
+  if(attributte){
+    if(attributte == 'password'){
+      checkPassword(req, res);
+    }
+  }
+  else{
+    res.status(401).json({status:'Not found'});
+  }
+
+}
+
 async function checkPassword(req, res){
-  let userName = req.body.userName;
-  let password = req.body.password;
+  let userName = req.params.user;console.log(userName)
+  let password = req.params.value;console.log(password)
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     res.headerSent = true;
@@ -197,4 +211,4 @@ async function checkPassword(req, res){
   }
 }
 
-module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, checkPassword, getThemesFromList };
+module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, getUserAttribute, getThemesFromList };

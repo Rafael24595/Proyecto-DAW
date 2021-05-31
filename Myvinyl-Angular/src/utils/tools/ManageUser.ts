@@ -69,7 +69,7 @@ export class ManageUser{
     }
 
     refreshToken(){
-        if(this.autorizationService.checkForToken()){
+        if(this.autorizationService.checkForToken() != null){
             this.DatabaseConexService.extendSession(sesionValues.activeUser.name).subscribe(
                 sucess=>{console.log(sucess);
                     let token = sucess.message.token;

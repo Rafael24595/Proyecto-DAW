@@ -23,7 +23,7 @@ export class UserDataComponent implements OnInit {
     this.manageComponent.setLastURL();
     this.manageUser.checkToken();
     this.manageUser.getUserDataFromDataBase().then(()=>{
-      this.sessionValues.activeUser = sesionValues.activeUser
+      this.sessionValues.activeUser = sesionValues.activeUser;
       if(this.sessionValues.activeUser.name == '@Usuario'){
         this.authorization.destroySession();
       }

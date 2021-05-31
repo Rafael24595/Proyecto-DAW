@@ -15,45 +15,42 @@ const multipartMiddleware = multipart({
     uploadDir:'./.temp'
 });
 
-router.get("/misc/database/new", DevManageTools.generateDatabase);
+router.patch("/misc/database", DevManageTools.generateDatabase);
 
-router.get("/theme", ArtistThemeManage.getThemeData);
+router.get("/theme/:theme", ArtistThemeManage.getThemeData);
 router.post("/theme", SecurityManage.verifyTokenStrict , ArtistThemeManage.setTheme);
-router.post("/theme/remove", SecurityManage.verifyTokenStrict , ArtistThemeManage.removeTheme);
-router.post("/theme/reassign", SecurityManage.verifyTokenStrict, ArtistThemeManage.reassignArtistTheme);
-router.post("/theme/reassign/all", SecurityManage.verifyTokenStrict, ArtistThemeManage.reassignArtistThemes);
-router.post("/theme/comment", SecurityManage.verifyTokenStrict , ComentsManage.publishComment);
-router.post("/theme/comment/remove", SecurityManage.verifyTokenStrict , ComentsManage.deleteComment);
-router.post("/theme/thumb", SecurityManage.verifyTokenStrict , ComentsManage.thumbValueTheme);
-router.get("/theme/flags/all", FilesManage.getFlagsList);
-router.post("/theme/attribute", SecurityManage.verifyTokenStrict , ArtistThemeManage.setThemesAttribute);
+router.delete("/theme/:id", SecurityManage.verifyTokenStrict , ArtistThemeManage.removeTheme);
+router.patch("/theme/reassign/:main/:target/:id", SecurityManage.verifyTokenStrict, ArtistThemeManage.reassignArtistTheme);
+router.post("/theme/:theme/comment", SecurityManage.verifyTokenStrict , ComentsManage.publishComment);
+router.delete("/theme/:theme/comment/:id", SecurityManage.verifyTokenStrict , ComentsManage.deleteComment);
+router.patch("/theme/:theme/thumb/:value", SecurityManage.verifyTokenStrict , ComentsManage.thumbValueTheme);
+router.get("/theme/attributte/flags/all", FilesManage.getFlagsList);
+router.patch("/theme/:theme/:attribute/:value", SecurityManage.verifyTokenStrict , ArtistThemeManage.setThemesAttribute);
 
-router.get("/artist", ArtistThemeManage.getArtistData);
+router.get("/artist/:artist", ArtistThemeManage.getArtistData);
 router.post("/artist", SecurityManage.verifyTokenStrict, ArtistThemeManage.setArtist);
-router.post("/artist/remove", SecurityManage.verifyTokenStrict, ArtistThemeManage.removeArtist);
-router.post("/artist/page", ArtistThemeManage.getArtistDataQuery);
-router.get("/artist/id/all", ArtistThemeManage.getArtistsId);
-router.post("/artist/attribute", SecurityManage.verifyTokenStrict , ArtistThemeManage.setArtistAttribute);
+router.delete("/artist/:id", SecurityManage.verifyTokenStrict, ArtistThemeManage.removeArtist);
+router.get("/artist/:page/:limit", ArtistThemeManage.getArtistDataQuery);
+router.get("/artist/attributte/:attribute/all", ArtistThemeManage.getArtistAttributte);
+router.patch("/artist/:artist/:attribute/:value", SecurityManage.verifyTokenStrict , ArtistThemeManage.setArtistAttribute);
 
-router.get("/user", SecurityManage.verifyToken , UserManage.getProfileData);
-router.post("/user/page", UserManage.searchUsersDataByName);
-router.get("/user/token", SecurityManage.verifyTokenStrict , UserManage.getUserData);
-router.get("/user/token/date", SecurityManage.checkTokenDate);
-router.get("/user/token/date/refresh", SecurityManage.extendSession);
-router.post("/user/password", SecurityManage.verifyTokenStrict, UserManage.checkPassword);
+router.get("/user/:user", SecurityManage.verifyToken , UserManage.getProfileData);
+router.get("/user/:page/:limit", UserManage.searchUsersDataByName);
+router.get("/user/self/profile/token", SecurityManage.verifyTokenStrict , UserManage.getUserData);
+router.get("/user/self/profile/token/date", SecurityManage.checkTokenDate);
+router.get("/user/self/profile/token/refresh", SecurityManage.extendSession);
+router.get("/user/:user/:attributte/:value", SecurityManage.verifyTokenStrict, UserManage.getUserAttribute);
 router.post("/user/access/signUp", UserManage.singUp);
 router.post("/user/access/signin", UserManage.signIn);
-router.post("/user/themelist/all", SecurityManage.verifyToken, UserManage.getThemesFromList);
-router.post("/user/themelist/privacy", SecurityManage.verifyTokenStrict , ThemeListsManage.privatizeThemeList);
-router.post("/user/themelist", SecurityManage.verifyTokenStrict , ThemeListsManage.createNewThemeList);
-router.post("/user/themelist/delete", SecurityManage.verifyTokenStrict , ThemeListsManage.deleteThemeList);
-router.post("/user/themelist/add", SecurityManage.verifyTokenStrict , ThemeListsManage.addToUserThemeList);
-router.post("/user/themelist/remove", SecurityManage.verifyTokenStrict , ThemeListsManage.removeFromUserThemeList);
-router.post("/user/themelist/update", SecurityManage.verifyTokenStrict , ThemeListsManage.updateUserThemeList);
-router.post("/user/attribute", SecurityManage.verifyTokenStrict , UserManage.updateUserData);
+router.get("/user/:user/themelist/:id/all", SecurityManage.verifyToken, UserManage.getThemesFromList);
+router.patch("/user/:user/themelist/:id/attribute/privacy", SecurityManage.verifyTokenStrict , ThemeListsManage.privatizeThemeList);
+router.post("/user/:user/themelist/:id", SecurityManage.verifyTokenStrict , ThemeListsManage.createNewThemeList);
+router.delete("/user/:user/themelist/:id", SecurityManage.verifyTokenStrict , ThemeListsManage.deleteThemeList);
+router.post("/user/:user/themelist/:id/:theme", SecurityManage.verifyTokenStrict , ThemeListsManage.addToUserThemeList);
+router.delete("/user/:user/themelist/:id/:theme", SecurityManage.verifyTokenStrict , ThemeListsManage.removeFromUserThemeList);
+router.patch("/user/:user/themelist/:id", SecurityManage.verifyTokenStrict , ThemeListsManage.updateUserThemeList);
+router.patch("/user/:user/:attribute", SecurityManage.verifyTokenStrict , UserManage.updateUserData);
 
 router.post("/file", SecurityManage.verifyTokenStrict, multipartMiddleware , FilesManage.uploadFile);
-router.post("/file/remove", SecurityManage.verifyTokenStrict, FilesManage.removeFile);
-router.post("/file/rename", SecurityManage.verifyTokenStrict, FilesManage.renameFile);
 
 module.exports = router;

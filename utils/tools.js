@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Artist = mongoose.model('Artist');
 const Theme = mongoose.model('Theme');
+const FilesManage = require('../controller/FilesManage');
 
 async function usersExist(theme){
   return new Promise(async resolve=>{
@@ -73,8 +74,10 @@ async function setThemeArtist(themeList){
   for (let index = 0; index < themeList.length; index++) {
     let id_artist = themeList[index].artist.id;
     let artist = await Artist.findOne({id_artist:id_artist}).lean();
-    themeList[index].artist.name = artist.name;
-    themeList[index].artist.surname = artist.surname;
+    if(artist){
+      themeList[index].artist.name = artist.name;
+      themeList[index].artist.surname = artist.surname;
+    }
   }
   return (isSingle == false) ? themeList : themeList[0];
 }

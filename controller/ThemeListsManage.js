@@ -5,11 +5,11 @@ const User = mongoose.model('User');
 const Tools = require('../utils/tools');
 
 async function privatizeThemeList(req, res){
-    let themeListName = req.body.themeListName;
+    let themeListName = req.params.id;
     let state = JSON.parse(req.body.state);
-    let userName = req.body.userName;
+    let userName = req.params.user;
     let index = 0;
-    state = (state != true && state != false) ? false : state;
+   state = (state != true && state != false) ? false : state;
     state = JSON.stringify(!state);
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
@@ -33,10 +33,10 @@ async function privatizeThemeList(req, res){
   }
   
   async function createNewThemeList(req, res){
-    let themeListName = req.body.themeListName;
+    let themeListName = req.params.id;
     let privacy = req.body.privacy;
     let list;
-    let userName = req.body.userName;
+    let userName = req.params.user;
 
     if(req.body.list && typeof req.body.list == 'object'){
       list = await Tools.simplifyThemeList(req.body.list);
@@ -63,11 +63,11 @@ async function privatizeThemeList(req, res){
   }
   
   async function deleteThemeList(req, res){
-    let themeListName = req.body.themeListName;
-    let userName = req.body.userName;
+    let themeListName = req.params.id;
+    let userName = req.params.user;
     let themeListToRemove;
     let index = 0;
-    if(userName == req.userNameToken){
+   if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
       themeListToRemove = user.themeLists.find(themeList=>{
         if(themeList.name == themeListName){
@@ -93,9 +93,9 @@ async function privatizeThemeList(req, res){
   
   async function addToUserThemeList(req, res){
     let artistId = req.body.artistId;
-    let newTheme = req.body.themeId;
-    let themeListName = req.body.themeListName;
-    let userName = req.body.userName;
+    let newTheme = req.params.theme;
+    let themeListName = req.params.id;
+    let userName = req.params.user;
     let index = 0;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
@@ -128,9 +128,9 @@ async function privatizeThemeList(req, res){
   }
   
   async function removeFromUserThemeList(req, res){
-    let themeId = req.body.themeId;
-    let themeListName = req.body.themeListName;
-    let userName = req.body.userName;
+    let themeId = req.params.theme;
+    let themeListName = req.params.id;
+    let userName = req.params.user;
 
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
@@ -157,8 +157,8 @@ async function privatizeThemeList(req, res){
 
   async function updateUserThemeList(req, res){
     let newThemeList = req.body.themeList;
-    let themeListName = req.body.themeListName;
-    let userName = req.body.userName;
+    let themeListName = req.params.id;
+    let userName = req.params.user;
     if(userName == req.userNameToken){
       let user = await User.findOne({name:userName}).lean();
       let index = user.themeLists.map(theme=>{return theme.name}).indexOf(themeListName);

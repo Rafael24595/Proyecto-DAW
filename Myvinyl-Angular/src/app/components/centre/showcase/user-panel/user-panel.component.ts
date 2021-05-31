@@ -68,7 +68,7 @@ export class UserPanelComponent implements OnInit {
       this.themeList = undefined;
       this.selectedThemeList = this.defaultSelect;
       this.userName = params['username'];
-      this.manageUser.getProfileDataFromDataBase(this.userName).then((profile:UserInterface)=>{
+      this.manageUser.getProfileDataFromDataBase(this.userName).then((profile:UserInterface)=>{console.log(profile)
       this.isSessionUser = (profile.email) ? true :false;
         if(profile.email){
           this.setGlobalUser(profile);
@@ -616,6 +616,7 @@ export class UserPanelComponent implements OnInit {
       this.DatabaseConexService.modifyThemeList(newThemeList, this.themeList.name, sesionValues.activeUser.name).subscribe(
         sucess=>{
           if(this.themeList && this.ProfileData && sucess.status){
+            localStorage.setItem(`last-${this.ProfileData.name}-theme-list`, this.selectedThemeList);
             this.themeList.name = this.modifyValuesData.themeListName.value;
             this.modifyValuesData.themeListName.status = false;
           }

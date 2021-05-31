@@ -85,7 +85,7 @@ async function verifyToken (req, res, next){
     req.validToken = true;
   }
 
-  let userName = (Object.keys(req.query).length != 0) ? req.query.profile : req.body.profile;
+  let userName = (Object.keys(req.query).length != 0) ? req.query.profile : (req.body.profile) ? req.body.profile : req.params.user;
   let userId = await userManage.searchUserDataByName(userName);
 
   if(userId){

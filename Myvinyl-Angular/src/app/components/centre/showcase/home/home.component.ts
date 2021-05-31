@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
   showHomeForm(){
     this.showForm = true;
     this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
-      sucess=>{
+      sucess=>{console.log(sucess)
         sucess.message.forEach(artistData=>{
           let artistDataSplited = artistData.split('&');
           if(artistDataSplited.length == 2){

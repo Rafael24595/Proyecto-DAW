@@ -3,11 +3,10 @@ const Tools = require('../utils/tools');
 const mongoose = require('mongoose');
 const Artist = mongoose.model('Artist');
 const Theme = mongoose.model('Theme');
-const FilesManage = require('../controller/FilesManage');
 
   async function getArtistData(req, res){
     try {
-      const artistId = req.query.artist;
+      const artistId = req.params.artist;
       let artist = await Artist.findOne({"id_artist":artistId}).lean();
       artist = await Tools.setArtistThemes(artist);
       if(artist){
@@ -24,10 +23,10 @@ const FilesManage = require('../controller/FilesManage');
 
   async function getArtistDataQuery(req, res){
     try {
-      let queryData = req.body.queryData;
-      let limitQuery = req.body.limitQuery;
-      let pageQuery = req.body.pageQuery;
-      let fieldsQuery = req.body.fieldsQuery;
+      let queryData = JSON.parse(req.query.query);
+      let limitQuery = parseInt(req.params.limit);
+      let pageQuery = parseInt(req.params.page);
+      let fieldsQuery = JSON.parse(req.query.fields);
       if(Array.isArray(queryData) && queryData.length > 0 && Array.isArray(fieldsQuery) && fieldsQuery.length > 0 && typeof limitQuery == 'number') {
         let artistsQuery = await new Promise(resolve=>{
           let query = {};
@@ -100,9 +99,27 @@ const FilesManage = require('../controller/FilesManage');
   
   }
 
+  async function getArtistAttributte(req, res){
+
+    let attribute = req.params.attribute;
+
+    switch (attribute){
+
+      case 'id_artist':
+        getArtistsId(req, res);
+      break;
+
+      default:
+        res.status(404).send({status:'Not Found'});
+      break
+
+    }
+
+  }
+
   async function getArtistsId(req, res){
     try {
-      let attribute = req.query.attribute;
+      let attribute = req.params.attribute;
       let artists = await Artist.find({}).lean();
       let artistsList = artists.map(artist=>{return (artist[attribute]) ? artist[attribute] : artist.id_artist});
       if(attribute == 'id_artist'){
@@ -122,7 +139,7 @@ const FilesManage = require('../controller/FilesManage');
 
   async function getThemeData(req, res){
     try {
-      const themeId = req.query.theme;
+      const themeId = req.params.theme;
       let theme = await Theme.findOne({"id":themeId}).lean();
       theme = await Tools.setThemeArtist(theme);
       if(theme.comments.length > 0){
@@ -163,18 +180,23 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function removeArtist(req, res){
-    let artistId = req.body.artistId;
-    let userName = req.body.userName;
+    let artistId = req.params.id;
+    let userName = req.query.user;
 
     if(userName == req.userNameToken && req.isAdmin){
       let artistExists = await Artist.findOne({id_artist:artistId}).lean();
       if(artistExists != null){
         let status = await Tools.dropArtist(artistId, true);
+        let themes = await Theme.find({'artist.id':artistId}).lean();
+        themes.forEach(theme=>{
+          let id = theme.id;
+          Tools.dropTheme(id);
+        });
         res.headerSent = true;
         res.status(200).json({status:true});
       }
       else{
-        if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
+        if(!res.headerSent) res.status(204).json({status:'id-not-exists'});
         res.headerSent = true;
       }
     }
@@ -183,19 +205,36 @@ const FilesManage = require('../controller/FilesManage');
     }
   }
 
+  async function reassignArtistTheme(req, res){
+    let id = req.params.id;
+
+    if(id){
+      if(id == 'all'){
+        reassignArtistThemes(req, res);
+      }
+      else{
+        reassignArtistThemeSingle(req, res);
+      }
+    }
+    else{
+      res.status(401).json({status:'Not found'});
+    }
+    
+  }
+
   async function reassignArtistThemes(req, res){
     try {
-      let mainArtistId = req.body.mainArtistId;
-      let targetArtistId = req.body.targetArtistId;
-      let userName = req.body.userName;
+      let mainArtistId = req.params.main;console.log(mainArtistId)
+      let targetArtistId = req.params.target;console.log(targetArtistId)
+      let userName = req.body.userName;console.log(userName)
       if(userName == req.userNameToken && req.isAdmin){
         let themes = await Theme.find({"artist.id":mainArtistId}).lean();
         if(themes != null){
           for (let index = 0; index < themes.length; index++) {
-            let status = await updateThemeAuthor(mainArtistId, targetArtistId, themes[index].id);
+            let status = await Tools.updateThemeAuthor(mainArtistId, targetArtistId, themes[index].id);
           }
           res.headerSent = true;
-          res.status(200).json({status:true});
+          res.status(200).json();
         }
         else{
           if(!res.headerSent) res.status(401).json({status:'id-not-exists'});
@@ -211,13 +250,13 @@ const FilesManage = require('../controller/FilesManage');
     }
   }
 
-  async function reassignArtistTheme(req, res){
-    let mainArtistId = req.body.mainArtistId;
-    let targetArtistId = req.body.targetArtistId;
-    let oldThemeId = req.body.themeId;
-    let userName = req.body.userName;
-    if(userName == req.userNameToken && req.isAdmin && mainArtistExists != targetArtistExists){
-      let status = await updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId);
+  async function reassignArtistThemeSingle(req, res){
+    let mainArtistId = req.params.main;console.log(mainArtistId)
+    let targetArtistId = req.params.target;console.log(targetArtistId)
+    let oldThemeId = req.params.id;console.log(oldThemeId)
+    let userName = req.body.userName;console.log(userName)
+    if(userName == req.userNameToken && req.isAdmin){
+      let status = await Tools.updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId);
       if(status){
         res.headerSent = true;
         res.status(200).json({status:true});
@@ -233,9 +272,9 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function setArtistAttribute(req, res){
-    let artistId = req.body.artistId;
-    let attribute = req.body.attribute;
-    let value = req.body.value;
+    let artistId = req.params.artist;
+    let attribute = req.params.attribute;
+    let value = req.params.value;
     let userName = req.body.userName;
     
     if(userName == req.userNameToken && req.isAdmin){
@@ -318,9 +357,8 @@ const FilesManage = require('../controller/FilesManage');
 
   async function removeTheme(req, res){
     
-    let artistId = req.body.artistId;
-    let themeId = req.body.themeId;
-    let userName = req.body.userName;
+    let themeId = req.params.id;
+    let userName = req.query.user;
 
     if(userName == req.userNameToken && req.isAdmin){
       let themeExists = await Theme.findOne({"id":themeId}).lean();
@@ -340,9 +378,9 @@ const FilesManage = require('../controller/FilesManage');
   }
 
   async function setThemesAttribute(req, res){
-    let themeId = req.body.themeId;
-    let attribute = req.body.attribute;
-    let value = req.body.value;
+    let themeId = req.params.theme;
+    let attribute = req.params.attribute;
+    let value = req.params.value;
     let userName = req.body.userName;
     
     if(userName == req.userNameToken && req.isAdmin){
@@ -376,4 +414,4 @@ const FilesManage = require('../controller/FilesManage');
     }
   }
 
-  module.exports = { getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistsId };
+  module.exports = { getArtistDataQuery , getArtistData, getThemeData, setArtistAttribute, setThemesAttribute, setArtist, removeArtist, reassignArtistTheme, reassignArtistThemes, setTheme, removeTheme, getArtistAttributte };
