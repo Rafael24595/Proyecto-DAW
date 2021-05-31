@@ -25,8 +25,14 @@ export const Variables = {
         range:{0:'Estandard', 1:'Administrador'}
 }
 
-export let GlobalVariables: {blackScreenStatus: string} = {
+export let GlobalVariables: {blackScreenStatus: string, notificationStatus:string, notificationMessage:string, notificationIsShowing:boolean, notificationCloseManual:boolean, notificationAnswer:boolean, notificationAnswerFunction:Function | undefined} = {
         blackScreenStatus: '',
+        notificationStatus: '',
+        notificationMessage: '',
+        notificationIsShowing: false,
+        notificationCloseManual: false,
+        notificationAnswer: false,
+        notificationAnswerFunction: undefined
 }
 
 export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};

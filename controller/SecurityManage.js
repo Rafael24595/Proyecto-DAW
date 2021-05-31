@@ -2,8 +2,68 @@
 require('../models/models');
 const jwt = require('jsonwebtoken');
 const userManage = require('./UserManage');
+const secretWord = 'secret';
 
-async function checkToken(req, res, next){
+async function checkTokenDate(req, res){
+
+  let userName = req.query.userName;
+  let token = req.headers.authorization.split(' ')[1];
+  let limit = 180000;
+  let expirationTimeNotification = true;
+  let message = {code:'correct', time:0};
+
+  try {
+    
+    let payload = jwt.verify(token, 'secret');
+    let existsUser = await userManage.searchUserDataById(payload._id);
+
+    if(existsUser && existsUser.name == userName){
+      let expirationTime = new Date(payload['exp'] * 1000) - new Date();
+      expirationTimeNotification = (expirationTime > limit);
+      message.code = (expirationTime > limit) ? message.code : `warn`;
+      message.time = expirationTime;
+    }
+    else{
+      res.status(401).send({status:false, message:'Unauthorize Request'});
+    }
+
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    expirationTimeNotification = false;
+    message.code = (err == 'TokenExpiredError: jwt expired') ? 'expired' : message.code;
+  }
+
+  res.status(200).send({status: expirationTimeNotification, message: message});
+
+}
+
+async function extendSession(req, res){
+
+  let userName = req.query.userName;
+  let token = req.headers.authorization.split(' ')[1];
+
+  try {
+    
+    let payload = jwt.verify(token, 'secret');
+    let existsUser = await userManage.searchUserDataById(payload._id);
+
+    if(existsUser && existsUser.name == userName){
+      const token = jwt.sign({_id: payload._id}, secretWord, { expiresIn: 240 });
+      res.status(200).send({status: true, message: {token}});
+    }
+    else{
+      res.status(401).send({status:false, message:'Unauthorize Request'});
+    }
+
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    expirationTimeNotification = false;
+    message.code = (err == 'TokenExpiredError: jwt expired') ? 'expired' : message.code;
+  }
+
+}
+
+async function verifyToken (req, res, next){
 
   let id;
   let token = req.headers.authorization.split(' ')[1];
@@ -40,7 +100,9 @@ async function checkToken(req, res, next){
 
 }
 
-async function verifyToken(req, res, next){
+
+
+async function verifyTokenStrict(req, res, next){
 
   let payload;
   let token;
@@ -79,4 +141,4 @@ async function verifyToken(req, res, next){
 
 }
 
-module.exports = { verifyToken, checkToken };
+module.exports = { verifyTokenStrict, verifyToken, checkTokenDate, extendSession };

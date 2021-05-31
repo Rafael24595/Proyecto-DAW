@@ -4,13 +4,14 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Tools = require('../utils/tools');
 const jwt = require('jsonwebtoken');
+const secretWord = 'secret';
 
 async function singUp(req, res){
 
     const {name, email, password} = req.body;
     let newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
     newUser = await setBasicThemeLists(newUser);
-    const token = jwt.sign({_id: newUser._id}, 'secret');
+    const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 240 });
   
     await newUser.save();
     
@@ -49,7 +50,7 @@ async function singUp(req, res){
       return res.status(401).send('{"attribute":"password","message":"Contraseña incorrecta"}');
     }
     
-    const token = jwt.sign({_id: user._id}, 'secret');
+    const token = jwt.sign({_id: user._id}, secretWord, { expiresIn: 240 });
   
     return res.status(200).json({status:true, token:token, user: user});
   

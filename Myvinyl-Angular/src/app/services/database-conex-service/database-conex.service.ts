@@ -46,6 +46,14 @@ export class DatabaseConexService {
   return this.http.get<{validToken:boolean,data:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/getProfileData?profile=${profile}`);
  }
 
+ checkToken(userName:string): Observable<{status:boolean,message:{code:string, time:number}}>{
+  return this.http.get<{status:boolean,message:{code:string, time:number}}>(`http://${Variables.host}:${Variables.port}/api/checkToken?userName=${userName}`);
+ }
+
+ extendSession(userName:string): Observable<{status:boolean,message:{token:string}}>{
+  return this.http.get<{status:boolean,message:{token:string}}>(`http://${Variables.host}:${Variables.port}/api/extendSession?userName=${userName}`);
+ }
+
  getUserData(): Observable<User>{
    return this.http.get<User>(`http://${Variables.host}:${Variables.port}/api/getUserData`)
  }

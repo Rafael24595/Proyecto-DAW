@@ -8,5 +8,5 @@ import { GlobalVariables } from 'src/utils/variables/variables';
 })
 
 export class AppComponent {
-  blackScreenStatus = GlobalVariables;
+  GlobalVariables = GlobalVariables;
 }

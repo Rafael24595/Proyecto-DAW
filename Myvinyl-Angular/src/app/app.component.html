@@ -1,4 +1,12 @@
-<div id="black-screen" class="{{blackScreenStatus.blackScreenStatus}}" (click)='blackScreenStatus.blackScreenStatus = ""'></div>
+<div id="notification-container" class="{{GlobalVariables.notificationStatus}}">
+    <p>Alerta: {{GlobalVariables.notificationMessage}}</p>
+    <p *ngIf='GlobalVariables.notificationCloseManual' id="close-alert" class="cursor-pointer" (click)='GlobalVariables.notificationStatus = ""; GlobalVariables.notificationIsShowing = false'>X</p>
+    <div *ngIf='GlobalVariables.notificationAnswer && GlobalVariables.notificationAnswerFunction' id="answer-alert" class="cursor-pointer">
+        <button class="white-button" (click)='GlobalVariables.notificationAnswerFunction(); GlobalVariables.notificationStatus = ""; GlobalVariables.notificationIsShowing = false'>Sí</button>
+        <button class="white-button" (click)='GlobalVariables.notificationStatus = ""; GlobalVariables.notificationIsShowing = false'>No</button>
+    </div>
+</div>
+<div id="black-screen" class="{{GlobalVariables.blackScreenStatus}}" (click)='GlobalVariables.blackScreenStatus = ""'></div>
 <app-header></app-header>
 <app-centre></app-centre>
 <app-footer></app-footer>
