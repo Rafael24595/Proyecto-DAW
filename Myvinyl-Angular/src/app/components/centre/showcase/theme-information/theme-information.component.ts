@@ -414,7 +414,7 @@ export class ThemeInformationComponent implements OnInit {
       case 'cover':
 
         let formDataFiles = new FormData();
-        let file = document.getElementById(attribute.attrName) as HTMLInputElement;
+        let file = document.getElementById((attribute.attrName == 'flag') ? `${attribute.attrName}-file` : attribute.attrName) as HTMLInputElement;
 
         let fileType = (attribute.attrName == 'cover') ? 'theme_cover' : (attribute.attrName == 'audio') ? 'theme_audio' : 'theme_flag' ;
         let fileName = (attribute.attrName == 'flag') ? attribute.value : this.theme?.id;

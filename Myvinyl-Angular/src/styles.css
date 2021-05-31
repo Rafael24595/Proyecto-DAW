@@ -439,16 +439,6 @@ input{
 	background-color: rgba(0,0,10,0.2);
 	padding: 10px;
 }
-.black-button{
-	padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 4px;
-    padding-bottom: 2px;
-	border: 2px solid var(--black-button-border);
-    background: var(--black-button-back);
-    color: aliceblue;
-}
-
 .text-error{
 	font-weight: bold;
 	color: var(--warn);
@@ -627,6 +617,25 @@ input{
     padding: 5px;
     transform: translateX(-100%);
 	background-color: white;
+}
+.black-button{
+	background-color: rgba(0,0,0,0.8);
+    color: white;
+    font-weight: bold;
+    border: 1px solid gray;
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 10px;
+}
+.gray-button{
+	padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+	border: 2px solid var(--black-button-border);
+    background: var(--black-button-back);
+    color: aliceblue;
 }
 .white-button{
 	font-weight: bold;

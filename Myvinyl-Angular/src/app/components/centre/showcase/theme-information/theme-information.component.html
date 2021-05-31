@@ -177,8 +177,8 @@
             </select>
             <br><br><br>
             <ng-container *ngIf='selectedThemeList != defaultThemeList'>
-                <button style="margin-right: 10px;" (click)='addToThmemeList()' >{{buttonThemeList}}</button>
-                <button style="margin-left: 10px;" (click)='clearForm()' >Cancelar</button>
+                <button class="black-button" (click)='addToThmemeList()' >{{buttonThemeList}}</button>
+                <button class="black-button" (click)='clearForm()' >Cancelar</button>
             </ng-container>
             <br>
         </div>
@@ -191,98 +191,100 @@
                 </ng-container>
                 <ng-container *ngIf='inputAttr == "lyrics"'>
                     <h2>Letra original:</h2>
-                    <quill-editor id="{{inputAttr}}" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputValue">
-                        <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                                <button class="ql-strike"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-header" value="1"></button>
-                                <button type="button" class="ql-header" value="2"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-indent" value="-1"></button>
-                                <button type="button" class="ql-indent" value="+1"></button>
-                            </span>                                      
-                            <span class="ql-formats">
-                                <select class="ql-color"></select>
-                                <select class="ql-background"></select>
-                            </span>
-                            <span class="ql-formats">
-                                <select class="ql-align">
-                                  <option selected></option>
-                                  <option value="center"></option>
-                                  <option value="right"></option>
-                                  <option value="justify"></option>
-                                </select>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-link"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-clean">
-                                </button>
-                            </span>
-                        </div>
-                    </quill-editor>
-                    <textarea id="{{inputAttr}}" name="native" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
+                    <div style="width: 85%; display: inline-block;">
+                        <quill-editor id="{{inputAttr}}" [styles]="{height: '125px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputValue">
+                            <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-header" value="1"></button>
+                                    <button type="button" class="ql-header" value="2"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-indent" value="-1"></button>
+                                    <button type="button" class="ql-indent" value="+1"></button>
+                                </span>                                      
+                                <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                </span>
+                                <span class="ql-formats">
+                                    <select class="ql-align">
+                                      <option selected></option>
+                                      <option value="center"></option>
+                                      <option value="right"></option>
+                                      <option value="justify"></option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-clean">
+                                    </button>
+                                </span>
+                            </div>
+                        </quill-editor>
+                    </div>
                     <br>
                     <h2>Letra traducida:</h2>
-                    <quill-editor id="{{inputAttr}}" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputSecondValue">
-                        <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                                <button class="ql-strike"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-header" value="1"></button>
-                                <button type="button" class="ql-header" value="2"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-indent" value="-1"></button>
-                                <button type="button" class="ql-indent" value="+1"></button>
-                            </span>                                      
-                            <span class="ql-formats">
-                                <select class="ql-color"></select>
-                                <select class="ql-background"></select>
-                            </span>
-                            <span class="ql-formats">
-                                <select class="ql-align">
-                                  <option selected></option>
-                                  <option value="center"></option>
-                                  <option value="right"></option>
-                                  <option value="justify"></option>
-                                </select>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-link"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button type="button" class="ql-clean">
-                                </button>
-                            </span>
-                        </div>
-                    </quill-editor>
-                    <textarea id="{{inputAttr}}" name="esp" id="" cols="30" rows="10" [(ngModel)]="inputSecondValue"></textarea>
+                    <div style="width: 85%; display: inline-block;">
+                        <quill-editor id="{{inputAttr}}" [styles]="{height: '125px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputSecondValue">
+                            <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-header" value="1"></button>
+                                    <button type="button" class="ql-header" value="2"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-indent" value="-1"></button>
+                                    <button type="button" class="ql-indent" value="+1"></button>
+                                </span>                                      
+                                <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                </span>
+                                <span class="ql-formats">
+                                    <select class="ql-align">
+                                      <option selected></option>
+                                      <option value="center"></option>
+                                      <option value="right"></option>
+                                      <option value="justify"></option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button type="button" class="ql-clean">
+                                    </button>
+                                </span>
+                            </div>
+                        </quill-editor>
+                    </div>
                 </ng-container>
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
                 <input id="{{inputAttr}}-file" class="{{formErrFile.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag-file")'>
                 <br><br>
-                <div>
+                <div *ngIf='inputAttr == "cover" || inputAttr == "flag"'>
                     <div style="display: inline-block;" class="{{inputAttr}}-back-preview">
                         <img *ngIf='inputAttr == "cover"' id="imagePreview" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         <img *ngIf='inputAttr == "flag"' id="imagePreview" src="{{mediaPath}}/images/flags/{{theme.flag}}.png" (error)="updateUrl($event, 'flag')">
@@ -292,8 +294,8 @@
                 <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
             </label>
             <br><br>
-            <button (click)='confirmFrom()' >Modificar</button>
-            <button (click)='clearForm()' >Cancelar</button>
+            <button class="black-button" (click)='confirmFrom()' >Modificar</button>
+            <button class="black-button" (click)='clearForm()' >Cancelar</button>
         </div>
     </div>
 </div>
