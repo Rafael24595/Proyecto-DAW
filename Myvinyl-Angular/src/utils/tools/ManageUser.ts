@@ -81,6 +81,9 @@ export class ManageUser{
                 }
             );
         }
+        else{
+            NotificationManage.showMessage(`La sesión ha espirado`);
+        }
     }
 
     getUserDataFromDataBase(): Promise<boolean> {
