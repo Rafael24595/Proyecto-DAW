@@ -1,4 +1,4 @@
-<div id="homeContainer" style="height: 660px;">
+<div id="homeContainer" style="">
     <div *ngIf='ProfileData' class="height-100">
         <div style="display: inline-block; max-width: 1300px; height: 100%; padding-left: 20px; padding-right: 20px; background-color: rgba(255,255,255, 0.1);">
             <div class="display-inline width-50 txt-horizontal-left" style="max-height: 530px; max-width: 550px; float: left; padding: 10px; box-sizing: border-box;">
@@ -251,9 +251,10 @@
                     </div>
                 </div>
             </div>
+            <br>
             <div style="width: 100%; display: inline-block;">
-                <div style="display: inline-block; width: 100%; max-width: 1000px; padding-left: 20px; padding-right: 20px; margin-top: 50px;">
-                    <app-audio-bar></app-audio-bar>
+                <div style="display: inline-block; width: 90%; max-width: 1000px; padding-left: 20px; padding-right: 20px; margin-top: 40px;">
+                    <app-audio-bar [ajustableWidth]="false"></app-audio-bar>
                 </div>
             </div>
         </div>

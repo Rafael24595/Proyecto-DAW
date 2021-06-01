@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BarThemesListInterface } from '../../../../../utils/audio-bar/interfaces/Bar-Themes-List';
 import { AudiobufferToWav } from '../../../../../utils/audio-bar/AudionufferToWav';
 import { BarUtils } from '../../../../../utils/audio-bar/Bar-Utils';
@@ -15,16 +15,16 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 })
 export class AudioBarComponent implements OnInit {
 
-  @Output() outputToparent = new EventEmitter<{status:string, value:string | number}>();
+  @Input() ajustableWidth: boolean = true;
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService) {
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void { console.log(this.ajustableWidth)
 
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-      if(element && this.ajustableWidth){
+      if(element){
         this.barAudioSize = element.offsetWidth;
       }
       if(window.innerWidth > 1450){
@@ -34,8 +34,8 @@ export class AudioBarComponent implements OnInit {
 
     window.onload = ()=>{
       let element = document.getElementById('bar-ajustable-width');
-        if(element && this.ajustableWidth){
-          //this.barAudioSize = element.offsetWidth;
+        if(element){
+          this.barAudioSize = element.offsetWidth;
         }
         else{
           this.barAudioSize = 525;
@@ -43,6 +43,7 @@ export class AudioBarComponent implements OnInit {
       
     }
 
+    this.setAjustable();
 
     this.comunicationService.sendReproductorDataObservable.subscribe((data:{type:string, value: any})=>{
       
@@ -109,17 +110,27 @@ export class AudioBarComponent implements OnInit {
   }
 
   buttonContainerState = '';
+  buttonResponsiveII = 'button-responsive-II';
+  buttonResponsiveI = 'button-responsive-I';
+  buttonGear = false;
 
   showButtonContainer(){
     this.buttonContainerState = (this.buttonContainerState == '') ? 'show' : '';
   }
 
+  setAjustable(){
+    if(!this.ajustableWidth){
+      this.buttonResponsiveII = '';
+      this.buttonResponsiveI = '';
+      this.buttonGear = false;
+    }
+  }
+  
   /*/////////////
   | THEMES VARS |
   /////////////*/
 
   mediaPath:string = '../../../../../assets/media';
-  ajustableWidth: boolean = true;
   lineToolBar:boolean = true;
   isThemeList:Boolean = false;
   audio: HTMLAudioElement | undefined;
