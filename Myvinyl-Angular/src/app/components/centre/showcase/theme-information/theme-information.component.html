@@ -167,8 +167,8 @@
             </div>
         </div>
         <div *ngIf='showThemeListForm && blackScreenStatus.blackScreenStatus != ""' class="form-style">
-            <h2>Añadir tema:</h2>
-            <br>
+            <h2 style="margin-top: 0px;">Añadir tema:</h2>
+            <p>Lista:</p>
             <select [(ngModel)]='selectedThemeList' (change)='checkInList()'>
                 <option selected="selected">-- Selecciona lista --</option>
                 <ng-container *ngFor='let list of userThemeLists'>
@@ -183,14 +183,18 @@
             <br>
         </div>
         <div *ngIf='showInput && blackScreenStatus.blackScreenStatus != ""' class="form-style">
-            <h2>Nuevo elemento:</h2>
-            <label for="{{inputAttr}}"><p>{{attrTranslation[inputAttr]}}:</p>
+            <h2 style="text-align: left; margin-top: 0px;">Editar {{attrTranslation[inputAttr]}}:</h2>
+            <br>
+            <label for="{{inputAttr}}">
                 <ng-container *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover" && inputAttr != "lyrics"'>
-                    <input id="{{inputAttr}}" type="text" [(ngModel)]="inputValue">
-                    <br>
+                    <div style="text-align: center; display: inline-block;">
+                            <p>{{attrTranslation[inputAttr] | titlecase}}:</p>
+                            <input id="{{inputAttr}}" style="text-align: left;" type="text" [(ngModel)]="inputValue">
+                    </div>
+                    <br><br>
                 </ng-container>
                 <ng-container *ngIf='inputAttr == "lyrics"'>
-                    <h2>Letra original:</h2>
+                    <h3>Letra original:</h3>
                     <div style="width: 85%; display: inline-block;">
                         <quill-editor id="{{inputAttr}}" [styles]="{height: '125px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputValue">
                             <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
@@ -235,7 +239,7 @@
                         </quill-editor>
                     </div>
                     <br>
-                    <h2>Letra traducida:</h2>
+                    <h3>Letra traducida:</h3>
                     <div style="width: 85%; display: inline-block;">
                         <quill-editor id="{{inputAttr}}" [styles]="{height: '125px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputSecondValue">
                             <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
@@ -283,8 +287,10 @@
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "audio"' type="file" (change)='checkAudioFile("audio")'>
                 <input id="{{inputAttr}}" class="{{formErrFile.class}}" *ngIf='inputAttr == "cover"' type="file" (change)='setImagePreview("cover")'>
                 <input id="{{inputAttr}}-file" class="{{formErrFile.class}}" *ngIf='inputAttr == "flag"' type="file" (change)='setImagePreview("flag-file")'>
-                <br><br>
-                <div *ngIf='inputAttr == "cover" || inputAttr == "flag"'>
+                <div *ngIf='inputAttr == "cover" || inputAttr == "flag"' style="display: inline-block; vertical-align: middle; margin-left: 50px;">
+                    <ng-container *ngIf='inputAttr == "flag"'>
+                        <br><br>
+                    </ng-container>
                     <div style="display: inline-block;" class="{{inputAttr}}-back-preview">
                         <img *ngIf='inputAttr == "cover"' id="imagePreview" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         <img *ngIf='inputAttr == "flag"' id="imagePreview" src="{{mediaPath}}/images/flags/{{theme.flag}}.png" (error)="updateUrl($event, 'flag')">
@@ -294,8 +300,8 @@
                 <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
             </label>
             <br><br>
-            <button class="black-button" (click)='confirmFrom()' >Modificar</button>
-            <button class="black-button" (click)='clearForm()' >Cancelar</button>
+            <button class="black-button" style="margin-bottom: 0px;" (click)='confirmFrom()' >Modificar</button>
+            <button class="black-button" style="margin-bottom: 0px;"  (click)='clearForm()' >Cancelar</button>
         </div>
     </div>
 </div>

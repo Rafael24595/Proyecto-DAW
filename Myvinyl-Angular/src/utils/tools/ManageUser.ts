@@ -45,13 +45,13 @@ export class ManageUser{
                                         if(!this.alerted){
                                             this.alerted = true;
                                             minutes = (minutes == 0) ? `menos de ${minutes + 1} minuto` : (minutes == 1) ? `${minutes} minuto` : `${minutes} minutos` ;
-                                            NotificationManage.showMessage(`La sesión va a caducar en ${minutes}. ¿Quieres extender la sesión?`, 'answer', this.refreshToken.bind(this));
+                                            NotificationManage.showMessage(`La sesión va a caducar en ${minutes}. ¿Quieres extender la sesión?`, true, 'answer', this.refreshToken.bind(this));
                                         }
                                     break;
     
                                     case 'expired':
                                         this.alerted = false;
-                                        NotificationManage.showMessage(`La sesión ha caducado`, 'manual');
+                                        NotificationManage.showMessage(`La sesión ha caducado`, true, 'manual');
                                         this.autorizationService.destroySession();
                                     break;
     
@@ -68,7 +68,7 @@ export class ManageUser{
 
     }
 
-    refreshToken(){
+    refreshToken(){console.log('inx')
         if(this.autorizationService.checkForToken() != null){
             this.DatabaseConexService.extendSession(sesionValues.activeUser.name).subscribe(
                 sucess=>{console.log(sucess);
@@ -81,8 +81,8 @@ export class ManageUser{
                 }
             );
         }
-        else{
-            NotificationManage.showMessage(`La sesión ha espirado`);
+        else{console.log('inxa')
+            NotificationManage.showMessage(`La sesión ha espirado`, true);
         }
     }
 

@@ -30,6 +30,10 @@ export class Artist {
 		this.themeList = themeList;
 	}
 
+	setTheme(theme: ThemesInterface){
+		this.themeList.push(new Themes(theme.id, theme.name, theme.flag, theme.tags, theme.lyrics, theme.artist, theme.comments, theme.likes, theme.dislikes, theme.views))
+	}
+
 	removeTheme(themeId:string){
 		let themeIndex = this.themeList.map(theme=>{return theme.id}).indexOf(themeId);
 		let index = 1;

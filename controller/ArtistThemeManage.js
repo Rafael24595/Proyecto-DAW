@@ -284,7 +284,7 @@ const Theme = mongoose.model('Theme');
           artist[attribute] = value;
           await Artist.findOneAndUpdate({id_artist:artistId}, artist);
           if(attribute == 'id_artist'){
-            let themes = await tools.updateThemesId(artistId, value);
+            let themes = await Tools.updateThemesId(artistId, value);
             if(themes){
               artist.themeList = themes;
             }
@@ -338,12 +338,12 @@ const Theme = mongoose.model('Theme');
           "artist":{
             "id":artistId
           }
-        });
+        });console.log('wha!')
 
         await newTheme.save();
         
         res.headerSent = true;
-        res.status(200).json({status:true, message:artistExists.themeList});
+        res.status(200).json({status:true, message:newTheme});
       }
       else{
         if(!res.headerSent) res.status(401).json({status:'id-not-exists'});

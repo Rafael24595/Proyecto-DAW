@@ -52,7 +52,7 @@ export class ThemeInformationComponent implements OnInit {
   inputAttr: string = '';
   formErr = {text:'', class:''};
   formErrFile = {text:'', class:''};
-  attrTranslation = {id: "Id", name: "Nombre", flag: "Bandera", tags: "Etiqueta", lyrics: "Letra", native:"Original", esp: "Traducción", cover:'Portada', comments: "Comentarios", likes: "Likes", dislikes: "Dislikes", views: "Visitas", audio: "Audio"};
+  attrTranslation = {id: "id", name: "nombre", flag: "bandera", tags: "etiqueta", lyrics: "letra", native:"original", esp: "traducción", cover:'portada', comments: "comentarios", likes: "likes", dislikes: "dislikes", views: "visitas", audio: "audio"};
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 

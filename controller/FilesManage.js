@@ -1,5 +1,7 @@
 var fs = require("fs");
-const tools = require('../utils/tools');
+const mongoose = require('mongoose');
+const Artist = mongoose.model('Artist');
+const Theme = mongoose.model('Theme');
 
 async function uploadFile(req, res){
     let userName = req.body.userName;
@@ -63,9 +65,10 @@ async function uploadFile(req, res){
   }
 
   async function setThemeCoverName(name){
-    let artist = await Artist.findOne({"id_artist":artistId}).lean();
+    let artist = await Artist.findOne({"id_artist":name}).lean();
     if(artist){
-        return `${name}-${artist.themeList.length}`;
+        let themes = await Theme.find({"artist.id":name}).lean();console.log(themes.length)
+        return `${name}-${themes.length}`;
     }
     else{
         return undefined;

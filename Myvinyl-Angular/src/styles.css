@@ -489,6 +489,17 @@ input{
 	border-radius: 50%;
 	background-color: black;
 }
+.artist-avatar-back-s{
+	height: 100px;
+	width: 100px;
+	border-radius: 50%; 
+	overflow: hidden;
+	border: 2px solid rgba(25, 25, 25, 0.5);
+}
+.artist-avatar-back-s img{
+	height: 100px;
+	text-align: center;
+}
 .cover-back-preview{
 	height: 100px;
 	width: 100px;
@@ -499,6 +510,16 @@ input{
 	height: 100px;
 	text-align: center;
 }
+.cover-back-preview-s{
+	height: 85px;
+	width: 85px;
+	overflow: hidden;
+	border: 1px solid;
+}
+.cover-back-preview-s img{
+	height: 85px;
+	text-align: center;
+}
 .flag-back-preview{
 	height: 45px;
 	overflow: hidden;
@@ -506,6 +527,14 @@ input{
 }
 .flag-back-preview img{
 	height: 45px;
+}
+.flag-back-preview-s{
+	height: 35px;
+	overflow: hidden;
+	border: 1px solid;
+}
+.flag-back-preview-s img{
+	height: 35px;
 }
 .comment-name-back{
 	background-color: rgba(0, 0, 75, 0.2);
@@ -568,13 +597,16 @@ input{
 	background-color: black;
 }
 .form-style{
+	max-height: 90%;
+	overflow: auto;
 	width: 625px;
 	position: fixed;
-	padding: 25px;
+	padding: 45px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: white;
+	box-sizing: border-box;
 	z-index: 15;
 }
 #black-screen{

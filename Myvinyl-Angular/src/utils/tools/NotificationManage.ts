@@ -2,11 +2,11 @@ import { GlobalVariables } from '../variables/variables';
 
 export class NotificationManage{
 
-    static showMessage(message:string, type?:string, funct?:Function){
+    static showMessage(message:string, forceClose:boolean, type?:string, funct?:Function){
 
         let time = 3500;
 
-        if(!GlobalVariables.notificationIsShowing){
+        if(!GlobalVariables.notificationIsShowing || forceClose){
 
             GlobalVariables.notificationIsShowing = true;
             NotificationManage.resetAlert();
@@ -42,6 +42,9 @@ export class NotificationManage{
 
     static resetAlert(){
         GlobalVariables.notificationCloseManual = false;
+        GlobalVariables.notificationAnswer = false;
+        GlobalVariables.notificationAnswerFunction = undefined;
+        GlobalVariables.notificationIsShowing = false;
         GlobalVariables.notificationStatus = '';
         GlobalVariables.notificationMessage = '';
     }

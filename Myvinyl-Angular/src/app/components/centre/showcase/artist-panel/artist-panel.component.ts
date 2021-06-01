@@ -9,6 +9,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { User } from 'src/app/classes/User';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { DataManage } from 'src/utils/tools/DataManage';
+import { GlobalVariables } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-artist-panel',
@@ -26,7 +27,7 @@ export class ArtistPanelComponent implements OnInit {
   inputValue: string |string[] = '';
   inputSecondValue: string |string[] = '';
   inputAttr: string = '';
-  attrTranslation = {id_artist: "Id", name: "Nombre", surname: "Apellido", description: "Descripción", tags: "Etiqueta", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar', avatar:'Avatar'};
+  attrTranslation = {id_artist: "id", name: "Nombre", surname: "Apellido", description: "descripción", tags: "etiquetas", themeList: "Lista", cover:'Carátula', newTheme:"Nuevo tema", reassign:'Reasignar', avatar:'avatar'};
   newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
   reassignArtist = 'default';
   arstistIds:{id:string, name:string}[] = [];
@@ -37,6 +38,7 @@ export class ArtistPanelComponent implements OnInit {
   coverErr = {text:'', class:''};
   flagFileErr = {text:'', class:''};
   themeErr = {text:'', class:''};
+  blackScreenStatus = GlobalVariables;
 
   constructor(private comunicationService :ComunicationServiceService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 
@@ -69,6 +71,8 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   showArtistForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
+    this.clearForm();
+    this.blackScreenStatus.blackScreenStatus = 'show';
     this.showInput = true;
     this.inputAttr = attribute.attrName;
     this.inputValue = attribute.value;
@@ -108,14 +112,25 @@ export class ArtistPanelComponent implements OnInit {
       this.modifyArtistData({attrName:'surname', attrId:'', value: this.inputSecondValue});
     }
     if(sendForm){
-      this.showInput = false;
-      this.inputAttr = '';
-      this.inputValue = '';
-      this.inputSecondValue = '';
-      this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
-      this.reassignArtist = 'default';
+      this.clearForm();
     }
     
+  }
+
+  clearForm(){
+    this.blackScreenStatus.blackScreenStatus = '';
+    this.showInput = false;
+    this.inputAttr = '';
+    this.inputValue = '';
+    this.inputSecondValue = '';
+    this.newTheme = {name:'', flag:'', flagFile: '', cover:[], themeFile:[], tags:'', lyrics:{native:'', esp:''}};
+    this.formErr = {text:'', class:''};
+    this.nameErr = {text:'', class:''};
+    this.flagErr = {text:'', class:''};
+    this.coverErr = {text:'', class:''};
+    this.flagFileErr = {text:'', class:''};
+    this.themeErr = {text:'', class:''};
+    this.reassignArtist = 'default';
   }
 
   async modifyArtistData(attribute:{attrName:string, attrId:string | string[], value?:string | string[]}){
@@ -194,8 +209,8 @@ export class ArtistPanelComponent implements OnInit {
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
             if(this.artist){
               this.DatabaseConexService.setNewTheme(this.artist?.id_artist, name, flag, tags, {native:lyricsNative, esp:lyricsEsp}, sesionValues.activeUser.name).subscribe(
-                sucess=>{
-                  if(this.artist) this.artist.setThemeList(sucess.message);
+                sucess=>{console.log(sucess)
+                  if(this.artist) this.artist.setTheme(sucess.message);
                   if(hasFiles){
                     this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
                       sucess=>{
@@ -298,7 +313,11 @@ export class ArtistPanelComponent implements OnInit {
                 }
               },
               err=>{
-                console.error(`Error: ${err}`);
+                console.error(`Error: ${err.error}`);
+                if(attribute.attrName == 'id_artist' && err.error.status == 'id-exists'){
+                  this.formErr.text = "Id en uso";
+                }
+                
                 resolve(sendSucess);
               }
             );
@@ -422,9 +441,13 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   searchFlag(){
-    let flagPreview = document.getElementById('flagPreview') as HTMLImageElement;
-    let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'ghostFlag';
-    flagPreview.src = `/uploads/media/image/flags/${path}.png`;
+    let isFlagFileUpload = document.getElementById('flagFile') as HTMLInputElement;
+    console.log(this.availableFlags, this.newTheme.flag)
+    if(!isFlagFileUpload || isFlagFileUpload.files && isFlagFileUpload.files.length == 0){
+      let flagPreview = document.getElementById('flagPreview') as HTMLImageElement;
+      let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'not_found';
+      flagPreview.src = `${this.mediaPath}/images/flags/${path}.png`;
+    }
   }
 
   async setImagePreview(mode:{input:string, preview:string, errObj:{text:string, class:string}}){
@@ -448,7 +471,7 @@ export class ArtistPanelComponent implements OnInit {
       break;
 
       case 'cover':
-        files = document.getElementById('coverFile') as HTMLInputElement;
+        files = document.getElementById('coverFile') as HTMLInputElement;console.log(files)
         imagePreview = document.getElementById('coverPreview') as HTMLImageElement;
       break;
 
@@ -473,7 +496,7 @@ export class ArtistPanelComponent implements OnInit {
     });
 
     mode.errObj.text = errMessage as string;
-    mode.errObj.class = errClass as string;
+    mode.errObj.class = errClass as string;console.log(errClass, errMessage)
 
     if(mode.input == 'cover'){
       this.coverErr.text = errMessage as string;

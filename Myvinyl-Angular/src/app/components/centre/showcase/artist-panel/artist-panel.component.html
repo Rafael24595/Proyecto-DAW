@@ -56,7 +56,7 @@
                     <h3 class="title-back">Temas: <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
                 </div>
                 <div style="max-height: 500px; overflow: auto; padding: 15px;">
-                    <div class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
+                    <div *ngIf='isAdmin' class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
                         <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-left: 10px; margin-right: 10px;" class="display-inline">
                             <img style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/new_cover.png">
                         </div>
@@ -84,12 +84,25 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf='showInput'>
+                <div *ngIf='showInput && blackScreenStatus.blackScreenStatus != ""' class="form-style">
                     <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>
-                        <h2>Nuevo elemento "{{attrTranslation[inputAttr]}}":</h2>
-                        <p>{{attrTranslation[inputAttr]}}</p>
-                        <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "avatar"' type="text" [(ngModel)]="inputValue">
-                        <input id="{{inputAttr}}" class="{{formErr.class}}"  *ngIf='inputAttr == "avatar"' type="file" (change)='setImagePreview({input:"avatar", preview:"formPreview", errObj:formErr})'>
+                        <h2 style="margin-top: 0px;" >Editar {{attrTranslation[inputAttr]}}:</h2>
+                        <br>
+                        <div style="text-align: center;">
+                            <div style="text-align: left; display: inline-block;">
+                                <ng-container *ngIf='inputAttr == "name"'>
+                                    <p style="text-align: left; display: inline-block; margin: 0px;">{{attrTranslation[inputAttr]}}:</p>
+                                    <br>
+                                </ng-container>
+                                <input id="{{inputAttr}}" *ngIf='inputAttr != "description" && inputAttr != "avatar"' type="text" [(ngModel)]="inputValue">
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <input id="{{inputAttr}}" *ngIf='inputAttr == "avatar"' class="{{formErr.class}}"  type="file" style="margin: 10px;" (change)='setImagePreview({input:"avatar", preview:"formPreview", errObj:formErr})'>
+                            <div *ngIf='inputAttr == "avatar"' class="artist-avatar-back-s" style="margin: 10px; display: inline-block; vertical-align: middle;">
+                                <img id="formPreview" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'user')">
+                            </div>
+                        </div>
                         <quill-editor id="{{inputAttr}}" *ngIf='inputAttr == "description"' [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="inputValue">
                             <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
                                 <span class="ql-formats">
@@ -131,47 +144,162 @@
                                 </span>
                             </div>
                         </quill-editor>
-                        <img *ngIf='inputAttr == "avatar"' id="formPreview" src="ghostCover.png">
-                        <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
+                        <div *ngIf='formErr.text == ""'>
+                            <br>
+                        </div>
+                        <div *ngIf='formErr.text != ""'>
+                            <p class="text-error" style="text-align: center;">{{formErr.text}}</p>
+                        </div>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "name"'>
-                        <br>
-                        <label for="surname"><p>{{attrTranslation['surname']}}</p>
-                            <input  type="text" [(ngModel)]="inputSecondValue">
-                        </label>
+                        <div style="text-align: center;">
+                            <div style="text-align: left; display: inline-block;">
+                                <p style="display: inline-block; margin: 0px;">{{attrTranslation['surname']}}:</p>
+                                <br>
+                                <input  type="text" [(ngModel)]="inputSecondValue">
+                            </div>
+                        </div>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "newTheme"'>
                         <h2>Nuevo tema: </h2>
-                        <label for="name"><p>Nombre: </p>
-                            <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newTheme.name">
-                            <p *ngIf='nameErr.text != ""'>{{nameErr.text}}</p>
-                        </label>
-                        <label for="cover"><p>Carátula: </p>
-                            <input id="coverFile"  type="file" [(ngModel)]="newTheme.cover" (change)='setImagePreview({input: "cover", preview: "coverPreview", errObj:coverErr})'>
-                            <img id="coverPreview" class="{{coverErr.class}}" src="ghostCover.png">
-                            <p *ngIf='coverErr.text != ""'>{{coverErr.text}}</p>
-                        </label>
-                        <label for="flag"><p>Idioma: </p>
-                            <input id="flag"  type="text" class="{{flagErr.class}}" [(ngModel)]="newTheme.flag" (keydown)="searchFlag()">
-                            <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
+                        <div style="padding: 10px;">
+                            <label for="name"><p style="margin: 0px; margin-bottom: 10px;">Nombre: </p>
+                                <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newTheme.name">
+                                <ng-container *ngIf='nameErr.text != ""'>
+                                    <p class="text-error">{{nameErr.text}}</p>
+                                </ng-container>
+                                <ng-container *ngIf='nameErr.text == ""'>
+                                    <br><br>
+                                </ng-container>
+                            </label>
+                            <label for="cover"><p style="margin: 0px; margin-bottom: 10px;">Carátula: </p>
+                                <input id="coverFile"  type="file" class="{{coverErr.class}}"  [(ngModel)]="newTheme.cover" (change)='setImagePreview({input: "cover", preview: "coverPreview", errObj:coverErr})'>
+                                <div class="cover-back-preview-s" style="display: inline-block; position: absolute; margin-left: 60px; transform: translateY(-36%);">
+                                    <img id="coverPreview" class="{{coverErr.class}}" src="{{mediaPath}}/images/covers/new_cover.png">
+                                </div>
+                                <ng-container *ngIf='coverErr.text != ""'>
+                                    <br>
+                                    <p class="text-error" style="display: inline-block;">{{coverErr.text}}</p>
+                                </ng-container>
+                                <ng-container *ngIf='coverErr.text == ""'>
+                                    <br>
+                                </ng-container>
+                            </label>
                             <br><br>
-                            <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview({input:"flag", preview:"flagFile", errObj:flagFileErr})'>
-                            <p *ngIf='flagFileErr.text != ""'>{{flagFileErr.text}}</p>
-                            <img id="flagPreview" src="ghostFlag.png">
-                        </label>
-                        <label for="tags"><p>Etiquetas: </p>
-                            <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">
-                        </label>
-                        <label for="lyrics_native"><p>Letra original: </p>
-                            <textarea name="" id="lyrics_native" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.native"></textarea>
-                        </label>
-                        <label for="lyrics_esp"><p>Letra traducida: </p>
-                            <textarea name="lyrics_esp" id="" cols="30" rows="10" [(ngModel)]="newTheme.lyrics.esp"></textarea>
-                        </label>
-                        <label for="theme"><p>Tema: </p>
-                            <input id="themeFile" type="file" class="{{themeErr.class}}" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
-                            <p *ngIf='themeErr.text != ""'>{{themeErr.text}}</p>
-                        </label>
+                            <label for="flag"><p style="margin: 0px; margin-bottom: 10px;">Idioma: </p>
+                                <input id="flag"  type="text" class="{{flagErr.class}}" [(ngModel)]="newTheme.flag" (keyup)="searchFlag()">
+                                <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
+                                <br><br>
+                                <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview({input:"flag", preview:"flagFile", errObj:flagFileErr})'>
+                                <div class="flag-back-preview" style="display: inline-block; position: absolute; margin-left: 60px; transform: translateY(-36%);">
+                                    <img id="flagPreview" src="{{mediaPath}}/images/flags/not_found.png" (error)="updateUrl($event, 'flag')">
+                                </div>
+                                <ng-container *ngIf='flagFileErr.text != ""'>
+                                    <br>
+                                    <p class="text-error" style="display: inline-block;">{{flagFileErr.text}}</p>
+                                </ng-container>
+                                <ng-container *ngIf='flagFileErr.text == ""'>
+                                    <br>
+                                </ng-container>
+                            </label>
+                            <br><br>
+                            <label for="tags"><p style="margin: 0px; margin-bottom: 10px;">Etiquetas: </p>
+                                <input id="tags" type="text" [(ngModel)]="newTheme.tags" placeholder="tag, tag, tag">
+                            </label>
+                            <br><br>
+                            <p style="margin: 0px;">Letra original: </p>
+                            <br>
+                            <quill-editor id="lyrics_native" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="newTheme.lyrics.native">
+                                <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-header" value="1"></button>
+                                        <button type="button" class="ql-header" value="2"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-indent" value="-1"></button>
+                                        <button type="button" class="ql-indent" value="+1"></button>
+                                    </span>                                      
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-align">
+                                          <option selected></option>
+                                          <option value="center"></option>
+                                          <option value="right"></option>
+                                          <option value="justify"></option>
+                                        </select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-clean">
+                                        </button>
+                                    </span>
+                                </div>
+                            </quill-editor>
+                            <br><br>
+                            <p style="margin: 0px;">Letra traducida: </p>
+                            <br>
+                            <quill-editor id="lyrics_esp" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="newTheme.lyrics.esp">
+                                <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-header" value="1"></button>
+                                        <button type="button" class="ql-header" value="2"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-indent" value="-1"></button>
+                                        <button type="button" class="ql-indent" value="+1"></button>
+                                    </span>                                      
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-align">
+                                          <option selected></option>
+                                          <option value="center"></option>
+                                          <option value="right"></option>
+                                          <option value="justify"></option>
+                                        </select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button type="button" class="ql-clean">
+                                        </button>
+                                    </span>
+                                </div>
+                            </quill-editor>
+                            <br><br>
+                            <label for="theme"><p style="margin: 0px; margin-bottom: 10px;">Tema: </p>
+                                <input id="themeFile" type="file" class="{{themeErr.class}}" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
+                                <p *ngIf='themeErr.text != ""'>{{themeErr.text}}</p>
+                            </label>
+                        </div>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "reassign" || inputAttr == "reassignMulti"'>
                         <h2>Resignar temas:</h2>
@@ -185,8 +313,10 @@
                         </label>
                     </ng-container>
                     <br><br>
-                    <button (click)='confirmFrom()' >Modificar</button>
-                    <button (click)='showInput = false' >Cancelar</button>
+                    <div style="text-align: center;">
+                        <button class="black-button" style="margin-bottom: 0px;" (click)='confirmFrom()' >Modificar</button>
+                        <button class="black-button" style="margin-bottom: 0px;" (click)='clearForm()' >Cancelar</button>
+                    </div>
                 </div>
             </div>
         </div>
