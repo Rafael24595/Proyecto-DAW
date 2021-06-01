@@ -1,253 +1,255 @@
 <div id="homeContainer" style="">
     <div *ngIf='ProfileData' class="height-100">
         <div style="display: inline-block; max-width: 1300px; height: 100%; padding-left: 20px; padding-right: 20px; background-color: rgba(255,255,255, 0.1);">
-            <div class="display-inline width-50 txt-horizontal-left" style="max-height: 530px; max-width: 550px; float: left; padding: 10px; box-sizing: border-box;">
-                <h2 class="title-back">Usuario:</h2>
-                <div style="padding-left: 10px; padding-right: 10px;">
-                    <div style="padding-left: 10px; background-color: rgba(255,255,255, 0.1); padding: 15px;">
-                        <ng-container *ngIf='isSessionUser'>
-                            <div>
-                                <span>Nombre: </span>
-                                <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
-                                    <span>{{ProfileData.name}} 
-                                        <span id="pencil-writting-animation" class="display-inline">
-                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
-                                        </span>
-                                    </span>
-                                </ng-container>
-                                <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
-                                    <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value' style="margin: 0px;"
-                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
-                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
-                                </ng-container>
-                            </div>
-                            <br>
-                            <div>
-                                <span>Email: </span>
-                                <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
-                                    <span>{{ProfileData.email}}
-                                        <span id="pencil-writting-animation" class="display-inline">
-                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
-                                        </span>
-                                    </span>
-                                </ng-container>
-                                <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
-                                    <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value' style="margin: 0px;"
-                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
-                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
-                                </ng-container>
-                            </div>
-                            <br>
-                            <div>
-                                <span>Contraseña: </span>
-                                <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
-                                    <span style="letter-spacing: 2px;"><span class="my-vinyl-icons-font">HHHHHHHH</span>
-                                        <span id="pencil-writting-animation" class="display-inline">
-                                            <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
-                                        </span>
-                                    </span>
-                                </ng-container>
-                                <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
-                                    <br>
-                                    <div style="margin: 10px;">
-                                        <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
-                                        <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
-                                        (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
-                                    </div>
-                                </ng-container>
-                            </div>
-                            <br>
-                            <div style="border-bottom: solid 2px black;"></div>
-                            <br>
-                            <div style="height: 100%;">
-                                <span>Descripción: </span>
-                                <span id="pencil-writting-animation" class="display-inline">
-                                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
-                                </span>
-                                <br>
-                                <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
-                                    <div style="max-height: 213px; overflow: auto;">
-                                        <span [innerHtml]='ProfileData.description | safeHtml'></span>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
-                                    <br>
-                                    <quill-editor (onEditorCreated)="setFocus($event)" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="modifyValuesData.modifyDescription.value">
-                                        <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
-                                            <span class="ql-formats">
-                                                <button class="ql-bold"></button>
-                                                <button class="ql-italic"></button>
-                                                <button class="ql-underline"></button>
-                                                <button class="ql-strike"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button type="button" class="ql-header" value="1"></button>
-                                                <button type="button" class="ql-header" value="2"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-list" value="ordered"></button>
-                                                <button class="ql-list" value="bullet"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button type="button" class="ql-indent" value="-1"></button>
-                                                <button type="button" class="ql-indent" value="+1"></button>
-                                            </span>                                      
-                                            <span class="ql-formats">
-                                                <select class="ql-color" style="z-index: 9;"></select>
-                                                <select class="ql-background" style="z-index: 9;"></select>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <select class="ql-align">
-                                                  <option selected></option>
-                                                  <option value="center"></option>
-                                                  <option value="right"></option>
-                                                  <option value="justify"></option>
-                                                </select>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-link"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button type="button" class="ql-clean">
-                                                </button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button type="button" class="my-vinyl-icons-font fake-quill-button-snow" (click)='modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})'>I</button>
-                                            </span>
-                                        </div>
-                                    </quill-editor>
-                                   <!-- <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
-                                    (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                                    (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                                    style="width: 100%; height: 200px;">
-                                    </textarea> -->
-                                </ng-container>
-                            </div>
-                            <br>
-                        </ng-container>
-                        <ng-container *ngIf='!isSessionUser'>
-                            <div style="height: 100%;">
+            <div>
+                <div class="display-inline width-50 txt-horizontal-left" style="height: 530px; max-width: 550px; padding: 10px; box-sizing: border-box;">
+                    <h2 class="title-back">Usuario:</h2>
+                    <div style="padding-left: 10px; padding-right: 10px;">
+                        <div style="padding-left: 10px; background-color: rgba(255,255,255, 0.1); padding: 15px;">
+                            <ng-container *ngIf='isSessionUser'>
                                 <div>
                                     <span>Nombre: </span>
-                                    <span>{{ProfileData.name}}</span>
+                                    <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
+                                        <span>{{ProfileData.name}} 
+                                            <span id="pencil-writting-animation" class="display-inline">
+                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf='modifyValuesData.modifyUserName.status'>
+                                        <input id="userName" type="text" [(ngModel)]='modifyValuesData.modifyUserName.value' style="margin: 0px;"
+                                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})
+                                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyUserName.id})>
+                                    </ng-container>
                                 </div>
                                 <br>
                                 <div>
-                                    <span>Rango: </span>
-                                    <span>{{range[ProfileData.admin]}}</span>
+                                    <span>Email: </span>
+                                    <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
+                                        <span>{{ProfileData.email}}
+                                            <span id="pencil-writting-animation" class="display-inline">
+                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf='modifyValuesData.modifyEmail.status'>
+                                        <input id="userEmail" type="text" [(ngModel)]='modifyValuesData.modifyEmail.value' style="margin: 0px;"
+                                            (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})
+                                            (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyEmail.id})>
+                                    </ng-container>
                                 </div>
+                                <br>
+                                <div>
+                                    <span>Contraseña: </span>
+                                    <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
+                                        <span style="letter-spacing: 2px;"><span class="my-vinyl-icons-font">HHHHHHHH</span>
+                                            <span id="pencil-writting-animation" class="display-inline">
+                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
+                                        <br>
+                                        <div style="margin: 10px;">
+                                            <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
+                                            <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
+                                            (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <br>
+                                <div style="border-bottom: solid 2px black;"></div>
                                 <br>
                                 <div style="height: 100%;">
                                     <span>Descripción: </span>
-                                    <br><br>
-                                    <div style="max-height: 72%; overflow: auto;">
-                                        <span>{{ProfileData.description}}</span>
+                                    <span id="pencil-writting-animation" class="display-inline">
+                                        <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
+                                    </span>
+                                    <br>
+                                    <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
+                                        <div style="max-height: 213px; overflow: auto;">
+                                            <span [innerHtml]='ProfileData.description | safeHtml'></span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
+                                        <br>
+                                        <quill-editor (onEditorCreated)="setFocus($event)" [styles]="{height: '150px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="modifyValuesData.modifyDescription.value">
+                                            <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                                <span class="ql-formats">
+                                                    <button class="ql-bold"></button>
+                                                    <button class="ql-italic"></button>
+                                                    <button class="ql-underline"></button>
+                                                    <button class="ql-strike"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button type="button" class="ql-header" value="1"></button>
+                                                    <button type="button" class="ql-header" value="2"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-list" value="ordered"></button>
+                                                    <button class="ql-list" value="bullet"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button type="button" class="ql-indent" value="-1"></button>
+                                                    <button type="button" class="ql-indent" value="+1"></button>
+                                                </span>                                      
+                                                <span class="ql-formats">
+                                                    <select class="ql-color" style="z-index: 9;"></select>
+                                                    <select class="ql-background" style="z-index: 9;"></select>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <select class="ql-align">
+                                                      <option selected></option>
+                                                      <option value="center"></option>
+                                                      <option value="right"></option>
+                                                      <option value="justify"></option>
+                                                    </select>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-link"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button type="button" class="ql-clean">
+                                                    </button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button type="button" class="my-vinyl-icons-font fake-quill-button-snow" (click)='modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})'>I</button>
+                                                </span>
+                                            </div>
+                                        </quill-editor>
+                                       <!-- <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
+                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
+                                        style="width: 100%; height: 200px;">
+                                        </textarea> -->
+                                    </ng-container>
+                                </div>
+                                <br>
+                            </ng-container>
+                            <ng-container *ngIf='!isSessionUser'>
+                                <div style="height: 100%;">
+                                    <div>
+                                        <span>Nombre: </span>
+                                        <span>{{ProfileData.name}}</span>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <span>Rango: </span>
+                                        <span>{{range[ProfileData.admin]}}</span>
+                                    </div>
+                                    <br>
+                                    <div style="height: 100%;">
+                                        <span>Descripción: </span>
+                                        <br><br>
+                                        <div style="max-height: 72%; overflow: auto;">
+                                            <span>{{ProfileData.description}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <p></p>
-                        </ng-container>
+                                <p></p>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="display-inline vertical-top width-50" style="height: 520.5px; max-width: 550px; float: right; padding: 10px; box-sizing: border-box; overflow: hidden;">
-                <h2 class="title-back">Lista de reproducción</h2>
-                <div style="padding-left:15px; padding-right: 15px;">
-                    <div style="position: relative;">
-                        <select [(ngModel)]='selectedThemeList' (change)=changeList()>
-                            <option selected="selected">{{defaultSelect}}</option>
-                            <ng-container *ngFor='let list of ProfileData.themeLists'>
-                                <option
-                                    *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>
-                                    {{list.name}}</option>
+                <div class="display-inline vertical-top width-50" style="height: 520.5px; max-width: 550px; padding: 10px; box-sizing: border-box; overflow: hidden;">
+                    <h2 class="title-back">Lista de reproducción</h2>
+                    <div style="padding-left:15px; padding-right: 15px;">
+                        <div style="position: relative;">
+                            <select [(ngModel)]='selectedThemeList' (change)=changeList()>
+                                <option selected="selected">{{defaultSelect}}</option>
+                                <ng-container *ngFor='let list of ProfileData.themeLists'>
+                                    <option
+                                        *ngIf='(isSessionUser && list.userView) || (!isSessionUser && !list.privateState && list.userView)'>
+                                        {{list.name}}</option>
+                                </ng-container>
+                                <option *ngIf='isSessionUser' selected="selected">-- Nueva lista --</option>
+                            </select>
+                            <span *ngIf='!isSessionUser' style="position: absolute; left: 100%; transform: translate(-110%, -12.5%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showProfileForm({attrName:"copy", attrId:"", value:selectedThemeList, secondValue:themeList})'>></span>
+                        </div>
+                        <br>
+                        <div style="height: 500px; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
+                            <ng-container *ngIf='themeList'>
+                                <div>
+                                    <p *ngIf='isSessionUser' style="margin-top: 0px;">
+                                        <span>Privada:</span><input type="checkbox" name="" id="" [(ngModel)]="privateValue" (click)=privatizeThemeList()>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <span id="pencil-writting-animation" class="display-inline">
+                                            <span *ngIf='isSessionUser && themeList.userManage' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                                        </span>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                            <span class="trash-cap cursor-pointer display-inline">0</span>
+                                            <span class="trash-body cursor-pointer display-inline">/</span>
+                                        </span>
+                                    </p>
+                                </div>
+                                <p *ngIf='!modifyValuesData.themeListName.status'>{{modifyValuesData.themeListName.value}}:</p>
+                                <ng-container *ngIf='modifyValuesData.themeListName.status'>
+                                    <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' style="margin-bottom: 8px;"
+                                        (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})
+                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
+                                        <span>:</span>
+                                </ng-container>
                             </ng-container>
-                            <option *ngIf='isSessionUser' selected="selected">-- Nueva lista --</option>
-                        </select>
-                        <span *ngIf='!isSessionUser' style="position: absolute; left: 100%; transform: translate(-110%, -12.5%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showProfileForm({attrName:"copy", attrId:"", value:selectedThemeList, secondValue:themeList})'>></span>
-                    </div>
-                    <br>
-                    <div style="height: 500px; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
-                        <ng-container *ngIf='themeList'>
-                            <div>
-                                <p *ngIf='isSessionUser' style="margin-top: 0px;">
-                                    <span>Privada:</span><input type="checkbox" name="" id="" [(ngModel)]="privateValue" (click)=privatizeThemeList()>
-                                    <span>&nbsp;&nbsp;</span>
-                                    <span id="pencil-writting-animation" class="display-inline">
-                                        <span *ngIf='isSessionUser && themeList.userManage' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
-                                    </span>
-                                    <span>&nbsp;&nbsp;</span>
-                                    <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
-                                        <span class="trash-cap cursor-pointer display-inline">0</span>
-                                        <span class="trash-body cursor-pointer display-inline">/</span>
-                                    </span>
-                                </p>
-                            </div>
-                            <p *ngIf='!modifyValuesData.themeListName.status'>{{modifyValuesData.themeListName.value}}:</p>
-                            <ng-container *ngIf='modifyValuesData.themeListName.status'>
-                                <input id="themeName" type="text" [(ngModel)]='modifyValuesData.themeListName.value' style="margin-bottom: 8px;"
-                                    (blur)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})
-                                    (keyup)=modifyData({event:$event,attribute:modifyValuesData.themeListName.id})>
-                                    <span>:</span>
-                            </ng-container>
-                        </ng-container>
-                        <ng-container *ngIf='themeList'>
-                            <div style="position: relative; height: 288px; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
-                                <ng-container *ngIf='themeList.list && themeList.list.length > 0'>
-                                    <ng-container *ngIf='isSessionUser'>
-                                        <div *ngFor='let singleTheme of themeList.list;' (click)='setAudioBarListPosition($event, singleTheme.id)' (mousedown)='eventDrag($event)'
+                            <ng-container *ngIf='themeList'>
+                                <div style="position: relative; height: 288px; border: 2px solid rgba(50, 50, 55, 0.5); background-color: rgba(50, 50, 55, 0.5);" class="overflow-auto">
+                                    <ng-container *ngIf='themeList.list && themeList.list.length > 0'>
+                                        <ng-container *ngIf='isSessionUser'>
+                                            <div *ngFor='let singleTheme of themeList.list;' (click)='setAudioBarListPosition($event, singleTheme.id)' (mousedown)='eventDrag($event)'
+                                                id="theme-container-{{selectedThemeList}}-{{singleTheme.artist.id}}-{{singleTheme.id}}" class="theme-container text-left"
+                                                style="white-space:nowrap; min-width: 255px; transition: filter 0.5s; cursor: {{cursorTheme}}">
+                                                <ng-container *ngIf='singleTheme.name'>
+                                                    <div class="display-inline" style="vertical-align: middle; margin: 10px; margin-right: 15px; min-width: 50px;">
+                                                        <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
+                                                        <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png" (error)="updateUrl($event, 'theme')">
+                                                    </div>
+                                                    <ng-container *ngIf='themeList.userManage'>
+                                                        <div class="display-inline theme-container-title" style="width: 58%;">
+                                                            <p class="display-inline" style="vertical-align: bottom;">
+                                                                <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="display-inline" style="width: 10%; float: right; margin-right: 3px;">
+                                                            <p *ngIf='themeList.userManage' style="margin-top: 0px; margin-bottom: 0px; transform: translateY(100%);" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="trash-can display-inline my-vinyl-icons-font font-size-150 text-right">
+                                                                <span class="trash-can trash-cap cursor-pointer display-inline">0</span>
+                                                                <span class="trash-can trash-body cursor-pointer display-inline">/</span>
+                                                            </p>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf='!themeList.userManage'>
+                                                        <div class="display-inline theme-container-title" style="width: 75%;">
+                                                            <p class="display-inline">
+                                                                <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                            </p>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf='!isSessionUser'>
+                                            <div *ngFor='let singleTheme of themeList.list;' (click)='setAudioBarListPosition($event, singleTheme.id)'
                                             id="theme-container-{{selectedThemeList}}-{{singleTheme.artist.id}}-{{singleTheme.id}}" class="theme-container text-left"
-                                            style="white-space:nowrap; transition: filter 0.5s; cursor: {{cursorTheme}}">
+                                            style="white-space:nowrap; min-width: 255px; cursor: pointer;">
                                             <ng-container *ngIf='singleTheme.name'>
                                                 <div class="display-inline" style="vertical-align: middle; margin: 10px; margin-right: 15px; min-width: 50px;">
                                                     <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
                                                     <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png" (error)="updateUrl($event, 'theme')">
                                                 </div>
-                                                <ng-container *ngIf='themeList.userManage'>
-                                                    <div class="display-inline theme-container-title" style="width: 58%;">
-                                                        <p class="display-inline" style="vertical-align: bottom;">
-                                                            <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="display-inline" style="width: 10%; float: right; margin-right: 3px;">
-                                                        <p *ngIf='themeList.userManage' style="margin-top: 0px; margin-bottom: 0px; transform: translateY(100%);" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="trash-can display-inline my-vinyl-icons-font font-size-150 text-right">
-                                                            <span class="trash-can trash-cap cursor-pointer display-inline">0</span>
-                                                            <span class="trash-can trash-body cursor-pointer display-inline">/</span>
-                                                        </p>
-                                                    </div>
-                                                </ng-container>
-                                                <ng-container *ngIf='!themeList.userManage'>
-                                                    <div class="display-inline theme-container-title" style="width: 75%;">
-                                                        <p class="display-inline">
-                                                            <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
-                                                        </p>
-                                                    </div>
-                                                </ng-container>
+                                                <div class="display-inline theme-container-title" style="width: 75%;">
+                                                    <p class="display-inline">
+                                                        <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                    </p>
+                                                </div>
                                             </ng-container>
                                         </div>
-                                    </ng-container>
-                                    <ng-container *ngIf='!isSessionUser'>
-                                        <div *ngFor='let singleTheme of themeList.list;' (click)='setAudioBarListPosition($event, singleTheme.id)'
-                                        id="theme-container-{{selectedThemeList}}-{{singleTheme.artist.id}}-{{singleTheme.id}}" class="theme-container text-left"
-                                        style="white-space:nowrap; transition: filter 0.5s; cursor: pointer;">
-                                        <ng-container *ngIf='singleTheme.name'>
-                                            <div class="display-inline" style="vertical-align: middle; margin: 10px; margin-right: 15px; min-width: 50px;">
-                                                <img style="position: absolute;" id="vinyl-{{singleTheme.id}}" class="cover-xs vinyl-xs" src="{{mediaPath}}/images/m-vinyl.png">
-                                                <img style="position: relative; z-index: 2;" class="cover-xs" src="{{mediaPath}}/images/covers/{{singleTheme.id}}.png" (error)="updateUrl($event, 'theme')">
-                                            </div>
-                                            <div class="display-inline theme-container-title" style="width: 75%;">
-                                                <p class="display-inline">
-                                                    <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'>{{singleTheme.position + 1}}.- </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
-                                                </p>
-                                            </div>
                                         </ng-container>
-                                    </div>
                                     </ng-container>
-                                </ng-container>
-                                <ng-container *ngIf='themeList.list && themeList.list.length <= 0'>
-                                    <p>La lista está vacía</p>
-                                </ng-container>
-                            </div>
-                        </ng-container>
+                                    <ng-container *ngIf='themeList.list && themeList.list.length <= 0'>
+                                        <p>La lista está vacía</p>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
             </div>
