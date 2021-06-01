@@ -578,7 +578,10 @@ input{
 .cursor-pointer{
 	cursor: pointer;
 }
-
+.link-decor-none{
+	text-decoration: none;
+	color: black;
+}
 .in-drag{
 	border: 2px solid white !important;
 	opacity: 0.85;

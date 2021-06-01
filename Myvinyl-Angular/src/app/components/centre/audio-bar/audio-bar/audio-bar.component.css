@@ -1,14 +1,11 @@
-@media (max-width: 1120px){
-    #button-gear{
-        display: initial !important;
-    }
+@media (max-width: 1200px){
     .button-responsive-II{
         display: none !important;
     }
 }
 
-@media (max-width: 1450px){
-    #button-gear{
+@media (max-width: 1520px){
+    #button-gear-container{
         display: initial !important;
     }
     .button-responsive-I{
@@ -22,10 +19,17 @@
 .button-responsive-II{
     display: initial;
 }
-#button-gear{
+#button-gear-container{
     display: none;
+    transition: 0.25s;
 }
-
+#button-gear{
+    transition: 0.25s;
+}
+#button-gear.show{
+    transform: rotate(70deg);
+    transition: 0.25s;
+}
 .drag-mode{
     position: absolute;
 }
@@ -41,7 +45,7 @@
     position: absolute; 
     margin-top: 10px; margin-bottom: 10px; 
     height: 10px; 
-    transform: translateY(-100%);
+    /*transform: translateY(-100%);*/
     padding-top: 5px; padding-bottom: 5px;
     cursor: pointer;
 }
@@ -56,7 +60,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     height: 10px; 
-    transform: translateY(-100%);
+    /*transform: translateY(-100%);*/
 }
 #audio-bar-background{
     position: absolute;
@@ -152,7 +156,7 @@
     position: absolute;
     background-color: white;
     padding: 10px;
-    left: 55px;
+    left: 35px;
     top: 0px;
     z-index: 5;
     transform: translateY(-100%);
@@ -162,6 +166,11 @@
 #button-container.show{
     opacity: 1;
     height: 85px;
-    width: 175px;
+    width: 140px;
     z-index: 5;
+    transition: 0.5s;
+}
+.button-clear{
+    background: none;
+    border: none;
 }

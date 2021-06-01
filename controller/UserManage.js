@@ -71,7 +71,7 @@ async function getUserData(req, res){
     res.status(200).send(userData);
 }
 
-async function searchUsersDataByName(req, res){
+async function searchUsersDataByName(req, res){console.log(req.query.nameQuery)
   let nameQuery = (req.query.nameQuery) ? JSON.parse(req.query.nameQuery) : [''];
   let limitQuery = parseInt(req.params.limit);
   let pageQuery = parseInt(req.params.page);

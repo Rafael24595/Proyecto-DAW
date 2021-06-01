@@ -16,12 +16,28 @@
     <ul class="menuContentHeader left">
         <li><span class="category_candy">Perfil</span>
             <ul>
-                <li class="category_shirt" onclick="generateShopShowcase()">
-                    <div>
-                        <img src="ghostUser.png" >
-                        <a href="javascript:void(0);" class="socialMenu noDecorLink" alt="acceso/registro" (click)="userRedirect()">{{userName.activeUser.name}}</a>
-                    </div>
+                <li class="category_shirt">
+                    
                 </li>
+                <ng-container *ngIf='sessionValues.activeUser.email'>
+                    <li>
+                        <div>
+                            <img class="avatar-back" style="height: 25px; vertical-align: sub; margin-right: 5px;" src="{{mediaPath}}/images/users/{{sessionValues.activeUser.name}}.png" (error)="updateUrl($event, 'theme')">
+                            <a href="javascript:void(0);" style="font-weight: bold; font-size: 1.35em;" class="link-decor-none" alt="acceso/registro" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>{{userName.activeUser.name}}</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="link-decor-none" alt="Cerrar sesión" style="color: rgb(128, 128, 128);" (click)='closeSession()'>Cerrar sesión</a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf='!sessionValues.activeUser.email'>
+                    <li>
+                        <a href="javascript:void(0);" class="noDecorLink" alt="acceso/registro" [routerLink]='["/Sign-In"]'>Acceder</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="noDecorLink" alt="acceso/registro" [routerLink]='["/Sign-Up"]'>Registrarse</a>
+                    </li>
+                </ng-container>
             </ul>
         </li>
     </ul>

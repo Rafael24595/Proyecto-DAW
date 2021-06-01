@@ -57,8 +57,8 @@ async function extendSession(req, res){
 
   } catch (err) {
     console.error(`Error: ${err}`);
-    expirationTimeNotification = false;
-    message.code = (err == 'TokenExpiredError: jwt expired') ? 'expired' : message.code;
+    let message = (err == 'TokenExpiredError: jwt expired') ? 'expired' : message.code;
+    res.status(401).send({status:false, message:message});
   }
 
 }

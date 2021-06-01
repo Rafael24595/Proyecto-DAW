@@ -24,7 +24,7 @@ import { Blur } from 'ngx-quill';
 export class UserPanelComponent implements OnInit {
 
   candy: CandyInterface = {id: 'Profile', name:'Profile', family:'candy-profile',route:'Profile', query:{}, routeQuery:''};
-  mediaPath: string = '../../../../../..//assets/media';
+  mediaPath: string = '../../../../../../assets/media';
   ProfileData: UserInterface | User | undefined ;
   userName:string = (sesionValues.activeUser) ? sesionValues.activeUser.name : '';
   selectedThemeList:string = '';

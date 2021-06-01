@@ -32,16 +32,16 @@ export class AudioBarComponent implements OnInit {
       }
     }
 
-    window.onload = ()=>{
+    setTimeout(()=>{
       let element = document.getElementById('bar-ajustable-width');
-        if(element){
-          this.barAudioSize = element.offsetWidth;
-        }
-        else{
-          this.barAudioSize = 525;
-        }
-      
-    }
+      if(element){console.log(element.offsetWidth, element.getBoundingClientRect())
+        this.barAudioSize = element.offsetWidth;
+      }
+      else{
+        this.barAudioSize = 525;
+      }
+    }, 100)
+    
 
     this.setAjustable();
 
@@ -109,10 +109,11 @@ export class AudioBarComponent implements OnInit {
     this.comunicationService.sendReproductorViewDataUnsubscribe();
   }
 
+  greatBar = 100;
   buttonContainerState = '';
   buttonResponsiveII = 'button-responsive-II';
   buttonResponsiveI = 'button-responsive-I';
-  buttonGear = false;
+  buttonGear = true;
 
   showButtonContainer(){
     this.buttonContainerState = (this.buttonContainerState == '') ? 'show' : '';
@@ -123,6 +124,8 @@ export class AudioBarComponent implements OnInit {
       this.buttonResponsiveII = '';
       this.buttonResponsiveI = '';
       this.buttonGear = false;
+      this.greatBar = 90
+      this.playLogo = (this.buttonGear) ? '"' : 'L' ;
     }
   }
   
@@ -146,6 +149,7 @@ export class AudioBarComponent implements OnInit {
   launchPaused = true;
   normalSrc = '';
   reverseSrc = '';
+  playLogo = '"';
 
   /*////////////
   | AUDIO VARS |
@@ -291,11 +295,13 @@ export class AudioBarComponent implements OnInit {
       if(this.audio.paused){
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
         this.playButtonColor = Color_Vars.button_play_color.pause;
+        this.playLogo = (this.buttonGear) ? '!' : 'K' ;
         sesionValues.reproductionState = false;
       }
       else{
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
         this.playButtonColor = Color_Vars.button_play_color.play;
+        this.playLogo = (this.buttonGear) ? '"' : 'L' ;
         sesionValues.reproductionState = true;
       }
     }
