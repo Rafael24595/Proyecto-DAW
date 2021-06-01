@@ -10,5 +10,5 @@
 .vinyl.show{
     transition: 2s ease;
 
-	transform: translate(15%) rotate(180deg);
+	transform: translate(10%) rotate(180deg);
 }

@@ -1,4 +1,5 @@
-<div id="homeContainer" style="background-color: rgba(255,255,255, 0.1); padding: 15px;">
+<!-- background-color: rgba(255,255,255, 0.1); -->
+<div id="homeContainer" style="padding: 15px;">
     <div *ngIf="theme">
         <div style="width: 60%;" class="display-inline">
             <div style="padding: 20px;">
@@ -7,7 +8,7 @@
                         <div>
                             <br>
                             <div>
-                                <div class="display-inline" style="position: relative; width: 90%;">
+                                <div class="display-inline" style="position: relative; width: 85%;">
                                     <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png" (error)="updateUrl($event, 'vinyl-xl')">
                                     <img style="position: relative; width: 100%; z-index: 2;border: 3px solid black; box-sizing: border-box;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                                 </div>

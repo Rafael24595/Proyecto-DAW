@@ -21,16 +21,21 @@ export class AudioBarComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
       if(element && this.ajustableWidth){
         this.barAudioSize = element.offsetWidth;
       }
+      if(window.innerWidth > 1450){
+        this.buttonContainerState = '';
+      }
     }
+
     window.onload = ()=>{
       let element = document.getElementById('bar-ajustable-width');
         if(element && this.ajustableWidth){
-          this.barAudioSize = element.offsetWidth;
+          //this.barAudioSize = element.offsetWidth;
         }
         else{
           this.barAudioSize = 525;
@@ -101,6 +106,12 @@ export class AudioBarComponent implements OnInit {
     }
     this.comunicationService.sendReproductorDataUnsubscribe();
     this.comunicationService.sendReproductorViewDataUnsubscribe();
+  }
+
+  buttonContainerState = '';
+
+  showButtonContainer(){
+    this.buttonContainerState = (this.buttonContainerState == '') ? 'show' : '';
   }
 
   /*/////////////
