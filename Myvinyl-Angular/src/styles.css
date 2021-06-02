@@ -470,6 +470,7 @@ input{
 .title-back{
 	background-color: rgba(0,0,10,0.2);
 	color: rgba(225, 225, 225, 1);
+	text-shadow: 3px 3px black;
 	padding: 10px;
 }
 .text-error{
