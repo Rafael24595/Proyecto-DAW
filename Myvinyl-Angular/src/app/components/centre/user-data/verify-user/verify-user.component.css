@@ -1,0 +1,25 @@
+:host{
+    width: 100%;
+    text-align: center;
+}
+#check-arm-l{
+    width: 20px;
+    height: 0px;
+    background-color: rgb(63, 156, 63); 
+    transform: translateY(20px);
+    transition: 0.12s;
+}
+#check-arm-r{
+    width: 0px;
+    height: 20px;
+    background-color: rgb(63, 156, 63); 
+    transition: 0.12s;
+}
+#check-arm-l.show{
+    height: 70px;
+    transition: 0.12s;
+}
+#check-arm-r.show{
+    width: 100px;
+    transition: 0.12s;
+}

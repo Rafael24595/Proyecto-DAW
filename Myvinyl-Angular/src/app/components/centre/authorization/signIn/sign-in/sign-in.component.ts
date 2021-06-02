@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
       this.authorization.signIn(email, password).subscribe(
         res =>{
           localStorage.setItem('sessionToken', res.token); 
-          sesionValues.activeUser = User.setUser(res.user.name, res.user.description, res.user.admin, res.user.themeLists, res.user.email);
+          sesionValues.activeUser = User.setUser(res.user.name, res.user.admin, res.user.date, res.user.description, res.user.themeLists, res.user.email, res.user.activeAccount);
           this.manageComponent.refreshComponent(this.manageComponent.getLastURL());
         },
         err=>{console.error(`Error: ${err.error}`); FormValidations.checkServerErrors(err.error, this.formError)}

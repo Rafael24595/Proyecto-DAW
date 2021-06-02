@@ -242,7 +242,7 @@ async function checkPassword(req, res){
     (user.password == password) ? res.status(200).json({status:true}) : res.status(401).json({status:false});
   }
   else{
-    if(!res.headerSent) res.status(401).json({status:'invalid-petition', user:simplifyProfile(user)});
+    if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
   }
 }
 
@@ -251,11 +251,11 @@ async function checkActivationCode(req, res){
   let code = req.params.code;
   let user = await User.findOne({"activationCode":code});
   if(user && user.activeAccount == false){
-    console.log('active')
+    const token = jwt.sign({_id: user._id}, secretWord, { expiresIn: 900 });
     user.activationCode = true;
     user.activationCode = '';
     user.save();
-    res.status(200).json({status:true});
+    res.status(200).json({status:true, user:simplifyProfile(user), token:token});
   }
   else{
     res.status(404).json({status:'Not found'});

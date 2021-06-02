@@ -7,6 +7,7 @@ import { ServerErrorToken } from 'src/app/interfaces/AuthorizationInterfaces';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { UserInterface } from 'src/app/interfaces/UserInterface';
 import { NotificationManage } from './NotificationManage';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ManageUser{
     countAnswer = 0;
     alerted:boolean = false;
 
-    constructor(private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService){};
+    constructor(private DatabaseConexService: DatabaseConexService, private router: Router, private autorizationService: AuthorizationService){};
 
     checkToken(){
 
@@ -116,6 +117,7 @@ export class ManageUser{
             err=>{
                 console.error(`Error: ${err}`);
                 let serverError = err.error as ServerErrorToken;
+                this.router.navigate(['/Home']);
                 if(serverError.destroyToken){
                     this.autorizationService.destroySession();
                 }

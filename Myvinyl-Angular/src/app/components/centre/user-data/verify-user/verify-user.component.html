@@ -1,8 +1,21 @@
 <div id="homeContainer">
-    <h2>Verificar cuenta</h2>
-    <p>{{statusMessage}}</p>
-    <div *ngIf='status'>
-        <p>Se le redirigirá a su perfil de usuario en {{count}} segundos</p>
-        <a href=""></a>
+    <div style="padding-left: 90px; padding-right: 90px;">
+        <h2 class="title-back">Verificar cuenta</h2>
+        <p style="margin-top: 35px;">{{statusMessage}}</p>
+        <br>
+        <img *ngIf='!status' style="height: 40px;" src="{{mediaPath}}/images/load.gif">
+        <div *ngIf='status'>
+            <div>
+                <div style="display: inline-block; height: 50px; width: 100px; transform: rotate(-45deg) scale(0.75) translate(20%, -70%);">
+                    <div id="check-arm-l" class="{{checkArmL}}">
+                    </div>
+                    <div id="check-arm-r" class="{{checkArmR}}">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <p>Se le redirigirá a su perfil de usuario en {{count}} segundos</p>
+            <a href="javascript:void(0);" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>Redirigir manualmente</a>
+        </div>
     </div>
 </div>
