@@ -242,8 +242,25 @@ async function checkPassword(req, res){
     (user.password == password) ? res.status(200).json({status:true}) : res.status(401).json({status:false});
   }
   else{
-    if(!res.headerSent) res.status(401).json({status:'invalid-petition'});
+    if(!res.headerSent) res.status(401).json({status:'invalid-petition', user:simplifyProfile(user)});
   }
 }
 
-module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, getUserAttribute, getThemesFromList };
+async function checkActivationCode(req, res){
+
+  let code = req.params.code;
+  let user = await User.findOne({"activationCode":code});
+  if(user && user.activeAccount == false){
+    console.log('active')
+    user.activationCode = true;
+    user.activationCode = '';
+    user.save();
+    res.status(200).json({status:true});
+  }
+  else{
+    res.status(404).json({status:'Not found'});
+  }
+
+}
+
+module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, getUserAttribute, getThemesFromList, checkActivationCode };

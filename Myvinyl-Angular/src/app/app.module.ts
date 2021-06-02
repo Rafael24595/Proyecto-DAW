@@ -23,6 +23,7 @@ import { SignUpComponent } from './components/centre/authorization/signUp/sign-u
 import { UserDataComponent } from './components/centre/user-data/user-data.component';
 import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel.component';
 import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio-bar.component';
+import { VerifyUserComponent } from './components/centre/user-data/verify-user/verify-user.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AudioBarComponent } from './components/centre/audio-bar/audio-bar/audio
     UserPanelComponent,
     AudioBarComponent,
     SafeHtmlPipe,
-    DateFormat
+    DateFormat,
+    VerifyUserComponent
   ],
   imports: [
     BrowserModule,

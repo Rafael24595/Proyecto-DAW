@@ -35,6 +35,7 @@ router.get("/artist/attributte/:attribute/all", ArtistThemeManage.getArtistAttri
 router.patch("/artist/:artist/:attribute/:value", SecurityManage.verifyTokenStrict , ArtistThemeManage.setArtistAttribute);
 
 router.get("/user/:user", SecurityManage.verifyToken , UserManage.getProfileData);
+router.get("/user/verify/:code", UserManage.checkActivationCode);
 router.get("/user/:page/:limit", UserManage.searchUsersDataByName);
 router.get("/user/self/profile/token", SecurityManage.verifyTokenStrict , UserManage.getUserData);
 router.get("/user/self/profile/token/date", SecurityManage.checkTokenDate);

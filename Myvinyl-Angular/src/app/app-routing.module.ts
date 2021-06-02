@@ -7,6 +7,7 @@ import { HomeComponent } from './components/centre/showcase/home/home.component'
 import { ThemeInformationComponent } from './components/centre/showcase/theme-information/theme-information.component'
 import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
 import { UserPanelComponent } from './components/centre/showcase/user-panel/user-panel.component';
+import { VerifyUserComponent } from './components/centre/user-data/verify-user/verify-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/Home', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'Search', component: ThemeSearchComponent },
   { path: 'Sign-In', component: SignInComponent },
   { path: 'Sign-Up', component: SignUpComponent },
+  { path: 'Verificar/:code', component: VerifyUserComponent }
 ];
 
 @NgModule({

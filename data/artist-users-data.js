@@ -929,6 +929,7 @@ const usersData = [
                 ]
             }
         ],
+        "date":0,
         "activeAccount":true,
         "activationCode":''
     },

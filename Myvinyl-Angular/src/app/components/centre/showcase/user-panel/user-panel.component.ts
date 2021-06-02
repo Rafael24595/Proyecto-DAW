@@ -356,7 +356,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   setGlobalUser(profile:UserInterface){
-    sesionValues.activeUser = User.setUser(profile.name, profile.admin, profile.description, profile.themeLists, profile.email);
+    sesionValues.activeUser = User.setUser(profile.name, profile.admin, profile.date, profile.description, profile.themeLists, profile.email, profile.activeAccount);
     this.ProfileData = sesionValues.activeUser;
   }
 

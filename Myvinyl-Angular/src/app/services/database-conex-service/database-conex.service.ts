@@ -157,6 +157,10 @@ export class DatabaseConexService {
   return this.http.post<{status:boolean}>(`http://${Variables.host}:${Variables.port}/api/artist`, {artistId, name, surname, description, tags, userName});
  }
 
+ checkActivationCode(code:string):Observable<{status:boolean, user:UserInterface}>{
+  return this.http.get<{status:boolean, user:UserInterface}>(`http://${Variables.host}:${Variables.port}/api/user/verify/${code}`);
+ }
+
  private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
           console.error(error);

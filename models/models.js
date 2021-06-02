@@ -99,6 +99,17 @@ const UserSchema = new Schema({
 	likes:{
 		type:Array,
 		required: true
+	},
+	date: {
+		type: Number,
+		required: true
+	},
+	activeAccount:{
+		type: Boolean,
+		required: true
+	},
+    activationCode:{
+		type: String
 	}
 });
 
