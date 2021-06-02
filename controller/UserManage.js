@@ -3,6 +3,7 @@ require('../models/models');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Tools = require('../utils/tools');
+const Mail = require('../utils/mail').Mail;
 const jwt = require('jsonwebtoken');
 const secretWord = 'secret';
 
@@ -11,14 +12,37 @@ async function singUp(req, res){
     const {name, email, password} = req.body;
     let newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
     newUser = await setBasicThemeLists(newUser);
+    newUser.date = new Date().getTime();
+    newUser.activeAccount = generateActivationCode(name);
     const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 900 });
-  
+
     await newUser.save();
+
+    let mail = Mail.getMailInstance();
     
-    res.status(200).json({status:true, token:token, user: newUser});
+    mail.sendMail('rafaelmostoles24595@gmail.com', 'Correo enviado desde MyVinyl', 'Mensaje de prueba tercero');
+    
+    res.status(200).json({status:true, token:token, user: simplifyProfile(newUser)});
   
   }
   
+  async function generateActivationCode(userName) {
+    
+    let date = new Date().getTime();
+    let randomString = '';
+
+    for (let index = 0; index < 10; index++) {
+        randomString = randomString +  Math.random().toString(36).substring(2, 15)
+    }
+
+    const msgUint8 = new TextEncoder().encode(`${userName}${date}${randomString}`);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           
+    const hashArray = Array.from(new Uint8Array(hashBuffer));                     
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); 
+
+    return hashHex;
+  }
+
   async function setBasicThemeLists(user){
     user.themeLists.push({
       "name":'@likes-list',
@@ -68,7 +92,19 @@ async function searchUserDataById(userId){
 
 async function getUserData(req, res){
     let userData = await searchUserDataById(req.userId);
-    res.status(200).send(userData);
+    res.status(200).send(simplifyProfile(userData));
+}
+
+async function simplifyProfile(user){
+  return {
+    "name": user.name, 
+    "password": user.password, 
+    "email": user.email, 
+    "description": user.description, 
+    "admin": user.admin, 
+    "themeLists": user.themeLists,
+    "activeAccount" : user.activeAccount
+  }
 }
 
 async function searchUsersDataByName(req, res){console.log(req.query.nameQuery)
@@ -82,7 +118,6 @@ async function searchUsersDataByName(req, res){console.log(req.query.nameQuery)
       nameQuery.forEach(async query => {
         data[query] = [];
         let queryResult = await User.paginate({name:{ "$regex": query, "$options": "i" }},{limit: limitQuery, page: pageQuery});
-        //data = data.concat(queryResult)
         queryResult.docs = await Tools.simplifyUsers(queryResult.docs);
         data[query] = queryResult;
         index ++;
@@ -127,7 +162,7 @@ async function getProfileData(req, res){
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);})
   if(profileData){
     if(req.userToken == true){
-      res.status(200).send({validToken:req.validToken, data:profileData});
+      res.status(200).send({validToken:req.validToken, data:simplifyProfile(profileData)});
     }
     else{
       res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, description:profileData.description, themeLists: profileData.themeLists}});

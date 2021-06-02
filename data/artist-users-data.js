@@ -875,7 +875,10 @@ const usersData = [
                     }
                 ]
             }
-        ]
+        ],
+        "date": 1622636052516,
+        "activeAccount":false,
+        "activationCode":'161fbb53e3ad7a702a1779c637ae9ddd4026b5937dcc9890c1ad7079b76e0b36'
     },
     {
         "name": "User01",
@@ -925,7 +928,9 @@ const usersData = [
                     }
                 ]
             }
-        ]
+        ],
+        "activeAccount":true,
+        "activationCode":''
     },
     {
         "name": "User02",
@@ -952,7 +957,10 @@ const usersData = [
 
                 ]
             }
-        ]
+        ],
+        "date": 0,
+        "activeAccount":true,
+        "activationCode":''
     },
     {
         "name": "User03",
@@ -979,7 +987,10 @@ const usersData = [
 
                 ]
             }
-        ]
+        ],
+        "date": 0,
+        "activeAccount":true,
+        "activationCode":''
     }
 ]
 
