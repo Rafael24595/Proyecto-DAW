@@ -38,39 +38,41 @@
                             <br>
                         </div>
                         <app-audio-bar></app-audio-bar>
-                        <div style="width: 33%;" class="display-inline">
-                            <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
-                        </div>
-                        <div style="width: 33%;" class="display-inline">
-                            <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
-                                <span>
-                                    <ng-container *ngIf='isLike == 1'>
-                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
-                                    </ng-container>
-                                    <ng-container *ngIf='isLike != 1'>
-                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
-                                    </ng-container>
-                                    <span>&nbsp;</span>
-                                    <span>{{theme.likes}}</span>
-                                </span> 
-                            </p>
-                            <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
-                                <span>
-                                    <ng-container *ngIf='isLike == -1'>
-                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
-                                    </ng-container>
-                                    <ng-container *ngIf='isLike != -1'>
-                                        <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
-                                    </ng-container>
-                                    <span>&nbsp;</span>
-                                    <span>{{theme.dislikes}}</span>
-                                </span>
-                            </p>
-                            <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
-                            <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
-                        </div>
-                        <div *ngIf='isSessionUser' style="width: 33%;" class="display-inline">
-                            <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true; blackScreenStatus.blackScreenStatus = 'show'" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                        <div>
+                            <div style="width: 33%;" class="display-inline">
+                                <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
+                            </div>
+                            <div style="width: 33%;" class="display-inline">
+                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                    <span>
+                                        <ng-container *ngIf='isLike == 1'>
+                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
+                                        </ng-container>
+                                        <ng-container *ngIf='isLike != 1'>
+                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
+                                        </ng-container>
+                                        <span>&nbsp;</span>
+                                        <span>{{theme.likes}}</span>
+                                    </span> 
+                                </p>
+                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                    <span>
+                                        <ng-container *ngIf='isLike == -1'>
+                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
+                                        </ng-container>
+                                        <ng-container *ngIf='isLike != -1'>
+                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
+                                        </ng-container>
+                                        <span>&nbsp;</span>
+                                        <span>{{theme.dislikes}}</span>
+                                    </span>
+                                </p>
+                                <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
+                                <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
+                            </div>
+                            <div *ngIf='isSessionUser' style="width: 33%;" class="display-inline">
+                                <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true; blackScreenStatus.blackScreenStatus = 'show'" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                            </div>
                         </div>
                         <div *ngIf='isAdmin' style="padding: 15px; padding-bottom: 5px;">
                             <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
@@ -126,7 +128,7 @@
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
                                 </p>
-                                <p>{{comment.comment}}</p>
+                                <p style="margin-left: 10px;">{{comment.comment}}</p>
                             </div>
                         </div>
                     </div>

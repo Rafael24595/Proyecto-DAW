@@ -12,8 +12,33 @@
 	src: url(./assets/fonts/BioRhyme-Regular.ttf);
 }
 
+@font-face {
+	font-family: rubik;
+	src: url(./assets/fonts/Rubik-Regular.ttf);
+}
+
+@font-face {
+	font-family: cairo;
+	src: url(./assets/fonts/Cairo-Regular.ttf);
+}
+
+@font-face {
+	font-family: karla;
+	src: url(./assets/fonts/Karla-SemiBold.ttf);
+}
+
+@font-face {
+	font-family: lora;
+	src: url(./assets/fonts/Lora-Regular.ttf);
+}
+
+@font-face {
+	font-family: frank;
+	src: url(./assets/fonts/FrankRuhlLibre-Regular.ttf);
+}
+
 *{
-	font-family: bio-rhyme;
+	font-family: sans-serif;
 }
 
 :root{
@@ -209,7 +234,7 @@ html, body{
     height: 100%;
     margin: 0px;
     padding: 0px;
-    background-color: rgb(77, 77, 77);
+    background-color: rgb(70, 70, 70);
 
 }
 
@@ -378,7 +403,6 @@ input{
 }
 
 .title-backg{
-
 	background-color: var(--containers);
 	height: 8%;
 	top: 50%;
@@ -387,7 +411,6 @@ input{
 	margin-left: 10px;
 	margin-right: 10px;
 	padding: 15px;
-
 }
 
 .title, .title-backg p{
@@ -395,7 +418,7 @@ input{
 	text-align: center;
 	font-size: 1.5em;
 	color: white;
-	font-family: BlazingSun;
+	font-weight: bold;
 	margin: 0px;
 	background-color: transparent;
 
@@ -446,6 +469,7 @@ input{
 }
 .title-back{
 	background-color: rgba(0,0,10,0.2);
+	color: rgba(225, 225, 225, 1);
 	padding: 10px;
 }
 .text-error{
