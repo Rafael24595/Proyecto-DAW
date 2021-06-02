@@ -156,8 +156,6 @@
     position: absolute;
     background-color: white;
     padding: 10px;
-    left: 35px;
-    top: 0px;
     z-index: 5;
     transform: translateY(-100%);
     overflow: hidden;
@@ -165,7 +163,7 @@
 }
 #button-container.show{
     opacity: 1;
-    height: 85px;
+    height: 180px;
     width: 140px;
     z-index: 5;
     transition: 0.5s;

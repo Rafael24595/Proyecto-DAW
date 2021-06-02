@@ -42,6 +42,7 @@ export class ThemeInformationComponent implements OnInit {
   blackScreenStatus = GlobalVariables;
 
   vinylState = '';
+  loadGif = false;
 
   showThemeListForm: boolean = false;
   buttonThemeList = 'Añadir';
@@ -112,6 +113,13 @@ export class ThemeInformationComponent implements OnInit {
           }
         break;
 
+        case 'loading-reverse':
+          this.loadGif = true;
+        break;
+
+        case 'loaded-reverse':
+          this.loadGif = false;
+        break;
       }
     }
 

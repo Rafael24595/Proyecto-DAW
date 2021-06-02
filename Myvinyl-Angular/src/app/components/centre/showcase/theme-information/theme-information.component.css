@@ -12,3 +12,15 @@
 
 	transform: translate(10%) rotate(180deg);
 }
+
+.load-gif{
+    position: absolute;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+.load-gif img{
+    height: 50px;
+}

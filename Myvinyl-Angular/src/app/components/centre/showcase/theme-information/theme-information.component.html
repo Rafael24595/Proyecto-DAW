@@ -9,6 +9,9 @@
                             <br>
                             <div>
                                 <div class="display-inline" style="position: relative; width: 85%;">
+                                    <div *ngIf='loadGif' class="load-gif" >
+                                        <img src="{{mediaPath}}/images/load.gif">
+                                    </div>
                                     <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png" (error)="updateUrl($event, 'vinyl-xl')">
                                     <img style="position: relative; width: 100%; z-index: 2;border: 3px solid black; box-sizing: border-box;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                                 </div>

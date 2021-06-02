@@ -5,7 +5,16 @@
 @font-face {
 	font-family: my-vinyl-icons;
 	src: url(./assets/fonts/my-vinyl-icons.ttf);
-	}
+}
+
+@font-face {
+	font-family: bio-rhyme;
+	src: url(./assets/fonts/BioRhyme-Regular.ttf);
+}
+
+*{
+	font-family: bio-rhyme;
+}
 
 :root{
 	--pencil_translate: -5px;

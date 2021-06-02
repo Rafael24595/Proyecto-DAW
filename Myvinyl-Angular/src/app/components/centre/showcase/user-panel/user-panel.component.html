@@ -1,4 +1,4 @@
-<div id="homeContainer" style="">
+<div id="homeContainer">
     <div *ngIf='ProfileData' class="height-100">
         <div style="display: inline-block; width: 100%; box-sizing: border-box; max-width: 1300px; height: 100%; background-color: rgba(255,255,255, 0.1);">
             <div>
@@ -117,11 +117,6 @@
                                                 </span>
                                             </div>
                                         </quill-editor>
-                                       <!-- <textarea name="" id="userDescription" [(ngModel)]='modifyValuesData.modifyDescription.value'
-                                        (focusout)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                                        (keyup)=modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})
-                                        style="width: 100%; height: 200px;">
-                                        </textarea> -->
                                     </ng-container>
                                 </div>
                                 <br>
@@ -138,11 +133,13 @@
                                         <span>{{range[ProfileData.admin]}}</span>
                                     </div>
                                     <br>
+                                    <div style="border-bottom: solid 2px black;"></div>
+                                    <br>
                                     <div style="height: 100%;">
                                         <span>Descripción: </span>
-                                        <br><br>
-                                        <div style="max-height: 72%; overflow: auto;">
-                                            <span>{{ProfileData.description}}</span>
+                                        <br>
+                                        <div style="height: 266px; overflow: auto;">
+                                            <span [innerHtml]='ProfileData.description | safeHtml'></span>
                                         </div>
                                     </div>
                                 </div>

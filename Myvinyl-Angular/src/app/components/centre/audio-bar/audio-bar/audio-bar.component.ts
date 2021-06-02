@@ -149,7 +149,7 @@ export class AudioBarComponent implements OnInit {
   launchPaused = true;
   normalSrc = '';
   reverseSrc = '';
-  playLogo = '"';
+  playLogo = '!';
 
   /*////////////
   | AUDIO VARS |
@@ -295,13 +295,13 @@ export class AudioBarComponent implements OnInit {
       if(this.audio.paused){
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
         this.playButtonColor = Color_Vars.button_play_color.pause;
-        this.playLogo = (this.buttonGear) ? '!' : 'K' ;
+        this.playLogo = (this.buttonGear) ? '"' : 'L' ;
         sesionValues.reproductionState = false;
       }
       else{
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
         this.playButtonColor = Color_Vars.button_play_color.play;
-        this.playLogo = (this.buttonGear) ? '"' : 'L' ;
+        this.playLogo = (this.buttonGear) ? '!' : 'K' ;
         sesionValues.reproductionState = true;
       }
     }
@@ -697,6 +697,7 @@ export class AudioBarComponent implements OnInit {
     if(this.audio){
       this.loadGif = Color_Vars.load_gif_status.visible;
       this.audioStatus = (this.audio.paused) ? false : true;
+      this.comunicationService.sendReproductorViewData({type:'loading-reverse', value:''});
 
       if(this.audio.src != this.reverseSrc){
         this.audio.pause();
@@ -721,6 +722,7 @@ export class AudioBarComponent implements OnInit {
         this.prepareTheme();
         this.audio.currentTime = time;
         this.audio.play();
+        this.comunicationService.sendReproductorViewData({type:'loaded-reverse', value:''});
   
       }else{
   
@@ -728,6 +730,7 @@ export class AudioBarComponent implements OnInit {
         let time = this.audio.duration - this.audio.currentTime;
         this.prepareTheme();
         this.audio.currentTime = time;
+        this.comunicationService.sendReproductorViewData({type:'loaded-reverse', value:''});
   
       }
   
