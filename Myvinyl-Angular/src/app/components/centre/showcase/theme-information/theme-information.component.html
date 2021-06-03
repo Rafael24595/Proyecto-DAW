@@ -15,7 +15,7 @@
                                     <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png" (error)="updateUrl($event, 'vinyl-xl')">
                                     <img style="position: relative; width: 100%; z-index: 2; box-shadow: 3px 3px 0px #262626; box-sizing: border-box;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                                 </div>
-                                <div *ngIf='isAdmin' class="display-inline" style="border: 2px solid black; text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
+                                <div *ngIf='isAdmin' class="display-inline" style="text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
                                     <span id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
                                         <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
                                     </span>
@@ -28,10 +28,10 @@
                                 </div>
                             </div>
                             <p style="margin-bottom: 0px;">
-                                <span (click)="routeArtist()" class="cursor-pointer">{{theme.artist.name}} {{theme.artist.surname}} -&nbsp;</span>
-                                <span>{{theme.name}} 
-                                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                                        &nbsp;<span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
+                                <span (click)="routeArtist()" style="font-weight: bold; color: #e6e6e6;" class="cursor-pointer">{{theme.artist.name}} {{theme.artist.surname}} -&nbsp;</span>
+                                <span style="font-weight: bold; color: #e6e6e6;">{{theme.name}} 
+                                    <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: super;">
+                                        &nbsp;<span style="position: absolute; color: black; font-weight: normal; transform: translateY(-20%);" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
                                     </span>
                                 </span>
                             </p>
@@ -43,19 +43,19 @@
                                 <p style="margin-top: 10px; margin-bottom: 10px; font-size: large;" class="attr-name">Visitas: <span class="less-more-content">{{theme.views}}</span></p>
                             </div>
                             <div style="width: 33%; vertical-align: super;" class="display-inline">
-                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px; text-align: left; padding-left: 10px; box-sizing: border-box;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == 1'>
-                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)"><b>@</b></span>
+                                            <span style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
                                         </ng-container>
                                         <ng-container *ngIf='isLike != 1'>
                                             <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
                                         </ng-container>
                                         <span>&nbsp;</span>
-                                        <span>{{theme.likes}}</span>
+                                        <span style="font-weight: bold; color: #e6e6e6;">{{theme.likes}}</span>
                                     </span> 
                                 </p>
-                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
+                                <p style="width: 50%; margin-top: 10px; margin-bottom: 10px; text-align: right; padding-right: 10px; box-sizing: border-box;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == -1'>
                                             <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
@@ -64,7 +64,7 @@
                                             <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
                                         </ng-container>
                                         <span>&nbsp;</span>
-                                        <span>{{theme.dislikes}}</span>
+                                        <span style="font-weight: bold; color: #e6e6e6;">{{theme.dislikes}}</span>
                                     </span>
                                 </p>
                                 <div id="likes-bar" style="height: 3px; width: {{likesBarPercent}}%; background-color: blue; transform: translateY(100%);"></div>
@@ -77,7 +77,7 @@
                         <div *ngIf='isAdmin' style="padding: 15px; padding-bottom: 5px;">
                             <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
                             <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
-                                <span>{{themeTag}} - </span>
+                                <span style="color: #e6e6e6;" >{{themeTag}} </span><span> - </span>
                                 <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                                     <span class="trash-cap cursor-pointer display-inline">0</span>
                                     <span class="trash-body cursor-pointer display-inline">/</span>
@@ -144,9 +144,9 @@
             <div>
                 <div>
                     <h3 class="title-back"> 
-                        <img *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="float: left;" (click)='switchLyrics()'>
+                        <img *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="float: left; box-shadow: 2px 2px black;" (click)='switchLyrics()'>
                          Letra: 
-                         <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="font-weight: normal; transform: translateY(-5%); float: right;">
+                         <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="text-shadow: none; font-weight: normal; transform: translateY(-5%); float: right;">
                             <span (click)='showThemeForm({attrName:"lyrics", attrId:"", value:theme.lyrics.native, secondValue:theme.lyrics.esp})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-125">+</span>
                         </span>
                     </h3>

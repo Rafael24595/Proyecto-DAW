@@ -16,7 +16,8 @@
                     </span>
                 </p>
                 <p *ngIf='isAdmin' style="margin-top: 5px; margin-bottom: 0px;">
-                    <span class="attr-name">Id: {{artist.id_artist}}</span>
+                    <span class="attr-name">Id: </span>
+                    <span>{{artist.id_artist}}</span>
                     <span>&nbsp;</span>
                     <span id="pencil-writting-animation" class="display-inline">
                         <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>+</span>
@@ -53,7 +54,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="title-back">Temas: <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
+                    <h3 class="title-back">Temas: <span *ngIf='isAdmin' style="color: black; text-shadow: none; float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
                 </div>
                 <div style="max-height: 500px; overflow: auto; padding: 15px;">
                     <div *ngIf='isAdmin' class="cursor-pointer" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>

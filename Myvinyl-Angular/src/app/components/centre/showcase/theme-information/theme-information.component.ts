@@ -289,6 +289,9 @@ export class ThemeInformationComponent implements OnInit {
         }
       );
     }
+    else{
+      this.router.navigate(['/Sign-In']);
+    }
   }
 
   addToThmemeList(){

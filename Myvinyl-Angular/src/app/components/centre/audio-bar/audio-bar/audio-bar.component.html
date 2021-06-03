@@ -63,7 +63,7 @@
                                 </div>
                                 <br><br>
                                 <p style="margin-top: 5px; margin-bottom: 5px;">Velocidad:</p>
-                                <div class="display-inline" style="margin-right: 10px; margin-left: 10px; margin-left: 5px; margin-right: 5px;">
+                                <div class="display-inline" style="margin-left: 5px; margin-right: 5px;">
                                     <select [(ngModel)]="speed" (change)='updateSpeed()' class="right-button cursor-pointer" style="margin-bottom: 5px;">
                                         <option value="0.25">x0.25</option>
                                         <option value="0.5">x0.5</option>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </ng-container>
-            <div class="display-inline {{buttonResponsiveI}}" style="margin-right: 10px; margin-left: 10px; margin-left: 5px; margin-right: 5px;">
+            <div class="display-inline {{buttonResponsiveI}}" style="vertical-align: text-bottom; margin-left: 5px; margin-right: 5px;">
                 <select [(ngModel)]="speed" (change)='updateSpeed()' class="right-button cursor-pointer">
                     <option value="0.25">x0.25</option>
                     <option value="0.5">x0.5</option>
