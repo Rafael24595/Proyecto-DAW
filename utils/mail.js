@@ -37,16 +37,22 @@ class Mail{
         this.message = message;
     }
 
-    sendMail(receiver, subject, message){
+    sendMail(receiver, subject, message, type){
 
         this.setMailData(receiver, subject, message);
 
         var mailOptions = {
             from: this.mail,
             to: this.receiver,
-            subject: this.subject ,
-            text: this.message
+            subject: this.subject
         };
+
+        if(type == 'html'){
+            mailOptions['html'] = this.message;
+        }
+        else{
+            mailOptions['text'] = this.message
+        }
 
         this.transporter.sendMail(mailOptions, ()=>{
             sucess=>{

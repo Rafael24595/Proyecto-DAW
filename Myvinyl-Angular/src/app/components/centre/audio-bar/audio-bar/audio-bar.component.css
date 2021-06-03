@@ -161,12 +161,20 @@
     overflow: hidden;
     transition: 0.5s;
 }
+#button-container div{
+    opacity: 0;
+    transition: 0.25s;
+}
 #button-container.show{
     opacity: 1;
     height: 180px;
     width: 140px;
     z-index: 5;
     transition: 0.5s;
+}
+#button-container.show div{
+    opacity: 1;
+    transition: 0.25s;
 }
 .button-style{
     background-color: transparent;

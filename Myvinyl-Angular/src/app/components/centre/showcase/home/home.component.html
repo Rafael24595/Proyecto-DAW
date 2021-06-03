@@ -15,16 +15,16 @@
     <div *ngFor='let category of categories | keyvalue'>
         <h2 class="title-back">{{category.value.name}}</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let item of category.value.items' class="display-inline" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
+            <div *ngFor='let item of category.value.items' class="display-inline container-card" style="width: 275px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{item.id}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
                     <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{item.id}}.png" (error)="updateUrl($event, 'theme')">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}'>{{item.name}}</span>
+                        <span class="attr-name">Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:item.id}'>{{item.name}}</span>
                     </p> 
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                        <span>Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:item.artist.id}'>{{item.artist.name}} {{item.artist.surname}}</span>
+                        <span class="attr-name">Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:item.artist.id}'>{{item.artist.name}} {{item.artist.surname}}</span>
                     </p> 
                 </div>
             </div>

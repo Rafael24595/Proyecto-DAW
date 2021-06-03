@@ -3,57 +3,57 @@
         <h2 class="title-back">Usuarios:</h2>
         <div>
             <div style="margin-left: 25px;">
-                <div *ngFor='let user of queryResult.users' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
+                <div *ngFor='let user of queryResult.users' class="display-inline container-card" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;">
                     <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline avatar-back">
                         <img class="cursor-pointer" [routerLink]='["/Profile/" + user.name]' style="width: 70px; box-sizing: border-box;" src="{{mediaPath}}/images/users/{{user.name}}.png" (error)="updateUrl($event, 'user')">
                     </div>
                     <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                         <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                            <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Profile/" + user.name]'>{{user.name}}</span>
+                            <span class="attr-name">Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Profile/" + user.name]'>{{user.name}}</span>
                         </p> 
                         <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                            <span>Rango: </span> <span>{{range[user.admin]}} <span *ngIf='user.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></span>
+                            <span class="attr-name">Rango: </span> <span>{{range[user.admin]}} <span *ngIf='user.admin == "1"' class="my-vinyl-icons-font admin-color">=</span></span>
                         </p> 
                     </div>
                 </div>
-                <p> <span (click)='searchResut("next", "user")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("user")' class="cursor-pointer">Ver menos</span></p>
+                <p style="color: #1a1a1a;"> <span (click)='searchResut("next", "user")' class="cursor-pointer less-more-content">Ver más</span> - <span (click)='showLess("user")' class="cursor-pointer less-more-content">Ver menos</span></p>
             </div>
         </div>
     </div>
     <div *ngIf='queryResult.artists.length > 0'>
         <h2 class="title-back">Artistas:</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let artist of queryResult.artists' class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
+            <div *ngFor='let artist of queryResult.artists' class="display-inline container-card" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;"  id="{{artist.id_artist}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
                     <img class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}' style="width: 70px; border: 2px solid rgba(25, 25, 25, 0.5); border-radius: 50%; box-sizing: border-box;" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}'>{{artist.name}} {{artist.surname}}</span>
+                        <span class="attr-name">Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:artist.id_artist}'>{{artist.name}} {{artist.surname}}</span>
                     </p> 
                     
                 </div>
             </div>
-            <p><span (click)='searchResut("next", "artist")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("artist")' class="cursor-pointer">Ver menos</span></p>
+            <p style="color: #1a1a1a;"><span (click)='searchResut("next", "artist")' class="cursor-pointer less-more-content">Ver más</span> - <span (click)='showLess("artist")' class="cursor-pointer less-more-content">Ver menos</span></p>
         </div>
     </div>
     <div *ngIf='queryResult.themes.length > 0'>
         <h2 class="title-back">Temas:</h2>
         <div style="margin-left: 25px;">
-            <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+            <div *ngFor='let theme of queryResult.themes; let i = index' [attr.data-index]="i" class="display-inline container-card" style="width: 260px; margin: 5px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                 <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-right: 12px;" class="display-inline">
                     <img class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                        <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
+                        <span class="attr-name">Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
                     </p> 
                     <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                        <span>Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>
+                        <span class="attr-name">Autor: </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>
                     </p> 
                 </div>
             </div>
+            <p style="color: #1a1a1a;"><span (click)='searchResut("next", "theme")' class="cursor-pointer less-more-content">Ver más</span> - <span (click)='showLess("theme")' class="cursor-pointer less-more-content">Ver menos</span></p>
         </div>
-        <p><span (click)='searchResut("next", "theme")' class="cursor-pointer">Ver más</span> - <span (click)='showLess("theme")' class="cursor-pointer">Ver menos</span></p>
     </div>
 </div>

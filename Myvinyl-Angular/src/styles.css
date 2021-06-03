@@ -421,6 +421,7 @@ input{
 	font-weight: bold;
 	margin: 0px;
 	background-color: transparent;
+	text-shadow: 2px 2px darkslategrey;
 
 }
 
@@ -716,6 +717,10 @@ input{
     cursor: pointer;
     border: 1px solid;
 }
+.attr-name{
+	font-weight: bold;
+	color: #131313;
+}
 .trash-cap{
 	position: absolute;
 	transition: 0.25s;
@@ -730,6 +735,13 @@ input{
 }
 .light-bulb-off{
 
+}
+.container-card{
+	box-shadow: 3px 3px 0px #262626;
+}
+.less-more-content{
+	font-weight: bold;
+	color: #e6e6e6;
 }
 .light-bulb-on{
 	position: absolute;

@@ -13,7 +13,7 @@
                                         <img src="{{mediaPath}}/images/load.gif">
                                     </div>
                                     <img style="width: 100%; position: absolute; border-radius: 50%;" class="vinyl {{vinylState}} cursor-pointer" (click)="sentToReproductor('stop')" src="{{mediaPath}}/images/m-vinyl.png" (error)="updateUrl($event, 'vinyl-xl')">
-                                    <img style="position: relative; width: 100%; z-index: 2;border: 3px solid black; box-sizing: border-box;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
+                                    <img style="position: relative; width: 100%; z-index: 2; box-shadow: 3px 3px 0px #262626; box-sizing: border-box;" class="{{coverCursorState}}" (click)="sentToReproductor('play')" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                                 </div>
                                 <div *ngIf='isAdmin' class="display-inline" style="border: 2px solid black; text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
                                     <span id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
@@ -40,9 +40,9 @@
                         <app-audio-bar></app-audio-bar>
                         <div>
                             <div style="width: 33%;" class="display-inline">
-                                <p style="margin-top: 10px; margin-bottom: 10px;">Visitas: {{theme.views}}</p>
+                                <p style="margin-top: 10px; margin-bottom: 10px; font-size: large;" class="attr-name">Visitas: <span class="less-more-content">{{theme.views}}</span></p>
                             </div>
-                            <div style="width: 33%;" class="display-inline">
+                            <div style="width: 33%; vertical-align: super;" class="display-inline">
                                 <p style="width: 50%; margin-top: 10px; margin-bottom: 10px;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == 1'>
@@ -96,7 +96,12 @@
                     <h3 style="margin-top: 0px;" class="title-back">Comentarios {{theme.comments.length}}: </h3>
                     <br>
                     <div style="padding: 15px;">
-                        <textarea style="width: 99%; height: 100px;" [(ngModel)]="comment"></textarea>
+                        <ng-container *ngIf='theme.comments.length == 0'> 
+                            <textarea style="width: 99%; height: 100px; padding: 10px; box-sizing: border-box;" placeholder="Sé el primero en comentar algo..." [(ngModel)]="comment"></textarea>
+                        </ng-container>
+                        <ng-container *ngIf='theme.comments.length > 0'> 
+                            <textarea style="width: 99%; height: 100px; padding: 10px; box-sizing: border-box;" placeholder="En qué estás pensando..." [(ngModel)]="comment"></textarea>
+                        </ng-container>
                         <br><br>
                         <div style="text-align: right;">
                             <input type="submit" value="Enviar" (click)='publicateComment()'>
@@ -157,18 +162,18 @@
             <div>
                 <h3 class="title-back">Relacionados: </h3>
                 <div style="max-height: 650px; overflow: auto; padding: 15px;">
-                    <div *ngFor='let theme of suggestThemes' style="text-align: left; background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
+                    <div *ngFor='let theme of suggestThemes' class="container-card" style="text-align: left; background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                         <div style="vertical-align: middle; height: 65px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
                             <img style="width: 65px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         </div>
                         <div style="text-align: left; width: 55%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
-                                <span>Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
+                                <span class="attr-name">Nombre: </span> <span class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}'>{{theme.name}}</span>
                                 <span> - </span> <span class="cursor-pointer" [routerLink]='["/Artist"]' [queryParams]='{id:theme.artist.id}'>{{theme.artist.name}} {{theme.artist.surname}}</span>
                             </p> 
                         </div>
                     </div>
-                    <p (click)='searchResut("next")'>Ver más</p>
+                    <p class="less-more-content" (click)='searchResut("next")'>Ver más</p>
                 </div>
             </div>
         </div>

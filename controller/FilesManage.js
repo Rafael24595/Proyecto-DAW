@@ -1,4 +1,4 @@
-var fs = require("fs");
+const fs = require("fs");
 const mongoose = require('mongoose');
 const Artist = mongoose.model('Artist');
 const Theme = mongoose.model('Theme');

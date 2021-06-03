@@ -112,22 +112,6 @@ async function fillThemeList(themeList){
           }
         }
       });
-      /*await Artist.findOne({"id_artist":theme.listId}).lean().then(async artist=>{
-        if(artist && artist.themeList && artist.themeList.length > 0){
-          await artist.themeList.find(themeListData=>{
-            if(themeListData.id == theme.themeId){
-              themeListData.artist = {};
-              themeListData.artist.id = artist.id_artist;
-              themeListData.artist.name = artist.name;
-              themeListData.artist.surname = artist.surname;
-              themeListData.position = theme.position;
-              list.push(themeListData);
-              return true;
-            }
-            return false;
-          });
-        }
-      });*/
       count++;
       if(count == themeList.length){
         resolve(list);
@@ -148,6 +132,18 @@ async function simplifyThemeList(themeList){
     }
   });
   return list;
+}
+
+function simplifyProfile(user){
+  return {
+    "name": user.name, 
+    "password": user.password, 
+    "email": user.email, 
+    "description": user.description, 
+    "admin": user.admin, 
+    "themeLists": user.themeLists,
+    "activeAccount" : user.activeAccount
+  }
 }
 
 async function simplifyUsers(users){
@@ -290,4 +286,4 @@ function getThemePosition(theme){
   return (position[1] && parseInt(position[1]) != NaN) ? parseInt(position[1]) : -1;
 }
 
-module.exports = { usersExist, setUserAttribute, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyUsers, getActualDate, setThemeArtist, setArtistThemes, dropArtist, dropTheme, updateThemeAuthor, updateThemesId, checkEmptyThemePositions }
+module.exports = { usersExist, setUserAttribute, orderThemeListThemes, fillThemeList, simplifyThemeList, simplifyProfile, simplifyUsers, getActualDate, setThemeArtist, setArtistThemes, dropArtist, dropTheme, updateThemeAuthor, updateThemesId, checkEmptyThemePositions }

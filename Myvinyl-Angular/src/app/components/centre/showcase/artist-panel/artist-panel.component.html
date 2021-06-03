@@ -7,7 +7,7 @@
                     <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
                 </span>
                 <p style="margin-top: 10px; margin-bottom: 5px;">
-                    <span> Nombre: </span>
+                    <span class="attr-name"> Nombre: </span>
                     <span>&nbsp;</span>
                     <span>{{artist.name}} {{artist.surname}}</span>
                     <span>&nbsp;</span>
@@ -16,7 +16,7 @@
                     </span>
                 </p>
                 <p *ngIf='isAdmin' style="margin-top: 5px; margin-bottom: 0px;">
-                    <span >Id: {{artist.id_artist}}</span>
+                    <span class="attr-name">Id: {{artist.id_artist}}</span>
                     <span>&nbsp;</span>
                     <span id="pencil-writting-animation" class="display-inline">
                         <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>+</span>

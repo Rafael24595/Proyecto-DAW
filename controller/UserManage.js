@@ -1,5 +1,8 @@
 
 require('../models/models');
+const CryptoJS = require("crypto-js");
+const fs = require("fs");
+const path = require('path');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Tools = require('../utils/tools');
@@ -10,22 +13,69 @@ const secretWord = 'secret';
 async function singUp(req, res){
 
     const {name, email, password} = req.body;
-    let newUser = new User({name: name, password: password, email: email, admin:0, themeLists:[], likes: []});
-    newUser = await setBasicThemeLists(newUser);
-    newUser.date = new Date().getTime();
-    newUser.activeAccount = generateActivationCode(name);
-    const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 900 });
+    let usersExist = await User.findOne({ $or: [{ name: name }, { email: { $regex: new RegExp("^" + email.toLowerCase(), "i") }}]});
+    if(!usersExist){
+      let newUser = new User({name: name, password: password, email: email.toLowerCase(), admin:0, themeLists:[], likes: []});
+      newUser = await setBasicThemeLists(newUser);
+      newUser.date = new Date().getTime();
+      newUser.activeAccount = false;
+      newUser.activationCode = await generateActivationCode(name);
+      const token = jwt.sign({_id: newUser._id}, secretWord, { expiresIn: 900 });
 
-    await newUser.save();
+      let template = await getTemplate('mail');
 
-    let mail = Mail.getMailInstance();
+      if(template){
+
+        template = await setTemplateData({name, email, code:newUser.activationCode}, template, 'verification');
+
+      }
+
+      await newUser.save();
+
+      let mail = Mail.getMailInstance();
+      
+      mail.sendMail(email, `Bienvenido a MyVinyl ${name}`, template, 'html');
+      
+      res.status(200).json({status:true, token:token, user: Tools.simplifyProfile(newUser)});
+    }
+    else{
+      return res.status(403).send({status:"User/Mail exists"});
+    }
     
-    mail.sendMail('rafaelmostoles24595@gmail.com', 'Correo enviado desde MyVinyl', 'Mensaje de prueba tercero');
-    
-    res.status(200).json({status:true, token:token, user: simplifyProfile(newUser)});
-  
   }
   
+  async function setTemplateData(data, template, type){
+
+    switch (type){
+
+      case 'verification':
+
+        let protocol = 'http';
+        let domain = 'localhost';
+        let port = '4200';
+        let path = `${protocol}://${domain}:${port}/Verificar/${data.code}`;
+
+        template = template.replace(/<!-- name -->/g, data.name);
+        template = template.replace(/<!-- mail -->/g, data.email);
+        template = template.replace(/<!-- path -->/g, path);
+
+      break;
+
+    }
+
+    return template;
+
+  }
+
+  async function getTemplate(name){
+    let templatePath = path.join('public', 'assets', 'templates', `myvinyl-template-${name}.html`);
+    let templateHtml;
+    if(fs.existsSync(templatePath)){
+      templateHtml = fs.readFileSync(templatePath).toString();
+    }
+    return templateHtml;
+  }
+
   async function generateActivationCode(userName) {
     
     let date = new Date().getTime();
@@ -35,10 +85,9 @@ async function singUp(req, res){
         randomString = randomString +  Math.random().toString(36).substring(2, 15)
     }
 
-    const msgUint8 = new TextEncoder().encode(`${userName}${date}${randomString}`);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           
-    const hashArray = Array.from(new Uint8Array(hashBuffer));                     
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); 
+    const hashBuffer = CryptoJS.SHA256(`${userName}${date}${randomString}`);     
+    const hashArray = Array.from(new Uint8Array(hashBuffer.words));             
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     return hashHex;
   }
@@ -92,19 +141,7 @@ async function searchUserDataById(userId){
 
 async function getUserData(req, res){
     let userData = await searchUserDataById(req.userId);
-    res.status(200).send(simplifyProfile(userData));
-}
-
-async function simplifyProfile(user){
-  return {
-    "name": user.name, 
-    "password": user.password, 
-    "email": user.email, 
-    "description": user.description, 
-    "admin": user.admin, 
-    "themeLists": user.themeLists,
-    "activeAccount" : user.activeAccount
-  }
+    res.status(200).send(Tools.simplifyProfile(userData));
 }
 
 async function searchUsersDataByName(req, res){console.log(req.query.nameQuery)
@@ -162,7 +199,7 @@ async function getProfileData(req, res){
   let profileData = await User.findOne({name:profileName}).catch(err=>{console.error(err);})
   if(profileData){
     if(req.userToken == true){
-      res.status(200).send({validToken:req.validToken, data:simplifyProfile(profileData)});
+      res.status(200).send({validToken:req.validToken, data:Tools.simplifyProfile(profileData)});
     }
     else{
       res.status(200).send({validToken:req.validToken, data:{name:profileData.name, admin:profileData.admin, description:profileData.description, themeLists: profileData.themeLists}});
@@ -252,10 +289,10 @@ async function checkActivationCode(req, res){
   let user = await User.findOne({"activationCode":code});
   if(user && user.activeAccount == false){
     const token = jwt.sign({_id: user._id}, secretWord, { expiresIn: 900 });
-    user.activationCode = true;
+    user.activeAccount = true;
     user.activationCode = '';
     user.save();
-    res.status(200).json({status:true, user:simplifyProfile(user), token:token});
+    res.status(200).json({status:true, user:Tools.simplifyProfile(user), token:token});
   }
   else{
     res.status(404).json({status:'Not found'});
