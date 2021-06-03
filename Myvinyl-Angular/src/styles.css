@@ -165,6 +165,16 @@ textarea{
 
  }
 
+ @media (max-width: 1085px){
+
+	.avatar-container-responsive{
+		display: block !important;
+		transform: none !important;
+		text-align: center !important;
+	}
+
+ }
+
   @media (min-width: 1000px) and (max-width: 1085px){
 
   	.galleryPreviewContainer{
@@ -432,7 +442,7 @@ input{
 }
 
 .user-data-container-small{
-	height: 85px;
+	
 }
 
 .box-sizing-border-box{
@@ -514,11 +524,13 @@ input{
 .marg-bott-0{
 	margin-bottom: 0px;
 }
-
+.avatar-container-responsive{
+	display: inline-block;
+}
 .avatar-small{
 	width: 85px;
+	height: 85px;
 }
-
 .avatar-back{
 	overflow: hidden;
 	border-radius: 50%;
@@ -664,18 +676,18 @@ input{
 }
 #notification-container{
 	position: fixed;
-	margin-top: -15%;
+	margin-top: -20px;
 	text-align: center;
 	min-width: 300px;
 	padding: 15px;
 	left: 50%;
 	background-color: var(--warn);
-	transform: translateX(-50%);
+	transform: translate(-50%, -100%);
 	transition: margin-top 1s;
 	z-index: 20;
 }
 #notification-container.show{
-	margin-top: 5%;
+	margin-top: 10%;
 	transition: margin-top 1s;
 }
 #close-alert{
@@ -736,6 +748,9 @@ input{
 }
 .light-bulb-off{
 
+}
+.text-color-09{
+	color: #0d0d0d;
 }
 .container-card{
 	box-shadow: 3px 3px 0px #262626;

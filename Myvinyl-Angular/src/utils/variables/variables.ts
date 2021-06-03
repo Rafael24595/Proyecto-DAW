@@ -22,7 +22,7 @@ export const Variables = {
         candyDeadEnd:['theme'],
         host:'localhost',
         port:'2525',
-        range:{0:'Estandard', 1:'Administrador'}
+        range:{0:'User', 1:'Admin'}
 }
 
 export let GlobalVariables: {blackScreenStatus: string, notificationStatus:string, notificationMessage:string, notificationIsShowing:boolean, notificationCloseManual:boolean, notificationAnswer:boolean, notificationAnswerFunction:Function | undefined} = {
