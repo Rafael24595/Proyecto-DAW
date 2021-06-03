@@ -300,4 +300,17 @@ async function checkActivationCode(req, res){
 
 }
 
-module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, getUserAttribute, getThemesFromList, checkActivationCode };
+async function dropNonVerifiedUsers(){
+  let actualDate = new Date().getTime();
+  let maxDate = 2592000000;
+  let users = await User.find({"activeAccount":false});
+  users.forEach(user=>{
+    let signUpDate = actualDate - user.date;
+    if(signUpDate > maxDate){
+      user.remove();
+    }
+  });
+
+}
+
+module.exports = { singUp, signIn, getUserData, searchUsersDataByName, getProfileData, searchUserDataById, searchUserDataByName, updateUserData, getUserAttribute, getThemesFromList, checkActivationCode, dropNonVerifiedUsers };

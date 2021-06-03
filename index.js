@@ -1,8 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const schedule = require('node-schedule');
 const router = require('./routes/routes');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const UserManage = require('./controller/UserManage');
+const FilesManage = require('./controller/FilesManage');
 
 const app = express();
 const port = process.env.PORT || 2525;
@@ -39,5 +42,13 @@ db.on('error', () => {
 db.on('connected', () => {
   app.use('/api', router);
   let server = app.listen(port, () => console.log(`Todo OK. Servidor escuchando en ${port}!`));
-  //process.on('uncaughtException', ()=>{server.close()});
+});
+
+const job = schedule.scheduleJob('0 0 * * 7', function(){
+  let date = new Date();
+  
+  UserManage.dropNonVerifiedUsers();
+  FilesManage.deleteTempFiles()
+
+  console.log(`Limpieza de usuarios no registrados a fecha y archivos temporales: ${date}`);
 });
