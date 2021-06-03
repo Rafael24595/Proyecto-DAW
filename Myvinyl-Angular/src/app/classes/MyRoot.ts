@@ -226,9 +226,9 @@ export class MyRoot{
 
     }
 
-    function rootsOpenMouthAnimation(bites = 0){
+    rootsOpenMouthAnimation(bites = 0){
 
-        if (rootTalkTime <= 0) {
+        if (this.rootTalkTime <= 0) {
 
             var callBack = (bites < 3) ? Math.floor(Math.random() * 10) : -1;
             var standOpen = (Math.floor(Math.random() * 10) > 5) ? [Math.floor(Math.random() * 375) + 125, 55 ]: [125, 125];
