@@ -3,8 +3,8 @@
         <ng-container *ngIf='!authorization.checkForToken()'>
             <div class="title-backg"><p>Iniciar sesión</p></div>
             <div id="toFormMenu">
-                <p><a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">Ya tengo cuenta</a></p>
-                <p><a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" class="whiteLink centreLink" alt="Registrarse">¿No estas registrado?</a></p>
+                <p style="text-align: center;"><a href="javascript:void(0);" routerLink="/Sign-In" id="signUpLink" style="color: white;" class="link-decor-none" alt="Registrarse">Ya tengo cuenta</a></p>
+                <p style="text-align: center;"><a href="javascript:void(0);" routerLink="/Sign-Up" id="signUpLink" style="color: white;" class="link-decor-none" alt="Registrarse">¿No estas registrado?</a></p>
             </div>
         </ng-container>
         <ng-container *ngIf='authorization.checkForToken()'>

@@ -31,9 +31,7 @@ export class UserDataComponent implements OnInit {
   }
 
   closeSession(){
-    if(this.router.url.indexOf(`/Profile/${this.sessionValues.activeUser.name}`) != -1 || this.router.url.includes('/Artist') || this.router.url.includes('/Theme')){
-      this.manageComponent.refreshComponent(this.router.url);
-    }
+    this.manageComponent.refreshComponent(this.router.url);
     this.authorization.destroySession();
   }
 

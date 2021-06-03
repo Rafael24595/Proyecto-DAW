@@ -26,16 +26,16 @@
                             <a href="javascript:void(0);" style="font-weight: bold; font-size: 1.35em;" class="link-decor-none" alt="acceso/registro" [routerLink]='["/Profile/" + sessionValues.activeUser.name]'>{{userName.activeUser.name}}</a>
                         </div>
                     </li>
-                    <li>
+                    <li style="margin-top: 5px;">
                         <a href="javascript:void(0);" class="link-decor-none" alt="Cerrar sesión" style="color: rgb(128, 128, 128);" (click)='closeSession()'>Cerrar sesión</a>
                     </li>
                 </ng-container>
                 <ng-container *ngIf='!sessionValues.activeUser.email'>
                     <li>
-                        <a href="javascript:void(0);" class="noDecorLink" alt="acceso/registro" [routerLink]='["/Sign-In"]'>Acceder</a>
+                        <a href="javascript:void(0);" class="link-decor-none" alt="acceso/registro" [routerLink]='["/Sign-In"]'>Acceder</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" class="noDecorLink" alt="acceso/registro" [routerLink]='["/Sign-Up"]'>Registrarse</a>
+                        <a href="javascript:void(0);" class="link-decor-none" alt="acceso/registro" [routerLink]='["/Sign-Up"]'>Registrarse</a>
                     </li>
                 </ng-container>
             </ul>

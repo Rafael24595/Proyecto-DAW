@@ -11,7 +11,8 @@ export class ManageComponent{
     constructor(private router: Router, private comunicationService: ComunicationServiceService){}
 
     refreshComponent(componentURL:string){
-        this.router.navigateByUrl('/Home', { skipLocationChange: true }).then(() => {
+        let middlePath = (componentURL.indexOf('Home') == -1) ? 'Home' : 'Search';
+        this.router.navigateByUrl(`/${middlePath}`).then(() => {
             if(componentURL.indexOf('?') == -1){
                 this.router.navigate([componentURL]);
             }
