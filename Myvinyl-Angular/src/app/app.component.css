@@ -1,0 +1,18 @@
+#roots-notification-container{
+    position: relative;
+    min-width: 300px;
+    min-height: 200px;
+    background-color: white;
+    z-index: 20;
+}
+
+#root-base, #root-eye{
+
+    position: absolute;
+	height: 95px;
+	width: 95px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+}

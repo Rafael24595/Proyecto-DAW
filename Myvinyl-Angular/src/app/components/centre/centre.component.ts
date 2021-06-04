@@ -5,6 +5,7 @@ import { ComunicationServiceService } from 'src/app/services/comunication-servic
 import { Variables } from 'src/utils/variables/variables';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { Router } from '@angular/router';
+import { MyRoot } from 'src/app/classes/MyRoot';
 
 @Component({
   selector: 'app-centre',
@@ -22,6 +23,10 @@ export class CentreComponent implements OnInit {
   constructor(private comunicationService :ComunicationServiceService, public authorization: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+
+    let myRoot = MyRoot.getMyRoot();
+    myRoot.callRoot();
+
     if(localStorage.getItem('lastCandyRow') != null){
       let candyRowAsString = localStorage.getItem('lastCandyRow') as string;
       this.candyRow = JSON.parse(candyRowAsString);

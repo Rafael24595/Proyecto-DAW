@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GlobalVariables } from 'src/utils/variables/variables';
+import { GlobalVariables, MyRootSprite } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,7 @@ import { GlobalVariables } from 'src/utils/variables/variables';
 })
 
 export class AppComponent {
+  mediaPath:string = '../assets/media';
+  MyRootSprite = MyRootSprite;
   GlobalVariables = GlobalVariables;
 }

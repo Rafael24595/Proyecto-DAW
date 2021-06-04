@@ -35,6 +35,11 @@ export let GlobalVariables: {blackScreenStatus: string, notificationStatus:strin
         notificationAnswerFunction: undefined
 }
 
+export let MyRootSprite: {eye:string, body:string} = {
+        eye: 'root_open_eye',
+        body:'root_base.png'
+}
+
 export const CandyBomb:CandyInterface = {id: 'home', name:'Home', family:'candy-home',route:'Home', query:{}, routeQuery:''};
 
 interface CategoriesInterface {
