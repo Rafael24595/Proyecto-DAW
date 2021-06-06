@@ -22,14 +22,25 @@ export class AudioBarComponent implements OnInit {
 
   ngOnInit(): void { console.log(this.ajustableWidth)
 
+    if(window.innerWidth <= 1520){console.log('inx')
+      this.gearShow = true;
+    }
+
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
       if(element){
         this.barAudioSize = element.offsetWidth;
       }
-      if(window.innerWidth > 1450){
+      if(window.innerWidth > 1520){
+        this.gearShow = false;
         this.buttonContainerState = '';
       }
+      else{
+        this.gearShow = true;
+      }
+      this.setRandomList();
+      this.setLoopAudio();
+      this.setLoopList();
     }
 
     setTimeout(()=>{
@@ -150,6 +161,7 @@ export class AudioBarComponent implements OnInit {
   normalSrc = '';
   reverseSrc = '';
   playLogo = '!';
+  gearShow = false;
 
   /*////////////
   | AUDIO VARS |
@@ -310,11 +322,11 @@ export class AudioBarComponent implements OnInit {
   setReverse(){
     if(this.audio){
       if(this.isReverse){
-        this.reverseColor = Color_Vars.button_reverse_color.reverse;
+        this.reverseColor = (this.buttonGear) ? (this.gearShow) ? Color_Vars.button_reverse_color.simple : Color_Vars.button_reverse_color.gear : Color_Vars.button_reverse_color.reverse;
         this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.reverse_play;
       }
       else{
-        this.reverseColor = Color_Vars.button_reverse_color.normal;
+        this.reverseColor = (this.buttonGear) ? (this.gearShow) ? Color_Vars.button_loop_list_color.gear : '' : Color_Vars.button_reverse_color.normal;
         this.barColor = (this.audio.paused) ? Color_Vars.bar_progress_color.pause : Color_Vars.bar_progress_color.play;
       }
     }
@@ -322,10 +334,10 @@ export class AudioBarComponent implements OnInit {
 
   setLoopList(){
     if(this.loopList){
-      this.loopListColor = Color_Vars.button_loop_list_color.loop;
+      this.loopListColor = (this.buttonGear) ? (this.gearShow) ? '' : Color_Vars.button_loop_list_color.simple : Color_Vars.button_loop_list_color.loop;
     }
     else{
-      this.loopListColor = Color_Vars.button_loop_list_color.normal;
+      this.loopListColor = (this.buttonGear) ? (this.gearShow) ? Color_Vars.button_loop_list_color.gear : '' : Color_Vars.button_loop_list_color.normal;
     }
   }
 
@@ -338,7 +350,14 @@ export class AudioBarComponent implements OnInit {
   }
 
   setLoopAudio(){
-    this.loopColor = (this.audio && this.audio.loop) ? Color_Vars.button_loop_color.loop : Color_Vars.button_loop_color.normal;
+    if(this.audio){
+      if(this.audio.loop){
+        this.loopColor = (this.buttonGear) ? (this.gearShow) ? '' : Color_Vars.button_loop_color.simple : Color_Vars.button_loop_color.loop;
+      }
+      else{
+        this.loopColor = (this.buttonGear) ? (this.gearShow) ? Color_Vars.button_loop_color.gear : '' : Color_Vars.button_loop_color.normal;
+      }
+    }
   }
 
   randomReproduction(){
@@ -358,10 +377,10 @@ export class AudioBarComponent implements OnInit {
 
   setRandomList(){
     if(this.randomList){
-      this.randomColor = Color_Vars.button_random_color.random;
+      this.randomColor = (this.buttonGear) ? (this.gearShow) ? '' : Color_Vars.button_random_color.simple : Color_Vars.button_random_color.random;
     }
     else{
-      this.randomColor = Color_Vars.button_random_color.normal;
+      this.randomColor = (this.buttonGear) ? (this.gearShow) ? Color_Vars.button_random_color.gear : '' : Color_Vars.button_random_color.normal;
     }
   }
 
@@ -510,23 +529,19 @@ export class AudioBarComponent implements OnInit {
       let volActual = this.audio.volume;
       let percentage = volActual * 100 / 25;
       
-      if(!this.audio.muted){
-        if(percentage <= 0){
-          this.volLogo = Color_Vars.volume_logo.percentage_0;
-        }
-        if(percentage > 0 && percentage <= 1){
-          this.volLogo = Color_Vars.volume_logo.percentage_25;
-        }
-        if(percentage > 1 && percentage < 3){
-          this.volLogo = Color_Vars.volume_logo.percentage_50;
-        }
-        if(percentage >= 3){
-          this.volLogo = Color_Vars.volume_logo.percentage_75;
-        }
+      if(percentage <= 0){
+        this.volLogo = (this.audio.muted) ? Color_Vars.volume_logo.percentage_0_muted : Color_Vars.volume_logo.percentage_0;
       }
-      else{
-        this.volLogo = Color_Vars.volume_logo.percentage_0;
+      if(percentage > 0 && percentage <= 1){
+        this.volLogo = (this.audio.muted) ? Color_Vars.volume_logo.percentage_25_muted : Color_Vars.volume_logo.percentage_25;
       }
+      if(percentage > 1 && percentage < 3){
+        this.volLogo = (this.audio.muted) ? Color_Vars.volume_logo.percentage_50_muted : Color_Vars.volume_logo.percentage_50;
+      }
+      if(percentage >= 3){
+        this.volLogo = (this.audio.muted) ? Color_Vars.volume_logo.percentage_75_muted : Color_Vars.volume_logo.percentage_75;
+      }
+
     }
   }
 

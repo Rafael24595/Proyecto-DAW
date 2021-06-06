@@ -58,7 +58,7 @@
                                 <p style="width: 50%; margin-top: 10px; margin-bottom: 10px; text-align: right; padding-right: 10px; box-sizing: border-box;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == -1'>
-                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)"><b>A</b></span>
+                                            <span style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
                                         </ng-container>
                                         <ng-container *ngIf='isLike != -1'>
                                             <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
@@ -71,7 +71,7 @@
                                 <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
                             </div>
                             <div *ngIf='isSessionUser' style="width: 33%;" class="display-inline">
-                                <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeListForm = true; blackScreenStatus.blackScreenStatus = 'show'" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                                <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeList()" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
                             </div>
                         </div>
                         <div *ngIf='isAdmin' style="padding: 15px; padding-bottom: 5px;">
@@ -133,7 +133,7 @@
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
                                 </p>
-                                <p style="margin-left: 10px;">{{comment.comment}}</p>
+                                <p style="margin-left: 10px; color: #dcdcdc;">{{comment.comment}}</p>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
             <br>
         </div>
         <div *ngIf='showInput && blackScreenStatus.blackScreenStatus != ""' class="form-style">
-            <h2 style="text-align: left; margin-top: 0px;">Editar {{attrTranslation[inputAttr]}}:</h2>
+            <h2 class="title-back-black" style="text-align: left; margin-top: 0px;">Editar {{attrTranslation[inputAttr]}}:</h2>
             <br>
             <label for="{{inputAttr}}">
                 <ng-container *ngIf='inputAttr != "description" && inputAttr != "audio" && inputAttr != "cover" && inputAttr != "lyrics"'>

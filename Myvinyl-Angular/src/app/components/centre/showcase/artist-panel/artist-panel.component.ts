@@ -10,6 +10,7 @@ import { User } from 'src/app/classes/User';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { GlobalVariables } from 'src/utils/variables/variables';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
   selector: 'app-artist-panel',
@@ -72,6 +73,7 @@ export class ArtistPanelComponent implements OnInit {
 
   showArtistForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
     this.clearForm();
+    NotificationManage.disableScroll();
     this.blackScreenStatus.blackScreenStatus = 'show';
     this.showInput = true;
     this.inputAttr = attribute.attrName;
@@ -118,6 +120,7 @@ export class ArtistPanelComponent implements OnInit {
   }
 
   clearForm(){
+    NotificationManage.enableScroll();
     this.blackScreenStatus.blackScreenStatus = '';
     this.showInput = false;
     this.inputAttr = '';

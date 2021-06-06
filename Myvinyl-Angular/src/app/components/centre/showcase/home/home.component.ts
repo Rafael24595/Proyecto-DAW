@@ -8,6 +8,7 @@ import { CandyInterface } from 'src/app/interfaces/CandyInterface';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
   selector: 'app-home',
@@ -72,6 +73,7 @@ export class HomeComponent implements OnInit {
   }
 
   showHomeForm(){
+    NotificationManage.disableScroll();
     this.showForm = true;
     this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
       sucess=>{console.log(sucess)
@@ -98,10 +100,17 @@ export class HomeComponent implements OnInit {
   async confirmFrom(){
     let sendForm = await this.modifyThemeData();
     if(sendForm){
-      this.setImagePreview('default')
-      this.newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
-      this.showForm = false;
+      this.resetForm();
     }
+  }
+
+  resetForm(){
+    NotificationManage.enableScroll();
+    this.showForm = false; 
+    this.setImagePreview('default')
+    this.newArtist = {id: '', name:'', surname:'', description:'', tags: '', avatarFile:[]};
+    this.showForm = false;
+    this.blackScreenStatus.blackScreenStatus = "";
   }
 
   async modifyThemeData(){

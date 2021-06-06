@@ -293,7 +293,7 @@
             </div>
         </ng-container>
         <ng-container *ngIf='inputAttr == "new" && ProfileData'>
-            <h2>Nueva lista de reproducción:</h2>
+            <h2 class="title-back-black">Nueva lista de reproducción:</h2>
             <div style="display: inline-block; text-align: center;">
                 <div style="text-align: left;">
                     <div style="text-align: center;">
@@ -313,7 +313,7 @@
         <ng-container *ngIf='inputErrMessage == ""'>
             <br><br><br>
         </ng-container>
-        <button (click)='confirmFrom(inputAttr)' style="margin-right: 10px;" >Continuar</button>
-        <button (click)='cleanForm()' style="margin-left: 10px;">Cancelar</button>
+        <button  class="black-button" (click)='confirmFrom(inputAttr)' style="margin-right: 10px;" >Continuar</button>
+        <button  class="black-button" (click)='cleanForm()' style="margin-left: 10px;">Cancelar</button>
     </div>
 </div>

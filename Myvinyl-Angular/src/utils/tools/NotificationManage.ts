@@ -49,4 +49,17 @@ export class NotificationManage{
         GlobalVariables.notificationMessage = '';
     }
 
+    static disableScroll(){
+        let scrollTop = window.pageYOffset;
+         let scrollLeft = window.pageXOffset;
+  
+        window.onscroll = function() {
+            window.scrollTo(scrollLeft, scrollTop);
+        };
+    }
+
+    static enableScroll(){
+        window.onscroll = function() {};
+    }
+
 }

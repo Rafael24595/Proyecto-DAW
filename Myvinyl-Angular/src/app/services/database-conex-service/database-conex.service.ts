@@ -77,11 +77,11 @@ export class DatabaseConexService {
  }
 
  setArtistAttribute(artistId:string, attribute:string, value:string | string[], userName:string):Observable<{status:boolean,message:Artist}>{
-  return this.http.patch<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/artist/${artistId}/${attribute}/${value}`, {userName});
+  return this.http.patch<{status:boolean,message:Artist}>(`http://${Variables.host}:${Variables.port}/api/artist/${artistId}/${attribute}?value=${JSON.stringify(value)}`, {userName});
  }
 
  setThemeAttribute(themeId: string, attribute: string, value: string | string[] | number | ThemeComment[] |Lyrics, userName: string):Observable<{status:boolean,message:Themes}>{
-  return this.http.patch<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/theme/${themeId}/${attribute}/${value}`, {userName});
+  return this.http.patch<{status:boolean,message:Themes}>(`http://${Variables.host}:${Variables.port}/api/theme/${themeId}/${attribute}?value=${JSON.stringify(value)}`, {userName});
  }
 
  reassignArtistTheme(mainArtistId: string, targetArtistId:string, themeId:string, userName:string):Observable<{status:boolean,message:Artist}>{

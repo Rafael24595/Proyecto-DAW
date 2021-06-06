@@ -7,7 +7,7 @@
                     <img class="cursor-pointer" style="width: 70px; border: 2px solid; box-sizing: border-box;" (click)=showHomeForm() src="{{mediaPath}}/images/covers/new_cover.png">
                 </div>
                 <div style="text-align: left; width: 65%; vertical-align: middle;" class="display-inline">
-                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;" (click)=showHomeForm() class="cursor-pointer"><span class="my-vinyl-icons-font font-size-150" style="vertical-align: middle;"><</span> <span>Nuevo</span></p>
+                    <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;" (click)=showHomeForm() class="cursor-pointer"><span class="my-vinyl-icons-font font-size-150" style="vertical-align: middle;"><</span>&nbsp;&nbsp;<span>Nuevo</span></p>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
     </div>
     <div *ngIf='showForm && blackScreenStatus.blackScreenStatus != ""' class="form-style">
         <div class="txt-horizontal-center">
-            <h2 class="title-back">Nuevo artista:</h2>
+            <h2 class="title-back-black">Nuevo artista:</h2>
             <div class="txt-horizontal-left" style="padding-left: 15px; padding-right: 15px;">
                 <div>
                     <label for="avatar">
@@ -48,7 +48,7 @@
                         </div>
                     </label>
                 </div>
-                <br><br>
+                <br><br><br>
                 <div style="white-space: nowrap;">
                     <div class="display-inline" style="width: 50%;">
                         <label for="id"><p>Id: </p>
@@ -114,8 +114,8 @@
                 </div>
                 <br><br>
                 <div class="txt-horizontal-center">
-                    <button (click)='confirmFrom()' style="margin-right: 10px;" >Modificar</button>
-                    <button (click)='showForm = false; blackScreenStatus.blackScreenStatus = ""' style="margin-left: 10px;">Cancelar</button>
+                    <button class="black-button" (click)='confirmFrom()' style="margin-right: 10px;" >Modificar</button>
+                    <button class="black-button" (click)='resetForm()' style="margin-left: 10px;">Cancelar</button>
                 </div>
             </div>
         </div>

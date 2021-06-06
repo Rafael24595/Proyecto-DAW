@@ -11,8 +11,11 @@
         <img id="root-base" src="{{mediaPath}}/images/root/{{MyRootSprite.eye}}" alt="">
         <img id="root-eye" src="{{mediaPath}}/images/root/{{MyRootSprite.body}}" alt="">
     </div>
+    <div>
+        <div [innerHTML]='rootData'></div>
+    </div>
 </div>
-<div id="black-screen" class="{{GlobalVariables.blackScreenStatus}}" (click)='GlobalVariables.blackScreenStatus = ""'></div>
+<div id="black-screen" class="{{GlobalVariables.blackScreenStatus}}" (click)='resetForm()'></div>
 <app-header></app-header>
 <app-centre></app-centre>
 <app-footer></app-footer>

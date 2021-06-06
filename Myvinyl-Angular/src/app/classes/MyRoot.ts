@@ -176,7 +176,7 @@ export class MyRoot{
 
                                 setTimeout(()=>{this.rootBaseElement.src =`${this.mediaPath}root_open_mouth_II.png`; this.rootEyeElement.src =`${this.mediaPath}root_closed_eye_mouth_II.png`; this.specialEye = "_mouth_II";
 
-                                    setTimeout(()=>{this.rootBaseElement.src =`${this.mediaPath}root_open_mouth_I.png`; this.rootEyeElement.src =`${this.mediaPath}root_open_eye.png`;this.specialEye = "_mouth_I";
+                                    setTimeout(()=>{this.rootBaseElement.src =`${this.mediaPath}root_open_mouth_I.png`; this.rootEyeElement.src =`${this.mediaPath}root_closed_eye_mouth_I.png`;this.specialEye = "_mouth_I";
 
                                         setTimeout(()=>{this.rootBaseElement.src =`${this.mediaPath}root_talk.png`; this.rootEyeElement.src =`${this.mediaPath}root_open_eye.png`; this.specialEye = "";
 

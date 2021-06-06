@@ -87,7 +87,7 @@
                 </div>
                 <div *ngIf='showInput && blackScreenStatus.blackScreenStatus != ""' class="form-style">
                     <ng-container *ngIf='inputAttr != "newTheme" && inputAttr != "reassign" && inputAttr != "reassignMulti"'>
-                        <h2 style="margin-top: 0px;" >Editar {{attrTranslation[inputAttr]}}:</h2>
+                        <h2 class="title-back-black" style="margin-top: 0px;" >Editar {{attrTranslation[inputAttr]}}:</h2>
                         <br>
                         <div style="text-align: center;">
                             <div style="text-align: left; display: inline-block;">
@@ -162,7 +162,7 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "newTheme"'>
-                        <h2>Nuevo tema: </h2>
+                        <h2 class="title-back-black">Nuevo tema: </h2>
                         <div style="padding: 10px;">
                             <label for="name"><p style="margin: 0px; margin-bottom: 10px;">Nombre: </p>
                                 <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newTheme.name">

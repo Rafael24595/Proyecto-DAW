@@ -274,7 +274,7 @@ const Theme = mongoose.model('Theme');
   async function setArtistAttribute(req, res){
     let artistId = req.params.artist;
     let attribute = req.params.attribute;
-    let value = req.params.value;
+    let value = JSON.parse(req.query.value);
     let userName = req.body.userName;
     
     if(userName == req.userNameToken && req.isAdmin){
@@ -380,7 +380,7 @@ const Theme = mongoose.model('Theme');
   async function setThemesAttribute(req, res){
     let themeId = req.params.theme;
     let attribute = req.params.attribute;
-    let value = req.params.value;
+    let value = JSON.parse(req.query.value);
     let userName = req.body.userName;
     
     if(userName == req.userNameToken && req.isAdmin){

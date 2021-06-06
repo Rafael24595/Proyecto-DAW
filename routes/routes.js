@@ -25,14 +25,14 @@ router.post("/theme/:theme/comment", SecurityManage.verifyTokenStrict , ComentsM
 router.delete("/theme/:theme/comment/:id", SecurityManage.verifyTokenStrict , ComentsManage.deleteComment);
 router.patch("/theme/:theme/thumb/:value", SecurityManage.verifyTokenStrict , ComentsManage.thumbValueTheme);
 router.get("/theme/attributte/flags/all", FilesManage.getFlagsList);
-router.patch("/theme/:theme/:attribute/:value", SecurityManage.verifyTokenStrict , ArtistThemeManage.setThemesAttribute);
+router.patch("/theme/:theme/:attribute", SecurityManage.verifyTokenStrict , ArtistThemeManage.setThemesAttribute);
 
 router.get("/artist/:artist", ArtistThemeManage.getArtistData);
 router.post("/artist", SecurityManage.verifyTokenStrict, ArtistThemeManage.setArtist);
 router.delete("/artist/:id", SecurityManage.verifyTokenStrict, ArtistThemeManage.removeArtist);
 router.get("/artist/:page/:limit", ArtistThemeManage.getArtistDataQuery);
 router.get("/artist/attributte/:attribute/all", ArtistThemeManage.getArtistAttributte);
-router.patch("/artist/:artist/:attribute/:value", SecurityManage.verifyTokenStrict , ArtistThemeManage.setArtistAttribute);
+router.patch("/artist/:artist/:attribute", SecurityManage.verifyTokenStrict , ArtistThemeManage.setArtistAttribute);
 
 router.get("/user/:user", SecurityManage.verifyToken , UserManage.getProfileData);
 router.get("/user/verify/:code", UserManage.checkActivationCode);

@@ -13,6 +13,7 @@ import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { Lyrics } from 'src/app/interfaces/LyricsInterface';
 import { GlobalVariables } from 'src/utils/variables/variables';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
   selector: 'app-theme-information',
@@ -131,11 +132,11 @@ export class ThemeInformationComponent implements OnInit {
     this.user = sesionValues.activeUser.name;
     this.userThemeLists = sesionValues.activeUser.themeLists;
     this.isSessionUser = (sesionValues.activeUser.email != undefined);
-    this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
+    this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);console.log(this.isLike);
     this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
 
     this.checkForLastComment();
-    this.calculateLikesPercentage();
+    this.calculateLikesPercentage();console.log(this.isLike , themeData.likes , this.isLike , themeData.dislikes)
     if(this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
       let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
       //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
@@ -371,6 +372,7 @@ export class ThemeInformationComponent implements OnInit {
 
   showThemeForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
     this.clearForm();
+    NotificationManage.disableScroll();
     this.showInput = true;
     this.inputAttr = attribute.attrName;
     this.inputValue = attribute.value;
@@ -386,6 +388,7 @@ export class ThemeInformationComponent implements OnInit {
   }
 
   clearForm(){
+    NotificationManage.enableScroll();
     let imagePreview =  document.getElementById('imagePreview') as HTMLImageElement;
     this.showInput = false;
     this.inputAttr = '';
@@ -399,6 +402,12 @@ export class ThemeInformationComponent implements OnInit {
     this.showThemeListForm = false;
     this.selectedThemeList = this.defaultThemeList;
     if(imagePreview) imagePreview.src = '';
+  }
+
+  showThemeList(){
+    NotificationManage.disableScroll();
+    this.showThemeListForm = true;
+    this.blackScreenStatus.blackScreenStatus = 'show';
   }
 
   deleteComment(commentId:string){

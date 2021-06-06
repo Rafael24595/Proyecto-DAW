@@ -15,6 +15,7 @@ import { FormValidations } from 'src/utils/tools/FormValidations';
 import { GlobalVariables, Variables } from 'src/utils/variables/variables';
 import { DragEvent } from 'src/app/classes/DragEvent';
 import { Blur } from 'ngx-quill';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
   selector: 'app-user-panel',
@@ -135,6 +136,7 @@ export class UserPanelComponent implements OnInit {
   
   showProfileForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string | string[] | ThemeList | undefined}){
     this.cleanForm();
+    NotificationManage.disableScroll();
     if(this.autorizationService.checkForToken() && this.ProfileData){
       this.showInput = true;
       this.inputAttr = attribute.attrName;
@@ -201,6 +203,7 @@ export class UserPanelComponent implements OnInit {
   }
 
   cleanForm(){
+    NotificationManage.enableScroll();
     this.showInput = false;
     this.inputAttr = '';
     this.inputValue = '';
@@ -665,7 +668,8 @@ export class UserPanelComponent implements OnInit {
 
   changeList(){
     if(this.ProfileData && this.selectedThemeList != this.defaultSelect){
-      if(this.selectedThemeList == '-- Nueva lista --'){
+      if(this.selectedThemeList == '-- Nueva lista --'){console.log(this.selectedThemeList)
+        setTimeout(()=>{this.selectedThemeList = this.defaultSelect;}, 100);
         this.showProfileForm({attrName:"new", attrId:"", value:'', secondValue:''});
         this.themeList = undefined;
       }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 import { GlobalVariables, MyRootSprite } from 'src/utils/variables/variables';
 
 @Component({
@@ -11,4 +12,10 @@ export class AppComponent {
   mediaPath:string = '../assets/media';
   MyRootSprite = MyRootSprite;
   GlobalVariables = GlobalVariables;
+  rootData = [ ]
+
+  resetForm(){
+    NotificationManage.enableScroll();
+    GlobalVariables.blackScreenStatus = "";
+  }
 }
