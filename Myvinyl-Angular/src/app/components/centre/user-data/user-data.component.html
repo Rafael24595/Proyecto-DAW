@@ -11,7 +11,7 @@
                     <span class="attr-name">Nombre: </span> <span style="font-weight: bold; color: #e1e1e1;">{{sessionValues.activeUser.name}}</span>
                 </p>
                 <p style="margin-top: 5px; margin-bottom: 5px;"> 
-                    <span class="attr-name">Rango: </span> <span style="font-weight: bold; color: #e1e1e1;">{{range[sessionValues.activeUser.admin]}}</span><span *ngIf='sessionValues.activeUser.admin == "1"' class="my-vinyl-icons-font admin-color"> =</span>
+                    <span class="attr-name">Rango: </span> <span style="font-weight: bold; color: #e1e1e1;">{{range[sessionValues.activeUser.admin]}}</span><span tooltip="Admin" [options]="TooltipValues" *ngIf='sessionValues.activeUser.admin == "1"' class="my-vinyl-icons-font admin-color"> =</span>
                 </p>
                 
             </div>

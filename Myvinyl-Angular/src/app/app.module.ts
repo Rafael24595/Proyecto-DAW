@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { ThemeInformationComponent } from './components/centre/showcase/theme-information/theme-information.component';
 import { ThemeSearchComponent } from './components/centre/showcase/theme-search/theme-search.component';
 import { ArtistPanelComponent } from './components/centre/showcase/artist-panel/artist-panel.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 import { TokenInterceptorService} from './services/token-interceptor/token-interceptor.service';
 import { SignInComponent } from './components/centre/authorization/signIn/sign-in/sign-in.component';
@@ -50,6 +51,7 @@ import { VerifyUserComponent } from './components/centre/user-data/verify-user/v
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    TooltipModule,
     QuillModule.forRoot({
       modules: {
         syntax: false,

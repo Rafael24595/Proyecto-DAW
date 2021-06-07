@@ -12,7 +12,7 @@ import { ThemeComment } from 'src/app/interfaces/ThemesInterface';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ThemeList } from 'src/app/classes/ThemeList';
 import { Lyrics } from 'src/app/interfaces/LyricsInterface';
-import { GlobalVariables } from 'src/utils/variables/variables';
+import { GlobalVariables, TooltipValues } from 'src/utils/variables/variables';
 import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
@@ -55,6 +55,7 @@ export class ThemeInformationComponent implements OnInit {
   formErr = {text:'', class:''};
   formErrFile = {text:'', class:''};
   attrTranslation = {id: "id", name: "nombre", flag: "bandera", tags: "etiqueta", lyrics: "letra", native:"original", esp: "traducción", cover:'portada', comments: "comentarios", likes: "likes", dislikes: "dislikes", views: "visitas", audio: "audio"};
+  TooltipValues = TooltipValues;
 
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private autorizationService: AuthorizationService) { }
 

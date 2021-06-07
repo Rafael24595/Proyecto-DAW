@@ -7,6 +7,7 @@ import { Themes } from 'src/app/classes/Themes';
 import { ComunicationServiceService } from 'src/app/services/comunication-service/comunication-service.service';
 import { DatabaseConexService } from '../../../../services/database-conex-service/database-conex.service';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
+import { TooltipValues } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-audio-bar',
@@ -140,6 +141,8 @@ export class AudioBarComponent implements OnInit {
     }
   }
   
+  TooltipValues = TooltipValues;
+
   /*/////////////
   | THEMES VARS |
   /////////////*/
@@ -178,6 +181,7 @@ export class AudioBarComponent implements OnInit {
   audioStatus = true;
   mouseDwnAudio = false;
   isReverse = false;
+  playText = 'Reproducir';
 
   /*/////////////
   | VOlUME VARS |
@@ -309,12 +313,14 @@ export class AudioBarComponent implements OnInit {
         this.playButtonColor = Color_Vars.button_play_color.pause;
         this.playLogo = (this.buttonGear) ? '"' : 'L' ;
         sesionValues.reproductionState = false;
+        this.playText = 'Pausar';
       }
       else{
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
         this.playButtonColor = Color_Vars.button_play_color.play;
         this.playLogo = (this.buttonGear) ? '!' : 'K' ;
         sesionValues.reproductionState = true;
+        this.playText = 'Reproducir';
       }
     }
   }

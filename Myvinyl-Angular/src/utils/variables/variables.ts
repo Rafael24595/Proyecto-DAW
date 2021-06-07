@@ -35,6 +35,13 @@ export let GlobalVariables: {blackScreenStatus: string, notificationStatus:strin
         notificationAnswerFunction: undefined
 }
 
+export const TooltipValues = {
+        'placement': 'right',
+        'show-delay': 10,
+        'theme': "light",
+        'hide-delay': 10
+}
+
 export let MyRootSprite: {eye:string, body:string} = {
         eye: 'root_open_eye',
         body:'root_base.png'

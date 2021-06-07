@@ -12,7 +12,7 @@
                                     <ng-container *ngIf='!modifyValuesData.modifyUserName.status'>
                                         <span>{{ProfileData.name}} 
                                             <span id="pencil-writting-animation" class="display-inline">
-                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
+                                                <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyUserName.status = !modifyValuesData.modifyUserName.status; setFocus(modifyValuesData.modifyUserName.id)'>+</span>
                                             </span>
                                         </span>
                                     </ng-container>
@@ -28,7 +28,7 @@
                                     <ng-container *ngIf='!modifyValuesData.modifyEmail.status'>
                                         <span>{{ProfileData.email}}
                                             <span id="pencil-writting-animation" class="display-inline">
-                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
+                                                <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyEmail.status = !modifyValuesData.modifyEmail.status; setFocus(modifyValuesData.modifyEmail.id);'>+</span>
                                             </span>
                                         </span>
                                     </ng-container>
@@ -44,7 +44,7 @@
                                     <ng-container *ngIf='!modifyValuesData.modifyPassword.status'>
                                         <span style="letter-spacing: 2px;"><span class="my-vinyl-icons-font">HHHHHHHH</span>
                                             <span id="pencil-writting-animation" class="display-inline">
-                                                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
+                                                <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyPassword.status = !modifyValuesData.modifyPassword.status; setFocus(modifyValuesData.modifyPassword.id); modifyPasswordData.passwordMessage="Introduce tu contraseña actual:"'>+</span>
                                             </span>
                                         </span>
                                     </ng-container>
@@ -63,7 +63,7 @@
                                 <div style="height: 100%; display: inline-block;">
                                     <span class="attr-name">Descripción: </span>
                                     <span id="pencil-writting-animation" class="display-inline">
-                                        <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
+                                        <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-125" (click)='modifyValuesData.modifyDescription.status = !modifyValuesData.modifyDescription.status; setFocus(modifyValuesData.modifyDescription.id);'>+</span>
                                     </span>
                                     <br>
                                     <ng-container *ngIf='!modifyValuesData.modifyDescription.status'>
@@ -74,50 +74,52 @@
                                     </ng-container>
                                     <ng-container *ngIf='modifyValuesData.modifyDescription.status'>
                                         <br>
-                                        <quill-editor (onEditorCreated)="setFocus($event)" [styles]="{height: '120px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="modifyValuesData.modifyDescription.value">
-                                            <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
-                                                <span class="ql-formats">
-                                                    <button class="ql-bold"></button>
-                                                    <button class="ql-italic"></button>
-                                                    <button class="ql-underline"></button>
-                                                    <button class="ql-strike"></button>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button type="button" class="ql-header" value="1"></button>
-                                                    <button type="button" class="ql-header" value="2"></button>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button class="ql-list" value="ordered"></button>
-                                                    <button class="ql-list" value="bullet"></button>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button type="button" class="ql-indent" value="-1"></button>
-                                                    <button type="button" class="ql-indent" value="+1"></button>
-                                                </span>                                      
-                                                <span class="ql-formats">
-                                                    <select class="ql-color" style="z-index: 9;"></select>
-                                                    <select class="ql-background" style="z-index: 9;"></select>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <select class="ql-align">
-                                                      <option selected></option>
-                                                      <option value="center"></option>
-                                                      <option value="right"></option>
-                                                      <option value="justify"></option>
-                                                    </select>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button class="ql-link"></button>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button type="button" class="ql-clean">
-                                                    </button>
-                                                </span>
-                                                <span class="ql-formats">
-                                                    <button type="button" class="my-vinyl-icons-font fake-quill-button-snow" (click)='modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})'>I</button>
-                                                </span>
-                                            </div>
-                                        </quill-editor>
+                                        <div style="background-color: white;">
+                                            <quill-editor (onEditorCreated)="setFocus($event)" [styles]="{height: '120px'}" [placeholder]="'Escribe algo...'" [(ngModel)]="modifyValuesData.modifyDescription.value">
+                                                <div quill-editor-toolbar style="white-space: pre-line; padding-left: 15px; text-align: center;">
+                                                    <span class="ql-formats">
+                                                        <button class="ql-bold"></button>
+                                                        <button class="ql-italic"></button>
+                                                        <button class="ql-underline"></button>
+                                                        <button class="ql-strike"></button>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button type="button" class="ql-header" value="1"></button>
+                                                        <button type="button" class="ql-header" value="2"></button>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button class="ql-list" value="ordered"></button>
+                                                        <button class="ql-list" value="bullet"></button>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button type="button" class="ql-indent" value="-1"></button>
+                                                        <button type="button" class="ql-indent" value="+1"></button>
+                                                    </span>                                      
+                                                    <span class="ql-formats">
+                                                        <select class="ql-color" style="z-index: 9;"></select>
+                                                        <select class="ql-background" style="z-index: 9;"></select>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <select class="ql-align">
+                                                          <option selected></option>
+                                                          <option value="center"></option>
+                                                          <option value="right"></option>
+                                                          <option value="justify"></option>
+                                                        </select>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button class="ql-link"></button>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button type="button" class="ql-clean">
+                                                        </button>
+                                                    </span>
+                                                    <span class="ql-formats">
+                                                        <button type="button" class="my-vinyl-icons-font fake-quill-button-snow" (click)='modifyData({event:$event,attribute:modifyValuesData.modifyDescription.id})'>I</button>
+                                                    </span>
+                                                </div>
+                                            </quill-editor>
+                                        </div>
                                     </ng-container>
                                 </div>
                                 <br>
@@ -162,7 +164,7 @@
                                 </ng-container>
                                 <option *ngIf='isSessionUser' selected="selected">-- Nueva lista --</option>
                             </select>
-                            <span *ngIf='!isSessionUser' style="position: absolute; left: 100%; transform: translate(-110%, -12.5%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showProfileForm({attrName:"copy", attrId:"", value:selectedThemeList, secondValue:themeList})'>></span>
+                            <span tooltip="Copiar lista" [options]="TooltipValues" *ngIf='!isSessionUser' style="position: absolute; left: 100%; transform: translate(-110%, -12.5%);" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showProfileForm({attrName:"copy", attrId:"", value:selectedThemeList, secondValue:themeList})'>></span>
                         </div>
                         <br>
                         <div style="height: 500px; background-color: rgba(50, 50, 55, 0.3); padding: 10px;" class="box-sizing-border-box">
@@ -172,10 +174,10 @@
                                         <span style="font-weight: bold; color: #e1e1e1;">Privada:</span><input type="checkbox" name="" id="" [(ngModel)]="privateValue" (click)=privatizeThemeList()>
                                         <span>&nbsp;&nbsp;</span>
                                         <span id="pencil-writting-animation" class="display-inline">
-                                            <span *ngIf='isSessionUser && themeList.userManage' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                                            <span tooltip="Editar" [options]="TooltipValues" *ngIf='isSessionUser && themeList.userManage' (click)='modifyValuesData.themeListName.status = !modifyValuesData.themeListName.status; setFocus(modifyValuesData.themeListName.id)' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
                                         </span>
                                         <span>&nbsp;&nbsp;</span>
-                                        <span *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                        <span tooltip="Eliminar" [options]="TooltipValues" *ngIf='isSessionUser && themeList.userManage' (click)='removeThemeList()' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                                             <span class="trash-cap cursor-pointer display-inline">0</span>
                                             <span class="trash-body cursor-pointer display-inline">/</span>
                                         </span>
@@ -205,11 +207,11 @@
                                                     <ng-container *ngIf='themeList.userManage'>
                                                         <div class="display-inline theme-container-title" style="width: 60%;">
                                                             <p class="display-inline" style="vertical-align: bottom;">
-                                                                <span [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'> <span class="attr-name">{{singleTheme.position + 1}}.-</span> </span>{{singleTheme.name}}</span> - <span [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
+                                                                <span tooltip="{{singleTheme.name}}" placement="bottom" [options]="TooltipValues" [routerLink]='["/Theme"]' [queryParams]='{id:singleTheme.id}' class="cursor-pointer"><span *ngIf='singleTheme.position || singleTheme.position == 0'> <span class="attr-name">{{singleTheme.position + 1}}.-</span> </span>{{singleTheme.name}}</span> - <span tooltip="{{singleTheme.artist.name}} {{singleTheme.artist.surname}}" placement="bottom" [options]="TooltipValues" [routerLink]='["/Artist"]' [queryParams]='{id:singleTheme.artist.id}' class="cursor-pointer">{{singleTheme.artist.name}} {{singleTheme.artist.surname}}</span>
                                                             </p>
                                                         </div>
                                                         <div class="display-inline" style="width: 10%; float: right; margin-right: 3px;">
-                                                            <p *ngIf='themeList.userManage' style="margin-top: 0px; margin-bottom: 0px; transform: translateY(100%);" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="trash-can display-inline my-vinyl-icons-font font-size-150 text-right">
+                                                            <p tooltip="Eliminar" [options]="TooltipValues" *ngIf='themeList.userManage' style="margin-top: 0px; margin-bottom: 0px; transform: translateY(100%);" (click)='removeThemeFromList(singleTheme.id)' id="trash-can-animation" class="trash-can display-inline my-vinyl-icons-font font-size-150 text-right">
                                                                 <span class="trash-can trash-cap cursor-pointer display-inline">0</span>
                                                                 <span class="trash-can trash-body cursor-pointer display-inline">/</span>
                                                             </p>

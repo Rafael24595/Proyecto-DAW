@@ -12,7 +12,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { AuthorizationService } from 'src/app/services/autorization-service/authorization.service';
 import { DataManage } from 'src/utils/tools/DataManage';
 import { FormValidations } from 'src/utils/tools/FormValidations';
-import { GlobalVariables, Variables } from 'src/utils/variables/variables';
+import { GlobalVariables, TooltipValues, Variables } from 'src/utils/variables/variables';
 import { DragEvent } from 'src/app/classes/DragEvent';
 import { Blur } from 'ngx-quill';
 import { NotificationManage } from 'src/utils/tools/NotificationManage';
@@ -58,6 +58,7 @@ export class UserPanelComponent implements OnInit {
   inputValue: string | string[] | ThemeList | undefined = '';
   inputCheckValue:boolean = false;
   inputErrMessage: string = '';
+  TooltipValues = TooltipValues;
 
   constructor(private route:ActivatedRoute, private manageUser: ManageUser, private DatabaseConexService: DatabaseConexService, private autorizationService: AuthorizationService, private router: Router, private comunicationService :ComunicationServiceService, private manageComponent:ManageComponent) { }
 
@@ -318,10 +319,33 @@ export class UserPanelComponent implements OnInit {
 
       if(element){
         element.classList.add('selected');
+        
+        
+        //element.parentElement?.scrollTo(0, y);
+        if(element.parentElement)
+        this.smoothScroll(element.parentElement, element);
         return true
       }
     } 
     return false;
+  }
+
+  smoothScroll(elementParent:HTMLElement, elementCurrent:HTMLElement, increment?:number){
+    let limit = elementParent.scrollTop;
+    let position = elementCurrent.offsetTop - elementCurrent.getBoundingClientRect().height *0.25;console.log(position);
+    position = (position < 0) ? 0 : position;
+    let sum = (limit < position) ? 1 : -1;
+    if(position >= 0){
+      setTimeout(()=>{
+        increment = (increment == undefined) ? 1.05 : increment;
+        elementParent.scrollTo(0, limit + (sum * increment));
+        increment = (4.05 < increment + 0.05) ? increment : increment + 0.05;
+        let actualPosition = elementParent.scrollTop;console.log(limit, actualPosition)
+        if((sum == 1 && actualPosition < position || sum == -1 && actualPosition > position) && limit != actualPosition){
+          this.smoothScroll(elementParent, elementCurrent, increment)
+        }
+      }, 1);
+    }
   }
 
   removeSelectedContainer(){

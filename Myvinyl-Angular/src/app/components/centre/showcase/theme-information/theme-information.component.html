@@ -17,21 +17,21 @@
                                 </div>
                                 <div *ngIf='isAdmin' class="display-inline" style="text-align: center; vertical-align: top; padding: 5px; position: absolute;transform: translateX(-100%);z-index: 3;background-color: white;">
                                     <span id="pencil-writting-animation" class="display-inline" style="margin: 5px;">
-                                        <span (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
+                                        <span tooltip="Editar carátula" [options]="TooltipValues" (click)='showThemeForm({attrName:"cover", attrId:"cover", value:theme.id})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150">+</span>
                                     </span>
                                     <br>
                                     <span id="vinyl-spin-animation-1" class="display-inline" style="margin: 5px;">
-                                        <span (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
+                                        <span tooltip="Editar tema" [options]="TooltipValues" (click)='showThemeForm({attrName:"audio", attrId:"audio", value:theme.id})' class="my-vinyl-icons-font vinyl-spin-1 cursor-pointer display-inline font-size-150">=</span>
                                     </span>
                                     <br>
-                                    <span (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})' style="margin: 5px;" class="my-vinyl-icons-font font-size-150 display-inline cursor-pointer">G</span>
+                                    <span tooltip="Editar bandera" [options]="TooltipValues" (click)='showThemeForm({attrName:"flag", attrId:"", value:theme.flag})' style="margin: 5px;" class="my-vinyl-icons-font font-size-150 display-inline cursor-pointer">G</span>
                                 </div>
                             </div>
                             <p style="margin-bottom: 0px;">
                                 <span (click)="routeArtist()" style="font-weight: bold; color: #e6e6e6;" class="cursor-pointer">{{theme.artist.name}} {{theme.artist.surname}} -&nbsp;</span>
                                 <span style="font-weight: bold; color: #e6e6e6;">{{theme.name}} 
                                     <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: super;">
-                                        &nbsp;<span style="position: absolute; color: black; font-weight: normal; transform: translateY(-20%);" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
+                                        &nbsp;<span tooltip="Editar" [options]="TooltipValues" style="position: absolute; color: black; font-weight: normal; transform: translateY(-20%);" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showThemeForm({attrName:"name", attrId:"", value:theme.name})' >+</span>
                                     </span>
                                 </span>
                             </p>
@@ -46,10 +46,10 @@
                                 <p style="width: 50%; margin-top: 10px; margin-bottom: 10px; text-align: left; padding-left: 10px; box-sizing: border-box;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == 1'>
-                                            <span style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
+                                            <span tooltip="Me gusta" [options]="TooltipValues" style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
                                         </ng-container>
                                         <ng-container *ngIf='isLike != 1'>
-                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
+                                            <span tooltip="Me gusta" [options]="TooltipValues" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(1)">@</span>
                                         </ng-container>
                                         <span>&nbsp;</span>
                                         <span style="font-weight: bold; color: #e6e6e6;">{{theme.likes}}</span>
@@ -58,10 +58,10 @@
                                 <p style="width: 50%; margin-top: 10px; margin-bottom: 10px; text-align: right; padding-right: 10px; box-sizing: border-box;" class="display-inline">
                                     <span>
                                         <ng-container *ngIf='isLike == -1'>
-                                            <span style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
+                                            <span tooltip="No me gusta" [options]="TooltipValues" style="font-weight: bold;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
                                         </ng-container>
                                         <ng-container *ngIf='isLike != -1'>
-                                            <span class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
+                                            <span tooltip="No me gusta" [options]="TooltipValues" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)="thumbValue(-1)">A</span>
                                         </ng-container>
                                         <span>&nbsp;</span>
                                         <span style="font-weight: bold; color: #e6e6e6;">{{theme.dislikes}}</span>
@@ -71,21 +71,21 @@
                                 <div id="dislikes-bar" style="height: 3px; width: 100%; background-color: {{dislikesBarColor}};"></div>
                             </div>
                             <div *ngIf='isSessionUser' style="width: 33%;" class="display-inline">
-                                <p style="margin-top: 10px; margin-bottom: 10px;"><span (click)="showThemeList()" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
+                                <p style="margin-top: 10px; margin-bottom: 10px;"><span tooltip="Agregar a lista" [options]="TooltipValues" (click)="showThemeList()" class="my-vinyl-icons-font font-size-150 cursor-pointer">;</span></p>
                             </div>
                         </div>
                         <div *ngIf='isAdmin' style="padding: 15px; padding-bottom: 5px;">
                             <h3 style="margin-top: 0px; margin-bottom: 10px;">Etiquetas:</h3>
                             <p *ngFor='let themeTag of theme.tags; let i = index' class="display-inline">
                                 <span style="color: #e6e6e6;" >{{themeTag}} </span><span> - </span>
-                                <span (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                                <span tooltip="Borrar" [options]="TooltipValues" (click)='modifyThemeData({attrName:"tags", attrId:"", value:themeTag})' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                                     <span class="trash-cap cursor-pointer display-inline">0</span>
                                     <span class="trash-body cursor-pointer display-inline">/</span>
                                 </span>
                                 <span *ngIf='i < theme.tags.length - 1'>,&nbsp;</span>
                             </p>
                             <div>
-                                <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
+                                <p (click)='showThemeForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;"><span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</span></p>
                             </div>
                         </div>
                     </div>
@@ -113,22 +113,22 @@
                             <div *ngFor='let comment of theme.comments'>
                                 <p *ngIf='comment.activeUser' class="comment-name-back">
                                     <b routerLink='/Profile/{{comment.userName}}' class="cursor-pointer">{{comment.userName}}</b><span *ngIf='comment.date != "0"'> - {{comment.date | DateFormat}}</span>:
-                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
+                                    <span tooltip="Eliminar" [options]="TooltipValues" *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
-                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
+                                    <span tooltip="Eliminar" [options]="TooltipValues" *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
                                 </p>
                                 <p *ngIf='!comment.activeUser' class="comment-name-back">
                                     <b><s>{{comment.userName}}</s></b><span *ngIf='comment.date != "0"'> - {{comment.date | DateFormat}}</span>:
-                                    <span *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
+                                    <span tooltip="Eliminar" [options]="TooltipValues" *ngIf='isAdmin' style="float: right; transform: translateY(-10%);" (click)='deleteComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
-                                    <span *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
+                                    <span tooltip="Eliminar" [options]="TooltipValues" *ngIf='!isAdmin && comment.userName == user' style="float: right; transform: translateY(-10%);" (click)='removeComment(comment.commentId)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-125">
                                         <span class="trash-cap cursor-pointer display-inline">0</span>
                                         <span class="trash-body cursor-pointer display-inline">/</span>
                                     </span>
@@ -144,10 +144,10 @@
             <div>
                 <div>
                     <h3 class="title-back"> 
-                        <img *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="float: left; box-shadow: 2px 2px black;" (click)='switchLyrics()'>
+                        <img tooltip="Idioma" [options]="TooltipValues" *ngIf='lyrics' class="flag-small cursor-pointer" src="{{mediaPath}}/images/flags/{{flag}}.png" style="float: left; box-shadow: 2px 2px black;" (click)='switchLyrics()'>
                          Letra: 
                          <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="text-shadow: none; font-weight: normal; transform: translateY(-5%); float: right;">
-                            <span (click)='showThemeForm({attrName:"lyrics", attrId:"", value:theme.lyrics.native, secondValue:theme.lyrics.esp})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-125">+</span>
+                            <span tooltip="Editar" [options]="TooltipValues" (click)='showThemeForm({attrName:"lyrics", attrId:"", value:theme.lyrics.native, secondValue:theme.lyrics.esp})' class="my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-125">+</span>
                         </span>
                     </h3>
                 </div>
@@ -173,7 +173,7 @@
                             </p> 
                         </div>
                     </div>
-                    <p class="less-more-content" (click)='searchResut("next")'>Ver más</p>
+                    <p class="less-more-content cursor-pointer" (click)='searchResut("next")'>Ver más</p>
                 </div>
             </div>
         </div>

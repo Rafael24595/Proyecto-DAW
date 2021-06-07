@@ -11,10 +11,10 @@
         <div>
             <div class="display-inline" style="margin-left: 5px; margin-right: 5px;">
                 <ng-container *ngIf='buttonGear'>
-                    <button (click)='calculeNextThemePosition($event)' value="-1" class="my-vinyl-icons-font font-size-150 button-style cursor-pointer button-clear" >$</button>
-                    <button (click)='calculeNextThemePosition($event)' value="1" class="my-vinyl-icons-font font-size-150 button-style cursor-pointer button-clear">%</button>
-                    <button (click)='setPlayPause()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style button-clear">{{playLogo}}</button>
-                    <button (click)='stopAudio()' class="my-vinyl-icons-font font-size-150 button-style button-clear cursor-pointer {{buttonResponsiveII}}">#</button>
+                    <button tooltip="Anterior" placement="bottom" [options]="TooltipValues" (click)='calculeNextThemePosition($event)' value="-1" class="my-vinyl-icons-font font-size-150 button-style cursor-pointer button-clear" >$</button>
+                    <button tooltip="Siguiente" placement="bottom" [options]="TooltipValues" (click)='calculeNextThemePosition($event)' value="1" class="my-vinyl-icons-font font-size-150 button-style cursor-pointer button-clear">%</button>
+                    <button tooltip="Parar/Reproducir" placement="bottom" [options]="TooltipValues" (click)='setPlayPause()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style button-clear">{{playLogo}}</button>
+                    <button tooltip="Parar" placement="bottom" [options]="TooltipValues" (click)='stopAudio()' class="my-vinyl-icons-font font-size-150 button-style button-clear cursor-pointer {{buttonResponsiveII}}">#</button>
                 </ng-container>
                 <ng-container *ngIf='!buttonGear'>
                     <button (click)='calculeNextThemePosition($event)' value="-1" class="my-vinyl-icons-font font-size-150 button-style cursor-pointer" >N</button>

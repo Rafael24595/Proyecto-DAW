@@ -4,7 +4,7 @@
             <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
                 <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
-                    <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
+                    <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
                 </span>
                 <p style="margin-top: 10px; margin-bottom: 5px;">
                     <span class="attr-name"> Nombre: </span>
@@ -12,7 +12,7 @@
                     <span>{{artist.name}} {{artist.surname}}</span>
                     <span>&nbsp;</span>
                     <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                        <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>+</span>
+                        <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"name", attrId:"", value:artist.name, secondValue:artist.surname})'>+</span>
                     </span>
                 </p>
                 <p *ngIf='isAdmin' style="margin-top: 5px; margin-bottom: 0px;">
@@ -20,19 +20,19 @@
                     <span>{{artist.id_artist}}</span>
                     <span>&nbsp;</span>
                     <span id="pencil-writting-animation" class="display-inline">
-                        <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>+</span>
+                        <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"id_artist", attrId:"", value:artist.id_artist})'>+</span>
                     </span>
                     <span>&nbsp;</span>
                     <span>-</span>
                     <span>&nbsp;</span>
-                    <span (click)='deleteArtist(artist.id_artist)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
+                    <span tooltip="Borrar" [options]="TooltipValues" (click)='deleteArtist(artist.id_artist)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150">
                         <span class="trash-cap cursor-pointer display-inline">0</span>
                         <span class="trash-body cursor-pointer display-inline">/</span>
                     </span>
                 </p>
             </div>
             <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="float: right;">
-                <span class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>+</span>
+                <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"description", attrId:"", value:artist.description})'>+</span>
             </span>
             <div *ngIf='artist.description != ""' [innerHTML]="artist.description | safeHtml" class="text-color-09"></div>
             <div *ngIf='artist.description == ""'><p>Descripción no disponible</p></div>
@@ -43,18 +43,18 @@
                     <h3 style="margin-top: 0px; margin-bottom: 10px;" class="txt-horizontal-left title-back">Etiquetas:</h3>
                     <p *ngFor='let artistTag of artist.tags; let i = index' class="display-inline">
                         <span style="color: #e6e6e6;">{{artistTag}} </span><span> - </span>
-                        <span (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})' id="trash-can-animation" class="my-vinyl-icons-font display-inline font-size-150">
+                        <span tooltip="Borrar" [options]="TooltipValues" (click)='modifyArtistData({attrName:"tags", attrId:"", value:artistTag})' id="trash-can-animation" class="my-vinyl-icons-font display-inline font-size-150">
                             <span class="trash-cap cursor-pointer display-inline">0</span>
                             <span class="trash-body cursor-pointer display-inline">/</span>
                         </span>
                         <span *ngIf='i < artist.tags.length - 1'>,&nbsp;</span>
                     </p>
                     <div>
-                        <p (click)='showArtistForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
+                        <p tooltip="Nuevo" [options]="TooltipValues" (click)='showArtistForm({attrName:"tags", attrId:"", value:""})' style="margin:0px;" class="my-vinyl-icons-font font-size-150 cursor-pointer"><</p>
                     </div>
                 </div>
                 <div>
-                    <h3 class="title-back">Temas: <span *ngIf='isAdmin' style="color: black; text-shadow: none; float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
+                    <h3 class="title-back">Temas: <span tooltip="Mover temas" [options]="TooltipValues" *ngIf='isAdmin' style="color: black; text-shadow: none; float: right; transform: translateY(-10%); font-weight: normal;" class="my-vinyl-icons-font font-size-150 cursor-pointer" (click)='showArtistForm({attrName:"reassignMulti", attrId:artist.id_artist, value:artist.id_artist})'>:</span></h3>
                 </div>
                 <div style="max-height: 500px; overflow: auto; padding: 15px;">
                     <div *ngIf='isAdmin' class="cursor-pointer container-card" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" (click)='showArtistForm({attrName:"newTheme", attrId:"", value:""})'>
@@ -73,13 +73,13 @@
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span class="attr-name">Nombre: </span> <span class="cursor-pointer" (click)=showItem(theme.id)>{{theme.name}}</span></p> 
                             <ng-container>
                                 <p *ngIf='isAdmin' style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span class="attr-name">Id: </span> <span>{{theme.id}}</span></p>
-                                <span *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150" style="position: relative;">
+                                <span tooltip="Borrar" [options]="TooltipValues" *ngIf='isAdmin' (click)='deleteTheme(theme.id)' id="trash-can-animation" class="display-inline my-vinyl-icons-font font-size-150" style="position: relative;">
                                     <span class="trash-cap cursor-pointer display-inline">0</span>
                                     <span class="trash-body cursor-pointer display-inline">/</span>
                                 </span>
                                 <span *ngIf='isAdmin'> - </span>
                                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline">
-                                    <span class="my-vinyl-icons-font cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>9</span>
+                                    <span tooltip="Mover tema" [options]="TooltipValues" class="my-vinyl-icons-font cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"reassign", attrId:theme.id, value:theme.id})'>9</span>
                                 </span>
                             </ng-container>
                         </div>

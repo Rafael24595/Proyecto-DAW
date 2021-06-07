@@ -9,7 +9,7 @@ import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { User } from 'src/app/classes/User';
 import { FormValidations } from 'src/utils/tools/FormValidations';
 import { DataManage } from 'src/utils/tools/DataManage';
-import { GlobalVariables } from 'src/utils/variables/variables';
+import { GlobalVariables, TooltipValues } from 'src/utils/variables/variables';
 import { NotificationManage } from 'src/utils/tools/NotificationManage';
 
 @Component({
@@ -40,6 +40,7 @@ export class ArtistPanelComponent implements OnInit {
   flagFileErr = {text:'', class:''};
   themeErr = {text:'', class:''};
   blackScreenStatus = GlobalVariables;
+  TooltipValues = TooltipValues;
 
   constructor(private comunicationService :ComunicationServiceService, private router: Router, private route:ActivatedRoute, private manageComponent:ManageComponent, private DatabaseConexService: DatabaseConexService) { }
 

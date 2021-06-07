@@ -4,7 +4,7 @@ import { AuthorizationService } from 'src/app/services/autorization-service/auth
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { ManageUser } from 'src/utils/tools/ManageUser';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
-import { Variables } from 'src/utils/variables/variables';
+import { TooltipValues, Variables } from 'src/utils/variables/variables';
 
 @Component({
   selector: 'app-user-data',
@@ -16,6 +16,7 @@ export class UserDataComponent implements OnInit {
   globalVariables = Variables;
   sessionValues = sesionValues;
   range = Variables.range;
+  TooltipValues = TooltipValues;
 
   constructor(public authorization: AuthorizationService, private manageUser: ManageUser, private router: Router, private route:ActivatedRoute, private manageComponent: ManageComponent) { }
 
