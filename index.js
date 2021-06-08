@@ -8,9 +8,10 @@ const UserManage = require('./controller/UserManage');
 const FilesManage = require('./controller/FilesManage');
 
 const app = express();
+const ip = "3.15.187.168";
 const port = process.env.PORT || 2525;
 const dbRetryTime = process.env.db_retry_time || 2000;
-const mongoUri = "mongodb://localhost:27017/myvinyl";
+const mongoUri = `mongodb://${ip}:27017/myvinyl`;
 
 let db = mongoose.connection;
 
@@ -48,7 +49,6 @@ const job = schedule.scheduleJob('0 0 * * 7', function(){
   let date = new Date();
   
   UserManage.dropNonVerifiedUsers();
-  FilesManage.deleteTempFiles()
-
+  FilesManage.deleteTempFiles();
   console.log(`Limpieza de usuarios no registrados a fecha y archivos temporales: ${date}`);
 });
