@@ -17,10 +17,10 @@ let db = mongoose.connection;
 let connectWithRetry= function() {
   return mongoose.connect(mongoUri, {
     useUnifiedTopology: true,
-    useNewUrlParser: true,/*
+    useNewUrlParser: true,
     auth: { authSource: "admin" },
     user: "root",
-    pass: "example"*/
+    pass: "example"
   });
 };
 
