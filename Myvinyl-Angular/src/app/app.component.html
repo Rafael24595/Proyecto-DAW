@@ -6,7 +6,7 @@
         <button class="white-button" (click)='GlobalVariables.notificationStatus = ""; GlobalVariables.notificationIsShowing = false'>No</button>
     </div>
 </div>
-<div id='roots-notification-container'>
+<div *ngIf='showRoot' id='roots-notification-container'>
     <div>
         <img id="root-base" src="{{mediaPath}}/images/root/{{MyRootSprite.eye}}" alt="">
         <img id="root-eye" src="{{mediaPath}}/images/root/{{MyRootSprite.body}}" alt="">

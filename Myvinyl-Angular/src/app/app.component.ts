@@ -13,6 +13,7 @@ export class AppComponent {
   MyRootSprite = MyRootSprite;
   GlobalVariables = GlobalVariables;
   rootData = [ ]
+  showRoot = false;
 
   resetForm(){
     NotificationManage.enableScroll();
