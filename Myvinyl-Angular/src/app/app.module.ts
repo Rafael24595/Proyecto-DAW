@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill'
 import { SafeHtmlPipe } from './services/pipes/DomSanitized';
 import { DateFormat } from './services/pipes/DateFormat';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -84,7 +85,8 @@ import { VerifyUserComponent } from './components/centre/user-data/verify-user/v
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent]
 })

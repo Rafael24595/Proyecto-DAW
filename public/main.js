@@ -196,11 +196,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/forms */ 3679);
-/* harmony import */ var ngx_quill__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-quill */ 6858);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/platform-browser */ 9075);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var ngx_quill__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-quill */ 6858);
 /* harmony import */ var _services_pipes_DomSanitized__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/pipes/DomSanitized */ 7605);
 /* harmony import */ var _services_pipes_DateFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/pipes/DateFormat */ 8174);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/common */ 8583);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app-routing.module */ 158);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.component */ 5041);
 /* harmony import */ var _components_header_header_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/header/header.component */ 3646);
@@ -212,7 +213,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_centre_showcase_theme_information_theme_information_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/centre/showcase/theme-information/theme-information.component */ 348);
 /* harmony import */ var _components_centre_showcase_theme_search_theme_search_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/centre/showcase/theme-search/theme-search.component */ 1743);
 /* harmony import */ var _components_centre_showcase_artist_panel_artist_panel_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/centre/showcase/artist-panel/artist-panel.component */ 2335);
-/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
+/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
 /* harmony import */ var _services_token_interceptor_token_interceptor_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/token-interceptor/token-interceptor.service */ 1603);
 /* harmony import */ var _components_centre_authorization_signIn_sign_in_sign_in_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/centre/authorization/signIn/sign-in/sign-in.component */ 4063);
 /* harmony import */ var _components_centre_authorization_signUp_sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/centre/authorization/signUp/sign-up/sign-up.component */ 8080);
@@ -221,6 +222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_centre_audio_bar_audio_bar_audio_bar_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/centre/audio-bar/audio-bar/audio-bar.component */ 5094);
 /* harmony import */ var _components_centre_user_data_verify_user_verify_user_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/centre/user-data/verify-user/verify-user.component */ 6382);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/core */ 7716);
+
 
 
 
@@ -256,14 +258,15 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_19__["ɵ�
             provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_20__.HTTP_INTERCEPTORS,
             useClass: _services_token_interceptor_token_interceptor_service__WEBPACK_IMPORTED_MODULE_12__.TokenInterceptorService,
             multi: true
-        }
+        },
+        { provide: _angular_common__WEBPACK_IMPORTED_MODULE_21__.LocationStrategy, useClass: _angular_common__WEBPACK_IMPORTED_MODULE_21__.HashLocationStrategy },
     ], imports: [[
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_21__.BrowserModule,
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_22__.BrowserModule,
             _app_routing_module__WEBPACK_IMPORTED_MODULE_2__.AppRoutingModule,
             _angular_common_http__WEBPACK_IMPORTED_MODULE_20__.HttpClientModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_22__.FormsModule,
-            ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_23__.TooltipModule,
-            ngx_quill__WEBPACK_IMPORTED_MODULE_24__.QuillModule.forRoot({
+            _angular_forms__WEBPACK_IMPORTED_MODULE_23__.FormsModule,
+            ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_24__.TooltipModule,
+            ngx_quill__WEBPACK_IMPORTED_MODULE_25__.QuillModule.forRoot({
                 modules: {
                     syntax: false,
                     toolbar: [
@@ -301,11 +304,11 @@ AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_19__["ɵ�
         _components_centre_audio_bar_audio_bar_audio_bar_component__WEBPACK_IMPORTED_MODULE_17__.AudioBarComponent,
         _services_pipes_DomSanitized__WEBPACK_IMPORTED_MODULE_0__.SafeHtmlPipe,
         _services_pipes_DateFormat__WEBPACK_IMPORTED_MODULE_1__.DateFormat,
-        _components_centre_user_data_verify_user_verify_user_component__WEBPACK_IMPORTED_MODULE_18__.VerifyUserComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_21__.BrowserModule,
+        _components_centre_user_data_verify_user_verify_user_component__WEBPACK_IMPORTED_MODULE_18__.VerifyUserComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_22__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_2__.AppRoutingModule,
         _angular_common_http__WEBPACK_IMPORTED_MODULE_20__.HttpClientModule,
-        _angular_forms__WEBPACK_IMPORTED_MODULE_22__.FormsModule,
-        ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_23__.TooltipModule, ngx_quill__WEBPACK_IMPORTED_MODULE_24__.QuillModule] }); })();
+        _angular_forms__WEBPACK_IMPORTED_MODULE_23__.FormsModule,
+        ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_24__.TooltipModule, ngx_quill__WEBPACK_IMPORTED_MODULE_25__.QuillModule] }); })();
 
 
 /***/ }),
@@ -10089,7 +10092,7 @@ const SearchQuery = {
 const Variables = {
     candyIdWhiteList: ['candy-home'],
     candyDeadEnd: ['theme'],
-    host: 'localhost',
+    host: '3.15.187.168',
     port: '2525',
     range: { 0: 'User', 1: 'Admin' }
 };
