@@ -8405,15 +8405,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserDataComponent": () => (/* binding */ UserDataComponent)
 /* harmony export */ });
-/* harmony import */ var src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/utils/variables/sessionVariables */ 8168);
-/* harmony import */ var src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/utils/variables/variables */ 7347);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/autorization-service/authorization.service */ 9452);
-/* harmony import */ var src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/utils/tools/ManageUser */ 8391);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 9895);
-/* harmony import */ var src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/utils/tools/ManageComponent */ 4367);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 8583);
-/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
+/* harmony import */ var src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/utils/tools/DataManage */ 5862);
+/* harmony import */ var src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/utils/variables/sessionVariables */ 8168);
+/* harmony import */ var src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/utils/variables/variables */ 7347);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/autorization-service/authorization.service */ 9452);
+/* harmony import */ var src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/utils/tools/ManageUser */ 8391);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 9895);
+/* harmony import */ var src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/utils/tools/ManageComponent */ 4367);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 8583);
+/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
+
 
 
 
@@ -8424,12 +8426,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function UserDataComponent_span_17_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "span", 13);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](1, " =");
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "span", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1, " =");
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("options", ctx_r0.TooltipValues);
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("options", ctx_r0.TooltipValues);
 } }
 const _c0 = function (a0) { return [a0]; };
 class UserDataComponent {
@@ -8439,76 +8441,83 @@ class UserDataComponent {
         this.router = router;
         this.route = route;
         this.manageComponent = manageComponent;
-        this.globalVariables = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_1__.Variables;
-        this.sessionValues = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_0__.sesionValues;
-        this.range = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_1__.Variables.range;
-        this.TooltipValues = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_1__.TooltipValues;
+        this.globalVariables = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables;
+        this.sessionValues = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues;
+        this.range = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.range;
+        this.TooltipValues = src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.TooltipValues;
+        this.mediaPath = '../../../../assets/media';
     }
     ngOnInit() {
         this.manageComponent.setLastURL();
         this.manageUser.checkToken();
         this.manageUser.getUserDataFromDataBase().then(() => {
-            this.sessionValues.activeUser = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_0__.sesionValues.activeUser;
+            this.sessionValues.activeUser = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser;
             if (this.sessionValues.activeUser.name == '@Usuario') {
                 this.authorization.destroySession();
             }
         });
+    }
+    updateUrl(event, type) {
+        let element = event.target;
+        src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_0__.DataManage.repairBrokenImages(element, this.mediaPath, type);
     }
     closeSession() {
         this.manageComponent.refreshComponent(this.router.url);
         this.authorization.destroySession();
     }
 }
-UserDataComponent.ɵfac = function UserDataComponent_Factory(t) { return new (t || UserDataComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_2__.AuthorizationService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_3__.ManageUser), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_4__.ManageComponent)); };
-UserDataComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({ type: UserDataComponent, selectors: [["app-user-data"]], decls: 20, vars: 10, consts: [["id", "userData"], [1, "user-data-container-small", "text-centre", 2, "white-space", "nowrap"], [1, "avatar-container-responsive"], [1, "display-inline", "avatar-back", "cursor-pointer", 2, "margin-right", "7px", "height", "85px", "width", "85px", 3, "routerLink"], [1, "avatar-small", "height-100", 3, "src"], [1, "avatar-container-responsive", 2, "margin-left", "7px", "vertical-align", "baseline", "transform", "translateY(-50%)"], [1, "text-left", 2, "display", "inline-block"], [1, "cursor-pointer", 2, "margin-top", "5px", "margin-bottom", "5px", 3, "routerLink"], [1, "attr-name"], [2, "font-weight", "bold", "color", "#e1e1e1"], [2, "margin-top", "5px", "margin-bottom", "5px"], ["tooltip", "Admin", "class", "my-vinyl-icons-font admin-color", 3, "options", 4, "ngIf"], [1, "whiteLink", "centreLink", "marg-bott-0", "cursor-pointer", 2, "margin-top", "10px", 3, "click"], ["tooltip", "Admin", 1, "my-vinyl-icons-font", "admin-color", 3, "options"]], template: function UserDataComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "div", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](2, "div", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](3, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](4, "img", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](5, "div", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](6, "div", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](7, "p", 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](8, "span", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](9, "Nombre: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](10, "span", 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](12, "p", 10);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](13, "span", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](14, "Rango: ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](15, "span", 9);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](17, UserDataComponent_span_17_Template, 2, 1, "span", 11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](18, "p", 12);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function UserDataComponent_Template_p_click_18_listener() { return ctx.closeSession(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](19, "Cerrar sesi\u00F3n");
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+UserDataComponent.ɵfac = function UserDataComponent_Factory(t) { return new (t || UserDataComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_3__.AuthorizationService), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_4__.ManageUser), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdirectiveInject"](src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_5__.ManageComponent)); };
+UserDataComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({ type: UserDataComponent, selectors: [["app-user-data"]], decls: 20, vars: 10, consts: [["id", "userData"], [1, "user-data-container-small", "text-centre", 2, "white-space", "nowrap"], [1, "avatar-container-responsive"], [1, "display-inline", "avatar-back", "cursor-pointer", 2, "margin-right", "7px", "height", "85px", "width", "85px", 3, "routerLink"], [1, "avatar-small", "height-100", 3, "src", "error"], [1, "avatar-container-responsive", 2, "margin-left", "7px", "vertical-align", "baseline", "transform", "translateY(-50%)"], [1, "text-left", 2, "display", "inline-block"], [1, "cursor-pointer", 2, "margin-top", "5px", "margin-bottom", "5px", 3, "routerLink"], [1, "attr-name"], [2, "font-weight", "bold", "color", "#e1e1e1"], [2, "margin-top", "5px", "margin-bottom", "5px"], ["tooltip", "Admin", "class", "my-vinyl-icons-font admin-color", 3, "options", 4, "ngIf"], [1, "whiteLink", "centreLink", "marg-bott-0", "cursor-pointer", 2, "margin-top", "10px", 3, "click"], ["tooltip", "Admin", 1, "my-vinyl-icons-font", "admin-color", 3, "options"]], template: function UserDataComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](2, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](3, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](4, "img", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("error", function UserDataComponent_Template_img_error_4_listener($event) { return ctx.updateUrl($event, "user"); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](5, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](6, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](7, "p", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](8, "span", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](9, "Nombre: ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](10, "span", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](12, "p", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](13, "span", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](14, "Rango: ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](15, "span", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](16);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](17, UserDataComponent_span_17_Template, 2, 1, "span", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](18, "p", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function UserDataComponent_Template_p_click_18_listener() { return ctx.closeSession(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](19, "Cerrar sesi\u00F3n");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpureFunction1"](6, _c0, "/Profile/" + ctx.sessionValues.activeUser.name));
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/media/images/users/", ctx.sessionValues.activeUser.name, ".png", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeUrl"]);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpureFunction1"](8, _c0, "/Profile/" + ctx.sessionValues.activeUser.name));
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](ctx.sessionValues.activeUser.name);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](ctx.range[ctx.sessionValues.activeUser.admin]);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.sessionValues.activeUser.admin == "1");
-    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_6__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_8__.TooltipDirective], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1c2VyLWRhdGEuY29tcG9uZW50LmNzcyJ9 */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpureFunction1"](6, _c0, "/Profile/" + ctx.sessionValues.activeUser.name));
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpropertyInterpolate1"]("src", "../../../../assets/media/images/users/", ctx.sessionValues.activeUser.name, ".png", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpureFunction1"](8, _c0, "/Profile/" + ctx.sessionValues.activeUser.name));
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](ctx.sessionValues.activeUser.name);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](ctx.range[ctx.sessionValues.activeUser.admin]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("ngIf", ctx.sessionValues.activeUser.admin == "1");
+    } }, directives: [_angular_router__WEBPACK_IMPORTED_MODULE_7__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgIf, ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_9__.TooltipDirective], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ1c2VyLWRhdGEuY29tcG9uZW50LmNzcyJ9 */"] });
 
 
 /***/ }),
@@ -8596,6 +8605,7 @@ class VerifyUserComponent {
                     let user = sucess.user;
                     this.statusMessage = 'La cuenta se ha verifcado correctamente.';
                     this.status = true;
+                    localStorage.setItem('sessionToken', sucess.token);
                     src_app_classes_User__WEBPACK_IMPORTED_MODULE_0__.User.setUser(user.name, user.admin, user.date, user.description, user.themeLists, user.email, user.activeAccount);
                     this.startCheckAnimation();
                     let interval;
@@ -8967,10 +8977,10 @@ class AuthorizationService {
         this.router = router;
     }
     signIn(email, password) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signin`, { email, password });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signin`, { email, password });
     }
     signUp(name, email, password) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signup`, { name, email, password });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signup`, { name, email, password });
     }
     setToken(token) {
         localStorage.setItem('sessionToken', token);
@@ -9090,110 +9100,110 @@ class DatabaseConexService {
     }
     getArtists(limit) {
         limit = (limit) ? limit : '-1';
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/getData?count=${limit}`)
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/getData?count=${limit}`)
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.tap)(_ => console.log('Searching..')), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.catchError)(this.handleError()));
     }
     getThemeData(themeId) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}`);
     }
     getArtistData(artistId) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}`);
     }
     getArtistDataByQuery(queryData, limitQuery, pageQuery, fieldsQuery) {
         limitQuery = (limitQuery) ? limitQuery : 0;
         pageQuery = (pageQuery) ? pageQuery : 0;
         fieldsQuery = (fieldsQuery) ? fieldsQuery : ['all'];
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${pageQuery}/${limitQuery}?query=${JSON.stringify(queryData)}&fields=${JSON.stringify(fieldsQuery)}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${pageQuery}/${limitQuery}?query=${JSON.stringify(queryData)}&fields=${JSON.stringify(fieldsQuery)}`);
     }
     getProfileData(profile) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}`);
     }
     checkToken(userName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/date?userName=${userName}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/date?userName=${userName}`);
     }
     extendSession(userName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/refresh?userName=${userName}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/refresh?userName=${userName}`);
     }
     getUserData() {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token`);
     }
     getUsersData(nameQuery, limitQuery, pageQuery) {
         limitQuery = (limitQuery) ? limitQuery : 0;
         pageQuery = (pageQuery) ? pageQuery : 1;
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${pageQuery}/${limitQuery}?nameQuery=${JSON.stringify(nameQuery)}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${pageQuery}/${limitQuery}?nameQuery=${JSON.stringify(nameQuery)}`);
     }
     setNewTheme(artistId, name, flag, tags, lyrics, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme`, { artistId, name, flag, tags, lyrics, userName });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme`, { artistId, name, flag, tags, lyrics, userName });
     }
     removeArtist(artistId, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}?user=${userName}`);
+        return this.http.delete(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}?user=${userName}`);
     }
     removeTheme(artistId, themeId, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}?user=${userName}`);
+        return this.http.delete(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}?user=${userName}`);
     }
     setArtistAttribute(artistId, attribute, value, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
     }
     setThemeAttribute(themeId, attribute, value, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
     }
     reassignArtistTheme(mainArtistId, targetArtistId, themeId, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/${themeId}`, { userName });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/${themeId}`, { userName });
     }
     reassignArtistThemes(mainArtistId, targetArtistId, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/all`, { userName });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/all`, { userName });
     }
     setThemeComment(themeId, userName, comment) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment`, { userName, comment });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment`, { userName, comment });
     }
     thumbValueTheme(themeId, thumbValue, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/thumb/${thumbValue}`, { userName });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/thumb/${thumbValue}`, { userName });
     }
     removeThemeComment(themeId, userName, commentId) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment/${commentId}?user=${userName}`);
+        return this.http.delete(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment/${commentId}?user=${userName}`);
     }
     updateThemeListPrivacity(themeListName, state, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/attribute/privacy`, { state });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/attribute/privacy`, { state });
     }
     newThemeList(themeListName, privacy, userName, list) {
         list = (list) ? list : [];
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { privacy, list });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { privacy, list });
     }
     removeThemeList(themeListName, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`);
+        return this.http.delete(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`);
     }
     addToThemeList(artistId, themeId, themeListName, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`, { artistId });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`, { artistId });
     }
     removeFromThemeList(themeId, themeListName, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`);
+        return this.http.delete(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`);
     }
     modifyThemeList(themeList, themeListName, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { themeList });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { themeList });
     }
     modifyUserData(attribute, oldAttribute, newAttribute, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/${attribute}`, { oldAttribute, newAttribute });
+        return this.http.patch(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/${attribute}`, { oldAttribute, newAttribute });
     }
     checkPassword(userName, password) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/password/${password}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/password/${password}`);
     }
     getThemesFromList(profile, themeListName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}/themelist/${themeListName}/all`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}/themelist/${themeListName}/all`);
     }
     getArtistsIds(attribute) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/attributte/${attribute}/all`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/attributte/${attribute}/all`);
     }
     getFlagsNames() {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/attributte/flags/all`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/attributte/flags/all`);
     }
     sendFilesToServer(FormData) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/file`, FormData);
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/file`, FormData);
     }
     setNewArtist(artistId, name, surname, description, tags, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist`, { artistId, name, surname, description, tags, userName });
+        return this.http.post(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist`, { artistId, name, surname, description, tags, userName });
     }
     checkActivationCode(code) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/verify/${code}`);
+        return this.http.get(`https://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/verify/${code}`);
     }
     handleError(operation = 'operation', result) {
         return (error) => {

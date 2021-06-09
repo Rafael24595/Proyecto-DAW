@@ -50,7 +50,7 @@ async function singUp(req, res){
 
       case 'verification':
 
-        let protocol = 'http';
+        let protocol = 'https';
         let domain = 'myvinyl.es';
         let port = '';
         let path = `${protocol}://${domain}/#/Verificar/${data.code}`;
