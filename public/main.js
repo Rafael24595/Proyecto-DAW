@@ -8967,10 +8967,10 @@ class AuthorizationService {
         this.router = router;
     }
     signIn(email, password) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.port}/api/user/access/signin`, { email, password });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signin`, { email, password });
     }
     signUp(name, email, password) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.port}/api/user/access/signup`, { name, email, password });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_2__.Variables.host}/api/user/access/signup`, { name, email, password });
     }
     setToken(token) {
         localStorage.setItem('sessionToken', token);
@@ -9090,110 +9090,110 @@ class DatabaseConexService {
     }
     getArtists(limit) {
         limit = (limit) ? limit : '-1';
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/getData?count=${limit}`)
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/getData?count=${limit}`)
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.tap)(_ => console.log('Searching..')), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.catchError)(this.handleError()));
     }
     getThemeData(themeId) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}`);
     }
     getArtistData(artistId) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist/${artistId}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}`);
     }
     getArtistDataByQuery(queryData, limitQuery, pageQuery, fieldsQuery) {
         limitQuery = (limitQuery) ? limitQuery : 0;
         pageQuery = (pageQuery) ? pageQuery : 0;
         fieldsQuery = (fieldsQuery) ? fieldsQuery : ['all'];
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist/${pageQuery}/${limitQuery}?query=${JSON.stringify(queryData)}&fields=${JSON.stringify(fieldsQuery)}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${pageQuery}/${limitQuery}?query=${JSON.stringify(queryData)}&fields=${JSON.stringify(fieldsQuery)}`);
     }
     getProfileData(profile) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${profile}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}`);
     }
     checkToken(userName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/self/profile/token/date?userName=${userName}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/date?userName=${userName}`);
     }
     extendSession(userName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/self/profile/token/refresh?userName=${userName}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token/refresh?userName=${userName}`);
     }
     getUserData() {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/self/profile/token`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/self/profile/token`);
     }
     getUsersData(nameQuery, limitQuery, pageQuery) {
         limitQuery = (limitQuery) ? limitQuery : 0;
         pageQuery = (pageQuery) ? pageQuery : 1;
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${pageQuery}/${limitQuery}?nameQuery=${JSON.stringify(nameQuery)}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${pageQuery}/${limitQuery}?nameQuery=${JSON.stringify(nameQuery)}`);
     }
     setNewTheme(artistId, name, flag, tags, lyrics, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme`, { artistId, name, flag, tags, lyrics, userName });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme`, { artistId, name, flag, tags, lyrics, userName });
     }
     removeArtist(artistId, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist/${artistId}?user=${userName}`);
+        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}?user=${userName}`);
     }
     removeTheme(artistId, themeId, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}?user=${userName}`);
+        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}?user=${userName}`);
     }
     setArtistAttribute(artistId, attribute, value, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist/${artistId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/${artistId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
     }
     setThemeAttribute(themeId, attribute, value, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/${attribute}?value=${JSON.stringify(value)}`, { userName });
     }
     reassignArtistTheme(mainArtistId, targetArtistId, themeId, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/reassign/${mainArtistId}/${targetArtistId}/${themeId}`, { userName });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/${themeId}`, { userName });
     }
     reassignArtistThemes(mainArtistId, targetArtistId, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/reassign/${mainArtistId}/${targetArtistId}/all`, { userName });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/reassign/${mainArtistId}/${targetArtistId}/all`, { userName });
     }
     setThemeComment(themeId, userName, comment) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}/comment`, { userName, comment });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment`, { userName, comment });
     }
     thumbValueTheme(themeId, thumbValue, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}/thumb/${thumbValue}`, { userName });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/thumb/${thumbValue}`, { userName });
     }
     removeThemeComment(themeId, userName, commentId) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/${themeId}/comment/${commentId}?user=${userName}`);
+        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/${themeId}/comment/${commentId}?user=${userName}`);
     }
     updateThemeListPrivacity(themeListName, state, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}/attribute/privacy`, { state });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/attribute/privacy`, { state });
     }
     newThemeList(themeListName, privacy, userName, list) {
         list = (list) ? list : [];
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}`, { privacy, list });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { privacy, list });
     }
     removeThemeList(themeListName, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}`);
+        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`);
     }
     addToThemeList(artistId, themeId, themeListName, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}/${themeId}`, { artistId });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`, { artistId });
     }
     removeFromThemeList(themeId, themeListName, userName) {
-        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}/${themeId}`);
+        return this.http.delete(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}/${themeId}`);
     }
     modifyThemeList(themeList, themeListName, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/themelist/${themeListName}`, { themeList });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/themelist/${themeListName}`, { themeList });
     }
     modifyUserData(attribute, oldAttribute, newAttribute, userName) {
-        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/${attribute}`, { oldAttribute, newAttribute });
+        return this.http.patch(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/${attribute}`, { oldAttribute, newAttribute });
     }
     checkPassword(userName, password) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${userName}/password/${password}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${userName}/password/${password}`);
     }
     getThemesFromList(profile, themeListName) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/${profile}/themelist/${themeListName}/all`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/${profile}/themelist/${themeListName}/all`);
     }
     getArtistsIds(attribute) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist/attributte/${attribute}/all`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist/attributte/${attribute}/all`);
     }
     getFlagsNames() {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/theme/attributte/flags/all`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/theme/attributte/flags/all`);
     }
     sendFilesToServer(FormData) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/file`, FormData);
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/file`, FormData);
     }
     setNewArtist(artistId, name, surname, description, tags, userName) {
-        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/artist`, { artistId, name, surname, description, tags, userName });
+        return this.http.post(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/artist`, { artistId, name, surname, description, tags, userName });
     }
     checkActivationCode(code) {
-        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}:${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.port}/api/user/verify/${code}`);
+        return this.http.get(`http://${src_utils_variables_variables__WEBPACK_IMPORTED_MODULE_0__.Variables.host}/api/user/verify/${code}`);
     }
     handleError(operation = 'operation', result) {
         return (error) => {
@@ -10092,8 +10092,8 @@ const SearchQuery = {
 const Variables = {
     candyIdWhiteList: ['candy-home'],
     candyDeadEnd: ['theme'],
-    host: 'localhost',
-    port: '2525',
+    host: 'www.myvinyl.es',
+    port: '',
     range: { 0: 'User', 1: 'Admin' }
 };
 let GlobalVariables = {

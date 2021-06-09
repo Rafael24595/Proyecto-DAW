@@ -20,8 +20,8 @@ export const SearchQuery:SearchQueryInterface = {
 export const Variables = {
         candyIdWhiteList : ['candy-home'],
         candyDeadEnd:['theme'],
-        host:'localhost',
-        port:'2525',
+        host:'www.myvinyl.es',
+        port:'',
         range:{0:'User', 1:'Admin'}
 }
 
