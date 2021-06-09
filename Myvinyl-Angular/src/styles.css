@@ -669,6 +669,7 @@ input{
 	margin-top: -20px;
 	text-align: center;
 	min-width: 300px;
+	max-width: 450px;
 	padding: 15px;
 	left: 50%;
 	background-color: var(--warn);

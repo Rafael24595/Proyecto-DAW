@@ -367,9 +367,83 @@ const themesData = [
         "tags": ['_OWB', 'blues'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Billie Hollyday</p>
+                    <p class="title1">Gloomy Sunday</p>
+                    <br>
+                   <p>Sunday is gloomy
+                   <p>My hours are slumberless</p>
+                   <p>Dearest the shadows</p>
+                   <p>I live with are numberless</p>
+                   <p>Little white flowers</p>
+                   <p>Will never awaken you</p>
+                   <p>Not where the black coach</p>
+                   <p>Of sorrow has taken you</p>
+                   <p>Angels have no thoughts</p>
+                   <p>Of ever returning you</p>
+                   <p>Would they be angry</p>
+                   <p>If I thought of joining you</p>
+                   <p>Gloomy Sunday</p>
+                   <p>Gloomy is Sunday</p>
+                   <p>With shadows I spend it all</p>
+                   <p>My heart and I</p>
+                   <p>Have decided to end it all</p>
+                   <p>Soon there'll be candles</p>
+                   <p>And prayers that are said I know</p>
+                   <p>Let them not weep</p>
+                   <p>Let them know that I'm glad to go</p>
+                   <p>Death is no dream</p>
+                   <p>For in death I'm caressin' you</p>
+                   <p>With the last breath of my soul</p>
+                   <p>I'll be blessin' you</p>
+                   <p>Gloomy Sunday</p>
+                   <p>Dreaming, I was only dreaming</p>
+                   <p>I wake and I find you asleep</p>
+                   <p>In the deep of my heart here</p>
+                   <p>Darling I hope</p>
+                   <p>That my dream never haunted you</p>
+                   <p>My heart is tellin' you</p>
+                   <p>How much I wanted you</p>
+                   <p>Gloomy Sunday</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Billie Hollyday</p>
+                    <p class="title1">Gloomy Sunday</p>
+                    <br>
+                   <p>El domingo es sombrío</p>
+                   <p>Mis horas son sin sueño</p>
+                   <p>Querido las sombras</p>
+                   <p>Vivo con son innumerables</p>
+                   <p>Pequeñas flores blancas</p>
+                   <p>Nunca te despertará</p>
+                   <p>No donde el entrenador negro</p>
+                   <p>De tristeza te ha llevado</p>
+                   <p>Los ángeles no tienen pensamientos</p>
+                   <p>De alguna vez devolverte</p>
+                   <p>¿Estarían enojados?</p>
+                   <p>Si pensara unirme a ti</p>
+                   <p>Domingo sombrío</p>
+                   <p>Sombrío es domingo</p>
+                   <p>Con sombras lo paso todo</p>
+                   <p>Mi corazon y yo</p>
+                   <p>Han decidido terminar con todo</p>
+                   <p>Pronto habrá velas</p>
+                   <p>Y oraciones que se dicen lo sé</p>
+                   <p>Que no lloren</p>
+                   <p>Hazles saber que me alegro de ir</p>
+                   <p>La muerte no es un sueño</p>
+                   <p>Porque en la muerte te estoy acariciando</p>
+                   <p>Con el ultimo aliento de mi alma</p>
+                   <p>Te estare bendiciendo</p>
+                   <p>Domingo sombrío</p>
+                   <p>Soñando, solo estaba soñando</p>
+                   <p>Me despierto y te encuentro dormido</p>
+                   <p>En lo profundo de mi corazón aquí</p>
+                   <p>Cariño espero</p>
+                   <p>Que mi sueño nunca te persiguió</p>
+                   <p>Mi corazón te dice</p>
+                   <p>Cuanto te deseaba</p>
+                   <p>Domingo sombrío</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -386,9 +460,59 @@ const themesData = [
         "tags": ['_OWB', 'blues'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Billie Hollyday</p>
+                    <p class="title1">Crazy He Calls Me</p>
+                    <br>
+                   <p>I say I'll move the mountains</p>
+                   <p>And I'll move the mountains</p>
+                   <p>If he wants them out of the way</p>
+                   <p>Crazy, he calls me</p>
+                   <p>Sure I'm crazy</p>
+                   <p>Crazy in love, I'd say</p>
+                   <p>I say I'll go through fire</p>
+                   <p>And I'll go through fire</p>
+                   <p>As he wants it, so it will be</p>
+                   <p>Crazy, he calls me</p>
+                   <p>Sure I'm crazy</p>
+                   <p>Crazy in love, you see</p>
+                   <p>Like the wind that shakes the bough</p>
+                   <p>He moves me with a smile</p>
+                   <p>The difficult I'll do right now</p>
+                   <p>The impossible will take a little while</p>
+                   <p>I say I'll care forever</p>
+                   <p>And I mean forever</p>
+                   <p>If I have to hold up the sky</p>
+                   <p>Crazy, he calls me</p>
+                   <p>Sure I'm crazy</p>
+                   <p>Crazy in love am I</p>
+                   <p>Like the wind that shakes the bough</p>
+                   <p>He moves me with a smile</p>
+                   <p>The difficult I'll do right now</p>
+                   <p>The impossible will take a little while</p>
+                   <p>I say I'll care forever</p>
+                   <p>And I mean forever</p>
+                   <p>If I have to hold up the sky</p>
+                   <p>Crazy, he calls me</p>
+                   <p>Sure I'm crazy</p>
+                   <p>Crazy in love am I</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Al Bowlly</p>
+                    <p class="title1">You're My Everything</p>
+                    <br>
+                   <p>Eres mi todo debajo del sol</p>
+                   <p>Eres mi todo enrollado en uno</p>
+                   <p>Eres mi único sueño, mi única realidad real</p>
+                   <p>Eres mi idea de una personalidad perfecta</p>
+                   <p>Eres mi todo, todo lo que necesito</p>
+                   <p>Eres la canción que canto y el libro que leo</p>
+                   <p>Eres un camino más allá de la creencia y solo para hacerlo breve</p>
+                   <p>Eres mi invierno, verano, primavera, mi todo</p>
+                   <p>Eres mi todo (todo lo que necesito)</p>
+                   <p>Eres la canción que canto y el libro que leo</p>
+                   <p>Eres un camino más allá de la creencia y solo para hacerlo breve</p>
+                   <p>Eres mi invierno, verano, primavera, mi todo</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -405,9 +529,57 @@ const themesData = [
         "tags": ['_OWB', 'stride'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">I'm Gonna Sit Right Down and Write Myself a Letter</p>
+                    <br>
+                   <p>I'm gonna sit right down and write myself a letter</p>
+                   <p>And make believe it came from you</p>
+                   <p>I'm gonna write words, oh, so sweet</p>
+                   <p>They're gonna knock me off my feet</p>
+                   <p>Kisses on the bottom</p>
+                   <p>I'll be glad I've got 'em</p>
+                   <p>I'm gonna smile and say "I hope you're feelin' better"</p>
+                   <p>And sign "with love" the way you do</p>
+                   <p>I'm gonna sit right down and write myself a letter</p>
+                   <p>And make believe it came from you</p>
+                   <p>I'm gonna sit right down and write myself a letter</p>
+                   <p>And make believe it came from you</p>
+                   <p>I'm gonna write words, oh, so sweet</p>
+                   <p>They're gonna knock me off my feet</p>
+                   <p>Kisses on the bottom</p>
+                   <p>I'll be glad I've got 'em</p>
+                   <p>I'm gonna smile and say "I hope you're feelin' better"</p>
+                   <p>And sign "with love" the way you do</p>
+                   <p>I'm gonna sit right down, write myself a letter</p>
+                   <p>And make believe it came from you</p>
+                   <p>And make believe it came from you.</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">I'm Gonna Sit Right Down and Write Myself a Letter</p>
+                    <br>
+                   <p>Voy a sentarme y escribirme una carta</p>
+                   <p>Y haz creer que vino de ti</p>
+                   <p>Voy a escribir palabras, oh, qué dulce</p>
+                   <p>Me van a sacar de mis pies</p>
+                   <p>Besos allá abajo</p>
+                   <p>Me alegraré de tenerlos</p>
+                   <p>Voy a sonreír y decir "Espero que te sientas mejor"</p>
+                   <p>Y firma "con amor" como lo haces</p>
+                   <p>Voy a sentarme y escribirme una carta</p>
+                   <p>Y haz creer que vino de ti</p>
+                   <p>Voy a sentarme y escribirme una carta</p>
+                   <p>Y haz creer que vino de ti</p>
+                   <p>Voy a escribir palabras, oh, qué dulce</p>
+                   <p>Me van a sacar de mis pies</p>
+                   <p>Besos allá abajo</p>
+                   <p>Me alegraré de tenerlos</p>
+                   <p>Voy a sonreír y decir "Espero que te sientas mejor"</p>
+                   <p>Y firma "con amor" como lo haces</p>
+                   <p>Voy a sentarme, escribirme una carta</p>
+                   <p>Y haz creer que vino de ti</p>
+                   <p>Y haz creer que vino de ti.</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -424,9 +596,48 @@ const themesData = [
         "tags": ['_OWB', 'stride'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">The Sheik of Araby</p>
+                    <br>
+                   <p>Well I'm the sheik of Araby</p>
+                   <p>Your love belongs to me</p>
+                   <p>Well at night when you're asleep</p>
+                   <p>Into your tent I'll creep</p>
+                   <p>The stars that shine above</p>
+                   <p>Will light our way to love</p>
+                   <p>You'll rule this world with me</p>
+                   <p>I'm the sheik of Araby</p>
+                   <p>Well I'm the sheik of Araby</p>
+                   <p>Your love belongs to me</p>
+                   <p>Well at night when you're asleep</p>
+                   <p>Into your tent I'll creep</p>
+                   <p>The stars that shine above</p>
+                   <p>Will light our way to love</p>
+                   <p>You'll rule this world with me</p>
+                   <p>I'm the sheik of Araby</p>
+                   <p>Well I'm the sheik of Araby</p>
+                   <p>Well I'm the sheik of Araby, yeah</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">The Sheik of Araby</p>
+                    <br>
+                   <p>"Soy el jeque de Araby,</p>
+                   <p>Tu amor me pertenece</p>
+                   <p>En la noche cuando estás dormido</p>
+                   <p>En tu tienda me arrastraré.</p>
+                   <p>Las estrellas que brillan arriba</p>
+                   <p>Iluminará nuestro camino al amor.</p>
+                   <p>Gobernarás esta tierra conmigo;</p>
+                   <p>"Soy el jeque de Araby,</p>
+                   <p>Tu amor me pertenece</p>
+                   <p>En la noche cuando estás dormido</p>
+                   <p>En tu tienda me arrastraré.</p>
+                   <p>Las estrellas que brillan arriba</p>
+                   <p>Iluminará nuestro camino al amor.</p>
+                   <p>Gobernarás esta tierra conmigo;</p>
+                   <p>"Soy el jeque de Araby,</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -443,9 +654,59 @@ const themesData = [
         "tags": ['_OWB', 'stride'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">Everybody Loves My Baby</p>
+                    <br>
+                   <p>Everybody loves my baby</p>
+                   <p>but my baby don't love nobody but me</p>
+                   <p>nobody but me</p>
+                   <p>Yes</p>
+                   <p>everybody wants my baby</p>
+                   <p>but my baby don't want nobody but me</p>
+                   <p>that's plain to see!</p>
+                   <p>I'm his sweet Judy</p>
+                   <p>and he is my loving man!</p>
+                   <p>No time to do his duty</p>
+                   <p>loves me like no other can!</p>
+                   <p>Everybody loves my baby</p>
+                   <p>but my baby don't love nobody but me</p>
+                   <p>nobody but me</p>
+                   <p>Everybody wants my baby</p>
+                   <p>but my baby don't want nobody but me</p>
+                   <p>that's plain to see!</p>
+                   <p>Now when my baby kisses me</p>
+                   <p>upon my rosy cheeks -</p>
+                   <p>I just let those kisses be</p>
+                   <p>don't wash my face for weeks!</p>
+                   <p>Everybody loves my baby...</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Fats Waller</p>
+                    <p class="title1">Everybody Loves My Baby</p>
+                    <br>
+                   <p>Todos aman a mi bebé</p>
+                   <p>pero mi bebé no ama a nadie más que a mí</p>
+                   <p>nadie excepto yo</p>
+                   <p>Sí</p>
+                   <p>todos quieren a mi bebe</p>
+                   <p>pero mi bebé no quiere a nadie más que a mí</p>
+                   <p>eso es fácil de ver!</p>
+                   <p>Soy su dulce Judy</p>
+                   <p>y él es mi hombre amoroso!</p>
+                   <p>No hay tiempo para cumplir con su deber</p>
+                   <p>me ama como ninguna otra lata!</p>
+                   <p>Todos aman a mi bebé</p>
+                   <p>pero mi bebé no ama a nadie más que a mí</p>
+                   <p>nadie excepto yo</p>
+                   <p>Todos quieren a mi bebé</p>
+                   <p>pero mi bebé no quiere a nadie más que a mí</p>
+                   <p>eso es fácil de ver!</p>
+                   <p>Ahora cuando mi bebé me besa</p>
+                   <p>sobre mis mejillas sonrosadas</p>
+                   <p>Solo dejo que esos besos sean</p>
+                   <p>¡no me laves la cara por semanas!</p>
+                   <p>Todos aman a mi bebé...</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -462,9 +723,51 @@ const themesData = [
         "tags": ['_OWB', 'pop'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">My Heart Cries for You</p>
+                    <br>
+                   <p>If you're in Arizona, I'll follow you</p>
+                   <p>If you're in Minnesota, I'll be there too</p>
+                   <p>You'll have a million chances to start anew</p>
+                   <p>Because my love is endless for you</p>
+                   <p>My heart cries for you</p>
+                   <p>Sighs for you, dies for you</p>
+                   <p>And my arms long for you</p>
+                   <p>Please come back to me</p>
+                   <p>An unimportant quarrel was what we had</p>
+                   <p>We have to learn to live with the good and bad</p>
+                   <p>Together we were happy, apart we're sad</p>
+                   <p>This loneliness is driving me mad</p>
+                   <p>My heart cries for you</p>
+                   <p>Sighs for you, dies for you</p>
+                   <p>And my arms long for you</p>
+                   <p>Please come back to me</p>
+                   <p>Please come back to me</p>
+                   <p>Please come back, come back, come back to me</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">My Heart Cries for You</p>
+                    <br>
+                   <p>Si estás en Arizona, te seguiré</p>
+                   <p>Si estás en Minnesota, yo también estaré allí.</p>
+                   <p>Tendrás un millón de oportunidades para comenzar de nuevo</p>
+                   <p>Porque mi amor es interminable para ti</p>
+                   <p>Mi corazón llora por ti</p>
+                   <p>Suspira por ti, muere por ti</p>
+                   <p>Y mis brazos te anhelan</p>
+                   <p>Por favor, vuelve a mi</p>
+                   <p>Una pelea sin importancia fue lo que tuvimos</p>
+                   <p>Tenemos que aprender a vivir con lo bueno y lo malo.</p>
+                   <p>Juntos fuimos felices, aparte estamos tristes</p>
+                   <p>Esta soledad me está volviendo loco</p>
+                   <p>Mi corazón llora por ti</p>
+                   <p>Suspira por ti, muere por ti</p>
+                   <p>Y mis brazos te anhelan</p>
+                   <p>Por favor, vuelve a mi</p>
+                   <p>Por favor, vuelve a mi</p>
+                   <p>Por favor vuelve, vuelve, vuelve a mí</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -481,9 +784,63 @@ const themesData = [
         "tags": ['_MR', 'country'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">Christopher Columbus</p>
+                    <br>
+                   <p>Mister Christopher Columbus</p>
+                   <p>Sailed the sea without a compass</p>
+                   <p>When his men began a rumpus</p>
+                   <p>Up spoke, Christopher Columbus</p>
+                   <p>There is land somewhere</p>
+                   <p>Until we get there</p>
+                   <p>We will not go wrong</p>
+                   <p>If we sing, "Swing a song"</p>
+                   <p>Since the world is round</p>
+                   <p>We'll be safe and sound</p>
+                   <p>'Till our goal is found</p>
+                   <p>We'll just keep rhythm bound</p>
+                   <p>Soon the crew was makin' merry</p>
+                   <p>Then came a yell</p>
+                   <p>"Let's drink to Isabelle</p>
+                   <p>Hum, bring the rum, ho hum"</p>
+                   <p>No more mutiny</p>
+                   <p>What a time at sea</p>
+                   <p>With diplomacy</p>
+                   <p>Christy made history</p>
+                   <p>Mister Christopher Columbus</p>
+                   <p>He used rhythm as a compass</p>
+                   <p>Music ended all the rumpus</p>
+                   <p>Wise old Christopher Columbus</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">Christopher Columbus</p>
+                    <br>
+                   <p>Señor Cristóbal Colón</p>
+                   <p>Navegó el mar sin brújula</p>
+                   <p>Cuando sus hombres comenzaron un alboroto</p>
+                   <p>Hasta habló, Cristóbal Colón</p>
+                   <p>Hay tierra en alguna parte</p>
+                   <p>Hasta que lleguemos</p>
+                   <p>No nos equivocaremos</p>
+                   <p>Si cantamos, "Swing a song"</p>
+                   <p>Como el mundo es redondo</p>
+                   <p>Estaremos sanos y salvos</p>
+                   <p>Hasta que nuestro objetivo sea encontrado</p>
+                   <p>Solo mantendremos el ritmo atado</p>
+                   <p>Pronto la tripulación se estaba alegrando</p>
+                   <p>Luego vino un grito</p>
+                   <p>"Brindemos por Isabelle</p>
+                   <p>Hum, trae el ron, ho hum "</p>
+                   <p>No más motín</p>
+                   <p>Que tiempo en el mar</p>
+                   <p>Con diplomacia</p>
+                   <p>Christy hizo historia</p>
+                   <p>Señor Cristóbal Colón</p>
+                   <p>Usó el ritmo como brújula</p>
+                   <p>La música terminó todo el alboroto</p>
+                   <p>El sabio Cristóbal Colón</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -500,9 +857,105 @@ const themesData = [
         "tags": ['_OWB', 'pop'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">Sparrow on a Treetop</p>
+                    <br>
+                   <p>In the tavern, all night sittin' in the tavern</p>
+                   <p>In the tavern singin' songs</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Though he loves his mate</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Scared of goin' home because it's too darn late</p>
+                   <p>Don't look at me, sweetheart, with scorn in your eyes</p>
+                   <p>Been out all night, gonna tell you no lies</p>
+                   <p>Stopped in one place, heard them singin' a song</p>
+                   <p>Heard them singin' a song</p>
+                   <p>Like a lonely sparrow, started singin' along</p>
+                   <p>Just singin'</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Though he loves his mate</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Scared of goin' home because it's too darn late</p>
+                   <p>In walked a blonde and, dear, she asked me to dance</p>
+                   <p>I told that blonde that there wasn't a chance</p>
+                   <p>I love my kids and my beautiful wife</p>
+                   <p>And my beautiful wife</p>
+                   <p>That's the honest truth, dear, and I swear by my life</p>
+                   <p>Just singin'</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Though he loves his mate</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Scared of goin' home because it's too darn late</p>
+                   <p>In the tavern, all night sittin' in the tavern,</p>
+                   <p>In the tavern singin' songs</p>
+                   <p>There's things I am sweetheart, and things that I ain't</p>
+                   <p>'Cause I'm a man and a man is no saint</p>
+                   <p>Won't you forgive 'cause I'm tellin' you true</p>
+                   <p>'Cause I'm tellin' you true</p>
+                   <p>I was in the tavern only thinkin' of you</p>
+                   <p>Just singin'</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Though he loves his mate</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Scared of goin' home because it's too darn late</p>
+                   <p>Just singin'</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Though he loves his mate</p>
+                   <p>Sparrow in the treetop, sparrow in the treetop</p>
+                   <p>Scared of goin' home because it's too darn late</p>
+                   <p>In the tavern, all night sittin' in the tavern,</p>
+                   <p>In the tavern singin' songs</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Guy Mitchell</p>
+                    <p class="title1">Sparrow on a Treetop</p>
+                    <br>
+                   <p>En la taberna, toda la noche sentado en la taberna</p>
+                   <p>En la taberna cantando canciones</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Aunque ama a su compañero</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Miedo de ir a casa porque es demasiado tarde</p>
+                   <p>No me mires, cariño, con desprecio en tus ojos</p>
+                   <p>Estuve fuera toda la noche, no te voy a decir mentiras</p>
+                   <p>Paré en un lugar, los escuché cantar una canción</p>
+                   <p>Los escuché cantar una canción</p>
+                   <p>Como un gorrión solitario, comenzó a cantar</p>
+                   <p>Solo cantando</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Aunque ama a su compañero</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Miedo de ir a casa porque es demasiado tarde</p>
+                   <p>Entró una rubia y, querida, me pidió que bailara</p>
+                   <p>Le dije a esa rubia que no había posibilidad</p>
+                   <p>Amo a mis hijos y a mi bella esposa</p>
+                   <p>Y mi bella esposa</p>
+                   <p>Esa es la verdad sincera, querido, y lo juro por mi vida</p>
+                   <p>Solo cantando</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Aunque ama a su compañero</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Miedo de ir a casa porque es demasiado tarde</p>
+                   <p>En la taberna, toda la noche sentada en la taberna,</p>
+                   <p>En la taberna cantando canciones</p>
+                   <p>Hay cosas que soy amor y cosas que no soy</p>
+                   <p>Porque soy un hombre y un hombre no es santo</p>
+                   <p>¿No perdonarás porque te estoy diciendo la verdad?</p>
+                   <p>Porque te estoy diciendo la verdad</p>
+                   <p>Estaba en la taberna solo pensando en ti</p>
+                   <p>Solo cantando</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Aunque ama a su compañero</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Miedo de ir a casa porque es demasiado tarde</p>
+                   <p>Solo cantando</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Aunque ama a su compañero</p>
+                   <p>Gorrión en la copa del árbol, gorrión en la copa del árbol</p>
+                   <p>Miedo de ir a casa porque es demasiado tarde</p>
+                   <p>En la taberna, toda la noche sentada en la taberna,</p>
+                   <p>En la taberna cantando canciones</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -519,9 +972,44 @@ const themesData = [
         "tags": ['_OWB', 'blues'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">A Lovely Way To Spend An Evening</p>
+                    <br>
+                    <p>Some like a night at the movies, some like a dance or a show</p>
+                   <p>Some are content with an evening spent home by the radio</p>
+                   <p>Some like to live for the moment, some like to just reminisce</p>
+                   <p>But whenever I have an evening to spend. just give me one like this</p>
+                   <p>This is a lovely way to spend an evening. can't think of anything I'd rather do</p>
+                   <p>This is a lovely way to spend an evening, can't think of anyone as lovely as you</p>
+                   <p>A casual stroll through a garden. a kiss by a lazy lagoon</p>
+                   <p>Catching a breath of moonlight, humming our favorite tune</p>
+                   <p>This is a lovely way to spend an evening</p>
+                   <p>I want to save all my nights and spend them with you</p>
+                   <p>Catching a breath of moonlight, humming our favorite tune</p>
+                   <p>This is a lovely way to spend an evening</p>
+                   <p>I want to save all my nights and spend them with you</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">A Lovely Way To Spend An Evening</p>
+                    <br>
+                    <p>Algunos como una noche en el cine, otros como un baile o un espectáculo.</p>
+                   <p>Algunos se contentan con pasar una tarde en casa junto a la radio</p>
+                   <p>A algunos les gusta vivir por el momento, a otros les gusta recordar</p>
+                   <p>Pero cada vez que tengo una noche para pasar.</p>
+                   <p>solo dame uno como este</p>
+                   <p>Esta es una manera encantadora de pasar una noche.</p>
+                   <p>No puedo pensar en nada que preferiría hacer</p>
+                   <p>Esta es una manera encantadora de pasar una noche, no puedo pensar en nadie tan encantador como tú</p>
+                   <p>Un paseo informal por un jardín.</p>
+                   <p>un beso por una laguna perezosa</p>
+                   <p>Tomando un soplo de luz de luna, tarareando nuestra canción favorita</p>
+                   <p>Esta es una manera encantadora de pasar una tarde</p>
+                   <p>Quiero salvar todas mis noches y pasarlas contigo</p>
+                   <p>Tomando un soplo de luz de luna, tarareando nuestra canción favorita</p>
+                   <p>Esta es una manera encantadora de pasar una tarde</p>
+                   <p>Quiero salvar todas mis noches y pasarlas contigo</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -538,9 +1026,61 @@ const themesData = [
         "tags": ['_OWB', 'blues'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">I Don't Want to Set the World on Fire</p>
+                    <br>
+                    <p>I don't want to set the world on fire</p>
+                   <p>I just want to start a flame in your heart</p>
+                   <p>In my heart I have but one desire</p>
+                   <p>And that one is you, no other will do</p>
+                   <p>I've lost all ambition for worldly acclaim</p>
+                   <p>I just want to be the one you love</p>
+                   <p>And with your admission that you'd feel the same</p>
+                   <p>I'll have reached the goal I'm dreaming of, believe me</p>
+                   <p>I don't want to set the world on fire</p>
+                   <p>I just want to start a flame in your heart</p>
+                   <p>I don't want to set the world on fire, honey</p>
+                   <p>I love you too much</p>
+                   <p>I just want to start a great big flame down in your heart</p>
+                   <p>You see, way down deep inside of me, darling</p>
+                   <p>I have only one desire</p>
+                   <p>And that one desire is you</p>
+                   <p>And I know, baby, ain't nobody else gonna do</p>
+                   <p>I've lost all ambition for worldly acclaim</p>
+                   <p>I just want to be the one you love</p>
+                   <p>And with your admission that you'd feel the same</p>
+                   <p>I'll have reached the goal I'm dreaming of, believe me</p>
+                   <p>I don't want to set the world on fire</p>
+                   <p>I just want to start a flame in your heart</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">I Don't Want to Set the World on Fire</p>
+                    <br>
+                    <p>No quiero prender fuego al mundo</p>
+                   <p>Solo quiero encender una llama en tu corazón</p>
+                   <p>En mi corazón solo tengo un deseo</p>
+                   <p>Y ese eres tú, nadie más lo hará</p>
+                   <p>He perdido toda ambición por la aclamación mundana</p>
+                   <p>Solo quiero ser la persona que amas</p>
+                   <p>Y con tu admisión de que sentirías lo mismo</p>
+                   <p>Habré alcanzado la meta con la que sueño, créeme</p>
+                   <p>No quiero prender fuego al mundo</p>
+                   <p>Solo quiero encender una llama en tu corazón</p>
+                   <p>No quiero prender fuego al mundo, cariño</p>
+                   <p>te amo demasiado</p>
+                   <p>Solo quiero comenzar una gran gran llama en tu corazón</p>
+                   <p>Ya ves, muy dentro de mí, cariño</p>
+                   <p>Solo tengo un deseo</p>
+                   <p>Y ese único deseo eres tú</p>
+                   <p>Y lo sé, cariño, nadie más lo hará</p>
+                   <p>He perdido toda ambición por la aclamación mundana</p>
+                   <p>Solo quiero ser la persona que amas</p>
+                   <p>Y con tu admisión de que sentirías lo mismo</p>
+                   <p>Habré alcanzado la meta con la que sueño, créeme</p>
+                   <p>No quiero prender fuego al mundo</p>
+                   <p>Solo quiero encender una llama en tu corazón</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -557,9 +1097,47 @@ const themesData = [
         "tags": ['_OWB', 'blues'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">It's All Over But The Crying</p>
+                    <br>
+                   <p>It's all over, but the crying</p>
+                   <p>And nobody's crying but me</p>
+                   <p>Friends all over know I'm trying</p>
+                   <p>To forget about how much I care for you</p>
+                   <p>It's all over, but the dreaming</p>
+                   <p>Poor little dreams that keep trying to come true</p>
+                   <p>It's all over, but the crying</p>
+                   <p>And I can't get over crying over you</p>
+                   <p>It's all over, but the crying</p>
+                   <p>And nobody's crying but me</p>
+                   <p>Friends all over know I'm trying</p>
+                   <p>To forget about how much I care for you</p>
+                   <p>It's all over, but the dreaming</p>
+                   <p>Poor little dreams that keep trying to come true</p>
+                   <p>It's all over, but the crying</p>
+                   <p>And I can't get over crying over you</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">The Ink Spots</p>
+                    <p class="title1">It's All Over But The Crying</p>
+                    <br>
+                   <p>Todo terminó pero el llanto</p>
+                   <p>Y nadie llora excepto yo</p>
+                   <p>Amigos por todas partes saben que estoy intentando</p>
+                   <p>Para olvidar lo mucho que me importas</p>
+                   <p>Se acabó todo menos el sueño</p>
+                   <p>Pobres pequeños sueños que siguen intentando hacerse realidad</p>
+                   <p>Todo terminó pero el llanto</p>
+                   <p>Y no puedo dejar de llorar por ti</p>
+                   <p>Todo terminó pero el llanto</p>
+                   <p>Y nadie llora excepto yo</p>
+                   <p>Amigos por todas partes saben que estoy intentando</p>
+                   <p>Para olvidar lo mucho que me importas</p>
+                   <p>Se acabó todo menos el sueño</p>
+                   <p>Pobres pequeños sueños que siguen intentando hacerse realidad</p>
+                   <p>Todo terminó pero el llanto</p>
+                   <p>Y no puedo dejar de llorar por ti</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -570,72 +1148,45 @@ const themesData = [
         }
     },
     {
-        "id": "m_x-1",
-        "name": "Bom",
-        "flag": "fcr",
-        "tags": ['_OWB', 'pop'],
-        "lyrics": {
-            "native":
-                    "", 
-            "esp":
-                    ""
-        },
-        "comments": [],
-        "likes": 0,
-        "dislikes": 0,
-        "views": 0,
-        "artist":{
-            "id":"m_x"
-        }
-    },
-    {
-        "id": "m_x-2",
-        "name": "Ta ostatnia niedziela",
-        "flag": "pln",
-        "tags": ['_OWB', 'pop'],
-        "lyrics": {
-            "native":
-                    "", 
-            "esp":
-                    ""
-        },
-        "comments": [],
-        "likes": 0,
-        "dislikes": 0,
-        "views": 0,
-        "artist":{
-            "id":"m_x"
-        }
-    },
-    {
-        "id": "m_x-3",
-        "name": "Maruzzella",
-        "flag": "itl",
-        "tags": ['_OWB', 'pop'],
-        "lyrics": {
-            "native":
-                    "", 
-            "esp":
-                    ""
-        },
-        "comments": [],
-        "likes": 0,
-        "dislikes": 0,
-        "views": 0,
-        "artist":{
-            "id":"m_x"
-        }
-    },
-    {
         "id": "pl-1",
         "name": "Johnny Guitar",
         "flag": "eng",
         "tags": ['_MR', 'country', 'soundtracks'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">Johnny Guitar</p>
+                    <br>
+                   <p>Play the guitar, play it again, my Johnny</p>
+                   <p>Maybe you're cold but you're so warm inside</p>
+                   <p>I was always a fool for my Johnny</p>
+                   <p>For the one they call Johnny Guitar</p>
+                   <p>Play it again, Johnny Guitar</p>
+                   <p>What if you go, what if you stay, I love you</p>
+                   <p>But if you're cruel, you can be kind, I know</p>
+                   <p>There was never a man like my Johnny</p>
+                   <p>Like the one they call Johnny Guitar</p>
+                   <p>There was never a man like my Johnny</p>
+                   <p>Like the one they call Johnny Guitar</p>
+                   <p>Play it again, Johnny Guitar</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">Johnny Guitar</p>
+                    <br>
+                   <p>Toca la guitarra, tócala otra vez, mi Johnny</p>
+                   <p>Tal vez tienes frío pero eres tan cálido por dentro</p>
+                   <p>Siempre fui un tonto por mi Johnny</p>
+                   <p>Para el que llaman Johnny Guitar</p>
+                   <p>Toca de nuevo, Johnny Guitar</p>
+                   <p>¿Qué pasa si te vas, qué pasa si te quedas, te amo</p>
+                   <p>Pero si eres cruel, puedes ser amable, lo sé</p>
+                   <p>Nunca hubo un hombre como mi Johnny</p>
+                   <p>Como el que llaman Johnny Guitar</p>
+                   <p>Nunca hubo un hombre como mi Johnny</p>
+                   <p>Como el que llaman Johnny Guitar</p>
+                   <p>Toca de nuevo, Johnny Guitar</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -652,9 +1203,55 @@ const themesData = [
         "tags": ['_OWB', 'pop'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">He's a Tramp</p>
+                    <br>
+                   <p>What a dog</p>
+                   <p>What a dog</p>
+                   <p>He's a tramp, but I love him</p>
+                   <p>Breaks a new heart every day</p>
+                   <p>He's a tramp, they adore him</p>
+                   <p>And I only hope he'll stay that way</p>
+                   <p>He's a tramp, he's a scoundrel</p>
+                   <p>He's a rounder, he's a cad</p>
+                   <p>He's a tramp, but I love him</p>
+                   <p>Yes, even I have got it pretty bad</p>
+                   <p>You can never tell when he'll show up</p>
+                   <p>He gives you plenty of trouble</p>
+                   <p>I guess he's just a no 'count pup</p>
+                   <p>But I wish that he were double</p>
+                   <p>He's a tramp, he's a rover</p>
+                   <p>And there's nothing more to say</p>
+                   <p>If he's a tramp, he's a good one</p>
+                   <p>And I wish that I could travel his way</p>
+                   <p>Wish that I could travel his way</p>
+                   <p>Wish that I could travel his way</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">He's a Tramp</p>
+                    <br>
+                   <p>Que perro</p>
+                   <p>Que perro</p>
+                   <p>Es un vagabundo, pero lo amo.</p>
+                   <p>Rompe un nuevo corazón todos los días</p>
+                   <p>Es un vagabundo, lo adoran</p>
+                   <p>Y solo espero que se quede así</p>
+                   <p>Es un vagabundo, es un sinvergüenza.</p>
+                   <p>Él es más redondo, es un cad</p>
+                   <p>Es un vagabundo, pero lo amo.</p>
+                   <p>Sí, incluso yo lo tengo bastante mal</p>
+                   <p>Nunca se sabe cuándo aparecerá</p>
+                   <p>Te da muchos problemas</p>
+                   <p>Supongo que solo es un cachorro sin contar</p>
+                   <p>Pero desearía que fuera doble</p>
+                   <p>Es un vagabundo, es un vagabundo</p>
+                   <p>Y no hay nada más que decir.</p>
+                   <p>Si es un vagabundo, es bueno.</p>
+                   <p>Y desearía poder viajar por su camino</p>
+                   <p>Desearía poder viajar por su camino</p>
+                   <p>Desearía poder viajar por su camino</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,
@@ -671,9 +1268,75 @@ const themesData = [
         "tags": ['_OWB', 'pop'],
         "lyrics": {
             "native":
-                    "", 
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">Black Coffee</p>
+                    <br>
+                   <p>I'm feelin' mighty lonesome</p>
+                   <p>Haven't slept a wink</p>
+                   <p>I walk the floor and watch the door</p>
+                   <p>And in between I drink</p>
+                   <p>Black coffee</p>
+                   <p>Love's a hand-me-down brew</p>
+                   <p>I'll never know a Sunday</p>
+                   <p>In this weekday room</p>
+                   <p>I'm talkin' to the shadows</p>
+                   <p>One o'clock 'til four</p>
+                   <p>And Lord, how slow the moments go</p>
+                   <p>When all I do is pour</p>
+                   <p>Black coffee</p>
+                   <p>Since the blues caught my eye</p>
+                   <p>I'm hangin' out on Monday</p>
+                   <p>My Sunday dreams to dry</p>
+                   <p>Now man was born to go a lovin'</p>
+                   <p>But was a woman born to weep and fret</p>
+                   <p>To stay at home and tend her oven</p>
+                   <p>And down her past regrets</p>
+                   <p>In coffee and cigarettes</p>
+                   <p>I'm moonin' all the mornin'</p>
+                   <p>Moanin' all the night</p>
+                   <p>And in between it's nicotine</p>
+                   <p>And not much heart to fight</p>
+                   <p>Black coffee</p>
+                   <p>Feelin' low as the ground</p>
+                   <p>It's drivin' me crazy</p>
+                   <p>This waitin' for my baby</p>
+                   <p>To maybe come around</p>
+                   <p class="title">-</p>`, 
             "esp":
-                    ""
+                    `<p class="title">Peggy Lee</p>
+                    <p class="title1">Black Coffee</p>
+                    <br>
+                   <p>Me siento poderoso solo</p>
+                   <p>No he dormido un guiño</p>
+                   <p>Camino por el piso y miro la puerta</p>
+                   <p>Y en el medio bebo</p>
+                   <p>Café negro</p>
+                   <p>El amor es una infusión</p>
+                   <p>Nunca sabré un domingo</p>
+                   <p>En esta sala de lunes a viernes</p>
+                   <p>Estoy hablando con las sombras</p>
+                   <p>La una hasta las cuatro</p>
+                   <p>Y Señor, qué lento son los momentos</p>
+                   <p>Cuando todo lo que hago es verter</p>
+                   <p>Café negro</p>
+                   <p>Desde que la tristeza me llamó la atención</p>
+                   <p>Estoy saliendo el lunes</p>
+                   <p>Mi domingo sueña a secarse</p>
+                   <p>Ahora el hombre nació para amar</p>
+                   <p>Pero era una mujer nacida para llorar y preocuparse</p>
+                   <p>Quedarse en casa y cuidar su horno.</p>
+                   <p>Y abajo sus remordimientos pasados</p>
+                   <p>En café y cigarrillos</p>
+                   <p>Estoy en la luna toda la mañana</p>
+                   <p>Gimiendo toda la noche</p>
+                   <p>Y en el medio es nicotina</p>
+                   <p>Y no hay mucho corazón para luchar</p>
+                   <p>Café negro</p>
+                   <p>Sintiéndome bajo como el suelo</p>
+                   <p>Me está volviendo loco</p>
+                   <p>Esta esperando a mi bebé</p>
+                   <p>Para tal vez venir</p>
+                   <p class="title">-</p>`
         },
         "comments": [],
         "likes": 0,

@@ -30,7 +30,10 @@ export class NotificationManage{
                     setTimeout(()=>{
                         setTimeout(()=>{
                             GlobalVariables.notificationIsShowing = false;
-                            NotificationManage.resetAlert();
+                            GlobalVariables.notificationStatus = '';
+                            setTimeout(() => {
+                                NotificationManage.resetAlert();
+                            }, 1500);
                         }, 1500);
                     }, time);
                 break;

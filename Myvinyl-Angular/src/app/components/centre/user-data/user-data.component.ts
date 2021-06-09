@@ -4,6 +4,7 @@ import { AuthorizationService } from 'src/app/services/autorization-service/auth
 import { DataManage } from 'src/utils/tools/DataManage';
 import { ManageComponent } from 'src/utils/tools/ManageComponent';
 import { ManageUser } from 'src/utils/tools/ManageUser';
+import { NotificationManage } from 'src/utils/tools/NotificationManage';
 import { sesionValues } from 'src/utils/variables/sessionVariables';
 import { TooltipValues, Variables } from 'src/utils/variables/variables';
 
@@ -23,12 +24,15 @@ export class UserDataComponent implements OnInit {
   constructor(public authorization: AuthorizationService, private manageUser: ManageUser, private router: Router, private route:ActivatedRoute, private manageComponent: ManageComponent) { }
 
   ngOnInit(): void {
-    this.manageComponent.setLastURL();
+    this.manageComponent.setLastURL();console.log('joderrrrrrrrrrr')
     this.manageUser.checkToken();
     this.manageUser.getUserDataFromDataBase().then(()=>{
-      this.sessionValues.activeUser = sesionValues.activeUser;
+      this.sessionValues.activeUser = sesionValues.activeUser;console.log(sesionValues.activeUser)
       if(this.sessionValues.activeUser.name == '@Usuario'){
         this.authorization.destroySession();
+      }
+      else if(!sesionValues.activeUser.activeAccount){
+        NotificationManage.showMessage(`Parece que tu cuenta no está activada, recuerda que si no la activas en treinta días será eliminada.`, true);
       }
     });
   }
