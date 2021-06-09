@@ -51,9 +51,9 @@ async function singUp(req, res){
       case 'verification':
 
         let protocol = 'http';
-        let domain = '3.15.187.168';
-        let port = '2525';
-        let path = `${protocol}://${domain}:${port}#/Verificar/${data.code}`;
+        let domain = 'myvinyl.es';
+        let port = '';
+        let path = `${protocol}://${domain}/#/Verificar/${data.code}`;
 
         template = template.replace(/<!-- name -->/g, data.name);
         template = template.replace(/<!-- mail -->/g, data.email);

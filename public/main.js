@@ -10092,7 +10092,7 @@ const SearchQuery = {
 const Variables = {
     candyIdWhiteList: ['candy-home'],
     candyDeadEnd: ['theme'],
-    host: '3.143.232.30',
+    host: 'localhost',
     port: '2525',
     range: { 0: 'User', 1: 'Admin' }
 };
