@@ -32,6 +32,7 @@ export class VerifyUserComponent implements OnInit {
             let user = sucess.user;
             this.statusMessage = 'La cuenta se ha verifcado correctamente.';
             this.status = true;
+            localStorage.setItem('sessionToken', sucess.token); 
             User.setUser(user.name, user.admin, user.date, user.description, user.themeLists, user.email, user.activeAccount);
             this.startCheckAnimation();
             let interval;
