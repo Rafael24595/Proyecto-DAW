@@ -204,7 +204,7 @@ export class ThemeInformationComponent implements OnInit {
         this.dislikesBarColor = 'gray';
       }
       else{
-        this.dislikesBarColor = 'orange';
+        this.dislikesBarColor = 'sandybrown';
       }
     }
   }

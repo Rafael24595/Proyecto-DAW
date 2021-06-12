@@ -4,8 +4,8 @@ export const Color_Vars = {
         visible: 'initial'
     },
     bar_progress_color:{
-        pause: '#820000',
-        play: '#e60f0f',
+        pause: '#750b20',
+        play: '#dc143c',
         reverse_play: '#FF6600',
         reverse_rause: '#993D00'
     },

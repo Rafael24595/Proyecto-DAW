@@ -2,11 +2,11 @@
     <div *ngIf='artist'>
         <div class="display-inline" style="width: 60%; min-height: 500px; background-color: rgba(255,255,255, 0.1); padding: 25px; box-sizing: border-box;">
             <div style="float: left; margin-right: 10px; margin-bottom: 0px;">
-                <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5);" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
+                <img style="width: 200px; border-radius: 50%; border: 2px solid rgba(25, 25, 25, 0.5); margin-right: 16px;" src="{{mediaPath}}/images/artists/{{artist.id_artist}}.png" (error)="updateUrl($event, 'artist')">
                 <span *ngIf='isAdmin' id="pencil-writting-animation" class="display-inline" style="vertical-align: top;">
                     <span tooltip="Editar" [options]="TooltipValues" class="my-vinyl-icons-font pencil-writting writting cursor-pointer display-inline font-size-150" (click)='showArtistForm({attrName:"avatar", attrId:artist.id_artist, value:artist.id_artist})'>+</span>
                 </span>
-                <p style="margin-top: 10px; margin-bottom: 5px;">
+                <p style="margin-top: 10px; margin-bottom: 5px; text-align: center;">
                     <span class="attr-name"> Nombre: </span>
                     <span>&nbsp;</span>
                     <span>{{artist.name}} {{artist.surname}}</span>

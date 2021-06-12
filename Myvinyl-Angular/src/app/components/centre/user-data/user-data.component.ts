@@ -32,7 +32,7 @@ export class UserDataComponent implements OnInit {
         this.authorization.destroySession();
       }
       else if(!sesionValues.activeUser.activeAccount){
-        NotificationManage.showMessage(`Parece que tu cuenta no está activada, recuerda que si no la activas en treinta días será eliminada.`, true);
+        NotificationManage.showMessage(`Parece que tu cuenta no está activada, recuerda que si no la activas en treinta días desde la creación de la misma será eliminada.`, true);
       }
     });
   }

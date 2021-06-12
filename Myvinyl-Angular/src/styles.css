@@ -678,7 +678,7 @@ input{
 	z-index: 20;
 }
 #notification-container.show{
-	margin-top: 10%;
+	margin-top: 200px;
 	transition: margin-top 1s;
 }
 #close-alert{

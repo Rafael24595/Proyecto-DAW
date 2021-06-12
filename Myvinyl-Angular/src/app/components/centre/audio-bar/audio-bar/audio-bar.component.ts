@@ -23,9 +23,14 @@ export class AudioBarComponent implements OnInit {
 
   ngOnInit(): void { console.log(this.ajustableWidth)
 
-    if(window.innerWidth <= 1520){console.log('inx')
+    if(window.innerWidth <= 1520){
       this.gearShow = true;
     }
+
+    window.addEventListener("click", (event)=>{
+      let element = event.target as HTMLElement;
+      this.checkClickOutGear(element);
+    });
 
     window.onresize = ()=>{
       let element = document.getElementById('bar-ajustable-width');
@@ -42,6 +47,7 @@ export class AudioBarComponent implements OnInit {
       this.setRandomList();
       this.setLoopAudio();
       this.setLoopList();
+      this.setReverse();
     }
 
     setTimeout(()=>{
@@ -119,6 +125,20 @@ export class AudioBarComponent implements OnInit {
     }
     this.comunicationService.sendReproductorDataUnsubscribe();
     this.comunicationService.sendReproductorViewDataUnsubscribe();
+  }
+
+  checkClickOutGear(element: HTMLElement){
+    if(element){
+      if(element.id != 'button-gear-container'){
+        let parentElement = element.parentElement;
+        if(parentElement){
+          this.checkClickOutGear(parentElement)
+        }
+        else if(this.buttonContainerState == 'show'){
+          this.showButtonContainer();
+        }
+      }
+    }
   }
 
   greatBar = 100;

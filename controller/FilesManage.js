@@ -173,19 +173,19 @@ async function uploadFile(req, res){
     switch (fileType){
 
         case 'user_avatar':
-            folder = 'public/assets/media/image/users';
+            folder = 'public/assets/media/images/users';
         break;
 
         case 'artist_avatar':
-            folder = 'public/assets/media/image/artists';
+            folder = 'public/assets/media/images/artists';
         break;
 
         case 'theme_flag':
-            folder = 'public/assets/media/image/flags';
+            folder = 'public/assets/media/images/flags';
         break;
 
         case 'theme_cover':
-            folder = 'public/assets/media/image/covers';
+            folder = 'public/assets/media/images/covers';
         break;
 
         case 'theme_audio':
