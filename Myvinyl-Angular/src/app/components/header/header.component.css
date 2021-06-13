@@ -12,6 +12,7 @@
     margin-left: 20px;
     top: 50%;
     height: 90%;
+	max-height: 300px;
     transform: translateY(-50%);
     cursor: pointer;
 
