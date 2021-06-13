@@ -308,9 +308,11 @@
                     </div>
                 </div>
                 <textarea id="{{inputAttr}}" *ngIf='inputAttr == "description"' name="" id="" cols="30" rows="10" [(ngModel)]="inputValue"></textarea>
-                <p *ngIf='formErr.text != ""'>{{formErr.text}}</p>
+                <p *ngIf='formErr.text != ""' style="margin-left: 10px;" class="text-error">{{formErr.text}}</p>
             </label>
-            <br><br>
+            <ng-container *ngIf='formErr.text == ""'>
+                <br><br>
+            </ng-container>
             <button class="black-button" style="margin-bottom: 0px;" (click)='confirmFrom()' >Modificar</button>
             <button class="black-button" style="margin-bottom: 0px;"  (click)='clearForm()' >Cancelar</button>
         </div>

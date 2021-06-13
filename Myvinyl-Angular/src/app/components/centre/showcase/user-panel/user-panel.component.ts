@@ -480,7 +480,7 @@ export class UserPanelComponent implements OnInit {
 
   }
 
-  async modifyPassword(event:Event, exit?:number){
+  modifyPassword(event:Event, exit?:number){
 
     let keyCode:KeyboardEvent | string = event as KeyboardEvent;
     keyCode = keyCode.code;
@@ -525,7 +525,7 @@ export class UserPanelComponent implements OnInit {
         case 2:
           if(this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value){
             let password =  FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
-            let sucess = await this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
+            let sucess = this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
             if(sucess){
               this.resetPasswordInput();
             }
@@ -541,7 +541,7 @@ export class UserPanelComponent implements OnInit {
 
   }
 
-  async modifyData(data:{event:KeyboardEvent | FocusEvent | Blur, attribute:string}){
+  modifyData(data:{event:KeyboardEvent | FocusEvent | Blur, attribute:string}){
     let attribute = data.attribute;
     let keyCode:KeyboardEvent | string | undefined = data.event as KeyboardEvent;
     keyCode = (keyCode.code) ? keyCode.code : undefined;
@@ -568,7 +568,7 @@ export class UserPanelComponent implements OnInit {
               oldAttribute = this.ProfileData.name; 
               newAttribute = this.modifyValuesData.modifyUserName.value; 
               input = this.modifyValuesData.modifyUserName;
-              let sucess = await this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+              let sucess = this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
               if(sucess){
                 this.router.navigate([`/Profile/${newAttribute}`]);
               }

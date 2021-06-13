@@ -62,7 +62,7 @@
                             <img style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/new_cover.png">
                         </div>
                         <div style="vertical-align: middle;" class="display-inline">
-                            <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">Nuevo tema</p> 
+                            <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span class="my-vinyl-icons-font font-size-150" style="vertical-align: middle;"><</span>&nbsp;&nbsp;Nuevo</p> 
                         </div>
                     </div>
                     <div *ngFor='let theme of artist.themeList' class="container-card" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
@@ -149,7 +149,7 @@
                             <br>
                         </div>
                         <div *ngIf='formErr.text != ""'>
-                            <p class="text-error" style="text-align: center;">{{formErr.text}}</p>
+                            <p style="margin-left: 10px; text-align: center;" class="text-error">{{formErr.text}}</p>
                         </div>
                     </ng-container>
                     <ng-container *ngIf='inputAttr == "name"'>
@@ -167,7 +167,7 @@
                             <label for="name"><p style="margin: 0px; margin-bottom: 10px;">Nombre: </p>
                                 <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newTheme.name">
                                 <ng-container *ngIf='nameErr.text != ""'>
-                                    <p class="text-error">{{nameErr.text}}</p>
+                                    <p style="margin-left: 10px;" class="text-error">{{nameErr.text}}</p>
                                 </ng-container>
                                 <ng-container *ngIf='nameErr.text == ""'>
                                     <br><br>
@@ -180,7 +180,7 @@
                                 </div>
                                 <ng-container *ngIf='coverErr.text != ""'>
                                     <br>
-                                    <p class="text-error" style="display: inline-block;">{{coverErr.text}}</p>
+                                    <p style="margin-left: 10px; display: inline-block;" class="text-error">{{coverErr.text}}</p>
                                 </ng-container>
                                 <ng-container *ngIf='coverErr.text == ""'>
                                     <br>
@@ -189,7 +189,7 @@
                             <br><br>
                             <label for="flag"><p style="margin: 0px; margin-bottom: 10px;">Idioma: </p>
                                 <input id="flag"  type="text" class="{{flagErr.class}}" [(ngModel)]="newTheme.flag" (keyup)="searchFlag()">
-                                <p *ngIf='flagErr.text != ""'>{{flagErr.text}}</p>
+                                <p *ngIf='flagErr.text != ""' style="margin-left: 10px;" class="text-error">{{flagErr.text}}</p>
                                 <br><br>
                                 <input id="flagFile" type="file" class="{{flagFileErr.class}}" [(ngModel)]="newTheme.flagFile" (change)='setImagePreview({input:"flag", preview:"flagFile", errObj:flagFileErr})'>
                                 <div class="flag-back-preview" style="display: inline-block; position: absolute; margin-left: 60px; transform: translateY(-36%);">
@@ -197,7 +197,7 @@
                                 </div>
                                 <ng-container *ngIf='flagFileErr.text != ""'>
                                     <br>
-                                    <p class="text-error" style="display: inline-block;">{{flagFileErr.text}}</p>
+                                    <p style="margin-left: 10px; display: inline-block;" class="text-error">{{flagFileErr.text}}</p>
                                 </ng-container>
                                 <ng-container *ngIf='flagFileErr.text == ""'>
                                     <br>
@@ -298,7 +298,7 @@
                             <br><br>
                             <label for="theme"><p style="margin: 0px; margin-bottom: 10px;">Tema: </p>
                                 <input id="themeFile" type="file" class="{{themeErr.class}}" [(ngModel)]="newTheme.themeFile" (change)='checkAudioFile()'>
-                                <p *ngIf='themeErr.text != ""'>{{themeErr.text}}</p>
+                                <p *ngIf='themeErr.text != ""' style="margin-left: 10px;" class="text-error">{{themeErr.text}}</p>
                             </label>
                         </div>
                     </ng-container>

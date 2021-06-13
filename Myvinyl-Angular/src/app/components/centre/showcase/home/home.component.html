@@ -44,7 +44,7 @@
                             <div class="display-inline avatar-back" style="height: 100px; width: 100px; margin-left: 15px; float: right; transform: translateY(15%);">
                                 <img id="avatarPreview" style="height: 100px;" src="{{mediaPath}}/images/users/default-profile.png">
                             </div>
-                            <p *ngIf='avatarErr.text != ""'>{{avatarErr.text}}</p>
+                            <p *ngIf='avatarErr.text != ""' style="margin-left: 10px;" class="text-error">{{avatarErr.text}}</p>
                         </div>
                     </label>
                 </div>
@@ -53,11 +53,11 @@
                     <div class="display-inline" style="width: 50%;">
                         <label for="id"><p>Id: </p>
                             <input  type="text" class="{{idErr.class}}" [(ngModel)]="newArtist.id">
-                            <p *ngIf='idErr.text != ""'>{{idErr.text}}</p>
+                            <p *ngIf='idErr.text != ""'  style="margin-left: 10px;" class="text-error">{{idErr.text}}</p>
                         </label>
                         <label for="name"><p>Nombre: </p>
                             <input  type="text" class="{{nameErr.class}}" [(ngModel)]="newArtist.name">
-                            <p *ngIf='nameErr.text != ""'>{{idErr.text}}</p>
+                            <p *ngIf='nameErr.text != ""' style="margin-left: 10px;" class="text-error">{{nameErr.text}}</p>
                         </label>
                         <label for="surname"><p>Apellidos: </p>
                             <input  type="text" [(ngModel)]="newArtist.surname">

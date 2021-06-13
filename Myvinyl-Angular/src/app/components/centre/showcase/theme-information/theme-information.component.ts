@@ -129,6 +129,7 @@ export class ThemeInformationComponent implements OnInit {
 
   setDefaultValues(themeData){
     this.theme = new Themes(themeData.id,themeData.name,themeData.flag,themeData.tags,themeData.lyrics, themeData.artist, themeData.comments, themeData.likes, themeData.dislikes, themeData.views);
+    this.flag = themeData.flag;
     this.lyrics = this.theme.lyrics.native;
     this.user = sesionValues.activeUser.name;
     this.userThemeLists = sesionValues.activeUser.themeLists;

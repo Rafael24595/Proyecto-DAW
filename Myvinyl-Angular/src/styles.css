@@ -644,10 +644,10 @@ input{
 	z-index: 15;
 }
 .sublist-option{
-	color: rgba(175, 175, 180, 1);
+	color: rgba(200, 200, 200, 1);
 }
 .sublist-option:hover{
-	color: rgba(195, 195, 200, 1);
+	color: rgba(255, 255, 255, 1);
 }
 #black-screen{
 	position: fixed;
