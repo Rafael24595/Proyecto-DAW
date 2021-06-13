@@ -164,7 +164,7 @@
                 <div style="max-height: 650px; overflow: auto; padding: 15px;">
                     <div *ngFor='let theme of suggestThemes' class="container-card" style="text-align: left; background-color: gray; padding: 10px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                         <div style="vertical-align: middle; height: 65px; min-width: 75px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                            <img style="width: 65px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
+                            <img style="width: 65px; border: 2px solid; box-sizing: border-box;" class="cursor-pointer" [routerLink]='["/Theme"]' [queryParams]='{id:theme.id}' src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         </div>
                         <div style="text-align: left; width: 55%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;">
