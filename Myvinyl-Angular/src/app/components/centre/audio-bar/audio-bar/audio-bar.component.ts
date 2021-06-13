@@ -157,7 +157,7 @@ export class AudioBarComponent implements OnInit {
       this.buttonResponsiveI = '';
       this.buttonGear = false;
       this.greatBar = 90
-      this.playLogo = (this.buttonGear) ? '"' : 'L' ;
+      this.playLogo = (this.buttonGear) ? '!' : 'K' ;
     }
   }
   
@@ -330,14 +330,14 @@ export class AudioBarComponent implements OnInit {
       if(this.audio.paused){
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_rause : Color_Vars.bar_progress_color.pause; 
         this.playButtonColor = Color_Vars.button_play_color.pause;
-        this.playLogo = (this.buttonGear) ? '"' : 'L' ;
+        this.playLogo = (this.buttonGear) ? '!' : 'K' ;
         sesionValues.reproductionState = false;
         this.playText = 'Pausar';
       }
       else{
         this.barColor = (this.isReverse) ? Color_Vars.bar_progress_color.reverse_play : Color_Vars.bar_progress_color.play;
         this.playButtonColor = Color_Vars.button_play_color.play;
-        this.playLogo = (this.buttonGear) ? '!' : 'K' ;
+        this.playLogo = (this.buttonGear) ? '"' : 'L' ;
         sesionValues.reproductionState = true;
         this.playText = 'Reproducir';
       }

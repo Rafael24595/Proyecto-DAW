@@ -1639,7 +1639,7 @@ class AudioBarComponent {
             this.buttonResponsiveI = '';
             this.buttonGear = false;
             this.greatBar = 90;
-            this.playLogo = (this.buttonGear) ? '"' : 'L';
+            this.playLogo = (this.buttonGear) ? '!' : 'K';
         }
     }
     /////////////////////////
@@ -1729,14 +1729,14 @@ class AudioBarComponent {
             if (this.audio.paused) {
                 this.barColor = (this.isReverse) ? _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.bar_progress_color.reverse_rause : _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.bar_progress_color.pause;
                 this.playButtonColor = _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.button_play_color.pause;
-                this.playLogo = (this.buttonGear) ? '"' : 'L';
+                this.playLogo = (this.buttonGear) ? '!' : 'K';
                 src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_3__.sesionValues.reproductionState = false;
                 this.playText = 'Pausar';
             }
             else {
                 this.barColor = (this.isReverse) ? _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.bar_progress_color.reverse_play : _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.bar_progress_color.play;
                 this.playButtonColor = _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.button_play_color.play;
-                this.playLogo = (this.buttonGear) ? '!' : 'K';
+                this.playLogo = (this.buttonGear) ? '"' : 'L';
                 src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_3__.sesionValues.reproductionState = true;
                 this.playText = 'Reproducir';
             }
