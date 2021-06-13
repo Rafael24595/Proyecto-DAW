@@ -19,8 +19,8 @@ let connectWithRetry= function() {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     auth: { authSource: "admin" },
-    user: "root",
-    pass: "example"
+    user: process.env.DB_NAME,
+    pass: process.env.DB_PASSWORD
   });
 };
 
