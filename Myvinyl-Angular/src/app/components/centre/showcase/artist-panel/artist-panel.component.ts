@@ -213,7 +213,7 @@ export class ArtistPanelComponent implements OnInit {
           await DataManage.toAsync((resolve: (value: unknown) => void)=>{
             if(this.artist){
               this.DatabaseConexService.setNewTheme(this.artist?.id_artist, name, flag, tags, {native:lyricsNative, esp:lyricsEsp}, sesionValues.activeUser.name).subscribe(
-                sucess=>{console.log(sucess)
+                sucess=>{
                   if(this.artist) this.artist.setTheme(sucess.message);
                   if(hasFiles){
                     this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
@@ -446,7 +446,7 @@ export class ArtistPanelComponent implements OnInit {
 
   searchFlag(){
     let isFlagFileUpload = document.getElementById('flagFile') as HTMLInputElement;
-    console.log(this.availableFlags, this.newTheme.flag)
+    
     if(!isFlagFileUpload || isFlagFileUpload.files && isFlagFileUpload.files.length == 0){
       let flagPreview = document.getElementById('flagPreview') as HTMLImageElement;
       let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'not_found';
@@ -475,7 +475,7 @@ export class ArtistPanelComponent implements OnInit {
       break;
 
       case 'cover':
-        files = document.getElementById('coverFile') as HTMLInputElement;console.log(files)
+        files = document.getElementById('coverFile') as HTMLInputElement;
         imagePreview = document.getElementById('coverPreview') as HTMLImageElement;
       break;
 
@@ -500,7 +500,7 @@ export class ArtistPanelComponent implements OnInit {
     });
 
     mode.errObj.text = errMessage as string;
-    mode.errObj.class = errClass as string;console.log(errClass, errMessage)
+    mode.errObj.class = errClass as string;
 
     if(mode.input == 'cover'){
       this.coverErr.text = errMessage as string;

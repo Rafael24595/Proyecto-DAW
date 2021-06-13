@@ -60,9 +60,9 @@ async function publishComment(req, res){
   }
 
   async function thumbValueTheme(req, res){
-    let themeId = req.params.theme;console.log(themeId);
-    let thumbValue = req.params.value;console.log(thumbValue);
-    let userName = req.body.userName;console.log(userName);
+    let themeId = req.params.theme;
+    let thumbValue = req.params.value;
+    let userName = req.body.userName;
 
     let user = await User.findOne({name:userName}).lean();
     let theme = await Theme.findOne({"id":themeId});
@@ -131,7 +131,7 @@ async function publishComment(req, res){
       if(likesList != -1) user.themeLists.find(list=>{return list.name == `@likes-list`}).list.splice(likesList, 1);
 
       let dislikesList = user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.map(themeData=>{return themeData.themeId}).indexOf(themeInList.themeId);
-      if(dislikesList != -1) user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.splice(dislikesList, 1);console.log(dislikesList)
+      if(dislikesList != -1) user.themeLists.find(list=>{return list.name == `@dislikes-list`}).list.splice(dislikesList, 1);
 
       await User.findOneAndUpdate({name:user.name}, user);
 

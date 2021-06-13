@@ -224,9 +224,9 @@ const Theme = mongoose.model('Theme');
 
   async function reassignArtistThemes(req, res){
     try {
-      let mainArtistId = req.params.main;console.log(mainArtistId)
-      let targetArtistId = req.params.target;console.log(targetArtistId)
-      let userName = req.body.userName;console.log(userName)
+      let mainArtistId = req.params.main;
+      let targetArtistId = req.params.target;
+      let userName = req.body.userName;
       if(userName == req.userNameToken && req.isAdmin){
         let themes = await Theme.find({"artist.id":mainArtistId}).lean();
         if(themes != null){
@@ -251,10 +251,10 @@ const Theme = mongoose.model('Theme');
   }
 
   async function reassignArtistThemeSingle(req, res){
-    let mainArtistId = req.params.main;console.log(mainArtistId)
-    let targetArtistId = req.params.target;console.log(targetArtistId)
-    let oldThemeId = req.params.id;console.log(oldThemeId)
-    let userName = req.body.userName;console.log(userName)
+    let mainArtistId = req.params.main;
+    let targetArtistId = req.params.target;
+    let oldThemeId = req.params.id;
+    let userName = req.body.userName;
     if(userName == req.userNameToken && req.isAdmin){
       let status = await Tools.updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId);
       if(status){
@@ -338,7 +338,7 @@ const Theme = mongoose.model('Theme');
           "artist":{
             "id":artistId
           }
-        });console.log('wha!')
+        });
 
         await newTheme.save();
         

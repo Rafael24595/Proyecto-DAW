@@ -24,7 +24,7 @@ export class VerifyUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params =>{
-      let code = params['code'];console.log(code);
+      let code = params['code'];
       if(code && code != ''){
         this.DatabaseConexService.checkActivationCode(code).subscribe(
           sucess=>{

@@ -133,11 +133,11 @@ export class ThemeInformationComponent implements OnInit {
     this.user = sesionValues.activeUser.name;
     this.userThemeLists = sesionValues.activeUser.themeLists;
     this.isSessionUser = (sesionValues.activeUser.email != undefined);
-    this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);console.log(this.isLike);
+    this.isLike = sesionValues.activeUser.isThemeLike(themeData.id);
     this.isAdmin = (parseInt(sesionValues.activeUser.admin) == 1) ? true : false;
 
     this.checkForLastComment();
-    this.calculateLikesPercentage();console.log(this.isLike , themeData.likes , this.isLike , themeData.dislikes)
+    this.calculateLikesPercentage();
     if(this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
       let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
       //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
@@ -330,10 +330,10 @@ export class ThemeInformationComponent implements OnInit {
     let errMessage: undefined | string;
     let errClass: undefined | string;
 
-    files = document.getElementById(mode) as HTMLInputElement;console.log(files)
-    imagePreview = document.getElementById('imagePreview') as HTMLImageElement;console.log(imagePreview)
+    files = document.getElementById(mode) as HTMLInputElement;
+    imagePreview = document.getElementById('imagePreview') as HTMLImageElement;
 
-    errMessage = await new Promise(resolve=>{
+    let errFile:{errMessage: undefined | string, errClass: undefined | string} = await new Promise(resolve=>{
       reader.onload = function(){
         let result = reader.result as string;
         if (imagePreview && result && result.split(";")[0].split("/")[1] == "png"){
@@ -345,14 +345,14 @@ export class ThemeInformationComponent implements OnInit {
           errClass = 'input-error';
           errMessage = 'Formato incorrecto';
         }
-        resolve(errMessage)
+        resolve({errMessage, errClass})
       }
       if(files && files.files)
       reader.readAsDataURL(files.files[0]);
     });
 
-    this.formErr.text = errMessage as string;
-    this.formErrFile.class = errClass as string;
+    this.formErr.text = errFile.errMessage as string;
+    this.formErrFile.class = errFile.errClass as string;
 
   }
 
@@ -362,13 +362,29 @@ export class ThemeInformationComponent implements OnInit {
       let extension = files.files[0].name.split('.')[1];
       if(extension == 'mp3'){
         this.formErr.text = '';
-        this.formErr.class = '';
+        this.formErrFile.class = '';
       }
       else{
         this.formErr.text = 'Formato incorrecto';
         this.formErrFile.class = 'input-error';
       }
     }
+  }
+
+  refreshImages(){
+    var images = document.images;
+      for (var i=0; i<images.length; i++) {
+          images[i].src = images[i].src;
+      }
+  }
+
+  refreshAudios(){
+
+    var audio = document.getElementsByTagName('audio');
+      for (var i=0; i<audio.length; i++) {
+        audio[i].src = audio[i].src;
+      }
+
   }
 
   showThemeForm(attribute:{attrName:string, attrId:string | string[], value:string | string[], secondValue?:string}){
@@ -473,6 +489,7 @@ export class ThemeInformationComponent implements OnInit {
             await DataManage.toAsync((resolve: (value: unknown) => void)=>{
               this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(
                 sucess=>{
+                  this.refreshImages();
                   sendSucess = true;
                   resolve(sendSucess);
                 },

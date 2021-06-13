@@ -24,10 +24,10 @@ export class UserDataComponent implements OnInit {
   constructor(public authorization: AuthorizationService, private manageUser: ManageUser, private router: Router, private route:ActivatedRoute, private manageComponent: ManageComponent) { }
 
   ngOnInit(): void {
-    this.manageComponent.setLastURL();console.log('joderrrrrrrrrrr')
+    this.manageComponent.setLastURL();
     this.manageUser.checkToken();
     this.manageUser.getUserDataFromDataBase().then(()=>{
-      this.sessionValues.activeUser = sesionValues.activeUser;console.log(sesionValues.activeUser)
+      this.sessionValues.activeUser = sesionValues.activeUser;
       if(this.sessionValues.activeUser.name == '@Usuario'){
         this.authorization.destroySession();
       }

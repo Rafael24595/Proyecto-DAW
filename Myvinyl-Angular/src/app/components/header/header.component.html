@@ -1,5 +1,5 @@
-<div id="header">
-    <img id="logo" src="assets/media/images/PAYNES.png" [routerLink]='["/Home"]'>
+<div id="header" style="position: relative;">
+    <img id="logo" src="assets/media/images/logo.png" [routerLink]='["/Home"]'>
     <div class="centerContainer">
         <input [(ngModel)]="searchQuery" #ctrl="ngModel">
         <input class="my-vinyl-icons-font cursor-pointer display-inline font-size-150 vertical-middle gray-button" type="submit" value="8" (click)=launchQuery()>

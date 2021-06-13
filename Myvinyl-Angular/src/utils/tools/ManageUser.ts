@@ -25,19 +25,17 @@ export class ManageUser{
 
         if(!this.checkTokenInterval){
             this.checkTokenInterval = setInterval(()=>{
-                console.log(this.autorizationService.checkForToken())
                 if(this.autorizationService.checkForToken()){
                     this.DatabaseConexService.checkToken(sesionValues.activeUser.name).subscribe(
                         sucess=>{
                             let status = sucess.status;
                             let code = sucess.message.code;
                             let time = sucess.message.time;
-                            console.log(sucess)
                             if(!status){
                                 switch (code){
     
                                     case 'correct':
-                                        console.log('correct')
+
                                     break;
     
                                     case 'warn':
@@ -69,10 +67,10 @@ export class ManageUser{
 
     }
 
-    refreshToken(){console.log('inx')
+    refreshToken(){
         if(this.autorizationService.checkForToken() != null){
             this.DatabaseConexService.extendSession(sesionValues.activeUser.name).subscribe(
-                sucess=>{console.log(sucess);
+                sucess=>{
                     let token = sucess.message.token;
                     this.autorizationService.setToken(token);
                     this.alerted = false;
@@ -82,7 +80,7 @@ export class ManageUser{
                 }
             );
         }
-        else{console.log('inxa')
+        else{
             NotificationManage.showMessage(`La sesión ha espirado`, true);
         }
     }

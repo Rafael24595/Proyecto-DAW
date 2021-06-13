@@ -3051,11 +3051,11 @@ input{
 	100% {transform: translateY(var(--pencil_translate)) rotate(-5deg)}
 }
 .centerContainer{
-	position: relative;
+	position: absolute;
 	display: inline-block;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(0%, -50%);
 }
 ::-webkit-scrollbar {
 	width: 15px;

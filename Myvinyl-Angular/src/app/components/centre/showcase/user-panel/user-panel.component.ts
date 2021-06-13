@@ -70,7 +70,7 @@ export class UserPanelComponent implements OnInit {
       this.themeList = undefined;
       this.selectedThemeList = this.defaultSelect;
       this.userName = params['username'];
-      this.manageUser.getProfileDataFromDataBase(this.userName).then((profile:UserInterface)=>{console.log(profile)
+      this.manageUser.getProfileDataFromDataBase(this.userName).then((profile:UserInterface)=>{
       this.isSessionUser = (profile.email) ? true :false;
         if(profile.email){
           this.setGlobalUser(profile);
@@ -332,7 +332,7 @@ export class UserPanelComponent implements OnInit {
 
   smoothScroll(elementParent:HTMLElement, elementCurrent:HTMLElement, increment?:number){
     let limit = elementParent.scrollTop;
-    let position = elementCurrent.offsetTop - elementCurrent.getBoundingClientRect().height *0.25;console.log(position);
+    let position = elementCurrent.offsetTop - elementCurrent.getBoundingClientRect().height *0.25;
     position = (position < 0) ? 0 : position;
     let sum = (limit < position) ? 1 : -1;
     if(position >= 0){
@@ -340,7 +340,7 @@ export class UserPanelComponent implements OnInit {
         increment = (increment == undefined) ? 1.05 : increment;
         elementParent.scrollTo(0, limit + (sum * increment));
         increment = (4.05 < increment + 0.05) ? increment : increment + 0.05;
-        let actualPosition = elementParent.scrollTop;console.log(limit, actualPosition)
+        let actualPosition = elementParent.scrollTop;
         if((sum == 1 && actualPosition < position || sum == -1 && actualPosition > position) && limit != actualPosition){
           this.smoothScroll(elementParent, elementCurrent, increment)
         }
@@ -480,7 +480,7 @@ export class UserPanelComponent implements OnInit {
 
   }
 
-  modifyPassword(event:Event, exit?:number){
+  async modifyPassword(event:Event, exit?:number){
 
     let keyCode:KeyboardEvent | string = event as KeyboardEvent;
     keyCode = keyCode.code;
@@ -525,7 +525,7 @@ export class UserPanelComponent implements OnInit {
         case 2:
           if(this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value){
             let password =  FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
-            let sucess = this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
+            let sucess = await this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, sesionValues.activeUser.name);
             if(sucess){
               this.resetPasswordInput();
             }
@@ -541,7 +541,7 @@ export class UserPanelComponent implements OnInit {
 
   }
 
-  modifyData(data:{event:KeyboardEvent | FocusEvent | Blur, attribute:string}){
+  async modifyData(data:{event:KeyboardEvent | FocusEvent | Blur, attribute:string}){
     let attribute = data.attribute;
     let keyCode:KeyboardEvent | string | undefined = data.event as KeyboardEvent;
     keyCode = (keyCode.code) ? keyCode.code : undefined;
@@ -568,7 +568,7 @@ export class UserPanelComponent implements OnInit {
               oldAttribute = this.ProfileData.name; 
               newAttribute = this.modifyValuesData.modifyUserName.value; 
               input = this.modifyValuesData.modifyUserName;
-              let sucess = this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+              let sucess = await this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
               if(sucess){
                 this.router.navigate([`/Profile/${newAttribute}`]);
               }
@@ -692,7 +692,7 @@ export class UserPanelComponent implements OnInit {
 
   changeList(){
     if(this.ProfileData && this.selectedThemeList != this.defaultSelect){
-      if(this.selectedThemeList == '-- Nueva lista --'){console.log(this.selectedThemeList)
+      if(this.selectedThemeList == '-- Nueva lista --'){
         setTimeout(()=>{this.selectedThemeList = this.defaultSelect;}, 100);
         this.showProfileForm({attrName:"new", attrId:"", value:'', secondValue:''});
         this.themeList = undefined;

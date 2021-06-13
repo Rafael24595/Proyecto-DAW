@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
     NotificationManage.disableScroll();
     this.showForm = true;
     this.DatabaseConexService.getArtistsIds('id_artist').subscribe(
-      sucess=>{console.log(sucess)
+      sucess=>{
         sucess.message.forEach(artistData=>{
           let artistDataSplited = artistData.split('&');
           if(artistDataSplited.length == 2){

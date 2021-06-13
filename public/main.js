@@ -101,43 +101,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function AppComponent_p_3_Template(rf, ctx) { if (rf & 1) {
-    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "p", 5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_p_3_Template_p_click_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r4); const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r3.GlobalVariables.notificationStatus = ""; return ctx_r3.GlobalVariables.notificationIsShowing = false; });
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "p", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_p_3_Template_p_click_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r3); const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r2.GlobalVariables.notificationStatus = ""; return ctx_r2.GlobalVariables.notificationIsShowing = false; });
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](1, "X");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
 } }
 function AppComponent_div_4_Template(rf, ctx) { if (rf & 1) {
-    const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 6);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "button", 7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_div_4_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r6); const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r5.GlobalVariables.notificationAnswerFunction(); ctx_r5.GlobalVariables.notificationStatus = ""; return ctx_r5.GlobalVariables.notificationIsShowing = false; });
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "button", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_div_4_Template_button_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r5); const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r4.GlobalVariables.notificationAnswerFunction(); ctx_r4.GlobalVariables.notificationStatus = ""; return ctx_r4.GlobalVariables.notificationIsShowing = false; });
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](2, "S\u00ED");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](3, "button", 7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_div_4_Template_button_click_3_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r6); const ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r7.GlobalVariables.notificationStatus = ""; return ctx_r7.GlobalVariables.notificationIsShowing = false; });
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](3, "button", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_div_4_Template_button_click_3_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r5); const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](); ctx_r6.GlobalVariables.notificationStatus = ""; return ctx_r6.GlobalVariables.notificationIsShowing = false; });
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](4, "No");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-} }
-function AppComponent_div_5_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](2, "img", 9);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](3, "img", 10);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](4, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](5, "div", 11);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-} if (rf & 2) {
-    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpropertyInterpolate2"]("src", "", ctx_r2.mediaPath, "/images/root/", ctx_r2.MyRootSprite.eye, "", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeUrl"]);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpropertyInterpolate2"]("src", "", ctx_r2.mediaPath, "/images/root/", ctx_r2.MyRootSprite.body, "", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeUrl"]);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("innerHTML", ctx_r2.rootData, _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeHtml"]);
 } }
 class AppComponent {
     constructor() {
@@ -153,7 +134,7 @@ class AppComponent {
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(); };
-AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 10, vars: 10, consts: [["id", "notification-container"], ["id", "close-alert", "class", "cursor-pointer", 3, "click", 4, "ngIf"], ["id", "answer-alert", "class", "cursor-pointer", 4, "ngIf"], ["id", "roots-notification-container", 4, "ngIf"], ["id", "black-screen", 3, "click"], ["id", "close-alert", 1, "cursor-pointer", 3, "click"], ["id", "answer-alert", 1, "cursor-pointer"], [1, "white-button", 3, "click"], ["id", "roots-notification-container"], ["id", "root-base", "alt", "", 3, "src"], ["id", "root-eye", "alt", "", 3, "src"], [3, "innerHTML"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 9, vars: 9, consts: [["id", "notification-container"], ["id", "close-alert", "class", "cursor-pointer", 3, "click", 4, "ngIf"], ["id", "answer-alert", "class", "cursor-pointer", 4, "ngIf"], ["id", "black-screen", 3, "click"], ["id", "close-alert", 1, "cursor-pointer", 3, "click"], ["id", "answer-alert", 1, "cursor-pointer"], [1, "white-button", 3, "click"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](1, "p");
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](2);
@@ -161,13 +142,12 @@ AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["�
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](3, AppComponent_p_3_Template, 2, 0, "p", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](4, AppComponent_div_4_Template, 5, 0, "div", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](5, AppComponent_div_5_Template, 6, 5, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](6, "div", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_Template_div_click_6_listener() { return ctx.resetForm(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](5, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function AppComponent_Template_div_click_5_listener() { return ctx.resetForm(); });
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](7, "app-header");
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](8, "app-centre");
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](9, "app-footer");
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](6, "app-header");
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](7, "app-centre");
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](8, "app-footer");
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵclassMap"](ctx.GlobalVariables.notificationStatus);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
@@ -176,8 +156,6 @@ AppComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["�
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.GlobalVariables.notificationCloseManual);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.GlobalVariables.notificationAnswer && ctx.GlobalVariables.notificationAnswerFunction);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.showRoot);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵclassMap"](ctx.GlobalVariables.blackScreenStatus);
     } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.NgIf, _components_header_header_component__WEBPACK_IMPORTED_MODULE_2__.HeaderComponent, _components_centre_centre_component__WEBPACK_IMPORTED_MODULE_3__.CentreComponent, _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_4__.FooterComponent], styles: ["#roots-notification-container[_ngcontent-%COMP%]{\n    position: relative;\n    min-width: 300px;\n    min-height: 200px;\n    background-color: white;\n    z-index: 20;\n}\n\n#root-base[_ngcontent-%COMP%], #root-eye[_ngcontent-%COMP%]{\n\n    position: absolute;\n\theight: 95px;\n\twidth: 95px;\n\tleft: 50%;\n\ttop: 50%;\n\ttransform: translate(-50%, -50%);\n\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQ0ksa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixpQkFBaUI7SUFDakIsdUJBQXVCO0lBQ3ZCLFdBQVc7QUFDZjs7QUFFQTs7SUFFSSxrQkFBa0I7Q0FDckIsWUFBWTtDQUNaLFdBQVc7Q0FDWCxTQUFTO0NBQ1QsUUFBUTtDQUNSLGdDQUFnQzs7QUFFakMiLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIjcm9vdHMtbm90aWZpY2F0aW9uLWNvbnRhaW5lcntcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgbWluLXdpZHRoOiAzMDBweDtcbiAgICBtaW4taGVpZ2h0OiAyMDBweDtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbiAgICB6LWluZGV4OiAyMDtcbn1cblxuI3Jvb3QtYmFzZSwgI3Jvb3QtZXlle1xuXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuXHRoZWlnaHQ6IDk1cHg7XG5cdHdpZHRoOiA5NXB4O1xuXHRsZWZ0OiA1MCU7XG5cdHRvcDogNTAlO1xuXHR0cmFuc2Zvcm06IHRyYW5zbGF0ZSgtNTAlLCAtNTAlKTtcblxufSJdfQ== */"] });
@@ -658,7 +636,6 @@ class MyRoot {
         }
     }
     rootsClick(event) {
-        console.log(event);
         let isCalm = this.rootBaseElement.src;
         isCalm = isCalm.split("/").pop();
         isCalm = (isCalm && isCalm.split(".")[0]) ? isCalm.split(".")[0] : '';
@@ -667,14 +644,12 @@ class MyRoot {
             let element = event.target;
             let mouseClick = event;
             clearTimeout(this.rootsBooring);
-            console.log(isCalm);
             var imageElement = (element.tagName == "IMG") ? event.target : (element.firstElementChild && element.firstElementChild.tagName == "IMG") ? element.firstElementChild : (element.firstElementChild && element.firstElementChild.firstChild) ? element.firstElementChild.firstElementChild : undefined;
             var directionValueX = mouseClick.clientX - (element.getBoundingClientRect().left + element.offsetWidth / 2);
             var directionValueY = mouseClick.clientY - (element.getBoundingClientRect().top + element.offsetHeight / 2);
             imageElement = imageElement;
             var direction = (directionValueX < -imageElement.offsetWidth / 5) ? "left" : (directionValueX > imageElement.offsetWidth / 5) ? "right" : "centre";
             var mode = Math.floor(Math.random() * 20) + this.rootsAngryLevel;
-            console.log(Math.abs(directionValueX), (imageElement.offsetWidth / 2 - 8), Math.abs(directionValueY), (imageElement.offsetHeight / 2 - 7));
             if (Math.abs(directionValueX) < (imageElement.offsetWidth / 2 - 8) && Math.abs(directionValueY) < (imageElement.offsetHeight / 2 - 7)) {
                 clearInterval(this.rootsAngry);
                 this.rootsAngryLevel = (this.rootsAngryLevel < 20) ? this.rootsAngryLevel + 1 : this.rootsAngryLevel;
@@ -1565,7 +1540,6 @@ class AudioBarComponent {
         this.reverseColor = _utils_audio_bar_variables_Bar_Variables__WEBPACK_IMPORTED_MODULE_2__.Color_Vars.button_reverse_color.normal;
     }
     ngOnInit() {
-        console.log(this.ajustableWidth);
         if (window.innerWidth <= 1520) {
             this.gearShow = true;
         }
@@ -1593,7 +1567,6 @@ class AudioBarComponent {
         setTimeout(() => {
             let element = document.getElementById('bar-ajustable-width');
             if (element) {
-                console.log(element.offsetWidth, element.getBoundingClientRect());
                 this.barAudioSize = element.offsetWidth;
             }
             else {
@@ -1728,7 +1701,6 @@ class AudioBarComponent {
         this.setRandomList();
         this.setReverse();
         this.setPlay();
-        console.log(this.launchPaused);
         (this.audio && !this.launchPaused) ? this.audio.play() : '';
     }
     setDefaultThemeValues() {
@@ -4080,7 +4052,6 @@ class ArtistPanelComponent {
                             var _a;
                             if (this.artist) {
                                 this.DatabaseConexService.setNewTheme((_a = this.artist) === null || _a === void 0 ? void 0 : _a.id_artist, name, flag, tags, { native: lyricsNative, esp: lyricsEsp }, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name).subscribe(sucess => {
-                                    console.log(sucess);
                                     if (this.artist)
                                         this.artist.setTheme(sucess.message);
                                     if (hasFiles) {
@@ -4258,7 +4229,6 @@ class ArtistPanelComponent {
     }
     searchFlag() {
         let isFlagFileUpload = document.getElementById('flagFile');
-        console.log(this.availableFlags, this.newTheme.flag);
         if (!isFlagFileUpload || isFlagFileUpload.files && isFlagFileUpload.files.length == 0) {
             let flagPreview = document.getElementById('flagPreview');
             let path = (this.availableFlags.indexOf(this.newTheme.flag) != -1) ? this.newTheme.flag : 'not_found';
@@ -4283,7 +4253,6 @@ class ArtistPanelComponent {
                     break;
                 case 'cover':
                     files = document.getElementById('coverFile');
-                    console.log(files);
                     imagePreview = document.getElementById('coverPreview');
                     break;
             }
@@ -4306,7 +4275,6 @@ class ArtistPanelComponent {
             });
             mode.errObj.text = errMessage;
             mode.errObj.class = errClass;
-            console.log(errClass, errMessage);
             if (mode.input == 'cover') {
                 this.coverErr.text = errMessage;
                 this.coverErr.class = errClass;
@@ -4713,7 +4681,6 @@ class HomeComponent {
         src_utils_tools_NotificationManage__WEBPACK_IMPORTED_MODULE_4__.NotificationManage.disableScroll();
         this.showForm = true;
         this.DatabaseConexService.getArtistsIds('id_artist').subscribe(sucess => {
-            console.log(sucess);
             sucess.message.forEach(artistData => {
                 let artistDataSplited = artistData.split('&');
                 if (artistDataSplited.length == 2) {
@@ -6045,11 +6012,9 @@ class ThemeInformationComponent {
         this.userThemeLists = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.themeLists;
         this.isSessionUser = (src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.email != undefined);
         this.isLike = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.isThemeLike(themeData.id);
-        console.log(this.isLike);
         this.isAdmin = (parseInt(src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.admin) == 1) ? true : false;
         this.checkForLastComment();
         this.calculateLikesPercentage();
-        console.log(this.isLike, themeData.likes, this.isLike, themeData.dislikes);
         if (this.isLike < 0 && themeData.likes == 0 || this.isLike > 0 && themeData.dislikes == 0) {
             let likeValue = (this.isLike < 0) ? 'dislikes' : 'likes';
             //this.modifyThemeData({attrName:likeValue, attrId:'', value:themeData[likeValue] + 1});
@@ -6201,10 +6166,8 @@ class ThemeInformationComponent {
             let errMessage;
             let errClass;
             files = document.getElementById(mode);
-            console.log(files);
             imagePreview = document.getElementById('imagePreview');
-            console.log(imagePreview);
-            errMessage = yield new Promise(resolve => {
+            let errFile = yield new Promise(resolve => {
                 reader.onload = function () {
                     let result = reader.result;
                     if (imagePreview && result && result.split(";")[0].split("/")[1] == "png") {
@@ -6216,13 +6179,13 @@ class ThemeInformationComponent {
                         errClass = 'input-error';
                         errMessage = 'Formato incorrecto';
                     }
-                    resolve(errMessage);
+                    resolve({ errMessage, errClass });
                 };
                 if (files && files.files)
                     reader.readAsDataURL(files.files[0]);
             });
-            this.formErr.text = errMessage;
-            this.formErrFile.class = errClass;
+            this.formErr.text = errFile.errMessage;
+            this.formErrFile.class = errFile.errClass;
         });
     }
     checkAudioFile(mode) {
@@ -6231,12 +6194,24 @@ class ThemeInformationComponent {
             let extension = files.files[0].name.split('.')[1];
             if (extension == 'mp3') {
                 this.formErr.text = '';
-                this.formErr.class = '';
+                this.formErrFile.class = '';
             }
             else {
                 this.formErr.text = 'Formato incorrecto';
                 this.formErrFile.class = 'input-error';
             }
+        }
+    }
+    refreshImages() {
+        var images = document.images;
+        for (var i = 0; i < images.length; i++) {
+            images[i].src = images[i].src;
+        }
+    }
+    refreshAudios() {
+        var audio = document.getElementsByTagName('audio');
+        for (var i = 0; i < audio.length; i++) {
+            audio[i].src = audio[i].src;
         }
     }
     showThemeForm(attribute) {
@@ -6320,6 +6295,7 @@ class ThemeInformationComponent {
                             formDataFiles.append(`userName`, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name);
                             yield src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_2__.DataManage.toAsync((resolve) => {
                                 this.DatabaseConexService.sendFilesToServer(formDataFiles).subscribe(sucess => {
+                                    this.refreshImages();
                                     sendSucess = true;
                                     resolve(sendSucess);
                                 }, err => {
@@ -6759,10 +6735,8 @@ class ThemeSearchComponent {
                         }));
                     }
                 }));
-                console.log(this.queryResult.artists);
                 this.queryResult.artists = (yield src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_1__.DataManage.clearRepeatData(this.queryResult.artists, 'artist'));
                 this.queryResult.themes = (yield src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_1__.DataManage.clearRepeatData(this.queryResult.themes, 'theme'));
-                console.log(this.queryResult.artists);
             }
         }), err => {
             console.error(`Error: ${err}`);
@@ -6855,6 +6829,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "UserPanelComponent": () => (/* binding */ UserPanelComponent)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 4762);
 /* harmony import */ var src_app_classes_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/classes/User */ 1336);
 /* harmony import */ var src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/utils/variables/sessionVariables */ 8168);
 /* harmony import */ var src_utils_tools_DataManage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/utils/tools/DataManage */ 5862);
@@ -6863,18 +6838,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_classes_DragEvent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/classes/DragEvent */ 4643);
 /* harmony import */ var src_utils_tools_NotificationManage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/utils/tools/NotificationManage */ 6199);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 9895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 9895);
 /* harmony import */ var src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/utils/tools/ManageUser */ 8391);
 /* harmony import */ var _services_database_conex_service_database_conex_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../services/database-conex-service/database-conex.service */ 522);
 /* harmony import */ var src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/autorization-service/authorization.service */ 9452);
 /* harmony import */ var src_app_services_comunication_service_comunication_service_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/services/comunication-service/comunication-service.service */ 8319);
 /* harmony import */ var src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/utils/tools/ManageComponent */ 4367);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common */ 8583);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ 8583);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/forms */ 3679);
 /* harmony import */ var _audio_bar_audio_bar_audio_bar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../audio-bar/audio-bar/audio-bar.component */ 5094);
-/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
-/* harmony import */ var ngx_quill__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ngx-quill */ 6858);
+/* harmony import */ var ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ng2-tooltip-directive */ 1463);
+/* harmony import */ var ngx_quill__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ngx-quill */ 6858);
 /* harmony import */ var _services_pipes_DomSanitized__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../services/pipes/DomSanitized */ 7605);
+
 
 
 
@@ -7867,7 +7843,6 @@ class UserPanelComponent {
             this.selectedThemeList = this.defaultSelect;
             this.userName = params['username'];
             this.manageUser.getProfileDataFromDataBase(this.userName).then((profile) => {
-                console.log(profile);
                 this.isSessionUser = (profile.email) ? true : false;
                 if (profile.email) {
                     this.setGlobalUser(profile);
@@ -8085,7 +8060,6 @@ class UserPanelComponent {
     smoothScroll(elementParent, elementCurrent, increment) {
         let limit = elementParent.scrollTop;
         let position = elementCurrent.offsetTop - elementCurrent.getBoundingClientRect().height * 0.25;
-        console.log(position);
         position = (position < 0) ? 0 : position;
         let sum = (limit < position) ? 1 : -1;
         if (position >= 0) {
@@ -8094,7 +8068,6 @@ class UserPanelComponent {
                 elementParent.scrollTo(0, limit + (sum * increment));
                 increment = (4.05 < increment + 0.05) ? increment : increment + 0.05;
                 let actualPosition = elementParent.scrollTop;
-                console.log(limit, actualPosition);
                 if ((sum == 1 && actualPosition < position || sum == -1 && actualPosition > position) && limit != actualPosition) {
                     this.smoothScroll(elementParent, elementCurrent, increment);
                 }
@@ -8203,112 +8176,116 @@ class UserPanelComponent {
         }
     }
     modifyPassword(event, exit) {
-        let keyCode = event;
-        keyCode = keyCode.code;
-        if (((keyCode == 'Enter' || keyCode == 'Escape') && this.modifyValuesData.modifyPassword.status) || exit) {
-            this.modifyPasswordData.passwordCounter = (keyCode == 'Escape' || exit) ? -1 : this.modifyPasswordData.passwordCounter;
-            switch (this.modifyPasswordData.passwordCounter) {
-                case -1:
-                    this.resetPasswordInput();
-                    break;
-                case 0:
-                    let password = src_utils_tools_FormValidations__WEBPACK_IMPORTED_MODULE_3__.FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
-                    this.DatabaseConexService.checkPassword(src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name, password).subscribe(sucess => {
-                        if (sucess.status) {
-                            this.modifyPasswordData.passwordCounter++;
-                            this.modifyValuesData.modifyPassword.value = '';
-                            this.modifyPasswordData.passwordMessage = "Introduce tu nueva contraseña:";
-                        }
-                    }, err => {
-                        this.modifyPasswordData.passwordMessage = "Contraseña incorrecta.";
-                        console.error(`Error: ${err}`);
-                    });
-                    break;
-                case 1:
-                    this.modifyPasswordData.passwordRoundI = this.modifyValuesData.modifyPassword.value;
-                    this.modifyValuesData.modifyPassword.value = '';
-                    this.modifyPasswordData.passwordCounter++;
-                    this.modifyPasswordData.passwordMessage = "Introduce nuevamente la nueva contraseña:";
-                    break;
-                case 2:
-                    if (this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value) {
-                        let password = src_utils_tools_FormValidations__WEBPACK_IMPORTED_MODULE_3__.FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
-                        let sucess = this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name);
-                        if (sucess) {
-                            this.resetPasswordInput();
-                        }
-                    }
-                    else {
-                        this.modifyPasswordData.passwordMessage = "Las contraseñas no coinciden.";
-                    }
-                    break;
-            }
-        }
-    }
-    modifyData(data) {
-        let attribute = data.attribute;
-        let keyCode = data.event;
-        keyCode = (keyCode.code) ? keyCode.code : undefined;
-        if (keyCode == 'Enter' || keyCode == 'Escape' || keyCode == undefined) {
-            if (this.ProfileData && this.autorizationService.checkForToken()) {
-                let userAttribute = '';
-                let oldAttribute = '';
-                let newAttribute = '';
-                let userName = this.ProfileData.name;
-                let input = this.modifyValuesData.themeListName;
-                let activeInput = this.modifyValuesData.themeListName.status;
-                switch (attribute) {
-                    case "themeName":
-                        this.modifyThemeList();
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__awaiter)(this, void 0, void 0, function* () {
+            let keyCode = event;
+            keyCode = keyCode.code;
+            if (((keyCode == 'Enter' || keyCode == 'Escape') && this.modifyValuesData.modifyPassword.status) || exit) {
+                this.modifyPasswordData.passwordCounter = (keyCode == 'Escape' || exit) ? -1 : this.modifyPasswordData.passwordCounter;
+                switch (this.modifyPasswordData.passwordCounter) {
+                    case -1:
+                        this.resetPasswordInput();
                         break;
-                    case "userName":
-                        activeInput = this.modifyValuesData.modifyUserName.status;
-                        if (activeInput && keyCode != 'Escape') {
-                            userAttribute = 'name';
-                            oldAttribute = this.ProfileData.name;
-                            newAttribute = this.modifyValuesData.modifyUserName.value;
-                            input = this.modifyValuesData.modifyUserName;
-                            let sucess = this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+                    case 0:
+                        let password = src_utils_tools_FormValidations__WEBPACK_IMPORTED_MODULE_3__.FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
+                        this.DatabaseConexService.checkPassword(src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name, password).subscribe(sucess => {
+                            if (sucess.status) {
+                                this.modifyPasswordData.passwordCounter++;
+                                this.modifyValuesData.modifyPassword.value = '';
+                                this.modifyPasswordData.passwordMessage = "Introduce tu nueva contraseña:";
+                            }
+                        }, err => {
+                            this.modifyPasswordData.passwordMessage = "Contraseña incorrecta.";
+                            console.error(`Error: ${err}`);
+                        });
+                        break;
+                    case 1:
+                        this.modifyPasswordData.passwordRoundI = this.modifyValuesData.modifyPassword.value;
+                        this.modifyValuesData.modifyPassword.value = '';
+                        this.modifyPasswordData.passwordCounter++;
+                        this.modifyPasswordData.passwordMessage = "Introduce nuevamente la nueva contraseña:";
+                        break;
+                    case 2:
+                        if (this.modifyPasswordData.passwordRoundI == this.modifyValuesData.modifyPassword.value) {
+                            let password = src_utils_tools_FormValidations__WEBPACK_IMPORTED_MODULE_3__.FormValidations.hashPassword(this.modifyValuesData.modifyPassword.value);
+                            let sucess = yield this.modifyUserData(this.modifyValuesData.modifyPassword, 'password', '', password, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name);
                             if (sucess) {
-                                this.router.navigate([`/Profile/${newAttribute}`]);
+                                this.resetPasswordInput();
                             }
                         }
-                        else if (keyCode == 'Escape') {
-                            this.modifyValuesData.modifyUserName.status = false;
-                        }
-                        break;
-                    case "userEmail":
-                        activeInput = this.modifyValuesData.modifyEmail.status;
-                        if (activeInput && keyCode != 'Escape') {
-                            userAttribute = 'email';
-                            oldAttribute = this.ProfileData.email;
-                            newAttribute = this.modifyValuesData.modifyEmail.value;
-                            input = this.modifyValuesData.modifyEmail;
-                            this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
-                        }
-                        else if (keyCode == 'Escape') {
-                            this.modifyValuesData.modifyEmail.status = false;
-                        }
-                        break;
-                    case "userDescription":
-                        activeInput = this.modifyValuesData.modifyDescription.status;
-                        if (activeInput && keyCode != 'Escape') {
-                            userAttribute = 'description';
-                            oldAttribute = this.ProfileData.description;
-                            newAttribute = this.modifyValuesData.modifyDescription.value;
-                            input = this.modifyValuesData.modifyDescription;
-                            this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
-                        }
-                        else if (keyCode == 'Escape') {
-                            this.modifyValuesData.modifyDescription.status = false;
+                        else {
+                            this.modifyPasswordData.passwordMessage = "Las contraseñas no coinciden.";
                         }
                         break;
                 }
             }
-            else {
-                this.router.navigate(['/Sign-In']);
+        });
+    }
+    modifyData(data) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__awaiter)(this, void 0, void 0, function* () {
+            let attribute = data.attribute;
+            let keyCode = data.event;
+            keyCode = (keyCode.code) ? keyCode.code : undefined;
+            if (keyCode == 'Enter' || keyCode == 'Escape' || keyCode == undefined) {
+                if (this.ProfileData && this.autorizationService.checkForToken()) {
+                    let userAttribute = '';
+                    let oldAttribute = '';
+                    let newAttribute = '';
+                    let userName = this.ProfileData.name;
+                    let input = this.modifyValuesData.themeListName;
+                    let activeInput = this.modifyValuesData.themeListName.status;
+                    switch (attribute) {
+                        case "themeName":
+                            this.modifyThemeList();
+                            break;
+                        case "userName":
+                            activeInput = this.modifyValuesData.modifyUserName.status;
+                            if (activeInput && keyCode != 'Escape') {
+                                userAttribute = 'name';
+                                oldAttribute = this.ProfileData.name;
+                                newAttribute = this.modifyValuesData.modifyUserName.value;
+                                input = this.modifyValuesData.modifyUserName;
+                                let sucess = yield this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+                                if (sucess) {
+                                    this.router.navigate([`/Profile/${newAttribute}`]);
+                                }
+                            }
+                            else if (keyCode == 'Escape') {
+                                this.modifyValuesData.modifyUserName.status = false;
+                            }
+                            break;
+                        case "userEmail":
+                            activeInput = this.modifyValuesData.modifyEmail.status;
+                            if (activeInput && keyCode != 'Escape') {
+                                userAttribute = 'email';
+                                oldAttribute = this.ProfileData.email;
+                                newAttribute = this.modifyValuesData.modifyEmail.value;
+                                input = this.modifyValuesData.modifyEmail;
+                                this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+                            }
+                            else if (keyCode == 'Escape') {
+                                this.modifyValuesData.modifyEmail.status = false;
+                            }
+                            break;
+                        case "userDescription":
+                            activeInput = this.modifyValuesData.modifyDescription.status;
+                            if (activeInput && keyCode != 'Escape') {
+                                userAttribute = 'description';
+                                oldAttribute = this.ProfileData.description;
+                                newAttribute = this.modifyValuesData.modifyDescription.value;
+                                input = this.modifyValuesData.modifyDescription;
+                                this.modifyUserData(input, userAttribute, oldAttribute, newAttribute, userName);
+                            }
+                            else if (keyCode == 'Escape') {
+                                this.modifyValuesData.modifyDescription.status = false;
+                            }
+                            break;
+                    }
+                }
+                else {
+                    this.router.navigate(['/Sign-In']);
+                }
             }
-        }
+        });
     }
     modifyUserData(input, attributte, oldAttribute, newAttribute, userName) {
         return new Promise(resolve => {
@@ -8379,7 +8356,6 @@ class UserPanelComponent {
     changeList() {
         if (this.ProfileData && this.selectedThemeList != this.defaultSelect) {
             if (this.selectedThemeList == '-- Nueva lista --') {
-                console.log(this.selectedThemeList);
                 setTimeout(() => { this.selectedThemeList = this.defaultSelect; }, 100);
                 this.showProfileForm({ attrName: "new", attrId: "", value: '', secondValue: '' });
                 this.themeList = undefined;
@@ -8412,7 +8388,7 @@ class UserPanelComponent {
         }
     }
 }
-UserPanelComponent.ɵfac = function UserPanelComponent_Factory(t) { return new (t || UserPanelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_15__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_7__.ManageUser), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_services_database_conex_service_database_conex_service__WEBPACK_IMPORTED_MODULE_8__.DatabaseConexService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_9__.AuthorizationService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_15__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_app_services_comunication_service_comunication_service_service__WEBPACK_IMPORTED_MODULE_10__.ComunicationServiceService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_11__.ManageComponent)); };
+UserPanelComponent.ɵfac = function UserPanelComponent_Factory(t) { return new (t || UserPanelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_16__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_utils_tools_ManageUser__WEBPACK_IMPORTED_MODULE_7__.ManageUser), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_services_database_conex_service_database_conex_service__WEBPACK_IMPORTED_MODULE_8__.DatabaseConexService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_app_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_9__.AuthorizationService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_16__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_app_services_comunication_service_comunication_service_service__WEBPACK_IMPORTED_MODULE_10__.ComunicationServiceService), _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdirectiveInject"](src_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_11__.ManageComponent)); };
 UserPanelComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵdefineComponent"]({ type: UserPanelComponent, selectors: [["app-user-panel"]], decls: 3, vars: 2, consts: [["id", "homeContainer"], ["class", "height-100", 4, "ngIf"], ["class", "form-style", 4, "ngIf"], [1, "height-100"], [2, "display", "inline-block", "width", "100%", "box-sizing", "border-box", "max-width", "1300px", "height", "100%", "background-color", "rgba(255,255,255, 0.1)"], [1, "display-inline", "width-50", "txt-horizontal-left", 2, "height", "530px", "max-width", "550px", "padding", "10px", "padding-left", "30px", "box-sizing", "border-box"], [1, "title-back"], [2, "padding-left", "10px", "padding-right", "10px"], [2, "padding-left", "10px", "background-color", "rgba(255,255,255, 0.1)", "height", "393px", "padding", "15px"], [4, "ngIf"], [1, "display-inline", "vertical-top", "width-50", 2, "height", "520.5px", "max-width", "550px", "padding", "10px", "padding-right", "30px", "box-sizing", "border-box", "overflow", "hidden"], [2, "padding-left", "15px", "padding-right", "15px"], [2, "position", "relative"], [3, "ngModel", "ngModelChange", "change"], ["selected", "selected"], [4, "ngFor", "ngForOf"], ["selected", "selected", 4, "ngIf"], ["tooltip", "Copiar lista", "style", "position: absolute; left: 100%; transform: translate(-110%, -12.5%);", "class", "my-vinyl-icons-font font-size-150 cursor-pointer", 3, "options", "click", 4, "ngIf"], [1, "box-sizing-border-box", 2, "height", "500px", "background-color", "rgba(50, 50, 55, 0.3)", "padding", "10px"], [2, "width", "100%", "display", "inline-block"], [2, "display", "inline-block", "width", "100%", "margin-top", "40px"], [3, "ajustableWidth"], [1, "attr-name"], [2, "border-bottom", "solid 2px black"], [2, "height", "100%", "display", "inline-block"], ["id", "pencil-writting-animation", 1, "display-inline"], ["tooltip", "Editar", 1, "my-vinyl-icons-font", "pencil-writting", "writting", "cursor-pointer", "display-inline", "font-size-125", 3, "options", "click"], ["id", "userName", "type", "text", 2, "margin", "0px", 3, "ngModel", "ngModelChange", "focusout", "keyup"], ["id", "userEmail", "type", "text", 2, "margin", "0px", 3, "ngModel", "ngModelChange", "focusout", "keyup"], [2, "letter-spacing", "2px"], [1, "my-vinyl-icons-font"], [2, "margin", "10px"], ["id", "userPassword", "type", "password", 3, "ngModel", "ngModelChange", "focusout", "keyup"], [2, "max-height", "209px", "overflow", "auto"], [3, "innerHtml"], [2, "background-color", "white"], [3, "styles", "placeholder", "ngModel", "onEditorCreated", "ngModelChange"], ["quill-editor-toolbar", "", 2, "white-space", "pre-line", "padding-left", "15px", "text-align", "center"], [1, "ql-formats"], [1, "ql-bold"], [1, "ql-italic"], [1, "ql-underline"], [1, "ql-strike"], ["type", "button", "value", "1", 1, "ql-header"], ["type", "button", "value", "2", 1, "ql-header"], ["value", "ordered", 1, "ql-list"], ["value", "bullet", 1, "ql-list"], ["type", "button", "value", "-1", 1, "ql-indent"], ["type", "button", "value", "+1", 1, "ql-indent"], [1, "ql-color", 2, "z-index", "9"], [1, "ql-background", 2, "z-index", "9"], [1, "ql-align"], ["selected", ""], ["value", "center"], ["value", "right"], ["value", "justify"], [1, "ql-link"], ["type", "button", 1, "ql-clean"], ["type", "button", 1, "my-vinyl-icons-font", "fake-quill-button-snow", 3, "click"], [2, "height", "100%"], [2, "height", "249px", "overflow", "auto"], ["tooltip", "Copiar lista", 1, "my-vinyl-icons-font", "font-size-150", "cursor-pointer", 2, "position", "absolute", "left", "100%", "transform", "translate(-110%, -12.5%)", 3, "options", "click"], ["style", "margin-top: 0px;", 4, "ngIf"], [2, "margin-top", "0px"], [2, "font-weight", "bold", "color", "#e1e1e1"], ["type", "checkbox", "name", "", "id", "", 3, "ngModel", "ngModelChange", "click"], ["tooltip", "Editar", "class", "my-vinyl-icons-font pencil-writting-bottom writting cursor-pointer display-inline font-size-150", 3, "options", "click", 4, "ngIf"], ["tooltip", "Eliminar", "id", "trash-can-animation", "class", "display-inline my-vinyl-icons-font font-size-150", 3, "options", "click", 4, "ngIf"], ["tooltip", "Editar", 1, "my-vinyl-icons-font", "pencil-writting-bottom", "writting", "cursor-pointer", "display-inline", "font-size-150", 3, "options", "click"], ["tooltip", "Eliminar", "id", "trash-can-animation", 1, "display-inline", "my-vinyl-icons-font", "font-size-150", 3, "options", "click"], [1, "trash-cap", "cursor-pointer", "display-inline"], [1, "trash-body", "cursor-pointer", "display-inline"], ["id", "themeName", "type", "text", 2, "margin-bottom", "8px", 3, "ngModel", "ngModelChange", "blur", "keyup"], [1, "overflow-auto", 2, "position", "relative", "height", "288px", "border", "2px solid rgba(50, 50, 55, 0.5)", "background-color", "rgba(50, 50, 55, 0.5)"], ["class", "theme-container text-left container-card", 3, "id", "style", "click", "mousedown", 4, "ngFor", "ngForOf"], [1, "theme-container", "text-left", "container-card", 3, "id", "click", "mousedown"], [1, "display-inline", 2, "vertical-align", "middle", "margin", "10px", "margin-right", "15px", "min-width", "50px"], [1, "cover-xs", "vinyl-xs", 2, "position", "absolute", 3, "id", "src"], [1, "cover-xs", 2, "border", "2px solid", "box-sizing", "border-box", "position", "relative", "z-index", "2", 3, "src", "error"], [1, "display-inline", "theme-container-title", 2, "width", "60%"], [1, "display-inline", 2, "vertical-align", "bottom"], ["placement", "bottom", 1, "cursor-pointer", 3, "tooltip", "options", "routerLink", "queryParams"], [1, "display-inline", 2, "width", "10%", "float", "right", "margin-right", "3px"], ["tooltip", "Eliminar", "style", "margin-top: 0px; margin-bottom: 0px; transform: translateY(100%);", "id", "trash-can-animation", "class", "trash-can display-inline my-vinyl-icons-font font-size-150 text-right", 3, "options", "click", 4, "ngIf"], ["tooltip", "Eliminar", "id", "trash-can-animation", 1, "trash-can", "display-inline", "my-vinyl-icons-font", "font-size-150", "text-right", 2, "margin-top", "0px", "margin-bottom", "0px", "transform", "translateY(100%)", 3, "options", "click"], [1, "trash-can", "trash-cap", "cursor-pointer", "display-inline"], [1, "trash-can", "trash-body", "cursor-pointer", "display-inline"], [1, "display-inline", "theme-container-title", 2, "width", "75%"], [1, "display-inline"], [1, "cursor-pointer", 3, "routerLink", "queryParams"], ["class", "theme-container text-left", "style", "white-space:nowrap; min-width: 255px; cursor: pointer;", 3, "id", "click", 4, "ngFor", "ngForOf"], [1, "theme-container", "text-left", 2, "white-space", "nowrap", "min-width", "255px", "cursor", "pointer", 3, "id", "click"], [1, "cover-xs", 2, "position", "relative", "z-index", "2", 3, "src", "error"], [1, "form-style"], ["class", "text-error", "style", "text-align: center;", 4, "ngIf"], [1, "black-button", 2, "margin-right", "10px", 3, "click"], [1, "black-button", 2, "margin-left", "10px", 3, "click"], [2, "display", "inline-block", "text-align", "center"], [2, "text-align", "left"], [2, "text-align", "center"], [2, "display", "inline-block", "text-align", "left"], [1, "my-vinyl-icons-font", "font-size-150", "cursor-pointer", 2, "vertical-align", "middle"], ["type", "text", 3, "ngModel", "ngModelChange"], ["type", "checkbox", 3, "ngModel", "ngModelChange"], [2, "margin", "5px"], [2, "margin-top", "10px", "margin-bottom", "10px"], [2, "max-height", "75px", "overflow-y", "scroll", "border", "1px solid", "display", "inline-block", "padding", "5px", "text-align", "left", "background-color", "rgba(0,0,0, 0.2)"], ["style", "margin-top: 5px; margin-bottom: 5px;", 4, "ngFor", "ngForOf"], [2, "margin-top", "5px", "margin-bottom", "5px"], [1, "title-back-black"], [1, "text-error", 2, "text-align", "center"]], template: function UserPanelComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵtemplate"](1, UserPanelComponent_div_1_Template, 29, 10, "div", 1);
@@ -8423,7 +8399,7 @@ UserPanelComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_
         _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵproperty"]("ngIf", ctx.ProfileData);
         _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_14__["ɵɵproperty"]("ngIf", ctx.showInput && ctx.blackScreenStatus.blackScreenStatus != "");
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_16__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_17__["ɵNgSelectMultipleOption"], _angular_common__WEBPACK_IMPORTED_MODULE_16__.NgForOf, _audio_bar_audio_bar_audio_bar_component__WEBPACK_IMPORTED_MODULE_12__.AudioBarComponent, ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_18__.TooltipDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.DefaultValueAccessor, ngx_quill__WEBPACK_IMPORTED_MODULE_19__.QuillEditorComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.CheckboxControlValueAccessor, _angular_router__WEBPACK_IMPORTED_MODULE_15__.RouterLink], pipes: [_services_pipes_DomSanitized__WEBPACK_IMPORTED_MODULE_13__.SafeHtmlPipe], styles: ["[_nghost-%COMP%]{\n    width: 100%;\n    text-align: center;\n}\n.vinyl-xs[_ngcontent-%COMP%]{\n    transition: 0.5s ease;\n}\n.vinyl-xs.show[_ngcontent-%COMP%]{\n    transition: 1s ease;\n\ttransform: translate(15%) rotate(180deg);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItcGFuZWwuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7QUFDdEI7QUFDQTtJQUNJLHFCQUFxQjtBQUN6QjtBQUNBO0lBQ0ksbUJBQW1CO0NBQ3RCLHdDQUF3QztBQUN6QyIsImZpbGUiOiJ1c2VyLXBhbmVsLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdHtcbiAgICB3aWR0aDogMTAwJTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG4udmlueWwteHN7XG4gICAgdHJhbnNpdGlvbjogMC41cyBlYXNlO1xufVxuLnZpbnlsLXhzLnNob3d7XG4gICAgdHJhbnNpdGlvbjogMXMgZWFzZTtcblx0dHJhbnNmb3JtOiB0cmFuc2xhdGUoMTUlKSByb3RhdGUoMTgwZGVnKTtcbn0iXX0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_17__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_18__["ɵNgSelectMultipleOption"], _angular_common__WEBPACK_IMPORTED_MODULE_17__.NgForOf, _audio_bar_audio_bar_audio_bar_component__WEBPACK_IMPORTED_MODULE_12__.AudioBarComponent, ng2_tooltip_directive__WEBPACK_IMPORTED_MODULE_19__.TooltipDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.DefaultValueAccessor, ngx_quill__WEBPACK_IMPORTED_MODULE_20__.QuillEditorComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_18__.CheckboxControlValueAccessor, _angular_router__WEBPACK_IMPORTED_MODULE_16__.RouterLink], pipes: [_services_pipes_DomSanitized__WEBPACK_IMPORTED_MODULE_13__.SafeHtmlPipe], styles: ["[_nghost-%COMP%]{\n    width: 100%;\n    text-align: center;\n}\n.vinyl-xs[_ngcontent-%COMP%]{\n    transition: 0.5s ease;\n}\n.vinyl-xs.show[_ngcontent-%COMP%]{\n    transition: 1s ease;\n\ttransform: translate(15%) rotate(180deg);\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInVzZXItcGFuZWwuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtJQUNJLFdBQVc7SUFDWCxrQkFBa0I7QUFDdEI7QUFDQTtJQUNJLHFCQUFxQjtBQUN6QjtBQUNBO0lBQ0ksbUJBQW1CO0NBQ3RCLHdDQUF3QztBQUN6QyIsImZpbGUiOiJ1c2VyLXBhbmVsLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdHtcbiAgICB3aWR0aDogMTAwJTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG4udmlueWwteHN7XG4gICAgdHJhbnNpdGlvbjogMC41cyBlYXNlO1xufVxuLnZpbnlsLXhzLnNob3d7XG4gICAgdHJhbnNpdGlvbjogMXMgZWFzZTtcblx0dHJhbnNmb3JtOiB0cmFuc2xhdGUoMTUlKSByb3RhdGUoMTgwZGVnKTtcbn0iXX0= */"] });
 
 
 /***/ }),
@@ -8485,11 +8461,9 @@ class UserDataComponent {
     }
     ngOnInit() {
         this.manageComponent.setLastURL();
-        console.log('joderrrrrrrrrrr');
         this.manageUser.checkToken();
         this.manageUser.getUserDataFromDataBase().then(() => {
             this.sessionValues.activeUser = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_2__.sesionValues.activeUser;
-            console.log(src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_2__.sesionValues.activeUser);
             if (this.sessionValues.activeUser.name == '@Usuario') {
                 this.authorization.destroySession();
             }
@@ -8639,7 +8613,6 @@ class VerifyUserComponent {
     ngOnInit() {
         this.route.params.subscribe(params => {
             let code = params['code'];
-            console.log(code);
             if (code && code != '') {
                 this.DatabaseConexService.checkActivationCode(code).subscribe(sucess => {
                     this.authorization.destroySession();
@@ -8874,7 +8847,7 @@ class HeaderComponent {
     }
 }
 HeaderComponent.ɵfac = function HeaderComponent_Factory(t) { return new (t || HeaderComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_services_autorization_service_authorization_service__WEBPACK_IMPORTED_MODULE_2__.AuthorizationService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_utils_tools_ManageComponent__WEBPACK_IMPORTED_MODULE_3__.ManageComponent)); };
-HeaderComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 54, vars: 20, consts: [["id", "header"], ["id", "logo", "src", "assets/media/images/PAYNES.png", 3, "routerLink"], [1, "centerContainer"], [3, "ngModel", "ngModelChange"], ["ctrl", "ngModel"], ["type", "submit", "value", "8", 1, "my-vinyl-icons-font", "cursor-pointer", "display-inline", "font-size-150", "vertical-middle", "gray-button", 3, "click"], ["id", "menuButton", 3, "click"], ["id", "barsContainer"], [1, "menuButtonBar"], ["id", "menuExpanded", 3, "ngClass"], [1, "menuContentHeader", "left"], [1, "category_candy"], [1, "category_shirt"], [4, "ngIf"], [1, "menuContentHeader"], [1, "category_owb", 3, "routerLink", "queryParams"], [1, "category_mr", 3, "routerLink", "queryParams"], [1, "category_cw", 3, "routerLink", "queryParams"], [1, "inferior_candy"], [1, "category_shirt", 3, "routerLink"], ["onclick", "generateShopShowcase()", 1, "category_shirt"], [1, "menuContentHeader", "right"], [1, "socialMenu", "font-social-media-font"], [1, "avatar-back", 2, "height", "25px", "vertical-align", "sub", "margin-right", "5px", 3, "src", "error"], ["href", "javascript:void(0);", "alt", "acceso/registro", 1, "link-decor-none", 2, "font-weight", "bold", "font-size", "1.35em", 3, "routerLink"], [2, "margin-top", "5px"], ["href", "javascript:void(0);", "alt", "Cerrar sesi\u00F3n", 1, "link-decor-none", 2, "color", "rgb(128, 128, 128)", 3, "click"], ["href", "javascript:void(0);", "alt", "acceso/registro", 1, "link-decor-none", 3, "routerLink"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
+HeaderComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({ type: HeaderComponent, selectors: [["app-header"]], decls: 54, vars: 20, consts: [["id", "header", 2, "position", "relative"], ["id", "logo", "src", "assets/media/images/logo.png", 3, "routerLink"], [1, "centerContainer"], [3, "ngModel", "ngModelChange"], ["ctrl", "ngModel"], ["type", "submit", "value", "8", 1, "my-vinyl-icons-font", "cursor-pointer", "display-inline", "font-size-150", "vertical-middle", "gray-button", 3, "click"], ["id", "menuButton", 3, "click"], ["id", "barsContainer"], [1, "menuButtonBar"], ["id", "menuExpanded", 3, "ngClass"], [1, "menuContentHeader", "left"], [1, "category_candy"], [1, "category_shirt"], [4, "ngIf"], [1, "menuContentHeader"], [1, "category_owb", 3, "routerLink", "queryParams"], [1, "category_mr", 3, "routerLink", "queryParams"], [1, "category_cw", 3, "routerLink", "queryParams"], [1, "inferior_candy"], [1, "category_shirt", 3, "routerLink"], ["onclick", "generateShopShowcase()", 1, "category_shirt"], [1, "menuContentHeader", "right"], [1, "socialMenu", "font-social-media-font"], [1, "avatar-back", 2, "height", "25px", "vertical-align", "sub", "margin-right", "5px", 3, "src", "error"], ["href", "javascript:void(0);", "alt", "acceso/registro", 1, "link-decor-none", 2, "font-weight", "bold", "font-size", "1.35em", 3, "routerLink"], [2, "margin-top", "5px"], ["href", "javascript:void(0);", "alt", "Cerrar sesi\u00F3n", 1, "link-decor-none", 2, "color", "rgb(128, 128, 128)", 3, "click"], ["href", "javascript:void(0);", "alt", "acceso/registro", 1, "link-decor-none", 3, "routerLink"]], template: function HeaderComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](1, "img", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "div", 2);
@@ -9277,7 +9250,6 @@ class DateFormat {
     constructor() { }
     transform(value) {
         let date = new Date(value);
-        console.log(JSON.stringify(date));
         date = (JSON.stringify(date) == 'null') ? new Date(946708560000) : date;
         let day = date.getDate();
         let month = date.getMonth() + 1;
@@ -9934,17 +9906,14 @@ class ManageUser {
     checkToken() {
         if (!this.checkTokenInterval) {
             this.checkTokenInterval = setInterval(() => {
-                console.log(this.autorizationService.checkForToken());
                 if (this.autorizationService.checkForToken()) {
                     this.DatabaseConexService.checkToken(_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name).subscribe(sucess => {
                         let status = sucess.status;
                         let code = sucess.message.code;
                         let time = sucess.message.time;
-                        console.log(sucess);
                         if (!status) {
                             switch (code) {
                                 case 'correct':
-                                    console.log('correct');
                                     break;
                                 case 'warn':
                                     let expireDate = new Date(Date.now() + time);
@@ -9970,10 +9939,8 @@ class ManageUser {
         }
     }
     refreshToken() {
-        console.log('inx');
         if (this.autorizationService.checkForToken() != null) {
             this.DatabaseConexService.extendSession(_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name).subscribe(sucess => {
-                console.log(sucess);
                 let token = sucess.message.token;
                 this.autorizationService.setToken(token);
                 this.alerted = false;
@@ -9982,7 +9949,6 @@ class ManageUser {
             });
         }
         else {
-            console.log('inxa');
             _NotificationManage__WEBPACK_IMPORTED_MODULE_2__.NotificationManage.showMessage(`La sesión ha espirado`, true);
         }
     }

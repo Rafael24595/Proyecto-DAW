@@ -144,7 +144,7 @@ async function getUserData(req, res){
     res.status(200).send(Tools.simplifyProfile(userData));
 }
 
-async function searchUsersDataByName(req, res){console.log(req.query.nameQuery)
+async function searchUsersDataByName(req, res){
   let nameQuery = (req.query.nameQuery) ? JSON.parse(req.query.nameQuery) : [''];
   let limitQuery = parseInt(req.params.limit);
   let pageQuery = parseInt(req.params.page);
@@ -233,10 +233,10 @@ async function getThemesFromList(req, res){
 }
 
 async function updateUserData(req, res){
-  let attribute = req.params.attribute;console.log(attribute)
-  let oldAttribute = req.body.oldAttribute;console.log(oldAttribute)
-  let newAttribute = req.body.newAttribute;console.log(newAttribute)
-  let userName = req.params.user;console.log(userName)
+  let attribute = req.params.attribute;
+  let oldAttribute = req.body.oldAttribute;
+  let newAttribute = req.body.newAttribute;
+  let userName = req.params.user;
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     let userModify = await Tools.setUserAttribute(user, attribute, oldAttribute, newAttribute);
@@ -271,8 +271,8 @@ async function getUserAttribute(req, res){
 }
 
 async function checkPassword(req, res){
-  let userName = req.params.user;console.log(userName)
-  let password = req.params.value;console.log(password)
+  let userName = req.params.user;
+  let password = req.params.value;
   if(userName == req.userNameToken){
     let user = await User.findOne({name:userName}).lean();
     res.headerSent = true;

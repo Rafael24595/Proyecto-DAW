@@ -101,9 +101,9 @@ export class ThemeSearchComponent implements OnInit {
                 if(field != 'artist' && field != 'user') this.queryResult.themes = this.queryResult.themes.concat(paginateObject[queryValue][field]['docs']);
               });
             }
-          });console.log( this.queryResult.artists)
+          });
           this.queryResult.artists = await DataManage.clearRepeatData(this.queryResult.artists, 'artist') as Artist[];
-          this.queryResult.themes = await DataManage.clearRepeatData(this.queryResult.themes, 'theme') as Themes[];console.log( this.queryResult.artists)
+          this.queryResult.themes = await DataManage.clearRepeatData(this.queryResult.themes, 'theme') as Themes[];
         }
       },
       err=>{

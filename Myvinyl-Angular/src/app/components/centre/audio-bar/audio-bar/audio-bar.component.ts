@@ -21,7 +21,7 @@ export class AudioBarComponent implements OnInit {
   constructor(private comunicationService :ComunicationServiceService, private DatabaseConexService: DatabaseConexService) {
   }
 
-  ngOnInit(): void { console.log(this.ajustableWidth)
+  ngOnInit(): void {
 
     if(window.innerWidth <= 1520){
       this.gearShow = true;
@@ -52,7 +52,7 @@ export class AudioBarComponent implements OnInit {
 
     setTimeout(()=>{
       let element = document.getElementById('bar-ajustable-width');
-      if(element){console.log(element.offsetWidth, element.getBoundingClientRect())
+      if(element){
         this.barAudioSize = element.offsetWidth;
       }
       else{
@@ -295,7 +295,6 @@ export class AudioBarComponent implements OnInit {
     this.setRandomList();
     this.setReverse();
     this.setPlay();
-    console.log(this.launchPaused);
     (this.audio && !this.launchPaused) ? this.audio.play() : '';
 
   }

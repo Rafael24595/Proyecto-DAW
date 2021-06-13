@@ -124,7 +124,7 @@ export class MyRoot{
 
     }
 
-    rootsClick(event?:Event | undefined){console.log(event)
+    rootsClick(event?:Event | undefined){
 
         let isCalm:string | boolean | undefined = this.rootBaseElement.src;
         isCalm = isCalm.split("/").pop();
@@ -137,7 +137,6 @@ export class MyRoot{
             let mouseClick = event as MouseEvent
 
             clearTimeout(this.rootsBooring);
-            console.log(isCalm)
             
             var imageElement:HTMLElement | undefined = (element.tagName == "IMG") ? event.target as HTMLElement : (element.firstElementChild && element.firstElementChild.tagName == "IMG") ? element.firstElementChild as HTMLElement : (element.firstElementChild && element.firstElementChild.firstChild) ? element.firstElementChild.firstElementChild as HTMLElement : undefined;
             var directionValueX = mouseClick.clientX - (element.getBoundingClientRect().left + element.offsetWidth/2);
@@ -147,7 +146,7 @@ export class MyRoot{
 
             var direction = (directionValueX < -imageElement.offsetWidth/5) ? "left" : (directionValueX > imageElement.offsetWidth/5) ? "right" : "centre";
             var mode = Math.floor(Math.random() * 20) + this.rootsAngryLevel;
-            console.log(Math.abs(directionValueX) , (imageElement.offsetWidth/2 - 8) , Math.abs(directionValueY) , (imageElement.offsetHeight/2 - 7))
+            
             if (Math.abs(directionValueX) < (imageElement.offsetWidth/2 - 8) && Math.abs(directionValueY) < (imageElement.offsetHeight/2 - 7)) {
 
                 clearInterval(this.rootsAngry);

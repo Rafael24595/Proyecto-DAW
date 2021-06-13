@@ -6,7 +6,7 @@
         <button class="white-button" (click)='GlobalVariables.notificationStatus = ""; GlobalVariables.notificationIsShowing = false'>No</button>
     </div>
 </div>
-<div *ngIf='showRoot' id='roots-notification-container'>
+<!--<div *ngIf='showRoot' id='roots-notification-container'>
     <div>
         <img id="root-base" src="{{mediaPath}}/images/root/{{MyRootSprite.eye}}" alt="">
         <img id="root-eye" src="{{mediaPath}}/images/root/{{MyRootSprite.body}}" alt="">
@@ -14,7 +14,7 @@
     <div>
         <div [innerHTML]='rootData'></div>
     </div>
-</div>
+</div>-->
 <div id="black-screen" class="{{GlobalVariables.blackScreenStatus}}" (click)='resetForm()'></div>
 <app-header></app-header>
 <app-centre></app-centre>
