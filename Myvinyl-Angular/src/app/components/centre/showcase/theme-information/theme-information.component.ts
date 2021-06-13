@@ -193,6 +193,7 @@ export class ThemeInformationComponent implements OnInit {
 
   sentToReproductor(type:string, value?:any){
     value = (value != undefined) ? value : '';
+    if(type == 'stop') this.coverCursorState = 'cursor-pointer';
     this.comunicationService.sendReproductorData({type, value});
   }
 

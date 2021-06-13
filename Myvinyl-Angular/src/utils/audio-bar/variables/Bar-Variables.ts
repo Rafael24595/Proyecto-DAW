@@ -23,8 +23,8 @@ export const Color_Vars = {
         senior:{
         },
         baby:{
-            unmuted: '#0d0d0d',
-            muted: '#0d0d0d'
+            unmuted: '#808080',
+            muted: '#808080'
         }
     },
     button_play_color:{

@@ -67,7 +67,7 @@
                     </div>
                     <div *ngFor='let theme of artist.themeList' class="container-card" style="min-width: 200px; background-color: gray; padding: 15px; margin-top: 10px; margin-bottom: 10px; white-space: nowrap;" id="{{theme.id}}">
                         <div style="vertical-align: middle; height: 70px; min-width: 70px; margin-left: 10px; margin-right: 10px;" class="display-inline">
-                            <img style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
+                            <img class="cursor-pointer" (click)=showItem(theme.id) style="width: 70px; border: 2px solid; box-sizing: border-box;" src="{{mediaPath}}/images/covers/{{theme.id}}.png" (error)="updateUrl($event, 'theme')">
                         </div>
                         <div style="width: 58%; vertical-align: middle;" class="display-inline">
                             <p style="overflow: hidden; text-overflow: ellipsis; margin-top: 5px; margin-bottom: 5px;"><span class="attr-name">Nombre: </span> <span class="cursor-pointer" (click)=showItem(theme.id)>{{theme.name}}</span></p> 

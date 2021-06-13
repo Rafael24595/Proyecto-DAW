@@ -74,7 +74,7 @@
     top: 50%; 
     transform: translate(-50%,-50%);  
     width: 20px; height: 20px; 
-    background-color: #384048; 
+    background-color: #0d0d0d; 
     border-radius: 50%;
     cursor: pointer;
 }
