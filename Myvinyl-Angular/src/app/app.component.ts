@@ -12,7 +12,7 @@ export class AppComponent {
   mediaPath:string = '../assets/media';
   MyRootSprite = MyRootSprite;
   GlobalVariables = GlobalVariables;
-  rootData = [ ]
+  rootData = [];
   showRoot = false;
 
   resetForm(){
