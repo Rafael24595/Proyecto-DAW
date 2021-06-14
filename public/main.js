@@ -6157,8 +6157,7 @@ class ThemeInformationComponent {
         if (this.theme) {
             this.DatabaseConexService.addToThemeList(this.theme.artist.id, this.theme.id, this.selectedThemeList, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name).subscribe(sucess => {
                 src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.setThemeListList(this.selectedThemeList, sucess.message);
-                this.showThemeListForm = false;
-                this.selectedThemeList = '';
+                this.clearForm();
             }, err => {
                 console.error(`Error: ${err}`);
             });

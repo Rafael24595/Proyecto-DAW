@@ -303,8 +303,7 @@ export class ThemeInformationComponent implements OnInit {
       this.DatabaseConexService.addToThemeList(this.theme.artist.id, this.theme.id, this.selectedThemeList, sesionValues.activeUser.name).subscribe(
         sucess=>{
           sesionValues.activeUser.setThemeListList(this.selectedThemeList, sucess.message);
-          this.showThemeListForm = false;
-          this.selectedThemeList = '';
+          this.clearForm();
         },
         err=>{
           console.error(`Error: ${err}`);
