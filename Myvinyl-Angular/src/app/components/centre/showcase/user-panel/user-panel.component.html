@@ -51,7 +51,7 @@
                                     <ng-container *ngIf='modifyValuesData.modifyPassword.status'>
                                         <br>
                                         <div style="margin: 10px;">
-                                            <p *ngIf='modifyPasswordData.passwordMessage != ""'>{{modifyPasswordData.passwordMessage}}</p>
+                                            <p *ngIf='modifyPasswordData.passwordMessage != ""' class="text-error">{{modifyPasswordData.passwordMessage}}</p>
                                             <input id="userPassword" type="password" [(ngModel)]='modifyValuesData.modifyPassword.value'
                                             (focusout)=modifyPassword($event,-1) (keyup)=modifyPassword($event)>
                                         </div>

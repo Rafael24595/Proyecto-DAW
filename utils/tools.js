@@ -28,6 +28,7 @@ async function setUserAttribute(user, attribute, oldAttribute, newAttribute){
       if(user[attribute] == oldAttribute && typeof newAttribute == 'string' &&  (oldAttribute == newAttribute && nameExist.length == 1 || nameExist.length == 0)){
         isChanged = true;
         user.name = newAttribute;
+        FilesManage.renameFileAction('user_avatar', `${oldAttribute}.png`, `${newAttribute}.png`);
       }else{inUse = true}
     break;
     case "email":
