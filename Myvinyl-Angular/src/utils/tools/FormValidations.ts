@@ -25,7 +25,7 @@ export class FormValidations{
 
                 case 'password':
                 
-                    if(formError['repassword']){
+                    if(userData['repassword']){
 
                         formError[input] = (!FormValidations.validePasssword(userData[input])) ? 'Contraseña no válida' : '';
 
@@ -86,9 +86,9 @@ export class FormValidations{
 
     }
 
-    public static validePasssword(password:string){
+    public static validePasssword(password:string){console.log(password);
 
-        let validPassword:RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\u0021-\u002b\u003c-\u0040])\S{8,}$/;
+        let validPassword:RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[.,:;])\S{8,}$/;
         return validPassword.test(password);
 
     }

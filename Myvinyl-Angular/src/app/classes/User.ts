@@ -142,7 +142,7 @@ export class User{
 
     public static setUser(name: string, admin: string, date:number, description:string, themeLists: ThemeList[], email?: string, activeAccount?: boolean){
 
-        User.activeUser = new User(name, admin, date, description, themeLists, email);
+        User.activeUser = new User(name, admin, date, description, themeLists, email, activeAccount);
 
         return User.activeUser;
 
