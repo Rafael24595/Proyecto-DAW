@@ -184,8 +184,8 @@ export class UserPanelComponent implements OnInit {
         let nameUsed = sesionValues.activeUser.getThemeList(name);
         if(!nameUsed){
           this.DatabaseConexService.newThemeList(name, privacy, sesionValues.activeUser.name).subscribe(
-            sucess=>{
-              sesionValues.activeUser.setNewThemeList(sucess.list);
+            sucess=>{console.log(sucess)
+              sesionValues.activeUser.setNewThemeList(sucess.list);console.log(sesionValues.activeUser)
               this.ProfileData = sesionValues.activeUser;
               this.cleanForm();
             },

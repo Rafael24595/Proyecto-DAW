@@ -104,8 +104,8 @@
                 </ng-container>
                 <ng-container *ngIf='!buttonGear'>
                     <button tooltip="Aleatorio" placement="bottom" [options]="TooltipValues" (click)='randomReproduction()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="background-color: {{randomColor}};">P</button>
-                    <button tooltip="Repetir lista" placement="bottom" [options]="TooltipValues" (click)='loopListReproduction()' (click)='loopListReproduction()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="background-color: {{loopListColor}};">Q</button>
-                    <button tooltip="Repetir tema" placement="bottom" [options]="TooltipValues" (click)='loopAudio()' (click)='loopAudio()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="background-color: {{loopColor}};">R</button>
+                    <button tooltip="Repetir lista" placement="bottom" [options]="TooltipValues" (click)='loopListReproduction()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="background-color: {{loopListColor}};">Q</button>
+                    <button tooltip="Repetir tema" placement="bottom" [options]="TooltipValues" (click)='loopAudio()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="background-color: {{loopColor}};">R</button>
                     <div class="display-inline">
                         <button tooltip="Reproduccion inversa" placement="bottom" [options]="TooltipValues" (click)='revertAudioImplement()' class="my-vinyl-icons-font font-size-150 cursor-pointer button-style" style="margin-right: 5px; background-color: {{reverseColor}};">S</button>
                         <img style="position: absolute; margin-left: 5px; height: 30px; vertical-align: bottom; visibility: {{loadGif}};" id="loadGif" src="{{mediaPath}}/images/load.gif">

@@ -67,7 +67,7 @@ export class User{
     }
 
     setNewThemeList(themeList:ThemeList){
-        this.themeLists.push(themeList);
+        this.themeLists.push(new ThemeList(themeList.name,themeList.userView,themeList.userManage,themeList.privateState,themeList.list));
     }
 
     setThemeListPrivacity(themeListName:string, status:boolean){
