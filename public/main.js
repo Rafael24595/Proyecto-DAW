@@ -1088,7 +1088,7 @@ class User {
         }
     }
     setNewThemeList(themeList) {
-        this.themeLists.push(themeList);
+        this.themeLists.push(new _ThemeList__WEBPACK_IMPORTED_MODULE_0__.ThemeList(themeList.name, themeList.userView, themeList.userManage, themeList.privateState, themeList.list));
     }
     setThemeListPrivacity(themeListName, status) {
         let index = 0;
@@ -1155,7 +1155,7 @@ class User {
         return isLike;
     }
     static setUser(name, admin, date, description, themeLists, email, activeAccount) {
-        User.activeUser = new User(name, admin, date, description, themeLists, email);
+        User.activeUser = new User(name, admin, date, description, themeLists, email, activeAccount);
         return User.activeUser;
     }
     static getUser() {
@@ -1434,16 +1434,16 @@ function AudioBarComponent_ng_container_45_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](2, "P");
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](3, "button", 55);
-    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_3_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r32 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r32.loopListReproduction(); })("click", function AudioBarComponent_ng_container_45_Template_button_click_3_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r33 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r33.loopListReproduction(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_3_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r32 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r32.loopListReproduction(); });
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](4, "Q");
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](5, "button", 56);
-    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_5_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r34.loopAudio(); })("click", function AudioBarComponent_ng_container_45_Template_button_click_5_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r35 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r35.loopAudio(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_5_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r33 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r33.loopAudio(); });
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](6, "R");
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](7, "div", 50);
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementStart"](8, "button", 57);
-    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_8_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r36 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r36.revertAudioImplement(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵlistener"]("click", function AudioBarComponent_ng_container_45_Template_button_click_8_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵrestoreView"](_r31); const ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵnextContext"](); return ctx_r34.revertAudioImplement(); });
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtext"](9, "S");
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵelement"](10, "img", 53);
@@ -7947,7 +7947,9 @@ class UserPanelComponent {
                 let nameUsed = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.getThemeList(name);
                 if (!nameUsed) {
                     this.DatabaseConexService.newThemeList(name, privacy, src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.name).subscribe(sucess => {
+                        console.log(sucess);
                         src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser.setNewThemeList(sucess.list);
+                        console.log(src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser);
                         this.ProfileData = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser;
                         this.cleanForm();
                     }, err => {
@@ -8471,6 +8473,7 @@ class UserDataComponent {
         this.manageUser.checkToken();
         this.manageUser.getUserDataFromDataBase().then(() => {
             this.sessionValues.activeUser = src_utils_variables_sessionVariables__WEBPACK_IMPORTED_MODULE_2__.sesionValues.activeUser;
+            console.log(this.sessionValues.activeUser);
             if (this.sessionValues.activeUser.name == '@Usuario') {
                 this.authorization.destroySession();
             }
@@ -9750,7 +9753,7 @@ class FormValidations {
                     formError[input] = (!FormValidations.valideEmail(userData[input])) ? 'Email no válido' : '';
                     break;
                 case 'password':
-                    if (formError['repassword']) {
+                    if (userData['repassword']) {
                         formError[input] = (!FormValidations.validePasssword(userData[input])) ? 'Contraseña no válida' : '';
                     }
                     else {
@@ -9786,7 +9789,8 @@ class FormValidations {
         return validEmail.test(email.toLowerCase());
     }
     static validePasssword(password) {
-        let validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\u0021-\u002b\u003c-\u0040])\S{8,}$/;
+        console.log(password);
+        let validPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[.,:;])\S{8,}$/;
         return validPassword.test(password);
     }
     static comparePasswords(password, repassword) {
@@ -9962,7 +9966,7 @@ class ManageUser {
     getUserDataFromDataBase() {
         return new Promise(resolve => {
             this.DatabaseConexService.getUserData().subscribe(user => {
-                src_app_classes_User__WEBPACK_IMPORTED_MODULE_0__.User.setUser(user.name, user.admin, user.date, user.description, user.themeLists, user.email);
+                src_app_classes_User__WEBPACK_IMPORTED_MODULE_0__.User.setUser(user.name, user.admin, user.date, user.description, user.themeLists, user.email, user.activeAccount);
                 _variables_sessionVariables__WEBPACK_IMPORTED_MODULE_1__.sesionValues.activeUser = src_app_classes_User__WEBPACK_IMPORTED_MODULE_0__.User.getUser();
                 resolve(true);
             }, err => {
