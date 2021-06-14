@@ -222,14 +222,19 @@ async function updateThemeAuthor(mainArtistId, targetArtistId, oldThemeId){
 
 async function updateThemesId(oldId, newId){
   try {
+    FilesManage.renameFileAction('artist_avatar', `${oldId}.png`, `${newId}.png`);
     let themes = await Theme.find({'artist.id':oldId});
     themes.forEach(theme=>{
       let idData = theme.id.split('-');
       if(idData.length > 1){
+        oldThemeId = theme.id;
         theme.id = `${newId}-${idData[1]}`;
         theme.artist.id = newId
         theme.markModified("artist");
         theme.save();
+
+        FilesManage.renameFileAction('theme_cover', `${oldThemeId}.png`, `${theme.id}.png`);
+        FilesManage.renameFileAction('theme_audio', `${oldThemeId}.mp3`, `${theme.id}.mp3`);
       }
     });
     return themes;
